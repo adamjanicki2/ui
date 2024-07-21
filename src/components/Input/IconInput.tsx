@@ -37,7 +37,7 @@ const IconInput = forwardRef<HTMLInputElement, IconInputProps>(
   ) => (
     <div
       className={classNames(
-        `ajcc-input-default ajcc-icon-input corners--${corners}`,
+        `ajui-input-default ajui-icon-input corners--${corners}`,
         className
       )}
       style={style}
@@ -47,7 +47,7 @@ const IconInput = forwardRef<HTMLInputElement, IconInputProps>(
         {...inputProps}
         ref={ref}
         className={classNames(
-          `ajcc-input-base corners--${corners}`,
+          `ajui-input-base corners--${corners}`,
           inputProps?.className
         )}
       />

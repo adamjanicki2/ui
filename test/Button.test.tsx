@@ -12,7 +12,7 @@ describe("Button", () => {
 
 describe("IconButton", () => {
   it("renders correctly", () => {
-    const { getByRole } = render(<IconButton icon="🚀" title="rocket" />);
+    const { getByRole } = render(<IconButton icon="🚀" name="rocket" />);
     expect(getByRole("button")).toBeInTheDocument;
   });
 });

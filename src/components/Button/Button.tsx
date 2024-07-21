@@ -22,19 +22,14 @@ type DefaultButtonProps = React.DetailedHTMLProps<
 
 type IconButtonProps = Omit<DefaultButtonProps, "children"> & {
   /**
-   * Title of the button for accessibility purposes
+   * Name of the button for accessibility purposes
    */
-  title: string;
+  name: string;
   /**
    * Icon to display inside the button
    * I would usually use FontAwesome, but for added flexibility, it's any node
    */
   icon: React.ReactNode;
-  /**
-   * [Optional] Variant of the button
-   * @default "primary"
-   */
-  variant?: "primary" | "secondary";
 };
 
 type ButtonProps = DefaultButtonProps & {
@@ -52,7 +47,7 @@ type ButtonProps = DefaultButtonProps & {
 
 export const UnstyledButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
   ({ to, LinkElement, className, ...props }, ref) => {
-    className = classNames("ajcc-button-base", className);
+    className = classNames("ajui-button-base", className);
     if (to) {
       return (
         <UnstyledLink
@@ -70,11 +65,11 @@ export const UnstyledButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
 );
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ title, icon, className, variant = "primary", ...props }, ref) => (
+  ({ name, icon, className, ...props }, ref) => (
     <UnstyledButton
       {...props}
-      title={title}
-      className={classNames(`ajcc-icon-button--${variant}`, className)}
+      aria-label={name}
+      className={classNames("ajui-icon-button", className)}
       ref={ref}
     >
       {icon}
@@ -87,7 +82,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     <UnstyledButton
       {...rest}
       className={classNames(
-        `ajcc-button-default ajcc-button--${variant} corners--${corners}`,
+        `ajui-button-default ajui-button--${variant} corners--${corners}`,
         className
       )}
       ref={ref}

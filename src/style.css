@@ -1,69 +1,111 @@
 /* General styles */
 :root {
-  --black: #000;
-  --white: #fff;
-  --light-gray: #eee;
-  --moon-gray: #ccc;
-  --dark-gray: #555;
-  --darkest-gray: #333;
-  --focus-ring: #b2dbfa;
-  --disabled-opacity: 0.4;
-  --default-transition: 0.2s ease-in-out;
-  --default-opacity-dim: 0.75;
+  /* General colors */
+  --ajui-light-gray: #eee;
+  --ajui-moon-gray: #ccc;
+  --ajui-darkest-gray: #333;
+  --ajui-focus-ring-color: #b2dbfa;
+  --ajui-default-color: black;
+  --ajui-default-background: white;
+  --ajui-default-border: var(--ajui-moon-gray);
+  /* General values */
+  --ajui-disabled-opacity: 0.4;
+  --ajui-default-transition: 0.2s ease-in-out;
+  --ajui-default-opacity-dim: 0.75;
+  /* Corners */
+  --ajui-sharp-radius: 0;
+  --ajui-rounded-radius: 0.5rem;
+  --ajui-pill-radius: 9999px;
+  --ajui-circle-radius: 50%;
+  /* Buttons */
+  --ajui-button-primary-background: var(--ajui-default-color);
+  --ajui-button-primary-color: var(--ajui-default-background);
+  --ajui-button-secondary-background: var(--ajui-default-background);
+  --ajui-button-secondary-color: var(--ajui-default-color);
+  --ajui-button-secondary-border: var(--ajui-default-border);
+  --ajui-button-transparent-background: transparent;
+  --ajui-button-secondary-border-hover: var(--ajui-darkest-gray);
+  /* Input */
+  --ajui-input-selection-color: var(--ajui-focus-ring-color);
+  --ajui-input-border: var(--ajui-default-border);
+  /* Select */
+  --ajui-select-border: var(--ajui-default-border);
+  /* Content types */
+  --ajui-success-background: #dff2e1;
+  --ajui-success-color: #1b5e20;
+  --ajui-success-border: #b2dfb1;
+
+  --ajui-warning-background: #fceeb6;
+  --ajui-warning-color: #b23904;
+  --ajui-warning-border: #e6d5a2;
+
+  --ajui-error-background: #fdecea;
+  --ajui-error-color: #b71c1c;
+  --ajui-error-border: #f5b7b7;
+
+  --ajui-info-background: #e3f2fd;
+  --ajui-info-color: #0d47a1;
+  --ajui-info-border: #90caf9;
+
+  --ajui-static-background: #f5f5f5;
+  --ajui-static-color: #424242;
+  --ajui-static-border: #bdbdbd;
+  /* Modal */
+  --ajui-modal-backdrop-background: rgba(0, 0, 0, 0.5);
 }
 
 a:not([disabled]):is(:focus-visible),
 button:not([disabled]):is(:focus-visible),
-.ajcc-input-default:focus-within,
-.ajcc-select-base:focus-within {
-  outline: 3px solid var(--focus-ring);
+.ajui-input-default:focus-within,
+.ajui-select-base:focus-within {
+  outline: 3px solid var(--ajui-focus-ring-color);
   outline-offset: 0;
 }
 
 .corners--rounded {
-  border-radius: 0.5rem;
+  border-radius: var(--ajui-rounded-radius);
 }
 
 .corners--pill {
-  border-radius: 9999px;
+  border-radius: var(--ajui-pill-radius);
 }
 
 .corners--sharp {
-  border-radius: 0;
+  border-radius: var(--ajui-sharp-radius);
 }
 
 .content--success {
-  background-color: #dff2e1;
-  color: #1b5e20;
-  border-color: #b2dfb1;
+  background-color: var(--ajui-success-background);
+  color: var(--ajui-success-color);
+  border-color: var(--ajui-success-border);
 }
 
 .content--warning {
-  background-color: #fceeb6;
-  color: #b23904;
-  border-color: #e6d5a2;
+  background-color: var(--ajui-warning-background);
+  color: var(--ajui-warning-color);
+  border-color: var(--ajui-warning-border);
 }
 
 .content--error {
-  background-color: #fdecea;
-  color: #b71c1c;
-  border-color: #f5b7b7;
+  background-color: var(--ajui-error-background);
+  color: var(--ajui-error-color);
+  border-color: var(--ajui-error-border);
 }
 
 .content--info {
-  background-color: #e3f2fd;
-  color: #0d47a1;
-  border-color: #90caf9;
+  background-color: var(--ajui-info-background);
+  color: var(--ajui-info-color);
+  border-color: var(--ajui-info-border);
 }
 
 .content--static {
-  background-color: #f5f5f5;
-  color: #424242;
-  border-color: #bdbdbd;
+  background-color: var(--ajui-static-background);
+  color: var(--ajui-static-color);
+  border-color: var(--ajui-static-border);
 }
 
 /* Alert */
-.ajcc-alert {
+.ajui-alert {
   padding: 0.75rem;
   border-style: solid;
   border-width: 1px;
@@ -71,7 +113,7 @@ button:not([disabled]):is(:focus-visible),
 }
 
 /* Badge */
-.ajcc-badge {
+.ajui-badge {
   padding: 1px 5px;
   border-style: solid;
   border-width: 1px;
@@ -80,7 +122,7 @@ button:not([disabled]):is(:focus-visible),
 }
 
 /* Banner */
-.ajcc-banner {
+.ajui-banner {
   padding: 1.5rem 2rem;
   border: none;
   font-weight: 400;
@@ -95,7 +137,7 @@ a {
 }
 
 /* Button */
-.ajcc-button-base {
+.ajui-button-base {
   background: none;
   color: inherit;
   fill: inherit;
@@ -106,60 +148,53 @@ a {
   font-weight: 500;
 }
 
-.ajcc-button-default {
+.ajui-button-default {
   padding: 0.5rem 0.75rem;
 }
 
-.ajcc-icon-button--primary {
-  transition: opacity var(--default-transition);
-}
-
-.ajcc-icon-button--secondary {
-  border-radius: 50%;
+.ajui-icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity var(--ajui-default-transition);
   padding: 0.25rem;
-  transition: background-color var(--default-transition);
 }
 
-.ajcc-button-base:disabled {
+.ajui-button-base:disabled {
   cursor: not-allowed !important;
-  opacity: var(--disabled-opacity);
+  opacity: var(--ajui-disabled-opacity);
 }
 
-.ajcc-button--primary {
-  background-color: black;
-  box-shadow: inset 0 0 0 1px black;
-  color: white;
-  transition: opacity var(--default-transition);
+.ajui-button--primary {
+  background-color: var(--ajui-button-primary-background);
+  color: var(--ajui-button-primary-color);
+  transition: opacity var(--ajui-default-transition);
 }
 
-.ajcc-button--transparent,
-.ajcc-button--secondary {
-  box-shadow: inset 0 0 0 1px var(--moon-gray);
-  transition: box-shadow var(--default-transition);
+.ajui-button--transparent,
+.ajui-button--secondary {
+  box-shadow: inset 0 0 0 1px var(--ajui-button-secondary-border);
+  transition: box-shadow var(--ajui-default-transition);
 }
 
-.ajcc-button--secondary {
-  background-color: white;
+.ajui-button--secondary {
+  background-color: var(--ajui-button-secondary-background);
 }
 
 @media (hover: hover) {
-  .ajcc-button--primary:not([disabled]):hover,
-  .ajcc-icon-button--primary:not([disabled]):hover {
-    opacity: var(--default-opacity-dim);
+  .ajui-button--primary:not([disabled]):hover,
+  .ajui-icon-button:not([disabled]):hover {
+    opacity: var(--ajui-default-opacity-dim);
   }
 
-  .ajcc-button--transparent:not([disabled]):hover,
-  .ajcc-button--secondary:not([disabled]):hover {
-    box-shadow: inset 0 0 0 1px var(--darkest-gray);
-  }
-
-  .ajcc-icon-button--secondary:not([disabled]):hover {
-    background-color: var(--light-gray);
+  .ajui-button--transparent:not([disabled]):hover,
+  .ajui-button--secondary:not([disabled]):hover {
+    box-shadow: inset 0 0 0 1px var(--ajui-button-secondary-border-hover);
   }
 }
 
 /* Input */
-.ajcc-input-base {
+.ajui-input-base {
   outline: 0px solid transparent;
   border: none;
   background-color: inherit;
@@ -168,41 +203,70 @@ a {
   font-weight: 400;
 }
 
-.ajcc-input-base::selection {
-  background-color: var(--focus-ring);
+.ajui-input-base::selection {
+  background-color: var(--ajui-input-selection-color);
 }
 
-.ajcc-icon-input {
+.ajui-icon-input {
   display: flex;
   align-items: center;
   flex-direction: row;
 }
 
-.ajcc-input-default {
-  transition: outline var(--default-transition);
+.ajui-input-default {
+  transition: outline var(--ajui-default-transition);
   outline: 0px solid transparent;
-  box-shadow: inset 0 0 0 1px var(--moon-gray);
+  box-shadow: inset 0 0 0 1px var(--ajui-default-border);
 }
 
-.ajcc-input-default:disabled {
-  opacity: var(--disabled-opacity);
+.ajui-input-default:disabled {
+  opacity: var(--ajui-disabled-opacity);
   cursor: not-allowed;
 }
 
 /* Select */
-.ajcc-select-base {
+.ajui-select-base {
   outline: 0px solid transparent;
   border: none;
   background-color: inherit;
   padding: 0.75rem 0.5rem;
   font-size: 1rem;
   font-weight: 400;
-  transition: outline var(--default-transition);
+  transition: outline var(--ajui-default-transition);
   outline: 0px solid transparent;
-  box-shadow: inset 0 0 0 1px var(--moon-gray);
+  box-shadow: inset 0 0 0 1px var(--ajui-select-border);
 }
 
-.ajcc-select-base:disabled {
-  opacity: var(--disabled-opacity);
+.ajui-select-base:disabled {
+  opacity: var(--ajui-disabled-opacity);
   cursor: not-allowed;
+}
+
+/* Modal */
+.ajui-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--ajui-modal-backdrop-background);
+  z-index: 10000;
+}
+
+.ajui-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--ajui-default-background);
+  z-index: 10001;
+  box-shadow: inset 0 0 0 1px var(--ajui-default-border);
+  border-radius: var(--ajui-rounded-radius);
+  min-width: 50vw;
+  max-width: 90vw;
+}
+
+.ajui-modal-close {
+  font-size: 1.5rem;
+  padding: 0 0.25rem;
 }

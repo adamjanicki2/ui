@@ -30,7 +30,7 @@ const Alert = ({ type, className, corners = "rounded", ...rest }: Props) => {
   return (
     <div
       className={classNames(
-        `ajcc-alert content--${type} corners--${corners}`,
+        `ajui-alert content--${type} corners--${corners}`,
         className
       )}
       {...rest}

@@ -24,7 +24,7 @@ type Props = {
 const Banner = ({ type, className, ...rest }: Props) => {
   return (
     <div
-      className={classNames(`content--${type} ajcc-banner`, className)}
+      className={classNames(`content--${type} ajui-banner`, className)}
       {...rest}
     />
   );

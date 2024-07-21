@@ -45,7 +45,7 @@ const Select = (
   <select
     {...props}
     ref={ref}
-    className={classNames(`ajcc-select-base corners--${corners}`, className)}
+    className={classNames(`ajui-select-base corners--${corners}`, className)}
   >
     {options.map((option, index) => (
       <option key={index} value={getOptionValue(option)}>

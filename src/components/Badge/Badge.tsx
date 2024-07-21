@@ -31,7 +31,7 @@ const Badge = ({ type, className, corners = "rounded", ...rest }: Props) => {
   return (
     <div
       className={classNames(
-        `ajcc-badge content--${type} corners--${corners}`,
+        `ajui-badge content--${type} corners--${corners}`,
         className
       )}
       {...rest}
