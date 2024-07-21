@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["jest"],
+    "noUnusedLocals": false
+  },
+  "include": ["test"]
+}
