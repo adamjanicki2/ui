@@ -1,19 +1,18 @@
 import React, { forwardRef } from "react";
+import { classNames } from "../../utils/util";
 
 type BuiltinLinkProps = Omit<
   React.DetailedHTMLProps<
     React.AnchorHTMLAttributes<HTMLAnchorElement>,
     HTMLAnchorElement
   >,
-  "href" | "onClick"
+  "href"
 >;
 
 export type CustomLinkElement = (
-  props: Partial<
-    BuiltinLinkProps & {
-      to: string;
-    }
-  > & { ref?: React.Ref<HTMLAnchorElement> }
+  props: Partial<BuiltinLinkProps> & {
+    to: string;
+  } & { ref?: React.MutableRefObject<HTMLAnchorElement> }
 ) => React.ReactNode;
 
 type DefaultLinkProps = BuiltinLinkProps & {
@@ -36,6 +35,21 @@ const DefaultLinkElement: CustomLinkElement = forwardRef<
 
 export const UnstyledLink = forwardRef<HTMLAnchorElement, DefaultLinkProps>(
   ({ LinkElement = DefaultLinkElement, ...props }, ref) => (
-    <LinkElement {...props} ref={ref} />
+    <LinkElement
+      {...props}
+      ref={ref as React.MutableRefObject<HTMLAnchorElement>}
+    />
   )
 );
+
+const Link = forwardRef<HTMLAnchorElement, DefaultLinkProps>(
+  ({ className, ...props }, ref) => (
+    <UnstyledLink
+      {...props}
+      className={classNames("ajui-link-default", className)}
+      ref={ref}
+    />
+  )
+);
+
+export default Link;

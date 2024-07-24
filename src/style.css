@@ -52,6 +52,8 @@
   --ajui-static-border: #bdbdbd;
   /* Modal */
   --ajui-modal-backdrop-background: rgba(0, 0, 0, 0.5);
+  /* Link */
+  --ajui-link-color: #0070ff;
 }
 
 a:not([disabled]):is(:focus-visible),
@@ -181,9 +183,15 @@ a {
   background-color: var(--ajui-button-secondary-background);
 }
 
+.ajui-link-default {
+  color: var(--ajui-link-color);
+  transition: opacity var(--ajui-default-transition);
+}
+
 @media (hover: hover) {
   .ajui-button--primary:not([disabled]):hover,
-  .ajui-icon-button:not([disabled]):hover {
+  .ajui-icon-button:not([disabled]):hover,
+  .ajui-link-default:hover {
     opacity: var(--ajui-default-opacity-dim);
   }
 
