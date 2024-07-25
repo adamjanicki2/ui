@@ -16,14 +16,14 @@ type Props = React.DetailedHTMLProps<
    * @param option the option to get the value of
    * @returns the value of the option
    */
-  getOptionValue: (option: string) => string;
+  getOptionValue?: (option: string) => string;
   /**
    * Mapper function to get the label of the option
    *
    * @param option the option to get the label of
    * @returns the label of the option
    */
-  getOptionLabel: (option: string) => string;
+  getOptionLabel?: (option: string) => string;
   /**
    * [Optional] The corner style of the select element.
    * @default "rounded"
@@ -31,12 +31,14 @@ type Props = React.DetailedHTMLProps<
   corners?: CornerType;
 };
 
+const identity = (x: string) => x;
+
 const Select = (
   {
     className,
     options,
-    getOptionValue,
-    getOptionLabel,
+    getOptionValue = identity,
+    getOptionLabel = identity,
     corners = "rounded",
     ...props
   }: Props,
