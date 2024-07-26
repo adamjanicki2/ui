@@ -53,7 +53,7 @@
   --ajui-static-color: #424242;
   --ajui-static-border: #bdbdbd;
   /* Modal */
-  --ajui-modal-backdrop-background: rgba(0, 0, 0, 0.5);
+  --ajui-layer-backdrop-background: rgba(0, 0, 0, 0.5);
   /* Link */
   --ajui-link-color: #0070ff;
 }
@@ -78,33 +78,36 @@
   /* Select */
   --ajui-select-border: var(--ajui-dark-gray);
   /* Content types */
-  --ajui-success-background: #264d2d;
-  --ajui-success-color: #d4edda;
-  --ajui-success-border: #3e8e41;
+  --ajui-success-background: #2a5733;
+  --ajui-success-color: #d9efd8;
+  --ajui-success-border: #439e4a;
 
-  --ajui-warning-background: #665c2a;
-  --ajui-warning-color: #fff3cd;
-  --ajui-warning-border: #866f34;
+  --ajui-warning-background: #736230;
+  --ajui-warning-color: #fff6d1;
+  --ajui-warning-border: #927a3b;
 
-  --ajui-error-background: #5c2b2b;
-  --ajui-error-color: #f8d7da;
-  --ajui-error-border: #842029;
+  --ajui-error-background: #663232;
+  --ajui-error-color: #f9dadc;
+  --ajui-error-border: #8d2a2a;
 
-  --ajui-info-background: #2b4c5c;
-  --ajui-info-color: #d1ecf1;
-  --ajui-info-border: #117a8b;
+  --ajui-info-background: #335f72;
+  --ajui-info-color: #d4f1f5;
+  --ajui-info-border: #1d8ea4;
 
-  --ajui-static-background: #2a2a2a;
-  --ajui-static-color: #e0e0e0;
-  --ajui-static-border: #4d4d4d;
+  --ajui-static-background: #333333;
+  --ajui-static-color: #e5e5e5;
+  --ajui-static-border: #595959;
   /* Modal */
-  --ajui-modal-backdrop-background: rgba(0, 0, 0, 0.8);
+  --ajui-layer-backdrop-background: rgba(0, 0, 0, 0.8);
   /* Link */
   --ajui-link-color: #ffa500;
 }
 
 a:not([disabled]):is(:focus-visible),
-button:not([disabled]):is(:focus-visible),
+button:not([disabled]):is(:focus-visible) {
+  outline: 3px solid var(--ajui-link-color);
+  outline-offset: 0;
+}
 .ajui-input-default:focus-within,
 .ajui-select-base:focus-within {
   outline: 3px solid var(--ajui-focus-ring-color);
@@ -300,27 +303,25 @@ a {
 }
 
 /* Modal */
-.ajui-modal-backdrop {
+.ajui-layer-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: var(--ajui-modal-backdrop-background);
   z-index: 10000;
+  background: var(--ajui-layer-backdrop-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ajui-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background: var(--ajui-default-background);
-  z-index: 10001;
   box-shadow: inset 0 0 0 1px var(--ajui-default-border);
   border-radius: var(--ajui-rounded-radius);
-  min-width: 50vw;
-  max-width: 90vw;
+  min-width: 50%;
+  max-width: 90%;
 }
 
 .ajui-modal-close {

@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { useFocusTrap, useScrollLock } from "../../hooks";
+import React from "react";
 import { IconButton } from "../Button";
 import { classNames } from "../../utils/util";
+import Layer from "../Layer";
 
 type Props = {
   /**
    * Whether the modal is open or not
    */
-  isOpen: boolean;
+  open: boolean;
   /**
    * Callback that fires when the user clicks the close button or outside the modal
    */
@@ -27,65 +27,35 @@ type Props = {
 };
 
 const Modal = ({
-  isOpen,
+  open,
   onClose,
   children,
   className,
   style,
-}: Props): JSX.Element | null => {
-  const { lock, unlock } = useScrollLock();
-  const focusRef = useFocusTrap<HTMLDivElement>(isOpen);
-
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscape);
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, [onClose]);
-
-  useEffect(() => {
-    if (isOpen) {
-      lock();
-    } else {
-      unlock();
-    }
-  }, [isOpen, lock, unlock]);
-
-  if (!isOpen) return null;
-
-  return (
-    <>
-      <div className="ajui-modal-backdrop" onClick={onClose} />
+}: Props): JSX.Element | null => (
+  <Layer onClose={onClose} open={open}>
+    <div
+      className={classNames("ajui-modal", className)}
+      role="dialog"
+      aria-modal="true"
+      style={style}
+    >
       <div
-        className={classNames("ajui-modal", className)}
-        role="dialog"
-        aria-modal="true"
-        ref={focusRef}
-        style={style}
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
-          <IconButton
-            name="close"
-            icon="&times;"
-            onClick={onClose}
-            className="ajui-modal-close"
-          />
-        </div>
-        {children}{" "}
+        <IconButton
+          name="close"
+          icon="&times;"
+          onClick={onClose}
+          className="ajui-modal-close"
+        />
       </div>
-    </>
-  );
-};
+      {children}
+    </div>
+  </Layer>
+);
 
 export default Modal;

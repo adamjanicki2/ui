@@ -11,5 +11,6 @@ export { default as Banner } from "./components/Banner";
 export { default as Select } from "./components/Select";
 export { default as ClickOutside } from "./components/ClickOutside";
 export { default as Modal } from "./components/Modal";
+export { default as Layer } from "./components/Layer";
 // Hooks
 export * from "./hooks";
