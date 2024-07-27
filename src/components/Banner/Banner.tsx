@@ -10,7 +10,7 @@ type Props = {
   /**
    * The content to display in the banner.
    */
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
   /**
    * [Optional] Additional class names to apply to the banner.
    */

@@ -10,7 +10,7 @@ type Props = {
   /**
    * The content to display in the alert.
    */
-  children: string;
+  children: React.ReactNode | React.ReactNode[];
   /**
    * [Optional] Additional class names to apply to the alert.
    */

@@ -53,7 +53,7 @@
   --ajui-static-color: #424242;
   --ajui-static-border: #bdbdbd;
   /* Modal */
-  --ajui-layer-backdrop-background: rgba(0, 0, 0, 0.5);
+  --ajui-layer-backdrop-background: rgba(0, 0, 0, 0.25);
   /* Link */
   --ajui-link-color: #0070ff;
 }
@@ -98,7 +98,7 @@
   --ajui-static-color: #e5e5e5;
   --ajui-static-border: #595959;
   /* Modal */
-  --ajui-layer-backdrop-background: rgba(0, 0, 0, 0.8);
+  --ajui-layer-backdrop-background: rgba(0, 0, 0, 0.4);
   /* Link */
   --ajui-link-color: #ffa500;
 }
@@ -220,6 +220,7 @@ a {
 .ajui-button--primary {
   background-color: var(--ajui-button-primary-background);
   color: var(--ajui-button-primary-color);
+  fill: var(--ajui-button-primary-color);
   transition: opacity var(--ajui-default-transition);
 }
 
@@ -239,14 +240,14 @@ a {
 }
 
 @media (hover: hover) {
-  .ajui-button--primary:not([disabled]):is(:hover, :focus-within),
-  .ajui-icon-button:not([disabled]):is(:hover, :focus-within),
-  .ajui-link-default:is(:hover, :focus-within) {
+  .ajui-button--primary:not([disabled]):is(:hover, :focus-visible),
+  .ajui-icon-button:not([disabled]):is(:hover, :focus-visible),
+  .ajui-link-default:is(:hover, :focus-visible) {
     opacity: var(--ajui-default-opacity-dim);
   }
 
-  .ajui-button--transparent:not([disabled]):is(:hover, :focus-within),
-  .ajui-button--secondary:not([disabled]):is(:hover, :focus-within) {
+  .ajui-button--transparent:not([disabled]):is(:hover, :focus-visible),
+  .ajui-button--secondary:not([disabled]):is(:hover, :focus-visible) {
     box-shadow: inset 0 0 0 1px var(--ajui-button-secondary-border-hover);
   }
 }
