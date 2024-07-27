@@ -192,7 +192,6 @@ a {
 .ajui-button-base {
   background: none;
   color: inherit;
-  fill: inherit;
   border: none;
   padding: 0;
   cursor: pointer;
@@ -220,7 +219,6 @@ a {
 .ajui-button--primary {
   background-color: var(--ajui-button-primary-background);
   color: var(--ajui-button-primary-color);
-  fill: var(--ajui-button-primary-color);
   transition: opacity var(--ajui-default-transition);
 }
 
@@ -328,4 +326,20 @@ a {
 .ajui-modal-close {
   font-size: 1.5rem;
   padding: 0 0.25rem;
+}
+
+/* Spinner */
+.ajui-spinner {
+  animation: ajui-spinner-animation 1s linear infinite;
+  transform-origin: center;
+  height: 1.5rem;
+}
+
+@keyframes ajui-spinner-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
