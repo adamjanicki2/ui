@@ -6,7 +6,7 @@ const focusableElementsString =
 /**
  * A hook for trapping focus within an element.
  *
- * @param isActive true if an element is active, false otherwise
+ * @param isActive true if the element is active, false otherwise
  * @returns ref object that must be passed to the element that should be trapped
  */
 const useFocusTrap = <T extends HTMLElement>(isActive: boolean) => {

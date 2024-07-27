@@ -49,9 +49,9 @@
   --ajui-info-color: #0d47a1;
   --ajui-info-border: #90caf9;
 
-  --ajui-static-background: #f5f5f5;
-  --ajui-static-color: #424242;
-  --ajui-static-border: #bdbdbd;
+  --ajui-static-background: #e8e8e8;
+  --ajui-static-color: var(--ajui-default-color);
+  --ajui-static-border: var(--ajui-default-border);
   /* Modal */
   --ajui-layer-backdrop-background: rgba(0, 0, 0, 0.25);
   /* Link */
@@ -94,9 +94,9 @@
   --ajui-info-color: #d4f1f5;
   --ajui-info-border: #1d8ea4;
 
-  --ajui-static-background: #333333;
-  --ajui-static-color: #e5e5e5;
-  --ajui-static-border: #595959;
+  --ajui-static-background: var(--ajui-darkest-gray);
+  --ajui-static-color: var(--ajui-default-color);
+  --ajui-static-border: var(--ajui-default-border);
   /* Modal */
   --ajui-layer-backdrop-background: rgba(0, 0, 0, 0.4);
   /* Link */

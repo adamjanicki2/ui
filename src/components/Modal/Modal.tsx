@@ -32,30 +32,31 @@ const Modal = ({
   children,
   className,
   style,
-}: Props): JSX.Element | null => (
-  <Layer onClose={onClose} open={open}>
-    <div
-      className={classNames("ajui-modal", className)}
-      role="dialog"
-      aria-modal="true"
-      style={style}
-    >
+}: Props): JSX.Element | null =>
+  open ? (
+    <Layer onClose={onClose}>
       <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-        }}
+        className={classNames("ajui-modal", className)}
+        role="dialog"
+        aria-modal="true"
+        style={style}
       >
-        <IconButton
-          name="close"
-          icon="&times;"
-          onClick={onClose}
-          className="ajui-modal-close"
-        />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <IconButton
+            name="close"
+            icon="&times;"
+            onClick={onClose}
+            className="ajui-modal-close"
+          />
+        </div>
+        {children}
       </div>
-      {children}
-    </div>
-  </Layer>
-);
+    </Layer>
+  ) : null;
 
 export default Modal;

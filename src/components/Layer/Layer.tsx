@@ -4,10 +4,6 @@ import { classNames } from "../../utils/util";
 
 type Props = {
   /**
-   * Whether the layer is open or not
-   */
-  open: boolean;
-  /**
    * Callback that fires when the user clicks outside the layer
    */
   onClose: () => void;
@@ -24,17 +20,22 @@ type Props = {
    * [Optional] Additional styles
    */
   backdropStyle?: React.CSSProperties;
+  /**
+   * [Optional] Whether to disable the escape key to close the layer
+   * @default false
+   */
+  disableEscape?: boolean;
 };
 
-const Modal = ({
-  open,
+const Layer = ({
   onClose,
   children,
   backdropStyle = {},
   backdropClassName,
+  disableEscape = false,
 }: Props): JSX.Element | null => {
   const { lock, unlock } = useScrollLock();
-  const focusRef = useFocusTrap<HTMLElement>(open);
+  const focusRef = useFocusTrap<HTMLElement>(true);
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -43,18 +44,18 @@ const Modal = ({
       }
     };
 
-    document.addEventListener("keydown", handleEscape);
+    if (!disableEscape) document.addEventListener("keydown", handleEscape);
     return () => {
-      document.removeEventListener("keydown", handleEscape);
+      if (!disableEscape) document.removeEventListener("keydown", handleEscape);
     };
-  }, [onClose]);
+  }, [onClose, disableEscape]);
 
   useEffect(() => {
-    if (open) lock();
-    else unlock();
-  }, [open, lock, unlock]);
+    lock();
+    return unlock;
+  }, [lock, unlock]);
 
-  return open ? (
+  return (
     <div
       className={classNames("ajui-layer-backdrop", backdropClassName)}
       style={backdropStyle}
@@ -68,7 +69,7 @@ const Modal = ({
         },
       })}
     </div>
-  ) : null;
+  );
 };
 
-export default Modal;
+export default Layer;

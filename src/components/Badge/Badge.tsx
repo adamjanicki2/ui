@@ -22,7 +22,7 @@ type Props = {
   style?: React.CSSProperties;
   /**
    * [Optional] The corner style of the badge.
-   * @default "pill"
+   * @default "rounded"
    */
   corners?: CornerType;
 };
