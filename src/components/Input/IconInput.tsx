@@ -30,7 +30,7 @@ type IconInputProps = {
   inputProps?: Omit<InputProps, "corners">;
 };
 
-const IconInput = forwardRef<HTMLInputElement, IconInputProps>(
+const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
   (
     { startIcon, endIcon, className, style, corners = "rounded", inputProps },
     ref
@@ -41,11 +41,11 @@ const IconInput = forwardRef<HTMLInputElement, IconInputProps>(
         className
       )}
       style={style}
+      ref={ref}
     >
       {startIcon || null}
       <input
         {...inputProps}
-        ref={ref}
         className={classNames(
           `ajui-input-base corners--${corners}`,
           inputProps?.className

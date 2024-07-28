@@ -100,7 +100,7 @@
   /* Modal */
   --ajui-layer-backdrop-background: rgba(0, 0, 0, 0.4);
   /* Link */
-  --ajui-link-color: #ffa500;
+  --ajui-link-color: #009ef3;
 }
 
 a:not([disabled]):is(:focus-visible),
@@ -269,6 +269,12 @@ a {
   display: flex;
   align-items: center;
   flex-direction: row;
+  overflow: scroll;
+}
+
+.ajui-icon-input input {
+  background-color: transparent;
+  width: 100%;
 }
 
 .ajui-input-default {

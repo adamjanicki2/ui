@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import { CornerType } from "../../utils/types";
 import { classNames } from "../../utils/util";
 
-export type InputProps = React.DetailedHTMLProps<
+type Props = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 > & {
@@ -13,7 +13,7 @@ export type InputProps = React.DetailedHTMLProps<
   corners?: CornerType;
 };
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+const Input = forwardRef<HTMLInputElement, Props>(
   ({ className, corners = "rounded", ...props }, ref) => (
     <input
       {...props}
@@ -25,5 +25,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     />
   )
 );
+
+export type InputProps = React.ComponentProps<typeof Input>;
 
 export default Input;
