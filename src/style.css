@@ -103,8 +103,12 @@
   --ajui-link-color: #009ef3;
 }
 
-a:not([disabled]):is(:focus-visible),
-button:not([disabled]):is(:focus-visible) {
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+a:not([disabled]):focus-visible,
+button:not([disabled]):focus-visible {
   outline: 3px solid var(--ajui-link-color);
   outline-offset: 0;
 }
