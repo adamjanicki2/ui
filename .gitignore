@@ -1,0 +1,19 @@
+# Ignore everything
+*
+
+# Include specific directories
+!src/
+!src/**/*
+!test/
+!test/**/*
+
+# Include specific files
+!.eslintrc.json
+!package.json
+!README.md
+!LICENSE
+!jest.config.js
+!.npmignore
+!clean.sh
+!tsconfig*
+!.gitignore
