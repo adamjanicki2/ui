@@ -21,13 +21,14 @@ type Props = {
   style?: React.CSSProperties;
 };
 
-const Banner = ({ type, className, ...rest }: Props) => {
-  return (
+const Banner = React.forwardRef<HTMLDivElement, Props>(
+  ({ type, className, ...rest }, ref) => (
     <div
       className={classNames(`content--${type} ajui-banner`, className)}
+      ref={ref}
       {...rest}
     />
-  );
-};
+  )
+);
 
 export default Banner;

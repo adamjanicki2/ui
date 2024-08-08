@@ -26,16 +26,17 @@ type Props = {
   corners?: CornerType;
 };
 
-const Alert = ({ type, className, corners = "rounded", ...rest }: Props) => {
-  return (
+const Alert = React.forwardRef<HTMLDivElement, Props>(
+  ({ type, className, corners = "rounded", ...rest }, ref) => (
     <div
       className={classNames(
         `ajui-alert content--${type} corners--${corners}`,
         className
       )}
+      ref={ref}
       {...rest}
     />
-  );
-};
+  )
+);
 
 export default Alert;

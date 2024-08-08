@@ -175,6 +175,7 @@ button:not([disabled]):focus-visible {
   border-width: 1px;
   font-weight: 600;
   font-size: 0.875rem;
+  width: fit-content;
 }
 
 /* Banner */

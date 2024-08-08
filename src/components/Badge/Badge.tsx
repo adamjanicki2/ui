@@ -27,16 +27,17 @@ type Props = {
   corners?: CornerType;
 };
 
-const Badge = ({ type, className, corners = "rounded", ...rest }: Props) => {
-  return (
+const Badge = React.forwardRef<HTMLDivElement, Props>(
+  ({ type, className, corners = "rounded", ...rest }, ref) => (
     <div
       className={classNames(
         `ajui-badge content--${type} corners--${corners}`,
         className
       )}
+      ref={ref}
       {...rest}
     />
-  );
-};
+  )
+);
 
 export default Badge;
