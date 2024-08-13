@@ -20,11 +20,11 @@ type DefaultButtonProps = React.DetailedHTMLProps<
   LinkElement?: CustomLinkElement;
 };
 
-type IconButtonProps = Omit<DefaultButtonProps, "children"> & {
+type IconButtonProps = Omit<DefaultButtonProps, "children" | "aria-label"> & {
   /**
    * Name of the button for accessibility purposes
    */
-  name: string;
+  "aria-label": string;
   /**
    * Icon to display inside the button
    * I would usually use FontAwesome, but for added flexibility, it's any node
@@ -65,10 +65,9 @@ export const UnstyledButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
 );
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ name, icon, className, ...props }, ref) => (
+  ({ icon, className, ...props }, ref) => (
     <UnstyledButton
       {...props}
-      aria-label={name}
       className={classNames("ajui-icon-button", className)}
       ref={ref}
     >

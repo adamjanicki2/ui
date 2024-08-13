@@ -2,9 +2,12 @@ import React, { forwardRef } from "react";
 import { classNames } from "../../utils/util";
 import { CornerType } from "../../utils/types";
 
-type Props = React.DetailedHTMLProps<
-  React.SelectHTMLAttributes<HTMLSelectElement>,
-  HTMLSelectElement
+type Props = Omit<
+  React.DetailedHTMLProps<
+    React.SelectHTMLAttributes<HTMLSelectElement>,
+    HTMLSelectElement
+  >,
+  "aria-label"
 > & {
   /**
    * Array of options to display in the select
@@ -30,9 +33,9 @@ type Props = React.DetailedHTMLProps<
    */
   corners?: CornerType;
   /**
-   * Name of the select element for accessibility purposes
+   * Name of the select for accessibility purposes
    */
-  name: string;
+  "aria-label": string;
 };
 
 const identity = (x: string) => x;
@@ -44,7 +47,6 @@ const Select = (
     getOptionValue = identity,
     getOptionLabel = identity,
     corners = "rounded",
-    name,
     ...props
   }: Props,
   ref: React.Ref<HTMLSelectElement>
@@ -53,7 +55,6 @@ const Select = (
     {...props}
     ref={ref}
     className={classNames(`ajui-select-base corners--${corners}`, className)}
-    aria-label={name}
   >
     {options.map((option, index) => (
       <option key={index} value={getOptionValue(option)}>
