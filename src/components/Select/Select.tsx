@@ -29,6 +29,10 @@ type Props = React.DetailedHTMLProps<
    * @default "rounded"
    */
   corners?: CornerType;
+  /**
+   * Name of the select element for accessibility purposes
+   */
+  name: string;
 };
 
 const identity = (x: string) => x;
@@ -40,6 +44,7 @@ const Select = (
     getOptionValue = identity,
     getOptionLabel = identity,
     corners = "rounded",
+    name,
     ...props
   }: Props,
   ref: React.Ref<HTMLSelectElement>
@@ -48,6 +53,7 @@ const Select = (
     {...props}
     ref={ref}
     className={classNames(`ajui-select-base corners--${corners}`, className)}
+    aria-label={name}
   >
     {options.map((option, index) => (
       <option key={index} value={getOptionValue(option)}>
