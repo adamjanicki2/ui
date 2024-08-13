@@ -48,7 +48,7 @@ const Modal = ({
           }}
         >
           <IconButton
-            name="close"
+            aria-label="close"
             icon="&times;"
             onClick={onClose}
             className="ajui-modal-close"

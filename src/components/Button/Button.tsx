@@ -57,6 +57,8 @@ export const UnstyledButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
           role="button"
           children={props.children}
           LinkElement={LinkElement}
+          // accessibility props
+          aria-label={props["aria-label"]}
         />
       );
     }
