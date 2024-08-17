@@ -112,8 +112,8 @@ button:not([disabled]):focus-visible {
   outline: 3px solid var(--ajui-link-color);
   outline-offset: 0;
 }
-.ajui-input-default:focus-within,
-.ajui-select-base:focus-within {
+.ajui-input-default:not([disabled]):focus-within,
+.ajui-select-base:not([disabled]):focus-within {
   outline: 3px solid var(--ajui-focus-ring-color);
   outline-offset: 0;
 }
@@ -294,22 +294,42 @@ a {
 }
 
 /* Select */
+.ajui-select-container {
+  position: relative;
+  padding: 0;
+  width: fit-content;
+}
+
+.ajui-select-disabled {
+  opacity: var(--ajui-disabled-opacity);
+  cursor: not-allowed;
+}
+
 .ajui-select-base {
+  width: 100%;
   color: inherit;
   outline: 0px solid transparent;
   border: none;
   background-color: inherit;
-  padding: 0.75rem 0.5rem;
+  padding: 0.75rem 1.75rem 0.75rem 0.5rem;
   font-size: 1rem;
   font-weight: 400;
   transition: outline var(--ajui-default-transition);
   outline: 0px solid transparent;
   box-shadow: inset 0 0 0 1px var(--ajui-select-border);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
-.ajui-select-base:disabled {
-  opacity: var(--ajui-disabled-opacity);
-  cursor: not-allowed;
+.ajui-select-triangle {
+  --size: 0.75rem;
+  width: var(--size);
+  height: var(--size);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: calc(var(--size) - 0.25rem);
 }
 
 /* Modal */
