@@ -12,7 +12,7 @@ type ScrollLock = {
 };
 
 /**
- * Hook to lock and unlock the scroll position
+ * Hook to lock and unlock the scroll position.
  * @returns Object with lock and unlock functions to lock and unlock the scroll position
  */
 const useScrollLock = (): ScrollLock => {
