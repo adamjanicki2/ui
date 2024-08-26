@@ -19,11 +19,9 @@ const useFocusTrap = <T extends HTMLElement>(isActive: boolean) => {
       focusableElementsString
     );
 
-    if (!focusableElements.length) return;
-
-    const firstFocusableElement = focusableElements[0];
+    const firstFocusableElement = focusableElements[0] || trapRef.current;
     const lastFocusableElement =
-      focusableElements[focusableElements.length - 1];
+      focusableElements[focusableElements.length - 1] || trapRef.current;
 
     const trapFocus = (event: KeyboardEvent) => {
       if (event.key !== "Tab") return;
@@ -31,25 +29,21 @@ const useFocusTrap = <T extends HTMLElement>(isActive: boolean) => {
       if (event.shiftKey) {
         // Shift + Tab
         if (document.activeElement === firstFocusableElement) {
-          lastFocusableElement.focus();
-          event.preventDefault();
+          lastFocusableElement?.focus();
         }
       } else {
         // Tab
         if (document.activeElement === lastFocusableElement) {
-          firstFocusableElement.focus();
-          event.preventDefault();
+          firstFocusableElement?.focus();
         }
       }
+      event.preventDefault();
     };
+
+    firstFocusableElement?.focus();
 
     document.addEventListener("keydown", trapFocus);
-
-    firstFocusableElement.focus();
-
-    return () => {
-      document.removeEventListener("keydown", trapFocus);
-    };
+    return () => document.removeEventListener("keydown", trapFocus);
   }, [isActive]);
 
   return trapRef;

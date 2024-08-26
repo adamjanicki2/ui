@@ -6,7 +6,7 @@ type Props = {
   /**
    * Callback that fires when the user clicks outside the layer
    */
-  onClose: () => void;
+  onClose?: () => void;
   /**
    * The child of the layer.
    * IMPORTANT: the child must be able to accept a ref
@@ -15,11 +15,11 @@ type Props = {
   /**
    * [Optional] Additional class name
    */
-  backdropClassName?: string;
+  className?: string;
   /**
    * [Optional] Additional styles
    */
-  backdropStyle?: React.CSSProperties;
+  style?: React.CSSProperties;
   /**
    * [Optional] Whether to disable the escape key to close the layer
    * @default false
@@ -30,8 +30,8 @@ type Props = {
 const Layer = ({
   onClose,
   children,
-  backdropStyle = {},
-  backdropClassName,
+  style,
+  className,
   disableEscape = false,
 }: Props): JSX.Element | null => {
   const { lock, unlock } = useScrollLock();
@@ -40,7 +40,7 @@ const Layer = ({
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        onClose();
+        onClose?.();
       }
     };
 
@@ -57,8 +57,8 @@ const Layer = ({
 
   return (
     <div
-      className={classNames("ajui-layer-backdrop", backdropClassName)}
-      style={backdropStyle}
+      className={classNames("ajui-layer-backdrop", className)}
+      style={style}
       onClick={onClose}
     >
       {React.cloneElement(children, {
