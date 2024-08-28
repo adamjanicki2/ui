@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useFocusTrap, useScrollLock } from "../../hooks";
 import { classNames } from "../../utils/util";
 
-type Props = {
+type LayerProps = {
   /**
    * Callback that fires when the user clicks outside the layer
    */
@@ -27,13 +27,27 @@ type Props = {
   disableEscape?: boolean;
 };
 
+type AnimatedLayerProps = LayerProps & {
+  /**
+   * [Optional] Config for visibility, including styles and class names
+   * Set the `transition` property on the `style` prop to animate the layer
+   */
+  visibility: {
+    visible: boolean;
+    invisibleStyle?: React.CSSProperties;
+    visibleStyle?: React.CSSProperties;
+    invisibleClassName?: string;
+    visibleClassName?: string;
+  };
+};
+
 const Layer = ({
   onClose,
   children,
   style,
   className,
   disableEscape = false,
-}: Props): JSX.Element | null => {
+}: LayerProps): JSX.Element => {
   const { lock, unlock } = useScrollLock();
   const focusRef = useFocusTrap<HTMLElement>(true);
 
@@ -70,6 +84,39 @@ const Layer = ({
       })}
     </div>
   );
+};
+
+const defaultInvisibleStyle = {
+  zIndex: -1,
+  opacity: 0,
+  pointerEvents: "none",
+  userSelect: "none",
+};
+
+const defaultVisibleStyle = { opacity: 1 };
+
+export const AnimatedLayer = ({
+  visibility,
+  className,
+  style = {},
+  ...props
+}: AnimatedLayerProps): JSX.Element => {
+  const {
+    visible,
+    invisibleStyle = defaultInvisibleStyle,
+    visibleStyle = defaultVisibleStyle,
+    invisibleClassName,
+    visibleClassName,
+  } = visibility;
+  const mergedStyle = {
+    ...style,
+    ...(visible ? visibleStyle : invisibleStyle),
+  };
+  const mergedClassName = classNames(
+    className,
+    visible ? visibleClassName : invisibleClassName
+  );
+  return <Layer {...props} style={mergedStyle} className={mergedClassName} />;
 };
 
 export default Layer;

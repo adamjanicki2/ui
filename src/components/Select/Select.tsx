@@ -55,7 +55,7 @@ const Select = (
     getOptionValue = identity,
     getOptionLabel = identity,
     corners = "rounded",
-    style = {},
+    style,
     innerStyle,
     innerClassName,
     disabled,
@@ -71,6 +71,7 @@ const Select = (
         className
       ) || undefined
     }
+    style={style}
   >
     <select
       {...props}

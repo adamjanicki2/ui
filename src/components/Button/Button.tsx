@@ -55,11 +55,12 @@ export const UnstyledButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
           className={className}
           style={props.style}
           role="button"
-          children={props.children}
           LinkElement={LinkElement}
           // accessibility props
           aria-label={props["aria-label"]}
-        />
+        >
+          {props.children}
+        </UnstyledLink>
       );
     }
     return <button {...props} className={className} ref={ref} />;

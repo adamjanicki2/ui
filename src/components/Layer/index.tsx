@@ -1,2 +1,3 @@
-import Layer from "./Layer";
+import Layer, { AnimatedLayer } from "./Layer";
+export { AnimatedLayer };
 export default Layer;

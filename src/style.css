@@ -53,7 +53,7 @@
   --ajui-static-color: var(--ajui-default-color);
   --ajui-static-border: var(--ajui-default-border);
   /* Layer */
-  --ajui-layer-backdrop-background: rgba(200, 200, 200, 0.6);
+  --ajui-layer-backdrop-background: rgba(200, 200, 200, 0.7);
   /* Link */
   --ajui-link-color: #0070ff;
 }
@@ -98,7 +98,7 @@
   --ajui-static-color: var(--ajui-default-color);
   --ajui-static-border: var(--ajui-default-border);
   /* Layer */
-  --ajui-layer-backdrop-background: rgba(40, 40, 40, 0.6);
+  --ajui-layer-backdrop-background: rgba(55, 55, 55, 0.7);
   /* Link */
   --ajui-link-color: #009ef3;
 }
