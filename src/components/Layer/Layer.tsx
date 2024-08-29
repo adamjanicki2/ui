@@ -41,15 +41,15 @@ type AnimatedLayerProps = LayerProps & {
   };
 };
 
-const Layer = ({
+const BaseLayer = ({
   onClose,
   children,
   style,
   className,
   disableEscape = false,
-}: LayerProps): JSX.Element => {
-  const { lock, unlock } = useScrollLock();
-  const focusRef = useFocusTrap<HTMLElement>(true);
+  visible,
+}: LayerProps & { visible: boolean }): JSX.Element => {
+  const focusRef = useFocusTrap<HTMLElement>(visible);
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -63,11 +63,6 @@ const Layer = ({
       if (!disableEscape) document.removeEventListener("keydown", handleEscape);
     };
   }, [onClose, disableEscape]);
-
-  useEffect(() => {
-    lock();
-    return unlock;
-  }, [lock, unlock]);
 
   return (
     <div
@@ -86,11 +81,16 @@ const Layer = ({
   );
 };
 
+const Layer = (props: LayerProps): JSX.Element => {
+  // Lock and unlock on mount and unmount
+  useScrollLock();
+
+  return <BaseLayer {...props} visible />;
+};
+
 const defaultInvisibleStyle = {
-  zIndex: -1,
+  visibility: "hidden",
   opacity: 0,
-  pointerEvents: "none",
-  userSelect: "none",
 };
 
 const defaultVisibleStyle = { opacity: 1 };
@@ -108,6 +108,10 @@ export const AnimatedLayer = ({
     invisibleClassName,
     visibleClassName,
   } = visibility;
+
+  // lock and unlock on visibility change
+  useScrollLock(visible);
+
   const mergedStyle = {
     ...style,
     ...(visible ? visibleStyle : invisibleStyle),
@@ -116,7 +120,14 @@ export const AnimatedLayer = ({
     className,
     visible ? visibleClassName : invisibleClassName
   );
-  return <Layer {...props} style={mergedStyle} className={mergedClassName} />;
+  return (
+    <BaseLayer
+      {...props}
+      style={mergedStyle}
+      className={mergedClassName}
+      visible={visible}
+    />
+  );
 };
 
 export default Layer;
