@@ -37,7 +37,18 @@ type Props = {
      */
     style?: React.CSSProperties;
   };
-  children: React.ReactNode;
+  /**
+   * Children to render
+   */
+  children: React.ReactNode | React.ReactNode[];
+  /**
+   * [Optional] className to apply to the component always
+   */
+  className?: string;
+  /**
+   * [Optional] Inline styles to apply to the component always
+   */
+  style?: React.CSSProperties;
 };
 
 const Animated = ({
@@ -47,6 +58,8 @@ const Animated = ({
   enter,
   exit,
   children,
+  className,
+  style,
 }: Props) => {
   const [shouldRender, setShouldRender] = useState(visible);
   const [animationState, setAnimationState] = useState<"entering" | "exiting">(
@@ -76,9 +89,11 @@ const Animated = ({
   return (
     <div
       className={classNames(
+        className,
         animationState === "entering" ? enter?.className : exit?.className
       )}
       style={{
+        ...style,
         ...(animationState === "entering" ? enter?.style : exit?.style),
         transition: `all ${duration}ms ease-in-out`,
       }}
