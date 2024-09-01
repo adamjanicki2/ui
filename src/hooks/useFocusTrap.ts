@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const focusableElementsString =
   'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
@@ -11,6 +11,9 @@ const focusableElementsString =
  */
 const useFocusTrap = <T extends HTMLElement>(isActive: boolean) => {
   const trapRef = useRef<T | null>(null);
+  const [currentIndex, setCurrentIndex] = useState<number | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     if (!isActive || !trapRef.current) return;
@@ -19,32 +22,34 @@ const useFocusTrap = <T extends HTMLElement>(isActive: boolean) => {
       focusableElementsString
     );
 
-    const firstFocusableElement = focusableElements[0] || trapRef.current;
-    const lastFocusableElement =
-      focusableElements[focusableElements.length - 1] || trapRef.current;
-
     const trapFocus = (event: KeyboardEvent) => {
       if (event.key !== "Tab") return;
 
+      event.preventDefault();
+
+      if (focusableElements.length === 0) return;
+
+      let newIndex = currentIndex;
+
       if (event.shiftKey) {
         // Shift + Tab
-        if (document.activeElement === firstFocusableElement) {
-          lastFocusableElement?.focus();
-        }
+        newIndex =
+          ((currentIndex ?? 0) - 1 + focusableElements.length) %
+          focusableElements.length;
       } else {
         // Tab
-        if (document.activeElement === lastFocusableElement) {
-          firstFocusableElement?.focus();
-        }
+        newIndex = ((currentIndex ?? -1) + 1) % focusableElements.length;
       }
-      event.preventDefault();
+
+      focusableElements[newIndex]?.focus();
+      setCurrentIndex(newIndex);
     };
 
-    firstFocusableElement?.focus();
-
     document.addEventListener("keydown", trapFocus);
-    return () => document.removeEventListener("keydown", trapFocus);
-  }, [isActive]);
+    return () => {
+      document.removeEventListener("keydown", trapFocus);
+    };
+  }, [isActive, currentIndex]);
 
   return trapRef;
 };
