@@ -54,13 +54,13 @@ const BaseLayer = ({
     <div
       className={classNames("ajui-layer-backdrop", className)}
       style={style}
-      onClick={onClose}
+      onMouseDown={onClose}
     >
       {React.cloneElement(children, {
         ref: focusRef,
-        onClick: (e: React.SyntheticEvent) => {
+        onMouseDown: (e: React.SyntheticEvent) => {
           e.stopPropagation();
-          children.props.onClick?.(e);
+          children.props.onMouseDown?.(e);
         },
       })}
     </div>

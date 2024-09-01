@@ -1,55 +1,66 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useCallback } from "react";
 
-const focusableElementsString =
+const selector =
   'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
 
 /**
  * A hook for trapping focus within an element.
  *
  * @param isActive true if the element is active, false otherwise
+ * `true` by default
  * @returns ref object that must be passed to the element that should be trapped
  */
-const useFocusTrap = <T extends HTMLElement>(isActive: boolean) => {
+const useFocusTrap = <T extends HTMLElement>(isActive = true) => {
   const trapRef = useRef<T | null>(null);
-  const [currentIndex, setCurrentIndex] = useState<number | undefined>(
-    undefined
-  );
+  const focusableElements = useRef<NodeListOf<T> | null>(null);
+
+  const updateFocusableElements = useCallback(() => {
+    if (trapRef.current) {
+      focusableElements.current = trapRef.current.querySelectorAll<T>(selector);
+    }
+  }, []);
 
   useEffect(() => {
     if (!isActive || !trapRef.current) return;
 
-    const focusableElements = trapRef.current.querySelectorAll<T>(
-      focusableElementsString
-    );
+    updateFocusableElements();
 
-    const trapFocus = (event: KeyboardEvent) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Tab") return;
-
-      event.preventDefault();
-
-      if (focusableElements.length === 0) return;
-
-      let newIndex = currentIndex;
-
-      if (event.shiftKey) {
-        // Shift + Tab
-        newIndex =
-          ((currentIndex ?? 0) - 1 + focusableElements.length) %
-          focusableElements.length;
-      } else {
-        // Tab
-        newIndex = ((currentIndex ?? -1) + 1) % focusableElements.length;
+      if (
+        !focusableElements.current ||
+        focusableElements.current.length === 0
+      ) {
+        return event.preventDefault();
       }
 
-      focusableElements[newIndex]?.focus();
-      setCurrentIndex(newIndex);
+      const { activeElement } = document;
+      const firstEl = focusableElements.current[0];
+      const lastEl =
+        focusableElements.current[focusableElements.current.length - 1];
+
+      if (event.shiftKey && activeElement === firstEl) {
+        lastEl.focus();
+        event.preventDefault();
+      } else if (!event.shiftKey && activeElement === lastEl) {
+        firstEl.focus();
+        event.preventDefault();
+      } else if (!trapRef.current?.contains(activeElement as Node)) {
+        (event.shiftKey ? lastEl : firstEl).focus();
+        event.preventDefault();
+      }
     };
 
-    document.addEventListener("keydown", trapFocus);
+    const observer = new MutationObserver(updateFocusableElements);
+    observer.observe(trapRef.current, { childList: true, subtree: true });
+
+    document.addEventListener("keydown", handleKeyDown);
+
     return () => {
-      document.removeEventListener("keydown", trapFocus);
+      document.removeEventListener("keydown", handleKeyDown);
+      observer.disconnect();
     };
-  }, [isActive, currentIndex]);
+  }, [isActive, updateFocusableElements]);
 
   return trapRef;
 };
