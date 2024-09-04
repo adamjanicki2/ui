@@ -6,6 +6,11 @@
 !src/**/*
 !test/
 !test/**/*
+!site/
+!site/**/*
+site/node_modules
+site/package-lock.json
+site/build
 
 # Include specific files
 !.eslintrc.json
