@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { classNames } from "../../utils/util";
+import classNames from "../../functions/classNames";
 
 type Props = {
   /**

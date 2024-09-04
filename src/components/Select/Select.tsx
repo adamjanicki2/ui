@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
-import { classNames } from "../../utils/util";
-import { CornerType } from "../../utils/types";
+import classNames from "../../functions/classNames";
+import { CornerType } from "../../types";
 
 type Props = Omit<
   React.DetailedHTMLProps<

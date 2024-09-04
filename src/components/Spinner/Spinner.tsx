@@ -1,5 +1,5 @@
 import React from "react";
-import { classNames } from "../../utils/util";
+import classNames from "../../functions/classNames";
 
 type Props = {
   /**

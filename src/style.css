@@ -302,7 +302,7 @@ a {
 
 .ajui-select-disabled {
   opacity: var(--ajui-disabled-opacity);
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 }
 
 .ajui-select-base {
@@ -310,6 +310,7 @@ a {
   color: inherit;
   outline: 0px solid transparent;
   border: none;
+  cursor: pointer;
   background-color: inherit;
   padding: 0.75rem 1.75rem 0.75rem 0.5rem;
   font-size: 1rem;

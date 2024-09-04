@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { classNames } from "../../utils/util";
+import classNames from "../../functions/classNames";
 
 type BuiltinLinkProps = Omit<
   React.DetailedHTMLProps<

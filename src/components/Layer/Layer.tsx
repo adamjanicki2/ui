@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useFocusTrap, useScrollLock } from "../../hooks";
-import { classNames } from "../../utils/util";
+import classNames from "../../functions/classNames";
 
 type LayerProps = {
   /**
