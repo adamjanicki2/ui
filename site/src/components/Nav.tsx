@@ -19,12 +19,9 @@ const Nav = () => {
   );
 
   return (
-    <nav
-      className="flex items-center justify-between w-100 nav pv2 ph4"
-      id="top"
-    >
+    <nav className="flex items-center justify-between w-100 nav pv2 ph4">
       <div className="flex items-center justify-between bar-container">
-        <UnstyledLink className="nav-title" to="#top">
+        <UnstyledLink className="nav-title" to="#welcome">
           @adamjanicki/ui
         </UnstyledLink>
         <div className="mobile">
@@ -41,7 +38,10 @@ const Nav = () => {
         className="flex items-center desktop link-container ma0"
         style={{ display: open ? "flex" : undefined }}
       >
-        <Navlink to="#top">Docs</Navlink>
+        <Navlink to="#welcome">Welcome</Navlink>
+        <Navlink to="#components">Components</Navlink>
+        <Navlink to="#hooks">Hooks</Navlink>
+        <Navlink to="#functions">Functions</Navlink>
       </ul>
     </nav>
   );
