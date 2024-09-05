@@ -4,7 +4,6 @@
   "homepage": "https://adamjanicki.xyz/ui",
   "private": true,
   "dependencies": {
-    "@adamjanicki/ui": "latest",
     "hamburger-react": "^2.5.0",
     "react": ">=18",
     "react-dom": ">=18",

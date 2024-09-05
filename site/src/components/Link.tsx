@@ -1,7 +1,4 @@
-import {
-  Link as UILink,
-  UnstyledLink as UIUnstyledLink,
-} from "@adamjanicki/ui";
+import { Link as UILink, UnstyledLink as UIUnstyledLink } from "src/lib";
 import { Link as RouterLink } from "react-router-dom";
 
 type Props = React.ComponentProps<typeof UILink>;

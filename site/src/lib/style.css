@@ -1,0 +1,364 @@
+/* General styles */
+:root {
+  /* General colors */
+  --ajui-light-gray: #eee;
+  --ajui-moon-gray: #ccc;
+  --ajui-dark-gray: #555;
+  --ajui-darkest-gray: #333;
+  --ajui-obsidian: #121212;
+  --ajui-focus-ring-color: #b2dbfa;
+  --ajui-default-color: #111;
+  --ajui-default-background: white;
+  --ajui-default-border: var(--ajui-moon-gray);
+  /* General values */
+  --ajui-disabled-opacity: 0.5;
+  --ajui-default-transition: 0.25s ease-in-out;
+  --ajui-default-opacity-dim: 0.75;
+  /* Corners */
+  --ajui-sharp-radius: 0;
+  --ajui-rounded-radius: 0.5rem;
+  --ajui-pill-radius: 9999px;
+  --ajui-circle-radius: 50%;
+  /* Buttons */
+  --ajui-button-primary-background: black;
+  --ajui-button-primary-color: white;
+  --ajui-button-secondary-background: white;
+  --ajui-button-secondary-color: #111;
+  --ajui-button-secondary-border: var(--ajui-moon-gray);
+  --ajui-button-transparent-background: transparent;
+  --ajui-button-secondary-border-hover: var(--ajui-darkest-gray);
+  /* Input */
+  --ajui-input-selection-color: var(--ajui-focus-ring-color);
+  --ajui-input-border: var(--ajui-default-border);
+  /* Select */
+  --ajui-select-border: var(--ajui-moon-gray);
+  /* Content types */
+  --ajui-success-background: #dff2e1;
+  --ajui-success-color: #1b5e20;
+  --ajui-success-border: #b2dfb1;
+
+  --ajui-warning-background: #fceeb6;
+  --ajui-warning-color: #b23904;
+  --ajui-warning-border: #e6d5a2;
+
+  --ajui-error-background: #fdecea;
+  --ajui-error-color: #b71c1c;
+  --ajui-error-border: #f5b7b7;
+
+  --ajui-info-background: #e3f2fd;
+  --ajui-info-color: #0d47a1;
+  --ajui-info-border: #90caf9;
+
+  --ajui-static-background: #e8e8e8;
+  --ajui-static-color: var(--ajui-default-color);
+  --ajui-static-border: var(--ajui-default-border);
+  /* Layer */
+  --ajui-layer-backdrop-background: rgba(200, 200, 200, 0.7);
+  /* Link */
+  --ajui-link-color: #0070ff;
+}
+
+[data-theme="dark"] {
+  /* General colors */
+  --ajui-focus-ring-color: #6699cc;
+  --ajui-default-color: white;
+  --ajui-default-background: var(--ajui-obsidian);
+  --ajui-default-border: var(--ajui-dark-gray);
+  /* Buttons */
+  --ajui-button-primary-background: white;
+  --ajui-button-primary-color: var(--ajui-obsidian);
+  --ajui-button-secondary-background: var(--ajui-obsidian);
+  --ajui-button-secondary-color: white;
+  --ajui-button-secondary-border: var(--ajui-dark-gray);
+  --ajui-button-transparent-background: transparent;
+  --ajui-button-secondary-border-hover: var(--ajui-moon-gray);
+  /* Input */
+  --ajui-input-selection-color: var(--ajui-focus-ring-color);
+  --ajui-input-border: var(--ajui-dark-gray);
+  /* Select */
+  --ajui-select-border: var(--ajui-dark-gray);
+  /* Content types */
+  --ajui-success-background: #2a5733;
+  --ajui-success-color: #d9efd8;
+  --ajui-success-border: #439e4a;
+
+  --ajui-warning-background: #736230;
+  --ajui-warning-color: #fff6d1;
+  --ajui-warning-border: #927a3b;
+
+  --ajui-error-background: #663232;
+  --ajui-error-color: #f9dadc;
+  --ajui-error-border: #8d2a2a;
+
+  --ajui-info-background: #335f72;
+  --ajui-info-color: #d4f1f5;
+  --ajui-info-border: #1d8ea4;
+
+  --ajui-static-background: var(--ajui-darkest-gray);
+  --ajui-static-color: var(--ajui-default-color);
+  --ajui-static-border: var(--ajui-default-border);
+  /* Layer */
+  --ajui-layer-backdrop-background: rgba(55, 55, 55, 0.7);
+  /* Link */
+  --ajui-link-color: #009ef3;
+}
+
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+a:not([disabled]):focus-visible,
+button:not([disabled]):focus-visible {
+  outline: 3px solid var(--ajui-link-color);
+  outline-offset: 0;
+}
+.ajui-input-default:not([disabled]):focus-within,
+.ajui-select-base:not([disabled]):focus-within {
+  outline: 3px solid var(--ajui-focus-ring-color);
+  outline-offset: 0;
+}
+
+.corners--rounded {
+  border-radius: var(--ajui-rounded-radius);
+}
+
+.corners--pill {
+  border-radius: var(--ajui-pill-radius);
+}
+
+.corners--sharp {
+  border-radius: var(--ajui-sharp-radius);
+}
+
+.content--success {
+  background-color: var(--ajui-success-background);
+  color: var(--ajui-success-color);
+  border-color: var(--ajui-success-border);
+}
+
+.content--warning {
+  background-color: var(--ajui-warning-background);
+  color: var(--ajui-warning-color);
+  border-color: var(--ajui-warning-border);
+}
+
+.content--error {
+  background-color: var(--ajui-error-background);
+  color: var(--ajui-error-color);
+  border-color: var(--ajui-error-border);
+}
+
+.content--info {
+  background-color: var(--ajui-info-background);
+  color: var(--ajui-info-color);
+  border-color: var(--ajui-info-border);
+}
+
+.content--static {
+  background-color: var(--ajui-static-background);
+  color: var(--ajui-static-color);
+  border-color: var(--ajui-static-border);
+}
+
+/* Alert */
+.ajui-alert {
+  padding: 1rem;
+  border-style: solid;
+  border-width: 1px;
+  font-weight: 400;
+}
+
+/* Badge */
+.ajui-badge {
+  padding: 0.125rem 0.375rem;
+  border-style: solid;
+  border-width: 1px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  width: fit-content;
+}
+
+/* Banner */
+.ajui-banner {
+  padding: 1.5rem 2rem;
+  border: none;
+  font-weight: 400;
+  width: 100vw;
+}
+
+/* Link */
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Button */
+.ajui-button-base {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.ajui-button-default {
+  padding: 0.5rem 1rem;
+}
+
+.ajui-icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity var(--ajui-default-transition);
+  padding: 0.25rem;
+}
+
+.ajui-button-base:disabled {
+  cursor: not-allowed !important;
+  opacity: var(--ajui-disabled-opacity);
+}
+
+.ajui-button--primary {
+  background-color: var(--ajui-button-primary-background);
+  color: var(--ajui-button-primary-color);
+  transition: opacity var(--ajui-default-transition);
+}
+
+.ajui-button--transparent,
+.ajui-button--secondary {
+  box-shadow: inset 0 0 0 1px var(--ajui-button-secondary-border);
+  transition: box-shadow var(--ajui-default-transition);
+}
+
+.ajui-button--secondary {
+  background-color: var(--ajui-button-secondary-background);
+}
+
+.ajui-link-default {
+  color: var(--ajui-link-color);
+  transition: opacity var(--ajui-default-transition);
+}
+
+@media (hover: hover) {
+  .ajui-button--primary:not([disabled]):is(:hover, :focus-visible),
+  .ajui-icon-button:not([disabled]):is(:hover, :focus-visible),
+  .ajui-link-default:is(:hover, :focus-visible) {
+    opacity: var(--ajui-default-opacity-dim);
+  }
+
+  .ajui-button--transparent:not([disabled]):is(:hover, :focus-visible),
+  .ajui-button--secondary:not([disabled]):is(:hover, :focus-visible) {
+    box-shadow: inset 0 0 0 1px var(--ajui-button-secondary-border-hover);
+  }
+}
+
+/* Input */
+.ajui-input-base {
+  outline: 0px solid transparent;
+  border: none;
+  background-color: inherit;
+  color: inherit;
+  padding: 0.75rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.ajui-input-base::selection {
+  background-color: var(--ajui-input-selection-color);
+}
+
+.ajui-icon-input {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  overflow: scroll;
+}
+
+.ajui-icon-input input {
+  background-color: transparent;
+  width: 100%;
+}
+
+.ajui-input-default {
+  transition: outline var(--ajui-default-transition);
+  outline: 0px solid transparent;
+  box-shadow: inset 0 0 0 1px var(--ajui-default-border);
+}
+
+.ajui-input-default:disabled {
+  opacity: var(--ajui-disabled-opacity);
+  cursor: not-allowed;
+}
+
+/* Select */
+.ajui-select-container {
+  position: relative;
+  padding: 0;
+  width: fit-content;
+}
+
+.ajui-select-disabled {
+  opacity: var(--ajui-disabled-opacity);
+  cursor: not-allowed !important;
+}
+
+.ajui-select-base {
+  width: 100%;
+  color: inherit;
+  outline: 0px solid transparent;
+  border: none;
+  cursor: pointer;
+  background-color: inherit;
+  padding: 0.75rem 1.75rem 0.75rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+  transition: outline var(--ajui-default-transition);
+  outline: 0px solid transparent;
+  box-shadow: inset 0 0 0 1px var(--ajui-select-border);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.ajui-select-triangle {
+  --size: 0.75rem;
+  width: var(--size);
+  height: var(--size);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: calc(var(--size) - 0.25rem);
+}
+
+/* Layer */
+.ajui-layer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  background: var(--ajui-layer-backdrop-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Spinner */
+.ajui-spinner {
+  animation: ajui-spinner-animation 1s linear infinite;
+  transform-origin: center;
+  height: 1.5rem;
+}
+
+@keyframes ajui-spinner-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

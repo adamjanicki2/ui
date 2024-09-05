@@ -11,7 +11,7 @@
     "url": "git+https://github.com/adamjanicki2/ui.git"
   },
   "scripts": {
-    "build": "tsc; cp src/style.css ./style.css",
+    "build": "tsc; cp src/style.css ./style.css; rm -rf site/src/lib; cp -r src site/src/lib",
     "clean": "./clean.sh",
     "dev": "nodemon --watch src --ext ts,tsx,css --exec \"npm run build\"",
     "test": "jest --config jest.config.js",
