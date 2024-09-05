@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Turn as Hamburger } from "hamburger-react";
 import "src/components/nav.css";
-import Link, { UnstyledLink } from "src/components/Link";
-import { useLocation } from "react-router-dom";
+import { Link, UnstyledLink } from "src/lib";
 
 type NavlinkProps = {
   to: string;
@@ -10,13 +9,8 @@ type NavlinkProps = {
 };
 
 const Nav = () => {
-  const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const closeMenu = () => setOpen(false);
-
-  useEffect(() => {
-    closeMenu();
-  }, [pathname]);
 
   const Navlink = (props: NavlinkProps) => (
     <li className="navlink-li">
@@ -25,9 +19,12 @@ const Nav = () => {
   );
 
   return (
-    <nav className="flex items-center justify-between w-100 nav pv2 ph4">
+    <nav
+      className="flex items-center justify-between w-100 nav pv2 ph4"
+      id="top"
+    >
       <div className="flex items-center justify-between bar-container">
-        <UnstyledLink className="nav-title" to="/">
+        <UnstyledLink className="nav-title" to="#top">
           @adamjanicki/ui
         </UnstyledLink>
         <div className="mobile">
@@ -44,8 +41,7 @@ const Nav = () => {
         className="flex items-center desktop link-container ma0"
         style={{ display: open ? "flex" : undefined }}
       >
-        <Navlink to="/">Home</Navlink>
-        <Navlink to="/about/">About</Navlink>
+        <Navlink to="#top">Docs</Navlink>
       </ul>
     </nav>
   );

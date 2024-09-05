@@ -1,23 +1,11 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Footer from "src/components/Footer";
+import Main from "src/pages/Main";
 import Nav from "src/components/Nav";
-import About from "src/pages/About";
-import Home from "src/pages/Home";
-import NotFound from "src/pages/NotFound";
 
-const App = () => {
+export default function App() {
   return (
-    <BrowserRouter basename="/ui">
+    <>
       <Nav />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about/" element={<About />} />
-        {/* Make sure this is the last route */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+      <Main />
+    </>
   );
-};
-
-export default App;
+}

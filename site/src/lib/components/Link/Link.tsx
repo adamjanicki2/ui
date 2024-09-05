@@ -35,6 +35,7 @@ const DefaultLinkElement: CustomLinkElement = forwardRef<
 
 export const UnstyledLink = forwardRef<HTMLAnchorElement, DefaultLinkProps>(
   ({ LinkElement = DefaultLinkElement, ...props }, ref) => (
+    // @ts-ignore
     <LinkElement
       {...props}
       ref={ref as React.MutableRefObject<HTMLAnchorElement>}
