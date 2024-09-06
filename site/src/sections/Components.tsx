@@ -193,30 +193,30 @@ export default function Components() {
         button at the end of your input.
       </Para>
       <div className="flex items-center w-fc m-auto flex-wrap">
-        <div>
+        <div className="ma1">
           <div className="fw5 f6">Uncontrolled</div>
-          <Input placeholder="Type something..." className="ma1 bg-white" />
+          <Input placeholder="Type something..." className="bg-white" />
         </div>
-        <div>
+        <div className="ma1">
           <div className="fw5 f6">Controlled</div>
           <Input
             placeholder="Type something..."
-            className="ma1 bg-white"
+            className="bg-white"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
         </div>
-        <div>
+        <div className="ma1">
           <div className="fw5 f6">Icon Input</div>
           <IconInput
             startIcon={<span className="pa2">🔎</span>}
             inputProps={{ placeholder: "Search..." }}
-            className="ma1 bg-white"
+            className="bg-white"
           />
         </div>
-        <div>
+        <div className="ma1">
           <div className="fw5 f6">Icon Input</div>
-          <TextArea className="ma1 bg-white" placeholder="Type something..." />
+          <TextArea className="bg-white" placeholder="Type something..." />
         </div>
       </div>
       <HiddenSnippet>{inputSnippet}</HiddenSnippet>
@@ -258,14 +258,14 @@ export default function Components() {
         container to store the select itself and the arrow.
       </Para>
       <div className="flex items-center m-auto w-fc flex-wrap">
-        <div>
+        <div className="ma1">
           <div className="fw5 f6">Uncontrolled</div>
           <Select
             aria-label="select"
             options={["apple", "orange", "banana", "kiwi"]}
           />
         </div>
-        <div>
+        <div className="ma1">
           <div className="fw5 f6">Controlled</div>
           <Select
             aria-label="select"
@@ -282,7 +282,8 @@ export default function Components() {
         it was some fun css animations!
       </Para>
       <div className="flex items-center m-auto w-fc">
-        <Spinner style={{ height: 24 }} className="ma1" />
+        <Spinner className="ma1" />
+        <Spinner style={{ height: 36, color: "red" }} className="ma1" />
         <Spinner style={{ height: 48, color: "blue" }} className="ma1" />
       </div>
       <HiddenSnippet>{spinnerSnippet}</HiddenSnippet>

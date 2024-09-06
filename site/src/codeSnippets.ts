@@ -95,6 +95,7 @@ const fruits = ["apple", "orange", "banana", "kiwi"];
 `;
 
 export const spinnerSnippet = `
-<Spinner style={{height: 24}} />
-<Spinner style={{height: 48, color: "blue"}} />
+<Spinner className="ma1" />
+<Spinner style={{ height: 36, color: "red" }} />
+<Spinner style={{ height: 48, color: "blue" }} />
 `;
