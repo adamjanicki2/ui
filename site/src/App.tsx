@@ -5,6 +5,7 @@ import Footer from "src/components/Footer";
 export default function App() {
   return (
     <>
+      <div id="welcome" aria-hidden />
       <Nav />
       <Main />
       <Footer />
