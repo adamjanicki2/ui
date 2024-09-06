@@ -1,4 +1,4 @@
-import { Link } from "src/lib";
+import { Link } from "@adamjanicki/ui";
 
 const Footer = () => (
   <footer className="pa5 flex bt b--moon-gray bw1 items-center justify-center w-100">

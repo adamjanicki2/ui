@@ -97,6 +97,7 @@ const Animated = ({
         ...(animationState === "entering" ? enter?.style : exit?.style),
         transition: `all ${duration}ms ease-in-out`,
       }}
+      aria-hidden={!visible}
     >
       {shouldRender && children}
     </div>

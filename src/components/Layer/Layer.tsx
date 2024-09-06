@@ -25,6 +25,11 @@ type LayerProps = {
    * @default false
    */
   disableEscape?: boolean;
+  /**
+   * [Optional] Whether to return focus to the element that triggered the layer
+   * @default false
+   */
+  returnFocusOnEscape?: boolean;
 };
 
 const BaseLayer = ({
@@ -67,9 +72,19 @@ const BaseLayer = ({
   );
 };
 
-const Layer = (props: LayerProps): JSX.Element => {
+const Layer = ({
+  returnFocusOnEscape = false,
+  ...props
+}: LayerProps): JSX.Element => {
   // Lock and unlock on mount and unmount
   useScrollLock();
+
+  useEffect(() => {
+    const activeEl = document.activeElement as HTMLElement;
+    if (!returnFocusOnEscape) {
+      activeEl?.blur?.();
+    }
+  }, [returnFocusOnEscape]);
 
   return <BaseLayer {...props} visible />;
 };
