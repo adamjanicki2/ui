@@ -2,10 +2,25 @@ import Snippet from "src/components/Snippet";
 import Heading from "src/components/Heading";
 import Para from "src/components/Para";
 import HiddenSnippet from "src/components/HiddenSnippet";
-import { alertSnippet } from "src/codeSnippets";
-import { Alert } from "@adamjanicki/ui";
+import {
+  alertSnippet,
+  animatedSnippet,
+  badgeSnippet,
+  bannerSnippet,
+  buttonSnippet,
+} from "src/codeSnippets";
+import {
+  Alert,
+  Animated,
+  Badge,
+  Banner,
+  Button,
+  UnstyledButton,
+} from "@adamjanicki/ui";
+import { useState } from "react";
 
 export default function Components() {
+  const [animatedOpen, setAnimatedOpen] = useState(false);
   return (
     <section id="components-section">
       <Heading level={1}>Components</Heading>
@@ -45,12 +60,103 @@ export default function Components() {
         <Alert className="mv1" type="error">
           This is an error alert
         </Alert>
+        <HiddenSnippet>{alertSnippet}</HiddenSnippet>
       </div>
-      <HiddenSnippet>{alertSnippet}</HiddenSnippet>
       <Heading level={2}>Animated</Heading>
+      <Para>
+        This is a simple wrapper component that allows you to perform animations
+        on mount and unmount of a given element. I found it useful when
+        designing a custom modal for one of my other sites that I wanted to fade
+        in an out when the user entered or exited the state.
+      </Para>
+      <div className="flex flex-column items-center">
+        <Button
+          className="w-fc mb2"
+          onClick={() => setAnimatedOpen(!animatedOpen)}
+        >
+          {animatedOpen ? "Close" : "Open"} Animated Alert
+        </Button>
+        <Animated
+          visible={animatedOpen}
+          enter={{ style: { opacity: 1 } }}
+          exit={{ style: { opacity: 0 } }}
+          className="w-100"
+        >
+          <Alert type="info">This is an animated alert!</Alert>
+        </Animated>
+        <HiddenSnippet>{animatedSnippet}</HiddenSnippet>
+      </div>
       <Heading level={2}>Badge</Heading>
+      <Para>
+        Like alerts, badges also come in different types, and is represented by
+        the same TypeScript type. these are little symbols and are good
+        indicators of status of a particular thing.
+      </Para>
+      <div className="flex items-center w-fc m-auto">
+        <Badge className="ma1" type="static">
+          Static
+        </Badge>
+        <Badge className="ma1" type="info">
+          Info
+        </Badge>
+        <Badge className="ma1" type="success">
+          Success
+        </Badge>
+        <Badge className="ma1" type="warning">
+          Warning
+        </Badge>
+        <Badge className="ma1" type="error">
+          Error
+        </Badge>
+      </div>
+      <HiddenSnippet>{badgeSnippet}</HiddenSnippet>
       <Heading level={2}>Banner</Heading>
+      <Para>
+        Banners are virtually the same as alerts, but are meant for the tops of
+        pages and contain more important information. Therefore, they have a
+        default style of <code>width: 100vw</code> applied to them.{" "}
+        <em>
+          I've taken the liberty of hiding the overflow here, but you get the
+          point.
+        </em>
+      </Para>
+      <div className="flex flex-column" style={{ overflow: "hidden" }}>
+        <Banner className="ma1" type="static">
+          This is a static banner
+        </Banner>
+        <Banner className="ma1" type="info">
+          This is an info banner
+        </Banner>
+        <Banner className="ma1" type="success">
+          This is a success banner
+        </Banner>
+        <Banner className="ma1" type="warning">
+          This is a warning banner
+        </Banner>
+        <Banner className="ma1" type="error">
+          This is an error banner
+        </Banner>
+        <HiddenSnippet>{bannerSnippet}</HiddenSnippet>
+      </div>
       <Heading level={2}>Button</Heading>
+      <Para>
+        One of the foundational elements in any site is a button, so I've tried
+        my best to make a robust option that is highly customizable depending on
+        the required use case.
+      </Para>
+      <div className="flex items-center w-fc m-auto">
+        <Button className="ma1" variant="primary">
+          Primary
+        </Button>
+        <Button className="ma1" variant="secondary">
+          Secondary
+        </Button>
+        <Button className="ma1" variant="transparent">
+          Transparent
+        </Button>
+        <UnstyledButton className="ma1">Unstyled</UnstyledButton>
+      </div>
+      <HiddenSnippet>{buttonSnippet}</HiddenSnippet>
       <Heading level={2}>ClickOutside</Heading>
       <Heading level={2}>Input</Heading>
       <Heading level={2}>Layer</Heading>
