@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Turn as Hamburger } from "hamburger-react";
 import "src/components/nav.css";
-import { Link, UnstyledLink } from "src/lib";
+import { Link, UnstyledLink } from "@adamjanicki/ui";
 
 type NavlinkProps = {
   to: string;
