@@ -80,10 +80,12 @@ const Layer = ({
   useScrollLock();
 
   useEffect(() => {
-    const activeEl = document.activeElement as HTMLElement;
-    if (!returnFocusOnEscape) {
-      activeEl?.blur?.();
-    }
+    return () => {
+      const activeEl = document.activeElement as HTMLElement;
+      if (!returnFocusOnEscape) {
+        activeEl?.blur?.();
+      }
+    };
   }, [returnFocusOnEscape]);
 
   return <BaseLayer {...props} visible />;

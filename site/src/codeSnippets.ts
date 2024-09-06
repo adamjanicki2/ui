@@ -64,3 +64,37 @@ export const clickOutsideSnippet = `
   <Alert type="info">Click outside me!</Alert>
 </ClickOutside>
 `;
+
+export const inputSnippet = `
+<Input placeholder="Type something..." />
+<Input
+  placeholder="Type something..."
+  className="ma1 bg-white"
+  value={inputValue}
+  onChange={(e) => setInputValue(e.target.value)}
+/>
+<IconInput startIcon={<span>🔎</span>} inputProps={{placeholder: "Search..."}} />
+<TextArea placeholder="Type something..." />
+`;
+
+export const linkSnippet = `
+<Link to="#link">Internal link</Link>
+<Link to="https://adamovies.com" target="_blank" rel="noreferrer">External link →</Link>
+<UnstyledLink to="#link">Unstyled link</UnstyledLink>
+`;
+
+export const selectSnippet = `
+const fruits = ["apple", "orange", "banana", "kiwi"];
+<Select options={fruits} aria-label="select fruit" />
+<Select 
+  options={fruits} 
+  aria-label="select fruit" 
+  value={selectedFruit}
+  onChange={(e) => setSelectedFruit(e.target.value)}
+/>
+`;
+
+export const spinnerSnippet = `
+<Spinner style={{height: 24}} />
+<Spinner style={{height: 48, color: "blue"}} />
+`;

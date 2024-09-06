@@ -1,4 +1,3 @@
-import Snippet from "src/components/Snippet";
 import Heading from "src/components/Heading";
 import Para from "src/components/Para";
 import HiddenSnippet from "src/components/HiddenSnippet";
@@ -9,6 +8,9 @@ import {
   bannerSnippet,
   buttonSnippet,
   clickOutsideSnippet,
+  inputSnippet,
+  linkSnippet,
+  spinnerSnippet,
 } from "src/codeSnippets";
 import {
   Alert,
@@ -17,12 +19,21 @@ import {
   Banner,
   Button,
   ClickOutside,
+  IconInput,
+  Input,
+  Link,
   UnstyledButton,
+  UnstyledLink,
+  Select,
+  TextArea,
+  Spinner,
 } from "@adamjanicki/ui";
 import { useState } from "react";
 
 export default function Components() {
   const [animatedOpen, setAnimatedOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("Here's looking at you, kid.");
+  const [selectValue, setSelectValue] = useState("orange");
   return (
     <section id="components-section">
       <Heading level={1}>Components</Heading>
@@ -174,10 +185,107 @@ export default function Components() {
       </div>
       <HiddenSnippet>{clickOutsideSnippet}</HiddenSnippet>
       <Heading level={2}>Input</Heading>
+      <Para>
+        I have 2 different types of inputs: one is a standard input with some
+        basic styles applied on top; the other is an icon input, meaning you can
+        choose to add an icon to the start or end. This is particularly useful
+        when building a search bar input, or perhaps you'd like to have a clear
+        button at the end of your input.
+      </Para>
+      <div className="flex items-center w-fc m-auto flex-wrap">
+        <div>
+          <div className="fw5 f6">Uncontrolled</div>
+          <Input placeholder="Type something..." className="ma1 bg-white" />
+        </div>
+        <div>
+          <div className="fw5 f6">Controlled</div>
+          <Input
+            placeholder="Type something..."
+            className="ma1 bg-white"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+        </div>
+        <div>
+          <div className="fw5 f6">Icon Input</div>
+          <IconInput
+            startIcon={<span className="pa2">🔎</span>}
+            inputProps={{ placeholder: "Search..." }}
+            className="ma1 bg-white"
+          />
+        </div>
+        <div>
+          <div className="fw5 f6">Icon Input</div>
+          <TextArea className="ma1 bg-white" placeholder="Type something..." />
+        </div>
+      </div>
+      <HiddenSnippet>{inputSnippet}</HiddenSnippet>
       <Heading level={2}>Layer</Heading>
       <Heading level={2}>Link</Heading>
+      <Para>
+        Perhaps the most important element in this whole library: links. They
+        are so crucial to any app, and I always used to have to waste a lot of
+        time setting up and overriding annoying default link styles. This link
+        is meant to be <em>extremely</em> customizable: you can override the
+        underlying link element from an anchor element <code>{"<a>"}</code> to
+        something more complex, maybe react-router-dom's link element if you're
+        working within a router context.
+      </Para>
+      <div className="flex items-center w-fc m-auto">
+        <Link className="ma1" to="#link">
+          Internal link
+        </Link>
+        <Link
+          className="ma1"
+          to="https://adamovies.com"
+          target="_blank"
+          rel="noreferrer"
+        >
+          External link →
+        </Link>
+        <UnstyledLink className="ma1" to="#link">
+          Unstyled link
+        </UnstyledLink>
+      </div>
+      <HiddenSnippet>{linkSnippet}</HiddenSnippet>
       <Heading level={2}>Select</Heading>
+      <Para>
+        This select input was tricky to design given how much styling different
+        browsers, I'm looking at you Safari, apply to the native select element.
+        I've tried to mitigate the differences by manually adding a dropdown
+        arrow and hiding the native dropdown, but it's not perfect because this
+        means I had to wrap the select element in an extra <code>div</code>{" "}
+        container to store the select itself and the arrow.
+      </Para>
+      <div className="flex items-center m-auto w-fc flex-wrap">
+        <div>
+          <div className="fw5 f6">Uncontrolled</div>
+          <Select
+            aria-label="select"
+            options={["apple", "orange", "banana", "kiwi"]}
+          />
+        </div>
+        <div>
+          <div className="fw5 f6">Controlled</div>
+          <Select
+            aria-label="select"
+            options={["apple", "orange", "banana", "kiwi"]}
+            onChange={(e) => setSelectValue(e.target.value)}
+            value={selectValue}
+          />
+        </div>
+      </div>
       <Heading level={2}>Spinner</Heading>
+      <Para>
+        The spinner was such a fun one to design: I had to go into Illustrator
+        to first make a suitable svg for the spinner icon, and then from there
+        it was some fun css animations!
+      </Para>
+      <div className="flex items-center m-auto w-fc">
+        <Spinner style={{ height: 24 }} className="ma1" />
+        <Spinner style={{ height: 48, color: "blue" }} className="ma1" />
+      </div>
+      <HiddenSnippet>{spinnerSnippet}</HiddenSnippet>
     </section>
   );
 }
