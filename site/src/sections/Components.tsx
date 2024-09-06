@@ -8,6 +8,7 @@ import {
   badgeSnippet,
   bannerSnippet,
   buttonSnippet,
+  clickOutsideSnippet,
 } from "src/codeSnippets";
 import {
   Alert,
@@ -15,6 +16,7 @@ import {
   Badge,
   Banner,
   Button,
+  ClickOutside,
   UnstyledButton,
 } from "@adamjanicki/ui";
 import { useState } from "react";
@@ -158,6 +160,19 @@ export default function Components() {
       </div>
       <HiddenSnippet>{buttonSnippet}</HiddenSnippet>
       <Heading level={2}>ClickOutside</Heading>
+      <Para>
+        One of my very favorite elements in the entire UI library is the click
+        outside listener. Due to the non-trivial implementation, I had the most
+        fun working on building one that works correct, <em>and</em> doesn't add
+        an extra element to the DOM, just instead wraps your component with some
+        extra hook magic and click listeners.
+      </Para>
+      <div className="w-fc m-auto">
+        <ClickOutside onClickOutside={() => console.log("You did it!")}>
+          <Alert type="info">Click outside me! (Check the console)</Alert>
+        </ClickOutside>
+      </div>
+      <HiddenSnippet>{clickOutsideSnippet}</HiddenSnippet>
       <Heading level={2}>Input</Heading>
       <Heading level={2}>Layer</Heading>
       <Heading level={2}>Link</Heading>

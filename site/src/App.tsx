@@ -10,7 +10,7 @@ export default function App() {
   useEffect(() => {
     // scroll to doc heading if available
     scroll();
-  }, []);
+  }, [scroll]);
 
   return (
     <>

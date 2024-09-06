@@ -58,3 +58,9 @@ export const buttonSnippet = `
 <Button variant="transparent">Transparent</Button>
 <UnstyledButton>Unstyled</UnstyledButton>
 `;
+
+export const clickOutsideSnippet = `
+<ClickOutside onClickOutside={() => console.log("You did it!")}>
+  <Alert type="info">Click outside me!</Alert>
+</ClickOutside>
+`;
