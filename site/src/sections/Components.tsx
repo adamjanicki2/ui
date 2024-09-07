@@ -9,6 +9,7 @@ import {
   buttonSnippet,
   clickOutsideSnippet,
   inputSnippet,
+  layerSnippet,
   linkSnippet,
   spinnerSnippet,
 } from "src/codeSnippets";
@@ -27,6 +28,7 @@ import {
   Select,
   TextArea,
   Spinner,
+  Layer,
 } from "@adamjanicki/ui";
 import { useState } from "react";
 
@@ -34,6 +36,7 @@ export default function Components() {
   const [animatedOpen, setAnimatedOpen] = useState(false);
   const [inputValue, setInputValue] = useState("Here's looking at you, kid.");
   const [selectValue, setSelectValue] = useState("orange");
+  const [layerOpen, setLayerOpen] = useState(false);
   return (
     <section id="components-section">
       <Heading level={1}>Components</Heading>
@@ -209,7 +212,7 @@ export default function Components() {
         <div className="ma1">
           <div className="fw5 f6">Icon Input</div>
           <IconInput
-            startIcon={<span className="pa2">🔎</span>}
+            startIcon={<span className="ml2">🔎</span>}
             inputProps={{ placeholder: "Search..." }}
             className="bg-white"
           />
@@ -221,6 +224,25 @@ export default function Components() {
       </div>
       <HiddenSnippet>{inputSnippet}</HiddenSnippet>
       <Heading level={2}>Layer</Heading>
+      <Para>
+        The layer component is a simple wrapper that allows you to create a
+        layer on top of your content. This is particularly useful when you want
+        to create a modal or a dropdown menu that should cover the entire
+        screen.
+      </Para>
+      <div className="flex flex-column items-center">
+        <Button className="w-fc mb2" onClick={() => setLayerOpen(true)}>
+          Open layer
+        </Button>
+        {layerOpen && (
+          <Layer onClose={() => setLayerOpen(false)}>
+            <div className="pa5 br3 bg-white fade">
+              <h1>Hello!</h1>
+            </div>
+          </Layer>
+        )}
+        <HiddenSnippet>{layerSnippet}</HiddenSnippet>
+      </div>
       <Heading level={2}>Link</Heading>
       <Para>
         Perhaps the most important element in this whole library: links. They
@@ -263,6 +285,7 @@ export default function Components() {
           <Select
             aria-label="select"
             options={["apple", "orange", "banana", "kiwi"]}
+            innerClassName="bg-white"
           />
         </div>
         <div className="ma1">
@@ -272,6 +295,7 @@ export default function Components() {
             options={["apple", "orange", "banana", "kiwi"]}
             onChange={(e) => setSelectValue(e.target.value)}
             value={selectValue}
+            innerClassName="bg-white"
           />
         </div>
       </div>

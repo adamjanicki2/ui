@@ -77,6 +77,14 @@ export const inputSnippet = `
 <TextArea placeholder="Type something..." />
 `;
 
+export const layerSnippet = `
+<Layer onClose={() => setLayerOpen(false)}>
+  <div className="bg-white">
+    <h1>Hello!</h1>
+  </div>
+</Layer>
+`;
+
 export const linkSnippet = `
 <Link to="#link">Internal link</Link>
 <Link to="https://adamovies.com" target="_blank" rel="noreferrer">External link →</Link>
@@ -98,4 +106,81 @@ export const spinnerSnippet = `
 <Spinner className="ma1" />
 <Spinner style={{ height: 36, color: "red" }} />
 <Spinner style={{ height: 48, color: "blue" }} />
+`;
+
+export const focusTrapSnippet = `
+// in your modal component ...
+// accepts a parameter for whether or not to trap focus
+const trapRef = useFocusTrap<HTMLDivElement>(true);
+return (
+  // disables focus outside of this div
+  <div ref={trapRef}>
+    <h1>Modal</h1>
+    <p>Some content...</p>
+    <button>Close</button>
+  </div>
+);
+`;
+
+export const mediaQuerySnippet = `
+// in your nav component ...
+const isMobile = useMediaQuery({query: "(max-width: 768px)"});
+return isMobile ? <MobileNav /> : <DesktopNav />;
+`;
+
+export const scrollLockSnippet = `
+// in your modal component ...
+// locks scrolling when modal is open
+useScrollLock(modalOpen);
+return (
+  <div>
+    <h1>Modal</h1>
+    <p>Some content...</p>
+    <button>Close</button>
+  </div>
+);
+`;
+
+export const scrollToHashSnippet = `
+// in your docs page with headings ...
+// scrolls to the hash in the URL on load
+useScrollToHash({active: true});
+return (
+  <section>
+    <h1 id="heading-1">Heading 1</h1>
+    <p>Some content...</p>
+    <h2 id="heading-2">Heading 2</h2>
+    <p>Some content...</p>
+  </section>
+);
+`;
+
+export const watchScrollSnippet = `
+// in your nav component ...
+// watches for scroll events and updates state
+useWatchScroll(() => {
+  setScrolled(window.scrollY > 0);
+});
+`;
+
+export const windowResizeSnippet = `
+// in your component that needs to know the window size ...
+// updates state when the window is resized
+useWindowResize(() => {
+  setWindowSize(window.innerWidth);
+});
+`;
+
+export const classNamesSnippet = `
+// in any component ...
+// conditionally apply classes
+<div className={classNames("container", isWhite ? "white" : null)}>
+  Some content...
+</div>
+`;
+
+export const scrollToIdSnippet = `
+// in some function or component ...
+// scrolls to an element with a specific ID
+scrollToId("some-id");
 `;

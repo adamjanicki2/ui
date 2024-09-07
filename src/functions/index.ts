@@ -1,3 +1,3 @@
 import classNames from "./classNames";
-
-export { classNames };
+import scrollToId from "./scrollToId";
+export { classNames, scrollToId };
