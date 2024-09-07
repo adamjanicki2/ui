@@ -24,7 +24,10 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
   };
 
   return (
-    <div className={classNames("snippet-container ba br2", className)}>
+    <div
+      className={classNames("snippet-container ba br2 m-auto", className)}
+      style={{ width: "max-content" }}
+    >
       <div className="flex justify-between items-center w-100 bb ph2 pv1">
         <p className="f6 fw5 ma0">{lang}</p>
         {copied ? (

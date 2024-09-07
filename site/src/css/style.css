@@ -15,6 +15,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;
+  background-color: #f4f4fb;
 }
 
 code {
@@ -28,6 +29,14 @@ code {
 .page-title-text {
   font-size: calc(2.5rem + 1vw);
   font-weight: 700;
+}
+
+.m-auto {
+  margin: 0 auto;
+}
+
+.w-fc {
+  width: fit-content;
 }
 
 .bordering {
