@@ -331,6 +331,7 @@ a {
   top: 50%;
   transform: translateY(-50%);
   right: calc(var(--size) - 0.25rem);
+  pointer-events: none;
 }
 
 /* Layer */
