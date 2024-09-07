@@ -1,3 +1,4 @@
+import { Link } from "@adamjanicki/ui";
 import { importCss } from "src/codeSnippets";
 import Header from "src/components/Heading";
 import Para from "src/components/Para";
@@ -5,6 +6,7 @@ import Snippet from "src/components/Snippet";
 import Components from "src/sections/Components";
 import Functions from "src/sections/Functions";
 import Hooks from "src/sections/Hooks";
+import { ReactComponent as Logo } from "src/images/logo.svg";
 
 const Main = () => (
   <div className="main-container">
@@ -28,6 +30,21 @@ const Main = () => (
     <Components />
     <Hooks />
     <Functions />
+    <hr className="ba b--moon-gray mv3" />
+    <Para>
+      And that's it! I hope you find this fun little library useful. If you want
+      to play around with any of these components, you can head over to my{" "}
+      <Link to="/react-playground" target="_blank" rel="noreferrer">
+        React Playground
+      </Link>{" "}
+      to see them in action and play around.
+      <br />
+      <br />
+      Thanks,
+      <br />
+      Adam
+    </Para>
+    <Logo style={{ color: "#0070ff", height: 48 }} />
   </div>
 );
 

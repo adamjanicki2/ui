@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Turn as Hamburger } from "hamburger-react";
 import "src/components/nav.css";
 import { Link, UnstyledLink } from "@adamjanicki/ui";
+import { ReactComponent as Logo } from "src/images/logo.svg";
 
 type NavlinkProps = {
   to: string;
@@ -22,7 +23,8 @@ const Nav = () => {
     <nav className="flex items-center justify-between w-100 nav pv2 ph4">
       <div className="flex items-center justify-between bar-container">
         <UnstyledLink className="nav-title" to="#welcome">
-          @adamjanicki/ui
+          <span className="desktop">@adamjanicki/ui</span>
+          <Logo style={{ height: 32 }} className="mobile" />
         </UnstyledLink>
         <div className="mobile">
           <Hamburger

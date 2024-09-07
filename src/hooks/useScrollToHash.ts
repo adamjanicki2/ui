@@ -1,25 +1,33 @@
-import { useCallback } from "react";
+import { useEffect } from "react";
+import scrollToId from "../functions/scrollToId";
+
+type UseScrollToHashConfig = {
+  /**
+   * Whether or not to scroll to the hash
+   */
+  active: boolean;
+  /**
+   * The scroll behavior to use
+   */
+  behavior?: ScrollBehavior;
+};
 
 /**
  * A hook for scrolling to a hash on the page.
- * @returns a function that scrolls to the hash on the page
  */
-const useScrollToHash = () =>
-  useCallback(
-    /**
-     * Scrolls to the hash on the page.
-     * @param behavior the behavior of the scroll
-     */
-    (behavior?: ScrollBehavior) => {
-      const hash = window.location.hash;
-      if (hash) {
-        const element = document.getElementById(hash.substring(1));
-        if (element) {
-          element.scrollIntoView({ behavior });
-        }
-      }
-    },
-    []
-  );
+const useScrollToHash = ({
+  active,
+  behavior = "smooth",
+}: UseScrollToHashConfig) => {
+  useEffect(() => {
+    if (!active) return;
+
+    const hash = window.location.hash;
+    if (hash?.length > 1) {
+      const id = hash.substring(1);
+      scrollToId(id, behavior);
+    }
+  }, [active, behavior]);
+};
 
 export default useScrollToHash;
