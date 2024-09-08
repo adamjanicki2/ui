@@ -6,7 +6,7 @@ import {
   mediaQuerySnippet,
   scrollLockSnippet,
   scrollToHashSnippet,
-  watchScrollSnippet,
+  scrollSnippet,
   windowResizeSnippet,
 } from "src/codeSnippets";
 import { Link } from "@adamjanicki/ui";
@@ -57,13 +57,13 @@ export default function Hooks() {
         attempt to scroll to the element with the corresponding ID.
       </Para>
       <Snippet>{scrollToHashSnippet}</Snippet>
-      <Heading level={2}>useWatchScroll</Heading>
+      <Heading level={2}>useScroll</Heading>
       <Para>
         In a few of my sites I've wanted to conditionally apply styles based on
         if the scroll height has reached a certain threshold. This hook is how I
         accomplish it by adding a scroll event listener to the window.
       </Para>
-      <Snippet>{watchScrollSnippet}</Snippet>
+      <Snippet>{scrollSnippet}</Snippet>
       <Heading level={2}>useWindowResize</Heading>
       <Para>
         I recently built a{" "}
