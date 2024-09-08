@@ -160,7 +160,7 @@ export default function Components() {
         my best to make a robust option that is highly customizable depending on
         the required use case.
       </Para>
-      <div className="flex items-center w-fc m-auto">
+      <div className="flex items-center justify-center flex-wrap">
         <Button className="ma1" variant="primary">
           Primary
         </Button>

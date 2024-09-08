@@ -155,12 +155,10 @@ return (
 );
 `;
 
-export const watchScrollSnippet = `
+export const scrollSnippet = `
 // in your nav component ...
 // watches for scroll events and updates state
-useWatchScroll(() => {
-  setScrolled(window.scrollY > 0);
-});
+const { scrollX, scrollY } = useScroll();
 `;
 
 export const windowResizeSnippet = `
