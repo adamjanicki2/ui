@@ -9,6 +9,7 @@ export { default as Alert } from "./components/Alert";
 export { default as Animated } from "./components/Animated";
 export { default as Badge } from "./components/Badge";
 export { default as Banner } from "./components/Banner";
+export { default as Hamburger } from "./components/Hamburger";
 export { default as Select } from "./components/Select";
 export { default as ClickOutside } from "./components/ClickOutside";
 export { default as Layer } from "./components/Layer";
