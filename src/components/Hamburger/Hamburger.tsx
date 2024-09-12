@@ -82,7 +82,7 @@ const Hamburger = (props: InnerProps) => {
     position: "relative",
     justifyContent: "center",
     alignItems: "center",
-    transition: `all ${duration}s ease`,
+    transition: `transform ${duration}s ease`,
   };
 
   const commonLineStyle: React.CSSProperties = {
@@ -114,6 +114,7 @@ const Hamburger = (props: InnerProps) => {
       style={{ ...style, ...outerStyle, ...buttonStyle }}
       {...buttonProps}
       aria-label={buttonProps["aria-label"] || "hamburger"}
+      aria-expanded={open}
     >
       <span style={{ ...commonLineStyle, ...topStyle }} />
       {!double && <span style={{ ...commonLineStyle, ...middleStyle }} />}
