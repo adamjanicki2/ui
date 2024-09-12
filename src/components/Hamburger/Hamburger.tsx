@@ -95,7 +95,7 @@ const Hamburger = (props: InnerProps) => {
     width: size * 0.7,
     backgroundColor: "currentColor",
     position: "absolute",
-    transition: `all ${duration}s ease`,
+    transition: `transform ${duration}s ease, opacity ${duration}s ease`,
     borderRadius: rounded ? 10000 : 0,
   };
 
