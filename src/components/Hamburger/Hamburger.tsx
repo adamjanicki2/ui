@@ -39,6 +39,10 @@ export type Props = {
    * [Optional] additional styles to apply to the button
    */
   style?: React.CSSProperties;
+  /**
+   * [Optional] round corners of the bars
+   */
+  rounded?: boolean;
 };
 
 type OpenStyle = {
@@ -71,6 +75,7 @@ const Hamburger = (props: InnerProps) => {
     openStyle,
     open,
     style,
+    rounded,
     ...buttonProps
   } = props;
   const lineHeight = Math.max(1, Math.round(size / 20));
@@ -91,6 +96,7 @@ const Hamburger = (props: InnerProps) => {
     backgroundColor: "currentColor",
     position: "absolute",
     transition: `all ${duration}s ease`,
+    borderRadius: rounded ? 10000 : 0,
   };
 
   const yTranslateMagnitude = useMemo(
