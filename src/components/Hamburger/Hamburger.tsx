@@ -1,13 +1,15 @@
+import { useMemo } from "react";
 import { UnstyledButton } from "../Button";
 
-type Props = {
+export type Props = {
   /**
    * Size of the button in pixels
    * @default 36
    */
   size?: number;
   /**
-   * Direction of the animation
+   * Direction the animation originates from;
+   * play around with this to see how it affects the animation because some of the animations are complicated
    * @default "left"
    */
   direction?: "left" | "right";
@@ -36,31 +38,37 @@ type Props = {
    * [Optional] additional styles to apply to the button
    */
   style?: React.CSSProperties;
-  /**
-   * Variant of the hamburger button
-   * @default "triple-vanish"
-   */
-  variant?: "double" | "triple-vanish" | "triple-fade";
 };
 
-type InnerProps = Omit<Props, "variant"> & {
-  bars: 2 | 3;
-  middleStyle?: (open: boolean) => React.CSSProperties;
+type OpenStyle = {
+  outer?: React.CSSProperties;
+  top: React.CSSProperties;
+  bottom: React.CSSProperties;
+  middle?: React.CSSProperties;
 };
 
-const barsToYTransform = {
-  2: 7,
-  3: 4,
+type InnerProps = Omit<Props, "variant" | "direction"> & {
+  double?: boolean;
+  openStyle: OpenStyle;
+};
+
+export const defaultAngles = {
+  right: 45,
+  left: -45,
 } as const;
 
-const BaseHamburger = (props: InnerProps) => {
+export const flipAngles = {
+  right: -135,
+  left: -225,
+} as const;
+
+const Hamburger = (props: InnerProps) => {
   const {
     size = 36,
-    direction = "left",
-    open,
     duration = 0.25,
-    bars,
-    middleStyle,
+    double,
+    openStyle,
+    open,
     style,
     ...buttonProps
   } = props;
@@ -73,6 +81,7 @@ const BaseHamburger = (props: InnerProps) => {
     position: "relative",
     justifyContent: "center",
     alignItems: "center",
+    transition: `all ${duration}s ease`,
   };
 
   const commonLineStyle: React.CSSProperties = {
@@ -83,56 +92,32 @@ const BaseHamburger = (props: InnerProps) => {
     transition: `all ${duration}s ease`,
   };
 
-  const yTranslateMagnitude = size / barsToYTransform[bars];
-  const transformTop = open
-    ? direction === "right"
-      ? "rotate(45deg)"
-      : "rotate(-45deg)"
-    : `translateY(-${yTranslateMagnitude}px)`;
-  const transformBottom = open
-    ? direction === "right"
-      ? "rotate(-45deg)"
-      : "rotate(45deg)"
-    : `translateY(${yTranslateMagnitude}px)`;
+  const yTranslateMagnitude = useMemo(
+    () => size / (double ? 7 : 4),
+    [size, double]
+  );
+
+  const { outer, top, middle, bottom } = openStyle;
+
+  const outerStyle = open ? outer : {};
+  const topStyle = open
+    ? top
+    : { transform: `translateY(-${yTranslateMagnitude}px)` };
+  const bottomStyle = open
+    ? bottom
+    : { transform: `translateY(${yTranslateMagnitude}px)` };
+  const middleStyle = open ? middle : {};
 
   return (
-    <UnstyledButton style={{ ...style, ...buttonStyle }} {...buttonProps}>
-      <span style={{ ...commonLineStyle, transform: transformTop }} />
-      {bars === 3 && (
-        <span style={{ ...commonLineStyle, ...middleStyle?.(open) }} />
-      )}
-      <span style={{ ...commonLineStyle, transform: transformBottom }} />
+    <UnstyledButton
+      style={{ ...style, ...outerStyle, ...buttonStyle }}
+      {...buttonProps}
+    >
+      <span style={{ ...commonLineStyle, ...topStyle }} />
+      {!double && <span style={{ ...commonLineStyle, ...middleStyle }} />}
+      <span style={{ ...commonLineStyle, ...bottomStyle }} />
     </UnstyledButton>
   );
-};
-
-const Hamburger = (props: Props) => {
-  const { variant = "triple-vanish", ...rest } = props;
-  switch (variant) {
-    case "double":
-      return <BaseHamburger {...rest} bars={2} />;
-    case "triple-fade":
-      return (
-        <BaseHamburger
-          {...rest}
-          bars={3}
-          middleStyle={(open) => ({
-            opacity: open ? 0 : 1,
-          })}
-        />
-      );
-    case "triple-vanish":
-    default:
-      return (
-        <BaseHamburger
-          {...rest}
-          bars={3}
-          middleStyle={(open) => ({
-            transform: open ? "scale(0)" : "translateY(0)",
-          })}
-        />
-      );
-  }
 };
 
 export default Hamburger;
