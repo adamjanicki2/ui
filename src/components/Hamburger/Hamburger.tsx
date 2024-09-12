@@ -23,8 +23,9 @@ export type Props = {
   onClick?: () => void;
   /**
    * Aria label for the button
+   * @default "hamburger"
    */
-  "aria-label": string;
+  "aria-label"?: string;
   /**
    * Duration of the animation in seconds
    * @default 0.25
@@ -112,6 +113,7 @@ const Hamburger = (props: InnerProps) => {
     <UnstyledButton
       style={{ ...style, ...outerStyle, ...buttonStyle }}
       {...buttonProps}
+      aria-label={buttonProps["aria-label"] || "hamburger"}
     >
       <span style={{ ...commonLineStyle, ...topStyle }} />
       {!double && <span style={{ ...commonLineStyle, ...middleStyle }} />}
