@@ -77,6 +77,16 @@ export const inputSnippet = `
 <TextArea placeholder="Type something..." />
 `;
 
+export const burgerSnippet = `
+<DoubleSpin open={burgerOpen} onClick={toggleBurger} className="red" />
+<DoubleFlip open={burgerOpen} onClick={toggleBurger} className="orange" />
+<DoubleCross open={burgerOpen} onClick={toggleBurger} className="yellow" />
+<TripleSpin open={burgerOpen} onClick={toggleBurger} className="green" />
+<TripleFlip open={burgerOpen} onClick={toggleBurger} className="blue" />
+<TripleFade open={burgerOpen} onClick={toggleBurger} className="indigo" />
+<TriplePrestige open={burgerOpen} onClick={toggleBurger} className="violet" />
+`;
+
 export const layerSnippet = `
 <Layer onClose={() => setLayerOpen(false)}>
   <div className="bg-white">

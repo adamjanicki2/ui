@@ -6,6 +6,7 @@ import {
   animatedSnippet,
   badgeSnippet,
   bannerSnippet,
+  burgerSnippet,
   buttonSnippet,
   clickOutsideSnippet,
   inputSnippet,
@@ -30,6 +31,15 @@ import {
   Spinner,
   Layer,
 } from "@adamjanicki/ui";
+import {
+  DoubleCross,
+  DoubleFlip,
+  DoubleSpin,
+  TripleFade,
+  TripleFlip,
+  TripleSpin,
+  TriplePrestige,
+} from "@adamjanicki/ui/components/Hamburger";
 import { useState } from "react";
 
 export default function Components() {
@@ -37,6 +47,8 @@ export default function Components() {
   const [inputValue, setInputValue] = useState("Here's looking at you, kid.");
   const [selectValue, setSelectValue] = useState("orange");
   const [layerOpen, setLayerOpen] = useState(false);
+  const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const toggleHamburger = () => setHamburgerOpen(!hamburgerOpen);
   return (
     <section id="components-section">
       <Heading level={1}>Components</Heading>
@@ -187,6 +199,54 @@ export default function Components() {
         </ClickOutside>
       </div>
       <HiddenSnippet>{clickOutsideSnippet}</HiddenSnippet>
+      <Heading level={2}>Hamburger</Heading>
+      <Para>
+        I've had a recent fascination with making a custom hamburger button
+        after I realized how fun it is to mess around with the{" "}
+        <code>transform</code> css property to create all sorts of different
+        variants of buttons. I've started simple with just 7 different variants,
+        which you can checkout below!
+      </Para>
+      <div className="flex items-center justify-center flex-wrap">
+        <DoubleSpin
+          open={hamburgerOpen}
+          onClick={toggleHamburger}
+          className="ma1 red"
+        />
+        <DoubleFlip
+          open={hamburgerOpen}
+          onClick={toggleHamburger}
+          className="ma1 orange"
+        />
+        <DoubleCross
+          open={hamburgerOpen}
+          onClick={toggleHamburger}
+          className="ma1 yellow"
+        />
+        <TripleSpin
+          open={hamburgerOpen}
+          onClick={toggleHamburger}
+          className="ma1 green"
+        />
+        <TripleFlip
+          open={hamburgerOpen}
+          onClick={toggleHamburger}
+          className="ma1 blue"
+        />
+        <TripleFade
+          open={hamburgerOpen}
+          onClick={toggleHamburger}
+          className="ma1"
+          style={{ color: "#4B0082" }}
+        />
+        <TriplePrestige
+          open={hamburgerOpen}
+          onClick={toggleHamburger}
+          className="ma1"
+          style={{ color: "#7F00FF" }}
+        />
+      </div>
+      <HiddenSnippet>{burgerSnippet}</HiddenSnippet>
       <Heading level={2}>Input</Heading>
       <Para>
         I have 2 different types of inputs: one is a standard input with some

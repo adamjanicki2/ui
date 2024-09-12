@@ -26,7 +26,7 @@ export default function Functions() {
       <Heading level={2}>scrollToId</Heading>
       <Para>
         Just while building this docs site, I actually refactors some exising
-        logic from the <Link to="#useScrollToHash">useScrollToHash</Link> hook
+        logic from the <Link to="#usescrolltohash">useScrollToHash</Link> hook
         into a simple function that can be used anywhere in your code. It's a
         simple function that scrolls to an element with a specific ID.
       </Para>
