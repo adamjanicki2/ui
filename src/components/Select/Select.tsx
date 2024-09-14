@@ -36,14 +36,6 @@ type Props = Omit<
    * Name of the select for accessibility purposes
    */
   "aria-label": string;
-  /**
-   * [Optional] The styles to apply to the select element
-   */
-  innerStyle?: React.CSSProperties;
-  /**
-   * [Optional] The class name to apply to the select element
-   */
-  innerClassName?: string;
 };
 
 const identity = (x: string) => x;
@@ -56,8 +48,6 @@ const Select = (
     getOptionLabel = identity,
     corners = "rounded",
     style,
-    innerStyle,
-    innerClassName,
     disabled,
     ...props
   }: Props,
@@ -67,6 +57,7 @@ const Select = (
     className={
       classNames(
         "ajui-select-container",
+        `corners--${corners}`,
         disabled ? "ajui-select-disabled" : undefined,
         className
       ) || undefined
@@ -76,11 +67,7 @@ const Select = (
     <select
       {...props}
       ref={ref}
-      className={classNames(
-        `ajui-select-base corners--${corners}`,
-        innerClassName
-      )}
-      style={innerStyle}
+      className={`ajui-select-base corners--${corners}`}
       disabled={disabled}
     >
       {options.map((option, index) => (

@@ -113,7 +113,7 @@ button:not([disabled]):focus-visible {
   outline-offset: 0;
 }
 .ajui-input-default:not([disabled]):focus-within,
-.ajui-select-base:not([disabled]):focus-within {
+.ajui-select-container:not([disabled]):focus-within {
   outline: 3px solid var(--ajui-focus-ring-color);
   outline-offset: 0;
 }
@@ -298,6 +298,10 @@ a {
   position: relative;
   padding: 0;
   width: fit-content;
+  transition: outline var(--ajui-default-transition);
+  outline: 0px solid transparent;
+  box-shadow: inset 0 0 0 1px var(--ajui-select-border);
+  background-color: inherit;
 }
 
 .ajui-select-disabled {
@@ -308,16 +312,14 @@ a {
 .ajui-select-base {
   width: 100%;
   color: inherit;
-  outline: 0px solid transparent;
   border: none;
+  outline: none;
+  box-shadow: none;
   cursor: pointer;
   background-color: inherit;
   padding: 0.75rem 1.75rem 0.75rem 0.5rem;
   font-size: 1rem;
   font-weight: 400;
-  transition: outline var(--ajui-default-transition);
-  outline: 0px solid transparent;
-  box-shadow: inset 0 0 0 1px var(--ajui-select-border);
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
