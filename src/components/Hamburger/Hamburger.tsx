@@ -8,6 +8,10 @@ export type Props = {
    */
   size?: number;
   /**
+   * Line height of the bars in pixels
+   */
+  lineHeight?: number;
+  /**
    * Direction the animation originates from;
    * play around with this to see how it affects the animation because some of the animations are complicated
    * @default "left"
@@ -76,9 +80,10 @@ const Hamburger = (props: InnerProps) => {
     open,
     style,
     rounded,
+    lineHeight: inputLineHeight,
     ...buttonProps
   } = props;
-  const lineHeight = Math.max(1, Math.round(size / 20));
+  const lineHeight = inputLineHeight || Math.max(1, Math.round(size / 20));
 
   const buttonStyle: React.CSSProperties = {
     width: size,
