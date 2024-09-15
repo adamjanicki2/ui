@@ -345,7 +345,7 @@ export default function Components() {
           <Select
             aria-label="select"
             options={["apple", "orange", "banana", "kiwi"]}
-            innerClassName="bg-white"
+            className="bg-white"
           />
         </div>
         <div className="ma1">
@@ -355,7 +355,7 @@ export default function Components() {
             options={["apple", "orange", "banana", "kiwi"]}
             onChange={(e) => setSelectValue(e.target.value)}
             value={selectValue}
-            innerClassName="bg-white"
+            className="bg-white"
           />
         </div>
       </div>
