@@ -107,11 +107,11 @@ a:focus:not(:focus-visible) {
   outline: none;
 }
 
-a:not([disabled]):focus-visible,
-button:not([disabled]):focus-visible {
-  outline: 3px solid var(--ajui-link-color);
-  outline-offset: 0;
+a,
+button {
+  outline-color: var(--ajui-link-color);
 }
+
 .ajui-input-default:not([disabled]):focus-within,
 .ajui-select-container:not([disabled]):focus-within {
   outline: 3px solid var(--ajui-focus-ring-color);
@@ -243,14 +243,14 @@ a {
 }
 
 @media (hover: hover) {
-  .ajui-button--primary:not([disabled]):is(:hover, :focus-visible),
-  .ajui-icon-button:not([disabled]):is(:hover, :focus-visible),
-  .ajui-link-default:is(:hover, :focus-visible) {
+  .ajui-button--primary:not([disabled]):hover,
+  .ajui-icon-button:not([disabled]):hover,
+  .ajui-link-default:hover {
     opacity: var(--ajui-default-opacity-dim);
   }
 
-  .ajui-button--transparent:not([disabled]):is(:hover, :focus-visible),
-  .ajui-button--secondary:not([disabled]):is(:hover, :focus-visible) {
+  .ajui-button--transparent:not([disabled]):hover,
+  .ajui-button--secondary:not([disabled]):hover {
     box-shadow: inset 0 0 0 1px var(--ajui-button-secondary-border-hover);
   }
 }
