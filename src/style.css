@@ -204,8 +204,14 @@ a {
   font-weight: 500;
 }
 
-.ajui-button-default {
+.ajui-button-size--regular {
   padding: 0.5rem 1rem;
+}
+
+.ajui-button-size--small {
+  padding: 4px 6px;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .ajui-icon-button {

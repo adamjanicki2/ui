@@ -43,6 +43,11 @@ type ButtonProps = DefaultButtonProps & {
    * @default "rounded"
    */
   corners?: CornerType;
+  /**
+   * [Optional] Size of the button, if wishing to make smaller
+   * @default "regular"
+   */
+  size?: "regular" | "small";
 };
 
 export const UnstyledButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
@@ -80,11 +85,20 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
 );
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = "primary", corners = "rounded", className, ...rest }, ref) => (
+  (
+    {
+      variant = "primary",
+      corners = "rounded",
+      className,
+      size = "regular",
+      ...rest
+    },
+    ref
+  ) => (
     <UnstyledButton
       {...rest}
       className={classNames(
-        `ajui-button-default ajui-button--${variant} corners--${corners}`,
+        `ajui-button--${variant} ajui-button-size--${size} corners--${corners}`,
         className
       )}
       ref={ref}
