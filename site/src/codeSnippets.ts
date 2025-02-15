@@ -192,3 +192,15 @@ export const scrollToIdSnippet = `
 // scrolls to an element with a specific ID
 scrollToId("some-id");
 `;
+
+export const assertDefinedSnippet = `
+const map = new Map<number, number>([[1, 2], [2, 3]]);
+const existing = assertDefined(map.get(1)); // has type number
+const nonExisting = assertDefined(map.get(10)); // throws dynamic error
+`;
+
+export const assertSnippet = `
+const map = new Map<number, number>([[1, 2], [2, 3]]);
+const value = map.get(1);
+assert(value); // throws error if value is falsy
+`;

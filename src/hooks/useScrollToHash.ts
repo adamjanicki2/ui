@@ -26,7 +26,6 @@ const useScrollToHash = (config: UseScrollToHashConfig = {}) => {
     const hash = window.location.hash;
     if (!active || hash?.length <= 1) return;
     const id = hash.substring(1);
-    scrollToId(id, behavior);
     if (delay !== undefined) {
       const timeout = setTimeout(() => scrollToId(id, behavior), delay);
       return () => clearTimeout(timeout);

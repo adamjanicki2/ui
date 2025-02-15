@@ -1,7 +1,12 @@
 import Snippet from "src/components/Snippet";
 import Heading from "src/components/Heading";
 import Para from "src/components/Para";
-import { classNamesSnippet, scrollToIdSnippet } from "src/codeSnippets";
+import {
+  assertDefinedSnippet,
+  assertSnippet,
+  classNamesSnippet,
+  scrollToIdSnippet,
+} from "src/codeSnippets";
 import { Link } from "@adamjanicki/ui";
 
 export default function Functions() {
@@ -31,6 +36,20 @@ export default function Functions() {
         simple function that scrolls to an element with a specific ID.
       </Para>
       <Snippet>{scrollToIdSnippet}</Snippet>
+      <Heading level={2}>assert</Heading>
+      <Para>
+        A super simple function with throws an error if the input is a falsy
+        value. Useful for not writing verbose error throwing logic.
+      </Para>
+      <Snippet>{assertSnippet}</Snippet>
+      <Heading level={2}>assertDefined</Heading>
+      <Para>
+        Similar to the assert function, but it's more widely applicable for
+        getting static type coverage without having to use the "as type"
+        operator. The function throws a dynamic error if the value passed in is
+        undefined.
+      </Para>
+      <Snippet>{assertDefinedSnippet}</Snippet>
     </section>
   );
 }
