@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useFocusTrap, useScrollLock } from "../../hooks";
 import classNames from "../../functions/classNames";
 
-type LayerProps = {
+type Props = {
   /**
    * Callback that fires when the user clicks outside the layer
    */
@@ -30,6 +30,15 @@ type LayerProps = {
    * @default false
    */
   returnFocusOnEscape?: boolean;
+  /**
+   * [Optional] disable the scroll lock behavior of the layer
+   * @default false
+   */
+  disableScrollLock?: boolean;
+};
+
+type BaseProps = Omit<Props, "disableScrollLock" | "returnFocusOnEscape"> & {
+  visible: boolean;
 };
 
 const BaseLayer = ({
@@ -39,7 +48,7 @@ const BaseLayer = ({
   className,
   disableEscape = false,
   visible,
-}: LayerProps & { visible: boolean }): JSX.Element => {
+}: BaseProps): JSX.Element => {
   const focusRef = useFocusTrap<HTMLElement>(visible);
 
   useEffect(() => {
@@ -73,11 +82,12 @@ const BaseLayer = ({
 };
 
 const Layer = ({
-  returnFocusOnEscape = false,
+  returnFocusOnEscape,
+  disableScrollLock,
   ...props
-}: LayerProps): JSX.Element => {
+}: Props): JSX.Element => {
   // Lock and unlock on mount and unmount
-  useScrollLock();
+  useScrollLock(!disableScrollLock);
 
   useEffect(() => {
     return () => {
