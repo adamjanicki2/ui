@@ -48,7 +48,11 @@ export default function Components() {
   const [selectValue, setSelectValue] = useState("orange");
   const [layerOpen, setLayerOpen] = useState(false);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const [clickOutsideText, setClickOutsideText] = useState("Click outside me!");
   const toggleHamburger = () => setHamburgerOpen(!hamburgerOpen);
+
+  const buttonAction = () => window.alert("You clicked me!");
+
   return (
     <section id="components-section">
       <Heading level={1}>Components</Heading>
@@ -173,13 +177,13 @@ export default function Components() {
         the required use case.
       </Para>
       <div className="flex items-center justify-center flex-wrap">
-        <Button className="ma1" variant="primary">
+        <Button className="ma1" variant="primary" onClick={buttonAction}>
           Primary
         </Button>
-        <Button className="ma1" variant="secondary">
+        <Button className="ma1" variant="secondary" onClick={buttonAction}>
           Secondary
         </Button>
-        <Button className="ma1" variant="transparent">
+        <Button className="ma1" variant="transparent" onClick={buttonAction}>
           Transparent
         </Button>
         <UnstyledButton className="ma1">Unstyled</UnstyledButton>
@@ -194,8 +198,13 @@ export default function Components() {
         extra hook magic and click listeners.
       </Para>
       <div className="w-fc m-auto">
-        <ClickOutside onClickOutside={() => console.log("You did it!")}>
-          <Alert type="info">Click outside me! (Check the console)</Alert>
+        <ClickOutside
+          onClickOutside={() => {
+            setClickOutsideText("You clicked outside!");
+            setTimeout(() => setClickOutsideText("Click outside!"), 1000);
+          }}
+        >
+          <Alert type="info">{clickOutsideText}</Alert>
         </ClickOutside>
       </div>
       <HiddenSnippet>{clickOutsideSnippet}</HiddenSnippet>
@@ -257,11 +266,11 @@ export default function Components() {
       </Para>
       <div className="flex items-center w-fc m-auto flex-wrap">
         <div className="ma1">
-          <div className="fw5 f6">Uncontrolled</div>
+          <div className="fw5 f6 mb1">Uncontrolled</div>
           <Input placeholder="Type something..." className="bg-white" />
         </div>
         <div className="ma1">
-          <div className="fw5 f6">Controlled</div>
+          <div className="fw5 f6 mb1">Controlled</div>
           <Input
             placeholder="Type something..."
             className="bg-white"
@@ -270,7 +279,7 @@ export default function Components() {
           />
         </div>
         <div className="ma1">
-          <div className="fw5 f6">Icon Input</div>
+          <div className="fw5 f6 mb1">Icon Input</div>
           <IconInput
             startIcon={<span className="ml2">🔎</span>}
             inputProps={{ placeholder: "Search..." }}
@@ -278,7 +287,7 @@ export default function Components() {
           />
         </div>
         <div className="ma1">
-          <div className="fw5 f6">Icon Input</div>
+          <div className="fw5 f6 mb1">Area</div>
           <TextArea className="bg-white" placeholder="Type something..." />
         </div>
       </div>
@@ -341,7 +350,7 @@ export default function Components() {
       </Para>
       <div className="flex items-center m-auto w-fc flex-wrap">
         <div className="ma1">
-          <div className="fw5 f6">Uncontrolled</div>
+          <div className="fw5 f6 mb1">Uncontrolled</div>
           <Select
             aria-label="select"
             options={["apple", "orange", "banana", "kiwi"]}
@@ -349,7 +358,7 @@ export default function Components() {
           />
         </div>
         <div className="ma1">
-          <div className="fw5 f6">Controlled</div>
+          <div className="fw5 f6 mb1">Controlled</div>
           <Select
             aria-label="select"
             options={["apple", "orange", "banana", "kiwi"]}
