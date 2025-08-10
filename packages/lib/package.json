@@ -1,0 +1,29 @@
+{
+  "name": "@adamjanicki/ui",
+  "version": "1.5.4",
+  "description": "Basic UI components and hooks for React in TypeScript",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "author": "Adam Janicki",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamjanicki2/ui.git"
+  },
+  "scripts": {
+    "clean": "./clean.sh",
+    "lint": "eslint src --max-warnings=0",
+    "build": "npm run clean && npm run lint && tsc; cp src/style.css ./style.css",
+    "prepare": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "typescript": "^5.9.2"
+  }
+}

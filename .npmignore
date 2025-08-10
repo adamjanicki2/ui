@@ -1,9 +1,0 @@
-node_modules
-src
-test
-site
-.*
-eslint.config.js
-package-lock.json
-tsconfig*
-clean.sh

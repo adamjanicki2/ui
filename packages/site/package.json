@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@adamjanicki/ui": "^1.5.4",
+    "@adamjanicki/ui": "*",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
@@ -30,7 +30,6 @@
     "@vitejs/plugin-react": "^5.0.0",
     "gh-pages": "^6.0.0",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.39.0",
     "vite": "^7.1.1",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.3.0"

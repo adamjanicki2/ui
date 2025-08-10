@@ -1,24 +1,19 @@
-# Ignore everything
-*
+# dependencies
+node_modules/
+package-lock.json
 
-# Include specific directories
-!src/
-!src/**/*
-!test/
-!test/**/*
-!site/
-!site/**/*
-site/node_modules
-site/package-lock.json
-site/build
+# site
+build
 
-# Include specific files
-!.eslintrc.json
-!package.json
-!README.md
-!LICENSE
-!.npmignore
-!clean.sh
-!tsconfig*
-!.gitignore
-!eslint.config.js
+# lib
+packages/lib/*
+
+# un-ignore src and specific files
+!packages/lib/src/
+!packages/lib/.npmignore
+!packages/lib/clean.sh
+!packages/lib/eslint.config.js
+!packages/lib/package.json
+!packages/lib/tsconfig.json
+!packages/lib/LICENSE
+!packages/lib/README.md
