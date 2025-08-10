@@ -1,6 +1,5 @@
 node_modules
 src
 clean.sh
-eslint.config.js
 package-lock.json
 tsconfig.json

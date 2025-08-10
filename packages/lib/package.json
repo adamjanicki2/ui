@@ -13,7 +13,7 @@
   },
   "scripts": {
     "clean": "./clean.sh",
-    "lint": "eslint src --max-warnings=0 --ext .ts,.tsx",
+    "lint": "eslint src --max-warnings=0",
     "build": "npm run clean && npm run lint && tsc; cp src/style.css ./style.css",
     "prepare": "npm run build"
   },
@@ -24,9 +24,6 @@
   "devDependencies": {
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.39.0"
+    "typescript": "^5.9.2"
   }
 }
