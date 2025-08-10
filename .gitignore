@@ -17,8 +17,8 @@ site/build
 !package.json
 !README.md
 !LICENSE
-!jest.config.js
 !.npmignore
 !clean.sh
 !tsconfig*
 !.gitignore
+!eslint.config.js
