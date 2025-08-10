@@ -103,10 +103,9 @@ export const linkSnippet = `
 
 export const selectSnippet = `
 const fruits = ["apple", "orange", "banana", "kiwi"];
-<Select options={fruits} aria-label="select fruit" />
+<Select options={fruits} />
 <Select 
   options={fruits} 
-  aria-label="select fruit" 
   value={selectedFruit}
   onChange={(e) => setSelectedFruit(e.target.value)}
 />

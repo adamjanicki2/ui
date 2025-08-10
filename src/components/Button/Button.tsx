@@ -20,11 +20,7 @@ type DefaultButtonProps = React.DetailedHTMLProps<
   LinkElement?: CustomLinkElement;
 };
 
-type IconButtonProps = Omit<DefaultButtonProps, "children" | "aria-label"> & {
-  /**
-   * Name of the button for accessibility purposes
-   */
-  "aria-label": string;
+type IconButtonProps = Omit<DefaultButtonProps, "children"> & {
   /**
    * Icon to display inside the button
    * I would usually use FontAwesome, but for added flexibility, it's any node
