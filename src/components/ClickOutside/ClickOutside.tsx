@@ -1,5 +1,12 @@
-import { cloneElement, useCallback, useEffect, useRef } from "react";
-import type { ReactElement, SyntheticEvent } from "react";
+import {
+  cloneElement,
+  useCallback,
+  useEffect,
+  useRef,
+  JSX,
+  type ReactElement,
+  type SyntheticEvent,
+} from "react";
 
 type Props = {
   /**
@@ -16,7 +23,7 @@ type Props = {
 };
 
 const ClickOutside = ({ children, onClickOutside }: Props): JSX.Element => {
-  const ref = useRef<HTMLElement>();
+  const ref = useRef<HTMLElement | null>(null);
   const bubbledRef = useRef(false);
   const startedRef = useRef(false);
 
@@ -36,8 +43,9 @@ const ClickOutside = ({ children, onClickOutside }: Props): JSX.Element => {
 
       if (!startedRef.current || !ref.current || bubbledUp) return;
 
-      const isOnEventPath = event.composedPath().includes(ref.current);
-      !isOnEventPath && onClickOutside(event);
+      if (!event.composedPath().includes(ref.current)) {
+        onClickOutside(event);
+      }
     },
     [onClickOutside]
   );
@@ -54,9 +62,9 @@ const ClickOutside = ({ children, onClickOutside }: Props): JSX.Element => {
       // from the child element, so we can ignore it if it
       // happens on the element itself
       bubbledRef.current = true;
-      children.props.onClick?.(event);
+      (children as any).props.onClick?.(event);
     },
-  });
+  } as any);
 };
 
 export default ClickOutside;

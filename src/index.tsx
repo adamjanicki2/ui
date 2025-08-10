@@ -17,3 +17,5 @@ export { default as Layer } from "./components/Layer";
 export { default as Spinner } from "./components/Spinner";
 // Hooks
 export * from "./hooks";
+// Functions
+export * from "./functions";

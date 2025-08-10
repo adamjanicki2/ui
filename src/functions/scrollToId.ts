@@ -14,6 +14,6 @@ export default function scrollToId(
       element.scrollIntoView({ behavior });
     }
   } catch {
-    // do nothing
+    return;
   }
 }

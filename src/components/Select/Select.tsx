@@ -2,12 +2,9 @@ import React, { forwardRef } from "react";
 import classNames from "../../functions/classNames";
 import { CornerType } from "../../types";
 
-type Props = Omit<
-  React.DetailedHTMLProps<
-    React.SelectHTMLAttributes<HTMLSelectElement>,
-    HTMLSelectElement
-  >,
-  "aria-label"
+type Props = React.DetailedHTMLProps<
+  React.SelectHTMLAttributes<HTMLSelectElement>,
+  HTMLSelectElement
 > & {
   /**
    * Array of options to display in the select
@@ -32,10 +29,6 @@ type Props = Omit<
    * @default "rounded"
    */
   corners?: CornerType;
-  /**
-   * Name of the select for accessibility purposes
-   */
-  "aria-label": string;
 };
 
 const identity = (x: string) => x;

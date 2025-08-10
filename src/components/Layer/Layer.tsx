@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, JSX } from "react";
 import { useFocusTrap, useScrollLock } from "../../hooks";
 import classNames from "../../functions/classNames";
 
@@ -74,9 +74,9 @@ const BaseLayer = ({
         ref: focusRef,
         onMouseDown: (e: React.SyntheticEvent) => {
           e.stopPropagation();
-          children.props.onMouseDown?.(e);
+          (children as any).props?.onMouseDown?.(e);
         },
-      })}
+      } as any)}
     </div>
   );
 };
