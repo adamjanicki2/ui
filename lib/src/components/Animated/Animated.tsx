@@ -54,33 +54,48 @@ type Props = {
   style?: React.CSSProperties;
 };
 
-const Animated = ({
-  animated,
-  duration = 0.25,
-  keepMounted = false,
-  animateTo,
-  animateFrom,
-  children,
-  className,
-  style,
-}: Props) => {
+const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const {
+    animated,
+    duration = 0.25,
+    keepMounted = false,
+    animateTo,
+    animateFrom,
+    children,
+    className,
+    style,
+  } = props;
+
   const [shouldRender, setShouldRender] = useState(animated || keepMounted);
   const [animationState, setAnimationState] = useState<"forward" | "reverse">(
     animated ? "forward" : "reverse"
   );
 
   const timeoutRef = useRef<number | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
-  useEffect(() => {
+  const clearRefs = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
 
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    clearRefs();
+
     if (animated) {
       setShouldRender(true);
-      // Use requestAnimationFrame to ensure browser paints the visible state
-      requestAnimationFrame(() => setAnimationState("forward"));
+      // Use requestAnimationFrame so browser paints shouldRender first
+      animationFrameRef.current = requestAnimationFrame(() => {
+        setAnimationState("forward");
+        animationFrameRef.current = null;
+      });
     } else {
       setAnimationState("reverse");
 
@@ -93,12 +108,7 @@ const Animated = ({
       }, duration * 1000);
     }
 
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-    };
+    return clearRefs;
   }, [animated, duration, keepMounted, shouldRender]);
 
   if (!shouldRender) return null;
@@ -114,10 +124,11 @@ const Animated = ({
         ...style,
         ...currentAnimation?.style,
       }}
+      ref={ref}
     >
       {children}
     </div>
   );
-};
+});
 
 export default Animated;
