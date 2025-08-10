@@ -2,18 +2,18 @@
 node_modules/
 package-lock.json
 
-# site
+# demo
 build
 
 # lib
-packages/lib/*
+lib/*
 
 # un-ignore src and specific files
-!packages/lib/src/
-!packages/lib/.npmignore
-!packages/lib/clean.sh
-!packages/lib/eslint.config.js
-!packages/lib/package.json
-!packages/lib/tsconfig.json
-!packages/lib/LICENSE
-!packages/lib/README.md
+!lib/src/
+!lib/.npmignore
+!lib/clean.sh
+!lib/eslint.config.js
+!lib/package.json
+!lib/tsconfig.json
+!lib/LICENSE
+!lib/README.md
