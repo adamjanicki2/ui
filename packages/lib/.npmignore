@@ -1,9 +1,6 @@
 node_modules
 src
-test
-site
-.*
+clean.sh
 eslint.config.js
 package-lock.json
-tsconfig*
-clean.sh
+tsconfig.json
