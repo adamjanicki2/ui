@@ -1,39 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import classNames from "../../functions/classNames";
 
 type Props = {
   /**
-   * Whether the component is visible or not
+   * Whether to begin the animation.
+   * Set to true to start animation, false to start the exit animation.
    */
-  visible: boolean;
+  animated: boolean;
   /**
-   * Duration of the animation in milliseconds
+   * Duration of the animation in seconds
+   * @default 0.25
    */
   duration?: number;
   /**
-   * Whether to keep the component mounted when it is not visible
+   * Whether to keep the component mounted when it is not animated
+   * @default false
    */
-  keepMountedOnExit?: boolean;
+  keepMounted?: boolean;
   /**
    * Animation configuration for the enter state
    */
-  enter?: {
+  animateTo?: {
     /**
-     * Class name to apply to the component during the enter animation
+     * Class name to apply to the component while animated (after state)
      */
     className?: string;
     /**
-     * Inline styles to apply to the component during the enter animation
+     * Inline styles to apply to the component while animated
      */
     style?: React.CSSProperties;
   };
-  exit?: {
+  animateFrom?: {
     /**
-     * Class name to apply to the component during the exit animation
+     * Class name to apply to the component when not animated (before state)
      */
     className?: string;
     /**
-     * Inline styles to apply to the component during the exit animation
+     * Inline styles to apply to the component when not animated
      */
     style?: React.CSSProperties;
   };
@@ -52,54 +55,67 @@ type Props = {
 };
 
 const Animated = ({
-  visible,
-  duration = 250,
-  keepMountedOnExit = false,
-  enter,
-  exit,
+  animated,
+  duration = 0.25,
+  keepMounted = false,
+  animateTo,
+  animateFrom,
   children,
   className,
   style,
 }: Props) => {
-  const [shouldRender, setShouldRender] = useState(visible);
-  const [animationState, setAnimationState] = useState<"entering" | "exiting">(
-    visible ? "entering" : "exiting"
+  const [shouldRender, setShouldRender] = useState(animated || keepMounted);
+  const [animationState, setAnimationState] = useState<"forward" | "reverse">(
+    animated ? "forward" : "reverse"
   );
 
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
+  const timeoutRef = useRef<number | null>(null);
 
-    if (visible && !shouldRender) {
-      // Start enter animation
-      setShouldRender(true);
-      setAnimationState("entering");
-    } else if (!visible && shouldRender) {
-      // Start exit animation
-      setAnimationState("exiting");
-      timeoutId = setTimeout(() => {
-        if (!keepMountedOnExit) {
-          setShouldRender(false);
-        }
-      }, duration);
+  useEffect(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
     }
 
-    return () => clearTimeout(timeoutId);
-  }, [visible, shouldRender, duration, keepMountedOnExit]);
+    if (animated) {
+      setShouldRender(true);
+      // Use requestAnimationFrame to ensure browser paints the visible state
+      requestAnimationFrame(() => setAnimationState("forward"));
+    } else {
+      setAnimationState("reverse");
+
+      timeoutRef.current = window.setTimeout(() => {
+        if (!keepMounted) {
+          setShouldRender(false);
+        }
+        timeoutRef.current = null;
+        // convert to ms
+      }, duration * 1000);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, [animated, duration, keepMounted, shouldRender]);
+
+  if (!shouldRender) return null;
+
+  const currentAnimation =
+    animationState === "forward" ? animateTo : animateFrom;
 
   return (
     <div
-      className={classNames(
-        className,
-        animationState === "entering" ? enter?.className : exit?.className
-      )}
+      className={classNames(className, currentAnimation?.className)}
       style={{
+        transition: `all ${duration}s ease-in-out`,
         ...style,
-        ...(animationState === "entering" ? enter?.style : exit?.style),
-        transition: `all ${duration}ms ease-in-out`,
+        ...currentAnimation?.style,
       }}
-      aria-hidden={!visible}
     >
-      {shouldRender && children}
+      {children}
     </div>
   );
 };

@@ -28,9 +28,9 @@ export const alertSnippet = `
 
 export const animatedSnippet = `
 <Animated
-  visible={animatedOpen}
-  enter={{ style: { opacity: 1 } }}
-  exit={{ style: { opacity: 0 } }}
+  animated={animatedOpen}
+  animateTo={{ style: { opacity: 1 } }}
+  animateFrom={{ style: { opacity: 0 } }}
 >
   <Alert type="info">This is an animated alert!</Alert>
 </Animated>

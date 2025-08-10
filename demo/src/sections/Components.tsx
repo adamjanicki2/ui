@@ -109,9 +109,9 @@ export default function Components() {
           {animatedOpen ? "Close" : "Open"} Animated Alert
         </Button>
         <Animated
-          visible={animatedOpen}
-          enter={{ style: { opacity: 1 } }}
-          exit={{ style: { opacity: 0 } }}
+          animated={animatedOpen}
+          animateTo={{ style: { opacity: 1 } }}
+          animateFrom={{ style: { opacity: 0 } }}
           className="w-100"
         >
           <Alert type="info">This is an animated alert!</Alert>
