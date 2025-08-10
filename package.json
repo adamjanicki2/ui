@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/*"
+    "lib",
+    "demo"
   ],
   "devDependencies": {
     "eslint-plugin-react-hooks": "^5.2.0",
