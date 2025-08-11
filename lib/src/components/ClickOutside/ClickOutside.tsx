@@ -1,19 +1,11 @@
-import {
-  cloneElement,
-  useCallback,
-  useEffect,
-  useRef,
-  JSX,
-  type ReactElement,
-  type SyntheticEvent,
-} from "react";
+import React, { cloneElement, useCallback, useEffect, useRef } from "react";
 
-type Props = {
+type Props<T extends React.ElementType> = {
   /**
    * The children to render.
    * IMPORTANT: The child must be a single element which can hold a ref.
    */
-  children: ReactElement;
+  children: React.ReactElement<React.ComponentPropsWithRef<T>>;
   /**
    * The function to call when a click occurs outside the child element.
    *
@@ -22,26 +14,31 @@ type Props = {
   onClickOutside: (event: MouseEvent) => void;
 };
 
-const ClickOutside = ({ children, onClickOutside }: Props): JSX.Element => {
-  const ref = useRef<HTMLElement | null>(null);
-  const bubbledRef = useRef(false);
+const ClickOutside = <T extends React.ElementType>({
+  children,
+  onClickOutside,
+}: Props<T>): React.JSX.Element => {
+  const ref = useRef<Element | null>(null);
+  const clickWithinChildRef = useRef(false);
   const startedRef = useRef(false);
 
   useEffect(() => {
-    window.setTimeout(() => {
+    const timeout = window.setTimeout(() => {
       startedRef.current = true;
     }, 0);
+
     return () => {
+      clearTimeout(timeout);
       startedRef.current = false;
     };
   }, []);
 
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
-      const bubbledUp = bubbledRef.current;
-      bubbledRef.current = false;
+      const clickedWithinChild = clickWithinChildRef.current;
+      clickWithinChildRef.current = false;
 
-      if (!startedRef.current || !ref.current || bubbledUp) return;
+      if (!startedRef.current || !ref.current || clickedWithinChild) return;
 
       if (!event.composedPath().includes(ref.current)) {
         onClickOutside(event);
@@ -57,12 +54,11 @@ const ClickOutside = ({ children, onClickOutside }: Props): JSX.Element => {
 
   return cloneElement(children, {
     ref,
-    onClick: (event: SyntheticEvent) => {
-      // point of this is to let us know that click bubbled up
-      // from the child element, so we can ignore it if it
-      // happens on the element itself
-      bubbledRef.current = true;
-      (children as any).props.onClick?.(event);
+    onClick: (event: React.SyntheticEvent) => {
+      // point of this is to let us know that click originated
+      // from the child element, so we can ignore it if the click ends outside
+      clickWithinChildRef.current = true;
+      children.props?.onClick?.(event);
     },
   } as any);
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, JSX } from "react";
+import React, { useEffect } from "react";
 import { useFocusTrap, useScrollLock } from "../../hooks";
 import classNames from "../../functions/classNames";
 
@@ -48,7 +48,7 @@ const BaseLayer = ({
   className,
   disableEscape = false,
   visible,
-}: BaseProps): JSX.Element => {
+}: BaseProps): React.JSX.Element => {
   const focusRef = useFocusTrap<HTMLElement>(visible);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const Layer = ({
   returnFocusOnEscape,
   disableScrollLock,
   ...props
-}: Props): JSX.Element => {
+}: Props): React.JSX.Element => {
   // Lock and unlock on mount and unmount
   useScrollLock(!disableScrollLock);
 
