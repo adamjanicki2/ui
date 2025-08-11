@@ -390,6 +390,7 @@ a {
 
 /* Carousel */
 .ajui-carousel {
+  max-width: 100%;
   position: relative;
   overflow: hidden;
   min-height: 64px;
