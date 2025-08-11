@@ -2,6 +2,21 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { classNames } from "../../functions";
 import Button from "../Button";
 
+type ButtonProps = {
+  /**
+   * Children to render inside the button
+   */
+  children?: React.ReactNode;
+  /**
+   * Additional class name to apply to the button
+   */
+  className?: string;
+  /**
+   * Additional styles to apply to the button
+   */
+  style?: React.CSSProperties;
+};
+
 type Props = {
   /**
    * The child elements/slides of the carousel
@@ -28,11 +43,23 @@ type Props = {
    */
   hideDots?: boolean;
   /**
-   * [Optional] Additional class names to apply to the banner.
+   * [Optional] props to supply to the dot buttons
+   */
+  dotProps?: Omit<ButtonProps, "children">;
+  /**
+   * [Optional] props to supply to the left arrow button
+   */
+  leftArrowProps?: ButtonProps;
+  /**
+   * [Optional] props to supply to the right arrow button
+   */
+  rightArrowProps?: ButtonProps;
+  /**
+   * [Optional] Additional class name to apply to the carousel.
    */
   className?: string;
   /**
-   * [Optional] Additional styles to apply to the banner.
+   * [Optional] Additional styles to apply to the carousel.
    */
   style?: React.CSSProperties;
 };
@@ -46,7 +73,16 @@ type State = {
 const DEFAULT_DURATION_S = 1;
 
 const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const { children, className, style, hideArrows, hideDots } = props;
+  const {
+    children,
+    className,
+    style,
+    hideArrows,
+    hideDots,
+    dotProps,
+    leftArrowProps,
+    rightArrowProps,
+  } = props;
   // min duration
   const duration = Math.max(props.duration ?? DEFAULT_DURATION_S, 0.1);
   const autoplayInterval = props.autoplayInterval
@@ -132,20 +168,28 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           {!hideArrows && (
             <>
               <Button
-                className="ajui-carousel-arrow-prev"
+                className={classNames(
+                  "ajui-carousel-arrow-prev",
+                  leftArrowProps?.className
+                )}
+                style={leftArrowProps?.style}
                 corners="pill"
                 aria-label="previous"
                 onClick={() => startTransition(-1)}
               >
-                ←
+                {leftArrowProps?.children ?? "←"}
               </Button>
               <Button
-                className="ajui-carousel-arrow-next"
+                className={classNames(
+                  "ajui-carousel-arrow-next",
+                  rightArrowProps?.className
+                )}
+                style={rightArrowProps?.style}
                 corners="pill"
                 aria-label="next"
                 onClick={() => startTransition(1)}
               >
-                →
+                {rightArrowProps?.children ?? "→"}
               </Button>
             </>
           )}
@@ -154,10 +198,14 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               {children.map((_, i) => (
                 <Button
                   key={i}
-                  className="ajui-carousel-dot"
+                  className={classNames(
+                    "ajui-carousel-dot",
+                    dotProps?.className
+                  )}
                   corners="pill"
                   disabled={cur === i || animating}
                   onClick={() => startTransition(i - cur)}
+                  style={dotProps?.style}
                 />
               ))}
             </div>
