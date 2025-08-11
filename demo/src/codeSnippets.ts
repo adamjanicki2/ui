@@ -59,6 +59,14 @@ export const buttonSnippet = `
 <UnstyledButton>Unstyled</UnstyledButton>
 `;
 
+export const carouselSnippet = `
+<Carousel autoplayInterval={5}>
+  <div className="bg-red">"We live in a twilight world"</div>
+  <div className="bg-green">"We live in a twilight world"</div>
+  <div className="bg-blue">"We live in a twilight world"</div>
+</Carousel>
+`;
+
 export const clickOutsideSnippet = `
 <ClickOutside onClickOutside={() => console.log("You did it!")}>
   <Alert type="info">Click outside me!</Alert>

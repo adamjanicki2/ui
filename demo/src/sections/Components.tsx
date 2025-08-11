@@ -8,6 +8,7 @@ import {
   bannerSnippet,
   burgerSnippet,
   buttonSnippet,
+  carouselSnippet,
   clickOutsideSnippet,
   inlineCodeSnippet,
   inputSnippet,
@@ -21,6 +22,7 @@ import {
   Badge,
   Banner,
   Button,
+  Carousel,
   ClickOutside,
   IconInput,
   Input,
@@ -192,6 +194,23 @@ export default function Components() {
         <UnstyledButton className="ma1">Unstyled</UnstyledButton>
       </div>
       <HiddenSnippet>{buttonSnippet}</HiddenSnippet>
+      <Heading level={2}>Carousel</Heading>
+      <Para>
+        I've wanted to build some sort of site that could show off a collage of
+        pictures that I've been taking on recent trips. I figured it'd be cool
+        to have the page segmeneted by trip, and each trip would have a carousel
+        of images, which is why I needed this component. This one ended up being
+        one of the more tricky things in this library to implement due to all of
+        the complex CSS involved.
+      </Para>
+      <Carousel className="m-auto br3 white" autoplayInterval={5}>
+        <div className="pa6 bg-red f1 i tc">"We live in a twilight world"</div>
+        <div className="pa6 bg-purple f1 i tc">
+          "We live in a twilight world"
+        </div>
+        <div className="pa6 bg-blue f1 i tc">"We live in a twilight world"</div>
+      </Carousel>
+      <HiddenSnippet>{carouselSnippet}</HiddenSnippet>
       <Heading level={2}>ClickOutside</Heading>
       <Para>
         One of my very favorite elements in the entire UI library is the click

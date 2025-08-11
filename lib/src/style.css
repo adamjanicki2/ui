@@ -15,7 +15,7 @@
   --ajui-default-opacity-dim: 0.75;
   /* Corners */
   --ajui-sharp-radius: 0;
-  --ajui-rounded-radius: 0.5rem;
+  --ajui-rounded-radius: 8px;
   --ajui-pill-radius: 9999px;
   --ajui-circle-radius: 50%;
   /* Buttons */
@@ -161,7 +161,7 @@ button {
 
 /* Alert */
 .ajui-alert {
-  padding: 1rem;
+  padding: 16px;
   border-style: solid;
   border-width: 1px;
   font-weight: 400;
@@ -179,7 +179,7 @@ button {
 
 /* Banner */
 .ajui-banner {
-  padding: 1.5rem 2rem;
+  padding: 24px 32px;
   border: none;
   font-weight: 400;
   width: 100%;
@@ -199,12 +199,12 @@ a {
   border: none;
   padding: 0;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 500;
 }
 
 .ajui-button-size--regular {
-  padding: 0.5rem 1rem;
+  padding: 8px 16px;
 }
 
 .ajui-button-size--small {
@@ -218,7 +218,7 @@ a {
   justify-content: center;
   align-items: center;
   transition: opacity var(--ajui-default-transition);
-  padding: 0.25rem;
+  padding: 4px;
 }
 
 .ajui-button-base:disabled {
@@ -266,8 +266,8 @@ a {
   border: none;
   background-color: inherit;
   color: inherit;
-  padding: 0.75rem 0.5rem;
-  font-size: 1rem;
+  padding: 12px 8px;
+  font-size: 16px;
   font-weight: 400;
 }
 
@@ -317,8 +317,8 @@ a {
   box-shadow: none;
   cursor: pointer;
   background-color: transparent;
-  padding: 0.75rem 1.75rem 0.75rem 0.5rem;
-  font-size: 1rem;
+  padding: 12px 28px 12px 8px;
+  font-size: 16px;
   font-weight: 400;
   appearance: none;
   -webkit-appearance: none;
@@ -331,13 +331,13 @@ a {
 }
 
 .ajui-select-triangle {
-  --size: 0.75rem;
+  --size: 12px;
   width: var(--size);
   height: var(--size);
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: calc(var(--size) - 0.25rem);
+  right: calc(var(--size) - 4px);
   pointer-events: none;
 }
 
@@ -359,7 +359,7 @@ a {
 .ajui-spinner {
   animation: ajui-spinner-animation 1s linear infinite;
   transform-origin: center;
-  height: 1.5rem;
+  height: 24px;
 }
 
 @keyframes ajui-spinner-animation {
@@ -386,4 +386,63 @@ a {
 
 .ajui-inline-code-copied {
   background-color: var(--ajui-success-background);
+}
+
+/* Carousel */
+.ajui-carousel {
+  max-width: 100%;
+  position: relative;
+  overflow: hidden;
+  min-height: 64px;
+  min-width: 64px;
+  width: fit-content;
+}
+
+.ajui-carousel-slider {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.ajui-carousel-item {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+}
+
+.ajui-carousel-arrow-prev,
+.ajui-carousel-arrow-next {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  font-weight: 800;
+}
+
+.ajui-carousel-arrow-prev {
+  left: 8px;
+}
+.ajui-carousel-arrow-next {
+  right: 8px;
+}
+
+.ajui-carousel-dots {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  bottom: 8px;
+  transform: translateX(-50%);
+  left: 50%;
+}
+
+.ajui-carousel-dot {
+  width: 16px;
+  height: 8px;
+  padding: 0;
+  margin: 0 2px;
 }

@@ -5,6 +5,7 @@ export { default as Badge } from "./components/Badge";
 export { default as Banner } from "./components/Banner";
 export { default as Button } from "./components/Button";
 export * from "./components/Button";
+export { default as Carousel } from "./components/Carousel";
 export { default as ClickOutside } from "./components/ClickOutside";
 export { default as Hamburger } from "./components/Hamburger";
 export * from "./components/Hamburger";
