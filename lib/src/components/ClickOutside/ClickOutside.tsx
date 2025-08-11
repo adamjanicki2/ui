@@ -28,7 +28,7 @@ const ClickOutside = ({ children, onClickOutside }: Props): JSX.Element => {
   const startedRef = useRef(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    window.setTimeout(() => {
       startedRef.current = true;
     }, 0);
     return () => {

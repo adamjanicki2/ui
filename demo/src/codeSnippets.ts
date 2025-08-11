@@ -65,6 +65,9 @@ export const clickOutsideSnippet = `
 </ClickOutside>
 `;
 
+export const inlineCodeSnippet =
+  '<InlineCode>navigator.clipboard.writeText("code")</InlineCode>';
+
 export const inputSnippet = `
 <Input placeholder="Type something..." />
 <Input

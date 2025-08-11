@@ -1,7 +1,6 @@
 /* General styles */
 :root {
   /* General colors */
-  --ajui-light-gray: #eee;
   --ajui-moon-gray: #ccc;
   --ajui-dark-gray: #555;
   --ajui-darkest-gray: #333;
@@ -183,7 +182,7 @@ button {
   padding: 1.5rem 2rem;
   border: none;
   font-weight: 400;
-  width: 100vw;
+  width: 100%;
 }
 
 /* Link */
@@ -370,4 +369,21 @@ a {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* Inline Code */
+.ajui-inline-code {
+  background-color: var(--ajui-default-border);
+  color: var(--ajui-default-color);
+  border-radius: var(--ajui-rounded-radius);
+  transition: background-color var(--ajui-default-transition);
+  word-wrap: break-word;
+}
+
+.ajui-copy-cursor {
+  cursor: copy;
+}
+
+.ajui-inline-code-copied {
+  background-color: var(--ajui-success-background);
 }
