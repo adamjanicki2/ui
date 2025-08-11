@@ -9,6 +9,7 @@ import {
   burgerSnippet,
   buttonSnippet,
   clickOutsideSnippet,
+  inlineCodeSnippet,
   inputSnippet,
   layerSnippet,
   linkSnippet,
@@ -23,6 +24,7 @@ import {
   ClickOutside,
   IconInput,
   Input,
+  InlineCode,
   Link,
   UnstyledButton,
   UnstyledLink,
@@ -109,9 +111,10 @@ export default function Components() {
           {animatedOpen ? "Close" : "Open"} Animated Alert
         </Button>
         <Animated
-          visible={animatedOpen}
-          enter={{ style: { opacity: 1 } }}
-          exit={{ style: { opacity: 0 } }}
+          duration={0.5}
+          animated={animatedOpen}
+          animateTo={{ style: { opacity: 1, transform: "scale(1)" } }}
+          animateFrom={{ style: { opacity: 0, transform: "scale(0.8)" } }}
           className="w-100"
         >
           <Alert type="info">This is an animated alert!</Alert>
@@ -146,7 +149,7 @@ export default function Components() {
       <Para>
         Banners are virtually the same as alerts, but are meant for the tops of
         pages and contain more important information. Therefore, they have a
-        default style of <code>width: 100vw</code> applied to them.{" "}
+        default style of <code>width: 100%</code> applied to them.{" "}
         <em>
           I've taken the liberty of hiding the overflow here, but you get the
           point.
@@ -201,7 +204,10 @@ export default function Components() {
         <ClickOutside
           onClickOutside={() => {
             setClickOutsideText("You clicked outside!");
-            setTimeout(() => setClickOutsideText("Click outside!"), 1000);
+            window.setTimeout(
+              () => setClickOutsideText("Click outside!"),
+              1000
+            );
           }}
         >
           <Alert type="info">{clickOutsideText}</Alert>
@@ -256,6 +262,18 @@ export default function Components() {
         />
       </div>
       <HiddenSnippet>{burgerSnippet}</HiddenSnippet>
+      <Heading level={2}>InlineCode</Heading>
+      <Para>
+        <>
+          Sometimes it's nice to be able to have a little piece of copyable
+          text, usually code. I never remember how you're supposed to write the
+          function to copy text to the clipboard. And cue the segue to the
+          demonstration of the component itself, the usual way to handle copying
+          to clipboard is:{" "}
+          <InlineCode>navigator.clipboard.writeText("code")</InlineCode>
+        </>
+      </Para>
+      <HiddenSnippet>{inlineCodeSnippet}</HiddenSnippet>
       <Heading level={2}>Input</Heading>
       <Para>
         I have 2 different types of inputs: one is a standard input with some

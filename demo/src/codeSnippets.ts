@@ -28,9 +28,9 @@ export const alertSnippet = `
 
 export const animatedSnippet = `
 <Animated
-  visible={animatedOpen}
-  enter={{ style: { opacity: 1 } }}
-  exit={{ style: { opacity: 0 } }}
+  animated={animatedOpen}
+  animateTo={{ style: { opacity: 1, transform: "scale(1)" } }}
+  animateFrom={{ style: { opacity: 0, transform: "scale(0.8)" } }}
 >
   <Alert type="info">This is an animated alert!</Alert>
 </Animated>
@@ -64,6 +64,9 @@ export const clickOutsideSnippet = `
   <Alert type="info">Click outside me!</Alert>
 </ClickOutside>
 `;
+
+export const inlineCodeSnippet =
+  '<InlineCode>navigator.clipboard.writeText("code")</InlineCode>';
 
 export const inputSnippet = `
 <Input placeholder="Type something..." />

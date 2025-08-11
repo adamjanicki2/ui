@@ -20,7 +20,7 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
   const copyCode = () => {
     navigator.clipboard.writeText(children);
     setCopied(true);
-    setTimeout(() => setCopied(false), 3000);
+    window.setTimeout(() => setCopied(false), 3000);
   };
 
   return (
