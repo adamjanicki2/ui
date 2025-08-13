@@ -1,7 +1,6 @@
 import React from "react";
-import { ContentType, CornerType } from "../../types";
+import type { ContentType, CornerType, DivProps } from "../../types";
 import classNames from "../../functions/classNames";
-import type { DivProps } from "../../types";
 
 type Props = DivProps & {
   /**
