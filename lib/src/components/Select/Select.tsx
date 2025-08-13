@@ -47,14 +47,12 @@ const Select = (
   ref: React.Ref<HTMLSelectElement>
 ) => (
   <div
-    className={
-      classNames(
-        "ajui-select-container",
-        `corners--${corners}`,
-        disabled ? "ajui-select-disabled" : undefined,
-        className
-      ) || undefined
-    }
+    className={classNames(
+      "ajui-select-container",
+      `corners--${corners}`,
+      disabled ? "ajui-select-disabled" : undefined,
+      className
+    )}
     style={style}
   >
     <select

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { UnstyledButton } from "../Button";
+import { Style } from "../../types";
 
 export type Props = {
   /**
@@ -42,7 +43,7 @@ export type Props = {
   /**
    * [Optional] additional styles to apply to the button
    */
-  style?: React.CSSProperties;
+  style?: Style;
   /**
    * [Optional] round corners of the bars
    */

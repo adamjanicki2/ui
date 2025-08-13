@@ -16,7 +16,7 @@ type Props = Omit<
 };
 
 const InlineCode = React.forwardRef<HTMLElement, Props>(
-  ({ className, disableCopy, onClick, children, ...props }, ref) => {
+  ({ className, disableCopy, onClick, children, ...rest }, ref) => {
     const [copied, setCopied] = useState(false);
     const timeoutRef = useRef<number | null>(null);
 
@@ -36,6 +36,7 @@ const InlineCode = React.forwardRef<HTMLElement, Props>(
 
     return (
       <code
+        {...rest}
         ref={ref}
         role="button"
         className={classNames(
@@ -50,7 +51,6 @@ const InlineCode = React.forwardRef<HTMLElement, Props>(
           }
           onClick?.(e);
         }}
-        {...props}
       >
         {children}
       </code>
