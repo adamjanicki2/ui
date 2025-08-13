@@ -28,9 +28,15 @@ export const alertSnippet = `
 
 export const animatedSnippet = `
 <Animated
+  keepMounted
+  duration={0.8}
   animated={animatedOpen}
-  animateTo={{ style: { opacity: 1, transform: "scale(1)" } }}
-  animateFrom={{ style: { opacity: 0, transform: "scale(0.8)" } }}
+  animateTo={{
+    style: { opacity: 1, transform: "rotate(0)" },
+  }}
+  animateFrom={{
+    style: { opacity: 0, transform: "rotate(0.5turn)" },
+  }}
 >
   <Alert type="info">This is an animated alert!</Alert>
 </Animated>

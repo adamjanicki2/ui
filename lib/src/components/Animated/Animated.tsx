@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import classNames from "../../functions/classNames";
+import type { DivProps, Style } from "../../types";
 
-type Props = {
+type Props = DivProps & {
   /**
    * Whether to begin the animation.
    * Set to true to start animation, false to start the exit animation.
@@ -28,7 +29,7 @@ type Props = {
     /**
      * Inline styles to apply to the component while animated
      */
-    style?: React.CSSProperties;
+    style?: Style;
   };
   animateFrom?: {
     /**
@@ -38,20 +39,8 @@ type Props = {
     /**
      * Inline styles to apply to the component when not animated
      */
-    style?: React.CSSProperties;
+    style?: Style;
   };
-  /**
-   * Children to render
-   */
-  children: React.ReactNode | React.ReactNode[];
-  /**
-   * [Optional] className to apply to the component always
-   */
-  className?: string;
-  /**
-   * [Optional] Inline styles to apply to the component always
-   */
-  style?: React.CSSProperties;
 };
 
 const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -64,12 +53,11 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     children,
     className,
     style,
+    ...rest
   } = props;
 
   const [shouldRender, setShouldRender] = useState(animated || keepMounted);
-  const [animationState, setAnimationState] = useState<"forward" | "reverse">(
-    animated ? "forward" : "reverse"
-  );
+  const [isAnimatingForward, setIsAnimatingForward] = useState(false);
 
   const timeoutRef = useRef<number | null>(null);
   const animationFrameRef = useRef<number | null>(null);
@@ -87,34 +75,39 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   };
 
   useEffect(() => {
-    clearRefs();
+    // initiate forward animation
+    if (animated && shouldRender) {
+      clearRefs();
+      animationFrameRef.current = requestAnimationFrame(() =>
+        setIsAnimatingForward(true)
+      );
+    }
 
+    return clearRefs;
+  }, [animated, shouldRender]);
+
+  useEffect(() => {
+    // make container element appear on DOM
     if (animated) {
       setShouldRender(true);
-      // Use requestAnimationFrame so browser paints shouldRender first
-      animationFrameRef.current = requestAnimationFrame(() => {
-        setAnimationState("forward");
-        animationFrameRef.current = null;
-      });
-    } else {
-      setAnimationState("reverse");
-
+    }
+    // initiate reverse animation
+    else {
+      clearRefs();
+      setIsAnimatingForward(false);
       timeoutRef.current = window.setTimeout(() => {
         if (!keepMounted) {
           setShouldRender(false);
         }
-        timeoutRef.current = null;
-        // convert to ms
       }, duration * 1000);
     }
 
     return clearRefs;
-  }, [animated, duration, keepMounted, shouldRender]);
+  }, [animated, duration, keepMounted]);
 
   if (!shouldRender) return null;
 
-  const currentAnimation =
-    animationState === "forward" ? animateTo : animateFrom;
+  const currentAnimation = isAnimatingForward ? animateTo : animateFrom;
 
   return (
     <div
@@ -124,6 +117,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         ...style,
         ...currentAnimation?.style,
       }}
+      {...rest}
       ref={ref}
     >
       {children}

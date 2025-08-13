@@ -21,3 +21,5 @@ export { default as Spinner } from "./components/Spinner";
 export * from "./hooks";
 // Functions
 export * from "./functions";
+// Types
+export * from "./types";

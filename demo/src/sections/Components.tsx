@@ -110,13 +110,18 @@ export default function Components() {
           className="w-fc mb2"
           onClick={() => setAnimatedOpen(!animatedOpen)}
         >
-          {animatedOpen ? "Close" : "Open"} Animated Alert
+          {animatedOpen ? "Unanimate" : "Animate"} Alert
         </Button>
         <Animated
-          duration={0.5}
+          keepMounted
+          duration={0.8}
           animated={animatedOpen}
-          animateTo={{ style: { opacity: 1, transform: "scale(1)" } }}
-          animateFrom={{ style: { opacity: 0, transform: "scale(0.8)" } }}
+          animateTo={{
+            style: { opacity: 1, transform: "rotate(0)" },
+          }}
+          animateFrom={{
+            style: { opacity: 0, transform: "rotate(0.5turn)" },
+          }}
           className="w-100"
         >
           <Alert type="info">This is an animated alert!</Alert>
