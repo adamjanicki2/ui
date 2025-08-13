@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { classNames } from "../../functions";
 import Button from "../Button";
+import type { DivProps, Style } from "../../types";
 
 type ButtonProps = {
   /**
    * Children to render inside the button
    */
-  children?: React.ReactNode;
+  children?: React.ReactNode | React.ReactNode[];
   /**
    * Additional class name to apply to the button
    */
@@ -14,10 +15,10 @@ type ButtonProps = {
   /**
    * Additional styles to apply to the button
    */
-  style?: React.CSSProperties;
+  style?: Style;
 };
 
-type Props = {
+type Props = DivProps & {
   /**
    * The child elements/slides of the carousel
    */
@@ -54,14 +55,6 @@ type Props = {
    * [Optional] props to supply to the right arrow button
    */
   rightArrowProps?: ButtonProps;
-  /**
-   * [Optional] Additional class name to apply to the carousel.
-   */
-  className?: string;
-  /**
-   * [Optional] Additional styles to apply to the carousel.
-   */
-  style?: React.CSSProperties;
 };
 
 type State = {
@@ -76,12 +69,12 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     children,
     className,
-    style,
     hideArrows,
     hideDots,
     dotProps,
     leftArrowProps,
     rightArrowProps,
+    ...rest
   } = props;
   // min duration
   const duration = Math.max(props.duration ?? DEFAULT_DURATION_S, 0.1);
@@ -145,11 +138,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     : undefined;
 
   return (
-    <div
-      className={classNames("ajui-carousel", className)}
-      style={style}
-      ref={ref}
-    >
+    <div {...rest} className={classNames("ajui-carousel", className)} ref={ref}>
       <div
         className="ajui-carousel-slider"
         style={{

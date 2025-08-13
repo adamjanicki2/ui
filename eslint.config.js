@@ -1,6 +1,7 @@
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 import reactRefreshPlugin from "eslint-plugin-react-refresh";
 import eslint from "typescript-eslint";
+
 export default eslint.config({
   extends: eslint.configs.recommended,
   files: ["**/*.{ts,tsx}"],

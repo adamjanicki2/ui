@@ -1,5 +1,5 @@
-import React from "react";
 import classNames from "../../functions/classNames";
+import type { Style } from "../../types";
 
 type Props = {
   /**
@@ -9,7 +9,7 @@ type Props = {
   /**
    * [Optional] Additional styles to apply to the spinner.
    */
-  style?: React.CSSProperties;
+  style?: Style;
 };
 
 const Spinner = ({ className, ...props }: Props) => (

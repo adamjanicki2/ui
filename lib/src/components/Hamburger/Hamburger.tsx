@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { UnstyledButton } from "../Button";
+import type { Style } from "../../types";
 
 export type Props = {
   /**
@@ -42,7 +43,7 @@ export type Props = {
   /**
    * [Optional] additional styles to apply to the button
    */
-  style?: React.CSSProperties;
+  style?: Style;
   /**
    * [Optional] round corners of the bars
    */
@@ -50,10 +51,10 @@ export type Props = {
 };
 
 type OpenStyle = {
-  outer?: React.CSSProperties;
-  top: React.CSSProperties;
-  bottom: React.CSSProperties;
-  middle?: React.CSSProperties;
+  outer?: Style;
+  top: Style;
+  bottom: Style;
+  middle?: Style;
 };
 
 type InnerProps = Omit<Props, "variant" | "direction"> & {
@@ -85,7 +86,7 @@ const Hamburger = (props: InnerProps) => {
   } = props;
   const lineHeight = inputLineHeight || Math.max(1, Math.round(size / 20));
 
-  const buttonStyle: React.CSSProperties = {
+  const buttonStyle: Style = {
     width: size,
     height: size,
     display: "flex",
@@ -95,7 +96,7 @@ const Hamburger = (props: InnerProps) => {
     transition: `transform ${duration}s ease`,
   };
 
-  const commonLineStyle: React.CSSProperties = {
+  const commonLineStyle: Style = {
     height: lineHeight,
     width: size * 0.7,
     backgroundColor: "currentColor",

@@ -13,13 +13,9 @@ export type ContentType = "success" | "warning" | "error" | "info" | "static";
  */
 export type Style = React.CSSProperties;
 /**
- * Generic type for props of a builtin HTML element
- */
-export type ElementProps<T extends HTMLElement> = React.DetailedHTMLProps<
-  React.HTMLAttributes<T>,
-  T
->;
-/**
  * Default props for a div element
  */
-export type DivProps = ElementProps<HTMLDivElement>;
+export type DivProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+>;

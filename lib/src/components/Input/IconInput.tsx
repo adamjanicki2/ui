@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { InputProps } from "./Input";
 import classNames from "../../functions/classNames";
-import { CornerType } from "../../types";
+import type { CornerType, Style } from "../../types";
 
 type IconInputProps = {
   /**
@@ -19,7 +19,7 @@ type IconInputProps = {
   /**
    * [Optional] Inline styles to add to the container
    */
-  style?: React.CSSProperties;
+  style?: Style;
   /**
    * [Optional] Corner style for the input
    */

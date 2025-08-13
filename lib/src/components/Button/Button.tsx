@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
-import { CustomLinkElement, UnstyledLink } from "../Link/Link";
-import { CornerType } from "../../types";
+import { type CustomLinkElement, UnstyledLink } from "../Link/Link";
+import type { CornerType } from "../../types";
 import classNames from "../../functions/classNames";
 
 type DefaultButtonProps = React.DetailedHTMLProps<

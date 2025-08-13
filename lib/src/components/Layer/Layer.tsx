@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useFocusTrap, useScrollLock } from "../../hooks";
 import classNames from "../../functions/classNames";
+import type { DivProps } from "../../types";
 
-type Props = {
+type Props<T extends React.ElementType> = Omit<DivProps, "children"> & {
   /**
    * Callback that fires when the user clicks outside the layer
    */
@@ -11,15 +12,7 @@ type Props = {
    * The child of the layer.
    * IMPORTANT: the child must be able to accept a ref
    */
-  children: React.ReactElement;
-  /**
-   * [Optional] Additional class name
-   */
-  className?: string;
-  /**
-   * [Optional] Additional styles
-   */
-  style?: React.CSSProperties;
+  children: React.ReactElement<React.ComponentPropsWithRef<T>>;
   /**
    * [Optional] Whether to disable the escape key to close the layer
    * @default false
@@ -37,18 +30,21 @@ type Props = {
   disableScrollLock?: boolean;
 };
 
-type BaseProps = Omit<Props, "disableScrollLock" | "returnFocusOnEscape"> & {
+type BaseProps<T extends React.ElementType> = Omit<
+  Props<T>,
+  "disableScrollLock" | "returnFocusOnEscape"
+> & {
   visible: boolean;
 };
 
-const BaseLayer = ({
+const BaseLayer = <T extends React.ElementType>({
   onClose,
   children,
   style,
   className,
   disableEscape = false,
   visible,
-}: BaseProps): React.JSX.Element => {
+}: BaseProps<T>): React.JSX.Element => {
   const focusRef = useFocusTrap<HTMLElement>(visible);
 
   useEffect(() => {
@@ -74,18 +70,18 @@ const BaseLayer = ({
         ref: focusRef,
         onMouseDown: (e: React.SyntheticEvent) => {
           e.stopPropagation();
-          (children as any).props?.onMouseDown?.(e);
+          children.props?.onMouseDown?.(e);
         },
       } as any)}
     </div>
   );
 };
 
-const Layer = ({
+const Layer = <T extends React.ElementType>({
   returnFocusOnEscape,
   disableScrollLock,
   ...props
-}: Props): React.JSX.Element => {
+}: Props<T>): React.JSX.Element => {
   // Lock and unlock on mount and unmount
   useScrollLock(!disableScrollLock);
 

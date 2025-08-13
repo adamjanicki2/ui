@@ -1,25 +1,12 @@
 import React from "react";
-import { ContentType, CornerType } from "../../types";
+import type { ContentType, CornerType, DivProps } from "../../types";
 import classNames from "../../functions/classNames";
 
-type Props = {
+type Props = DivProps & {
   /**
    * The type of badge to display.
    */
   type: ContentType;
-  /**
-   * The content to display in the badge.
-   * Should be short.
-   */
-  children: React.ReactNode | React.ReactNode[];
-  /**
-   * [Optional] Additional class names to apply to the badge.
-   */
-  className?: string;
-  /**
-   * [Optional] Additional styles to apply to the badge.
-   */
-  style?: React.CSSProperties;
   /**
    * [Optional] The corner style of the badge.
    * @default "rounded"
@@ -30,12 +17,12 @@ type Props = {
 const Badge = React.forwardRef<HTMLDivElement, Props>(
   ({ type, className, corners = "rounded", ...rest }, ref) => (
     <div
+      {...rest}
       className={classNames(
         `ajui-badge content--${type} corners--${corners}`,
         className
       )}
       ref={ref}
-      {...rest}
     />
   )
 );

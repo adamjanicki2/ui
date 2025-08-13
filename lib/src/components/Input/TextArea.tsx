@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { CornerType } from "../../types";
+import type { CornerType } from "../../types";
 import classNames from "../../functions/classNames";
 
 type TextAreaProps = React.DetailedHTMLProps<

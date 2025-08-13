@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import classNames from "../../functions/classNames";
-import { CornerType } from "../../types";
+import type { CornerType } from "../../types";
 
 type Props = React.DetailedHTMLProps<
   React.SelectHTMLAttributes<HTMLSelectElement>,
@@ -47,14 +47,12 @@ const Select = (
   ref: React.Ref<HTMLSelectElement>
 ) => (
   <div
-    className={
-      classNames(
-        "ajui-select-container",
-        `corners--${corners}`,
-        disabled ? "ajui-select-disabled" : undefined,
-        className
-      ) || undefined
-    }
+    className={classNames(
+      "ajui-select-container",
+      `corners--${corners}`,
+      disabled ? "ajui-select-disabled" : undefined,
+      className
+    )}
     style={style}
   >
     <select
