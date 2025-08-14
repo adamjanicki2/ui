@@ -49,7 +49,7 @@ const Select = (
   <div
     className={classNames(
       "ajui-select-container",
-      `corners--${corners}`,
+      `ajui-corners--${corners}`,
       disabled ? "ajui-select-disabled" : undefined,
       className
     )}
@@ -58,7 +58,7 @@ const Select = (
     <select
       {...props}
       ref={ref}
-      className={`ajui-select-base corners--${corners}`}
+      className={`ajui-select-base ajui-corners--${corners}`}
       disabled={disabled}
     >
       {options.map((option, index) => (

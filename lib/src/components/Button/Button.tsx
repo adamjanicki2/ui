@@ -94,7 +94,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     <UnstyledButton
       {...rest}
       className={classNames(
-        `ajui-button--${variant} ajui-button-size--${size} corners--${corners}`,
+        `ajui-button--${variant} ajui-button-size--${size} ajui-corners--${corners}`,
         className
       )}
       ref={ref}

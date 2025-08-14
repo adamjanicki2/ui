@@ -19,7 +19,7 @@ const Badge = React.forwardRef<HTMLDivElement, Props>(
     <div
       {...rest}
       className={classNames(
-        `ajui-badge content--${type} corners--${corners}`,
+        `ajui-badge ajui-content--${type} ajui-corners--${corners}`,
         className
       )}
       ref={ref}

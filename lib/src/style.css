@@ -117,43 +117,43 @@ button {
   outline-offset: 0;
 }
 
-.corners--rounded {
+.ajui-corners--rounded {
   border-radius: var(--ajui-rounded-radius);
 }
 
-.corners--pill {
+.ajui-corners--pill {
   border-radius: var(--ajui-pill-radius);
 }
 
-.corners--sharp {
+.ajui-corners--sharp {
   border-radius: var(--ajui-sharp-radius);
 }
 
-.content--success {
+.ajui-content--success {
   background-color: var(--ajui-success-background);
   color: var(--ajui-success-color);
   border-color: var(--ajui-success-border);
 }
 
-.content--warning {
+.ajui-content--warning {
   background-color: var(--ajui-warning-background);
   color: var(--ajui-warning-color);
   border-color: var(--ajui-warning-border);
 }
 
-.content--error {
+.ajui-content--error {
   background-color: var(--ajui-error-background);
   color: var(--ajui-error-color);
   border-color: var(--ajui-error-border);
 }
 
-.content--info {
+.ajui-content--info {
   background-color: var(--ajui-info-background);
   color: var(--ajui-info-color);
   border-color: var(--ajui-info-border);
 }
 
-.content--static {
+.ajui-content--static {
   background-color: var(--ajui-static-background);
   color: var(--ajui-static-color);
   border-color: var(--ajui-static-border);
