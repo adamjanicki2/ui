@@ -61,7 +61,6 @@ export const bannerSnippet = `
 export const buttonSnippet = `
 <Button variant="primary">Primary</Button>
 <Button variant="secondary">Secondary</Button>
-<Button variant="transparent">Transparent</Button>
 <UnstyledButton>Unstyled</UnstyledButton>
 `;
 

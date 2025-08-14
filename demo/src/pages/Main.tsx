@@ -11,7 +11,7 @@ import Logo from "src/images/logo.svg?react";
 const Main = () => (
   <div className="main-container">
     <h1 className="f1 tc">Welcome to my UI library.</h1>
-    <p className="f3 fw5 tc dark-gray">
+    <p className="f3 fw5 tc subtitle">
       This is a collection of React components that I use across my projects.
       <br />
       Checkout the docs and examples below to see what's available.

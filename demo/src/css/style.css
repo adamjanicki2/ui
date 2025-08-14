@@ -1,5 +1,14 @@
 :root {
   --breakpoint: 768px;
+  --background-color: #f4f4fb;
+  --code: #b71c1c;
+  --subtitle: var(--ajui-dark-gray);
+}
+
+[data-theme="dark"] {
+  --background-color: #222;
+  --code: #f90404;
+  --subtitle: var(--ajui-moon-gray);
 }
 
 html {
@@ -9,18 +18,17 @@ html {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;
-  background-color: #f4f4fb;
+  background-color: var(--background-color);
   overflow-x: hidden;
+  color: var(--ajui-default-text-color);
 }
 
 code {
-  color: #b71c1c;
+  color: var(--code);
   font-size: 90%;
   border-radius: 4px;
   padding: 0 0.25rem;
@@ -29,6 +37,10 @@ code {
 .page-title-text {
   font-size: calc(2.5rem + 1vw);
   font-weight: 700;
+}
+
+.subtitle {
+  color: var(--subtitle);
 }
 
 .m-auto {
@@ -40,5 +52,5 @@ code {
 }
 
 .bordering {
-  border: 2px solid green;
+  border: 2px solid red;
 }

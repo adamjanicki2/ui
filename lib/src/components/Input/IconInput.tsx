@@ -37,7 +37,7 @@ const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
   ) => (
     <div
       className={classNames(
-        `ajui-input-default ajui-icon-input corners--${corners}`,
+        `ajui-input-default ajui-icon-input ajui-corners--${corners}`,
         className
       )}
       style={style}
@@ -47,7 +47,7 @@ const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
       <input
         {...inputProps}
         className={classNames(
-          `ajui-input-base corners--${corners}`,
+          `ajui-input-base ajui-corners--${corners}`,
           inputProps?.className
         )}
       />

@@ -33,7 +33,7 @@ type ButtonProps = DefaultButtonProps & {
    * Type of button
    * @default "primary"
    */
-  variant?: "primary" | "secondary" | "transparent";
+  variant?: "primary" | "secondary";
   /**
    * Type of corners on the button
    * @default "rounded"
@@ -64,7 +64,13 @@ export const UnstyledButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
         </UnstyledLink>
       );
     }
-    return <button {...props} className={className} ref={ref} />;
+    return (
+      <button
+        {...props}
+        className={classNames("ajui-action", className)}
+        ref={ref}
+      />
+    );
   }
 );
 
@@ -94,7 +100,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     <UnstyledButton
       {...rest}
       className={classNames(
-        `ajui-button--${variant} ajui-button-size--${size} corners--${corners}`,
+        `ajui-button--${variant} ajui-button-size--${size} ajui-corners--${corners}`,
         className
       )}
       ref={ref}

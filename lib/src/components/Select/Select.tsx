@@ -11,13 +11,6 @@ type Props = React.DetailedHTMLProps<
    */
   options: string[];
   /**
-   * Mapper function to get the value of the option
-   *
-   * @param option the option to get the value of
-   * @returns the value of the option
-   */
-  getOptionValue?: (option: string) => string;
-  /**
    * Mapper function to get the label of the option
    *
    * @param option the option to get the label of
@@ -31,14 +24,11 @@ type Props = React.DetailedHTMLProps<
   corners?: CornerType;
 };
 
-const identity = (x: string) => x;
-
 const Select = (
   {
     className,
     options,
-    getOptionValue = identity,
-    getOptionLabel = identity,
+    getOptionLabel,
     corners = "rounded",
     style,
     disabled,
@@ -49,7 +39,7 @@ const Select = (
   <div
     className={classNames(
       "ajui-select-container",
-      `corners--${corners}`,
+      `ajui-corners--${corners}`,
       disabled ? "ajui-select-disabled" : undefined,
       className
     )}
@@ -58,12 +48,12 @@ const Select = (
     <select
       {...props}
       ref={ref}
-      className={`ajui-select-base corners--${corners}`}
+      className={`ajui-select-base ajui-corners--${corners}`}
       disabled={disabled}
     >
       {options.map((option, index) => (
-        <option key={index} value={getOptionValue(option)}>
-          {getOptionLabel(option)}
+        <option key={index} value={option}>
+          {getOptionLabel?.(option) || option}
         </option>
       ))}
     </select>
