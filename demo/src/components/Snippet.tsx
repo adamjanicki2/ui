@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneLight as light } from "react-syntax-highlighter/dist/esm/styles/prism";
+import {
+  oneLight as light,
+  oneDark as dark,
+} from "react-syntax-highlighter/dist/esm/styles/prism";
 import "src/components/snippet.css";
 import { Badge, Button } from "@adamjanicki/ui";
 import { classNames } from "@adamjanicki/ui/functions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faClipboard } from "@fortawesome/free-solid-svg-icons";
+import { useTheme } from "src/hooks";
 
 export type Props = {
   className?: string;
@@ -14,6 +18,7 @@ export type Props = {
 };
 
 const Snippet = ({ className, children, lang = "tsx" }: Props) => {
+  const { theme } = useTheme();
   children = children.trim();
   const [copied, setCopied] = useState(false);
 
@@ -54,7 +59,7 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
         }}
       >
         <SyntaxHighlighter
-          style={light}
+          style={theme === "dark" ? dark : light}
           language={lang}
           customStyle={{
             background: "none",

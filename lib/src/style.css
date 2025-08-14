@@ -266,6 +266,7 @@ a {
   transition: outline var(--ajui-default-transition);
   outline: 0px solid transparent;
   box-shadow: inset 0 0 0 1px var(--ajui-default-border);
+  background-color: var(--ajui-default-background);
 }
 
 .ajui-input-default:disabled {
@@ -281,7 +282,7 @@ a {
   transition: outline var(--ajui-default-transition);
   outline: 0px solid transparent;
   box-shadow: inset 0 0 0 1px var(--ajui-default-border);
-  background-color: inherit;
+  background-color: var(--ajui-default-background);
 }
 
 .ajui-select-base {

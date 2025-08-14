@@ -309,13 +309,12 @@ export default function Components() {
       <div className="flex items-center w-fc m-auto flex-wrap">
         <div className="ma1">
           <div className="fw5 f6 mb1">Uncontrolled</div>
-          <Input placeholder="Type something..." className="bg-white" />
+          <Input placeholder="Type something..." />
         </div>
         <div className="ma1">
           <div className="fw5 f6 mb1">Controlled</div>
           <Input
             placeholder="Type something..."
-            className="bg-white"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
@@ -325,12 +324,11 @@ export default function Components() {
           <IconInput
             startIcon={<span className="ml2">🔎</span>}
             inputProps={{ placeholder: "Search..." }}
-            className="bg-white"
           />
         </div>
         <div className="ma1">
           <div className="fw5 f6 mb1">Area</div>
-          <TextArea className="bg-white" placeholder="Type something..." />
+          <TextArea placeholder="Type something..." />
         </div>
       </div>
       <HiddenSnippet>{inputSnippet}</HiddenSnippet>
@@ -347,7 +345,7 @@ export default function Components() {
         </Button>
         {layerOpen && (
           <Layer onClose={() => setLayerOpen(false)}>
-            <div className="pa5 br3 bg-white fade">
+            <div className="pa5 br3 bg-green fade">
               <h1>Hello!</h1>
             </div>
           </Layer>
@@ -396,7 +394,6 @@ export default function Components() {
           <Select
             aria-label="select"
             options={["apple", "orange", "banana", "kiwi"]}
-            className="bg-white"
           />
         </div>
         <div className="ma1">
@@ -406,7 +403,6 @@ export default function Components() {
             options={["apple", "orange", "banana", "kiwi"]}
             onChange={(e) => setSelectValue(e.target.value)}
             value={selectValue}
-            className="bg-white"
           />
         </div>
       </div>
