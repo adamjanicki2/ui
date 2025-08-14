@@ -177,11 +177,11 @@ a {
   padding: 0;
   cursor: pointer;
   font-size: 16px;
-  font-weight: 500;
 }
 
 .ajui-button-size--regular {
   padding: 8px 16px;
+  font-weight: 600;
 }
 
 .ajui-button-size--small {
@@ -219,6 +219,7 @@ a {
 }
 
 .ajui-link-default {
+  font-weight: 600;
   color: var(--ajui-link-color);
   transition: opacity var(--ajui-default-transition);
 }

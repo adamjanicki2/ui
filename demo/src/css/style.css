@@ -40,7 +40,7 @@ code {
 }
 
 .subtitle {
-  color: var(--ajui-moon-gray);
+  color: var(--subtitle);
 }
 
 .m-auto {

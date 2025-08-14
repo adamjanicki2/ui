@@ -193,9 +193,6 @@ export default function Components() {
         <Button className="ma1" variant="secondary" onClick={buttonAction}>
           Secondary
         </Button>
-        <Button className="ma1" variant="transparent" onClick={buttonAction}>
-          Transparent
-        </Button>
         <UnstyledButton className="ma1">Unstyled</UnstyledButton>
       </div>
       <HiddenSnippet>{buttonSnippet}</HiddenSnippet>

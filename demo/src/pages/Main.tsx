@@ -1,4 +1,4 @@
-import { Button, Link } from "@adamjanicki/ui";
+import { Link } from "@adamjanicki/ui";
 import { importCss } from "src/codeSnippets";
 import Header from "src/components/Heading";
 import Para from "src/components/Para";
