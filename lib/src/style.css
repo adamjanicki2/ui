@@ -6,7 +6,7 @@
   --ajui-darkest-gray: #333;
   --ajui-obsidian: #121212;
   --ajui-focus-ring-color: #b2dbfa;
-  --ajui-default-color: #111;
+  --ajui-default-text-color: #111;
   --ajui-default-background: white;
   --ajui-default-border: var(--ajui-moon-gray);
   /* General values */
@@ -17,19 +17,10 @@
   --ajui-sharp-radius: 0;
   --ajui-rounded-radius: 8px;
   --ajui-pill-radius: 9999px;
-  --ajui-circle-radius: 50%;
   /* Buttons */
   --ajui-button-primary-background: black;
   --ajui-button-primary-color: white;
-  --ajui-button-secondary-background: white;
-  --ajui-button-secondary-color: #111;
-  --ajui-button-secondary-border: var(--ajui-moon-gray);
   --ajui-button-secondary-border-hover: var(--ajui-darkest-gray);
-  /* Input */
-  --ajui-input-selection-color: var(--ajui-focus-ring-color);
-  --ajui-input-border: var(--ajui-default-border);
-  /* Select */
-  --ajui-select-border: var(--ajui-moon-gray);
   /* Content types */
   --ajui-success-background: #dff2e1;
   --ajui-success-color: #1b5e20;
@@ -48,8 +39,6 @@
   --ajui-info-border: #90caf9;
 
   --ajui-static-background: #e8e8e8;
-  --ajui-static-color: var(--ajui-default-color);
-  --ajui-static-border: var(--ajui-default-border);
   /* Layer */
   --ajui-layer-backdrop-background: rgba(200, 200, 200, 0.7);
   /* Link */
@@ -59,21 +48,13 @@
 [data-theme="dark"] {
   /* General colors */
   --ajui-focus-ring-color: #6699cc;
-  --ajui-default-color: white;
+  --ajui-default-text-color: white;
   --ajui-default-background: var(--ajui-obsidian);
   --ajui-default-border: var(--ajui-dark-gray);
   /* Buttons */
   --ajui-button-primary-background: white;
   --ajui-button-primary-color: var(--ajui-obsidian);
-  --ajui-button-secondary-background: var(--ajui-obsidian);
-  --ajui-button-secondary-color: white;
-  --ajui-button-secondary-border: var(--ajui-dark-gray);
   --ajui-button-secondary-border-hover: var(--ajui-moon-gray);
-  /* Input */
-  --ajui-input-selection-color: var(--ajui-focus-ring-color);
-  --ajui-input-border: var(--ajui-dark-gray);
-  /* Select */
-  --ajui-select-border: var(--ajui-dark-gray);
   /* Content types */
   --ajui-success-background: #2a5733;
   --ajui-success-color: #d9efd8;
@@ -92,8 +73,6 @@
   --ajui-info-border: #1d8ea4;
 
   --ajui-static-background: var(--ajui-darkest-gray);
-  --ajui-static-color: var(--ajui-default-color);
-  --ajui-static-border: var(--ajui-default-border);
   /* Layer */
   --ajui-layer-backdrop-background: rgba(55, 55, 55, 0.7);
   /* Link */
@@ -153,8 +132,8 @@ button {
 
 .ajui-content--static {
   background-color: var(--ajui-static-background);
-  color: var(--ajui-static-color);
-  border-color: var(--ajui-static-border);
+  color: var(--ajui-default-text-color);
+  border-color: var(--ajui-default-border);
 }
 
 /* Alert */
@@ -231,12 +210,12 @@ a {
 }
 
 .ajui-button--secondary {
-  box-shadow: inset 0 0 0 1px var(--ajui-button-secondary-border);
+  box-shadow: inset 0 0 0 1px var(--ajui-default-border);
   transition: box-shadow var(--ajui-default-transition);
 }
 
 .ajui-button--secondary {
-  background-color: var(--ajui-button-secondary-background);
+  background-color: var(--ajui-default-background);
 }
 
 .ajui-link-default {
@@ -268,7 +247,7 @@ a {
 }
 
 .ajui-input-base::selection {
-  background-color: var(--ajui-input-selection-color);
+  background-color: var(--ajui-focus-ring-color);
 }
 
 .ajui-icon-input {
@@ -301,7 +280,7 @@ a {
   width: fit-content;
   transition: outline var(--ajui-default-transition);
   outline: 0px solid transparent;
-  box-shadow: inset 0 0 0 1px var(--ajui-select-border);
+  box-shadow: inset 0 0 0 1px var(--ajui-default-border);
   background-color: inherit;
 }
 
@@ -370,7 +349,7 @@ a {
 /* Inline Code */
 .ajui-inline-code {
   background-color: var(--ajui-default-border);
-  color: var(--ajui-default-color);
+  color: var(--ajui-default-text-color);
   border-radius: var(--ajui-rounded-radius);
   transition: background-color var(--ajui-default-transition);
   word-wrap: break-word;
