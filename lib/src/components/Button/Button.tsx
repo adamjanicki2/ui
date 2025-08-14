@@ -64,7 +64,13 @@ export const UnstyledButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
         </UnstyledLink>
       );
     }
-    return <button {...props} className={className} ref={ref} />;
+    return (
+      <button
+        {...props}
+        className={classNames("ajui-action", className)}
+        ref={ref}
+      />
+    );
   }
 );
 

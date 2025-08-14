@@ -193,7 +193,9 @@ export default function Components() {
         <Button className="ma1" variant="secondary" onClick={buttonAction}>
           Secondary
         </Button>
-        <UnstyledButton className="ma1">Unstyled</UnstyledButton>
+        <UnstyledButton className="ma1" to="#button">
+          Unstyled
+        </UnstyledButton>
       </div>
       <HiddenSnippet>{buttonSnippet}</HiddenSnippet>
       <Heading level={2}>Carousel</Heading>

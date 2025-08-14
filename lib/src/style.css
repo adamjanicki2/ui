@@ -79,15 +79,6 @@
   --ajui-link-color: #009ef3;
 }
 
-a:focus:not(:focus-visible) {
-  outline: none;
-}
-
-a,
-button {
-  outline-color: var(--ajui-link-color);
-}
-
 .ajui-input-default:not([disabled]):focus-within,
 .ajui-select-container:not([disabled]):focus-within {
   outline: 3px solid var(--ajui-focus-ring-color);
@@ -162,11 +153,16 @@ button {
   width: 100%;
 }
 
-/* Link */
-a {
+/* Action (link/button) */
+.ajui-action {
   color: inherit;
   text-decoration: none;
   cursor: pointer;
+  outline-color: var(--ajui-link-color);
+}
+
+.ajui-action:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* Button */
@@ -175,7 +171,6 @@ a {
   color: inherit;
   border: none;
   padding: 0;
-  cursor: pointer;
   font-size: 16px;
 }
 

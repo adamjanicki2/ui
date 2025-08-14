@@ -9,11 +9,11 @@ type BuiltinLinkProps = Omit<
   "href"
 >;
 
-export type CustomLinkElement = (
-  props: Partial<BuiltinLinkProps> & {
+export type CustomLinkElement = React.ForwardRefExoticComponent<
+  BuiltinLinkProps & {
     to: string;
-  } & { ref?: React.MutableRefObject<HTMLAnchorElement> }
-) => React.ReactNode;
+  } & React.RefAttributes<HTMLAnchorElement>
+>;
 
 type DefaultLinkProps = BuiltinLinkProps & {
   /**
@@ -34,10 +34,11 @@ const DefaultLinkElement: CustomLinkElement = forwardRef<
 >(({ to, ...props }, ref) => <a {...props} href={to} ref={ref} />);
 
 export const UnstyledLink = forwardRef<HTMLAnchorElement, DefaultLinkProps>(
-  ({ LinkElement = DefaultLinkElement, ...props }, ref) => (
+  ({ LinkElement = DefaultLinkElement, className, ...props }, ref) => (
     <LinkElement
       {...props}
-      ref={ref as React.MutableRefObject<HTMLAnchorElement>}
+      className={classNames("ajui-action", className)}
+      ref={ref}
     />
   )
 );
