@@ -33,7 +33,7 @@ type ButtonProps = DefaultButtonProps & {
    * Type of button
    * @default "primary"
    */
-  variant?: "primary" | "secondary" | "transparent";
+  variant?: "primary" | "secondary";
   /**
    * Type of corners on the button
    * @default "rounded"
