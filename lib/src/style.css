@@ -172,7 +172,7 @@
 }
 
 .ajui-button-size--regular {
-  padding: 8px 16px;
+  padding: 8px 12px;
   font-weight: 600;
 }
 
@@ -234,7 +234,7 @@
   border: none;
   background-color: inherit;
   color: inherit;
-  padding: 12px 8px;
+  padding: 8px 12px;
   font-weight: 400;
 }
 
@@ -291,7 +291,7 @@
   box-shadow: none;
   cursor: pointer;
   background-color: transparent;
-  padding: 8px 28px 8px 8px;
+  padding: 8px 32px 8px 12px;
   font-weight: 600;
   appearance: none;
   -webkit-appearance: none;
