@@ -80,13 +80,7 @@
   /* Layer */
   --ajui-layer-backdrop-background: rgba(55, 55, 55, 0.7);
   /* Link */
-  --ajui-link-color: #009ef3;
-}
-
-.ajui-input-default:not([disabled]):focus-within,
-.ajui-select-container:not([disabled]):focus-within {
-  outline: 3px solid var(--ajui-focus-ring-color);
-  outline-offset: 0;
+  --ajui-link-color: #33bfff;
 }
 
 .ajui-corners--rounded {
@@ -261,8 +255,7 @@
 }
 
 .ajui-input-default {
-  transition: outline var(--ajui-default-transition);
-  outline: 0px solid transparent;
+  transition: box-shadow var(--ajui-default-transition);
   box-shadow: 0 0 0 1px var(--ajui-default-border) inset,
     var(--ajui-subtle-box-shadow);
   background-color: var(--ajui-default-background);
@@ -273,13 +266,18 @@
   cursor: default;
 }
 
+.ajui-input-default:not([disabled]):focus-within,
+.ajui-select-container:not([disabled]):focus-within {
+  box-shadow: 0 0 0 1px var(--ajui-default-border) inset,
+    var(--ajui-subtle-box-shadow), 0 0 0 3px var(--ajui-focus-ring-color);
+}
+
 /* Select */
 .ajui-select-container {
   position: relative;
   padding: 0;
   width: fit-content;
-  transition: outline var(--ajui-default-transition);
-  outline: 0px solid transparent;
+  transition: box-shadow var(--ajui-default-transition);
   box-shadow: 0 0 0 1px var(--ajui-default-border) inset,
     var(--ajui-subtle-box-shadow);
   background-color: var(--ajui-default-background);
