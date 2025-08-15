@@ -6,7 +6,7 @@
   --ajui-darkest-gray: #333;
   --ajui-obsidian: #121212;
   --ajui-focus-ring-color: #b2dbfa;
-  --ajui-default-text-color: #111;
+  --ajui-default-text-color: black;
   --ajui-default-background: white;
   --ajui-default-border: var(--ajui-moon-gray);
   /* General values */
@@ -21,6 +21,8 @@
   --ajui-button-primary-background: black;
   --ajui-button-primary-color: white;
   --ajui-button-secondary-border-hover: var(--ajui-darkest-gray);
+  --ajui-subtle-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16);
+  --ajui-button-primary-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.36);
   /* Content types */
   --ajui-success-background: #dff2e1;
   --ajui-success-color: #1b5e20;
@@ -55,6 +57,8 @@
   --ajui-button-primary-background: white;
   --ajui-button-primary-color: var(--ajui-obsidian);
   --ajui-button-secondary-border-hover: var(--ajui-moon-gray);
+  --ajui-subtle-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --ajui-button-primary-box-shadow: 0 1px 2px rgba(64, 64, 64, 0.8);
   /* Content types */
   --ajui-success-background: #2a5733;
   --ajui-success-color: #d9efd8;
@@ -76,13 +80,7 @@
   /* Layer */
   --ajui-layer-backdrop-background: rgba(55, 55, 55, 0.7);
   /* Link */
-  --ajui-link-color: #009ef3;
-}
-
-.ajui-input-default:not([disabled]):focus-within,
-.ajui-select-container:not([disabled]):focus-within {
-  outline: 3px solid var(--ajui-focus-ring-color);
-  outline-offset: 0;
+  --ajui-link-color: #33bfff;
 }
 
 .ajui-corners--rounded {
@@ -140,7 +138,7 @@
   padding: 2px 6px;
   border-style: solid;
   border-width: 1px;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   width: fit-content;
 }
@@ -171,11 +169,10 @@
   color: inherit;
   border: none;
   padding: 0;
-  font-size: 16px;
 }
 
 .ajui-button-size--regular {
-  padding: 8px 16px;
+  padding: 8px 12px;
   font-weight: 600;
 }
 
@@ -201,16 +198,15 @@
 .ajui-button--primary {
   background-color: var(--ajui-button-primary-background);
   color: var(--ajui-button-primary-color);
+  box-shadow: var(--ajui-button-primary-box-shadow);
   transition: opacity var(--ajui-default-transition);
 }
 
 .ajui-button--secondary {
-  box-shadow: inset 0 0 0 1px var(--ajui-default-border);
-  transition: box-shadow var(--ajui-default-transition);
-}
-
-.ajui-button--secondary {
   background-color: var(--ajui-default-background);
+  box-shadow: 0 0 0 1px var(--ajui-default-border) inset,
+    var(--ajui-subtle-box-shadow);
+  transition: box-shadow var(--ajui-default-transition);
 }
 
 .ajui-link-default {
@@ -227,7 +223,8 @@
   }
 
   .ajui-button--secondary:not([disabled]):hover {
-    box-shadow: inset 0 0 0 1px var(--ajui-button-secondary-border-hover);
+    box-shadow: 0 0 0 1px var(--ajui-button-secondary-border-hover) inset,
+      var(--ajui-subtle-box-shadow);
   }
 }
 
@@ -237,8 +234,7 @@
   border: none;
   background-color: inherit;
   color: inherit;
-  padding: 12px 8px;
-  font-size: 16px;
+  padding: 8px 12px;
   font-weight: 400;
 }
 
@@ -259,9 +255,9 @@
 }
 
 .ajui-input-default {
-  transition: outline var(--ajui-default-transition);
-  outline: 0px solid transparent;
-  box-shadow: inset 0 0 0 1px var(--ajui-default-border);
+  transition: box-shadow var(--ajui-default-transition);
+  box-shadow: 0 0 0 1px var(--ajui-default-border) inset,
+    var(--ajui-subtle-box-shadow);
   background-color: var(--ajui-default-background);
 }
 
@@ -270,14 +266,20 @@
   cursor: default;
 }
 
+.ajui-input-default:not([disabled]):focus-within,
+.ajui-select-container:not([disabled]):focus-within {
+  box-shadow: 0 0 0 1px var(--ajui-default-border) inset,
+    var(--ajui-subtle-box-shadow), 0 0 0 3px var(--ajui-focus-ring-color);
+}
+
 /* Select */
 .ajui-select-container {
   position: relative;
   padding: 0;
   width: fit-content;
-  transition: outline var(--ajui-default-transition);
-  outline: 0px solid transparent;
-  box-shadow: inset 0 0 0 1px var(--ajui-default-border);
+  transition: box-shadow var(--ajui-default-transition);
+  box-shadow: 0 0 0 1px var(--ajui-default-border) inset,
+    var(--ajui-subtle-box-shadow);
   background-color: var(--ajui-default-background);
 }
 
@@ -289,9 +291,8 @@
   box-shadow: none;
   cursor: pointer;
   background-color: transparent;
-  padding: 12px 28px 12px 8px;
-  font-size: 16px;
-  font-weight: 400;
+  padding: 8px 32px 8px 12px;
+  font-weight: 600;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
