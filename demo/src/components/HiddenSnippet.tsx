@@ -17,6 +17,8 @@ export default function HiddenSnippet(props: Props) {
         </Button>
       </div>
       <Animated
+        className="flex justify-center"
+        style={{ maxWidth: "100%", width: "min-content" }}
         animated={show}
         animateTo={{ style: { opacity: 1 } }}
         animateFrom={{ style: { opacity: 0 } }}
