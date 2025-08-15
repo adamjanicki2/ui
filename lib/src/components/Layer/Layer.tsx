@@ -62,7 +62,7 @@ const BaseLayer = <T extends React.ElementType>({
 
   return (
     <div
-      className={classNames("ajui-layer-backdrop", className)}
+      className={classNames("aui-layer-backdrop", className)}
       style={style}
       onMouseDown={onClose}
     >

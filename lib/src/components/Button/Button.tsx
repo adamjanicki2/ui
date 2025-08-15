@@ -48,7 +48,7 @@ type ButtonProps = DefaultButtonProps & {
 
 export const UnstyledButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
   ({ to, LinkElement, className, ...props }, ref) => {
-    className = classNames("ajui-button-base", className);
+    className = classNames("aui-button-base", className);
     if (to) {
       return (
         <UnstyledLink
@@ -67,7 +67,7 @@ export const UnstyledButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
     return (
       <button
         {...props}
-        className={classNames("ajui-action", className)}
+        className={classNames("aui-action", className)}
         ref={ref}
       />
     );
@@ -78,7 +78,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ icon, className, ...props }, ref) => (
     <UnstyledButton
       {...props}
-      className={classNames("ajui-icon-button", className)}
+      className={classNames("aui-icon-button", className)}
       ref={ref}
     >
       {icon}
@@ -100,7 +100,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     <UnstyledButton
       {...rest}
       className={classNames(
-        `ajui-button--${variant} ajui-button-size--${size} ajui-corners--${corners}`,
+        `aui-button--${variant} aui-button-size--${size} aui-corners--${corners}`,
         className
       )}
       ref={ref}

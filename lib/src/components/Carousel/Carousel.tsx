@@ -138,17 +138,17 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     : undefined;
 
   return (
-    <div {...rest} className={classNames("ajui-carousel", className)} ref={ref}>
+    <div {...rest} className={classNames("aui-carousel", className)} ref={ref}>
       <div
-        className="ajui-carousel-slider"
+        className="aui-carousel-slider"
         style={{
           ...animatingStyles,
           flexDirection: delta >= 0 ? "row" : "row-reverse",
         }}
         onTransitionEnd={onTransitionEnd}
       >
-        <div className="ajui-carousel-item">{children[cur]}</div>
-        <div className="ajui-carousel-item" aria-hidden>
+        <div className="aui-carousel-item">{children[cur]}</div>
+        <div className="aui-carousel-item" aria-hidden>
           {children[next]}
         </div>
       </div>
@@ -158,7 +158,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             <>
               <Button
                 className={classNames(
-                  "ajui-carousel-arrow-prev",
+                  "aui-carousel-arrow-prev",
                   leftArrowProps?.className
                 )}
                 style={leftArrowProps?.style}
@@ -170,7 +170,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               </Button>
               <Button
                 className={classNames(
-                  "ajui-carousel-arrow-next",
+                  "aui-carousel-arrow-next",
                   rightArrowProps?.className
                 )}
                 style={rightArrowProps?.style}
@@ -183,12 +183,12 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             </>
           )}
           {!hideDots && (
-            <div className="ajui-carousel-dots">
+            <div className="aui-carousel-dots">
               {children.map((_, i) => (
                 <Button
                   key={i}
                   className={classNames(
-                    "ajui-carousel-dot",
+                    "aui-carousel-dot",
                     dotProps?.className
                   )}
                   corners="pill"

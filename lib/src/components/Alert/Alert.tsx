@@ -19,7 +19,7 @@ const Alert = React.forwardRef<HTMLDivElement, Props>(
     <div
       {...rest}
       className={classNames(
-        `ajui-alert ajui-content--${type} ajui-corners--${corners}`,
+        `aui-alert aui-content--${type} aui-corners--${corners}`,
         className
       )}
       ref={ref}
