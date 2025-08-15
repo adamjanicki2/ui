@@ -1,10 +1,10 @@
 :root {
-  --snippet-border: var(--ajui-dark-gray);
+  --snippet-border: var(--aui-dark-gray);
   --snippet-background-color: #f1f8ff;
 }
 
 [data-theme="dark"] {
-  --snippet-border: var(--ajui-moon-gray);
+  --snippet-border: var(--aui-moon-gray);
   --snippet-background-color: black;
 }
 

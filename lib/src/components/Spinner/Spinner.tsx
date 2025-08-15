@@ -17,7 +17,7 @@ const Spinner = ({ className, ...props }: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"
-    className={classNames("ajui-spinner", className)}
+    className={classNames("aui-spinner", className)}
     {...props}
   >
     <path

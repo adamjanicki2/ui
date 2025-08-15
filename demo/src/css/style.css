@@ -2,13 +2,13 @@
   --breakpoint: 768px;
   --background-color: #f4f4fb;
   --code: #b71c1c;
-  --subtitle: var(--ajui-dark-gray);
+  --subtitle: var(--aui-dark-gray);
 }
 
 [data-theme="dark"] {
   --background-color: #222;
   --code: #f90404;
-  --subtitle: var(--ajui-moon-gray);
+  --subtitle: var(--aui-moon-gray);
 }
 
 html {
@@ -24,7 +24,7 @@ body {
   overscroll-behavior: none;
   background-color: var(--background-color);
   overflow-x: hidden;
-  color: var(--ajui-default-text-color);
+  color: var(--aui-default-text-color);
 }
 
 code {

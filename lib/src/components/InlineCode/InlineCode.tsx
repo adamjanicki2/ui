@@ -40,9 +40,9 @@ const InlineCode = React.forwardRef<HTMLElement, Props>(
         ref={ref}
         role="button"
         className={classNames(
-          "ajui-inline-code",
-          disableCopy ? undefined : "ajui-copy-cursor",
-          copied ? "ajui-inline-code-copied" : undefined,
+          "aui-inline-code",
+          disableCopy ? undefined : "aui-copy-cursor",
+          copied ? "aui-inline-code-copied" : undefined,
           className
         )}
         onClick={(e) => {

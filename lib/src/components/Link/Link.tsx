@@ -37,7 +37,7 @@ export const UnstyledLink = forwardRef<HTMLAnchorElement, DefaultLinkProps>(
   ({ LinkElement = DefaultLinkElement, className, ...props }, ref) => (
     <LinkElement
       {...props}
-      className={classNames("ajui-action", className)}
+      className={classNames("aui-action", className)}
       ref={ref}
     />
   )
@@ -47,7 +47,7 @@ const Link = forwardRef<HTMLAnchorElement, DefaultLinkProps>(
   ({ className, ...props }, ref) => (
     <UnstyledLink
       {...props}
-      className={classNames("ajui-link-default", className)}
+      className={classNames("aui-link-default", className)}
       ref={ref}
     />
   )

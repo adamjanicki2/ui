@@ -38,9 +38,9 @@ const Select = (
 ) => (
   <div
     className={classNames(
-      "ajui-select-container",
-      `ajui-corners--${corners}`,
-      disabled ? "ajui-select-disabled" : undefined,
+      "aui-select-container",
+      `aui-corners--${corners}`,
+      disabled ? "aui-select-disabled" : undefined,
       className
     )}
     style={style}
@@ -48,7 +48,7 @@ const Select = (
     <select
       {...props}
       ref={ref}
-      className={`ajui-select-base ajui-corners--${corners}`}
+      className={`aui-select-base aui-corners--${corners}`}
       disabled={disabled}
     >
       {options.map((option, index) => (
@@ -60,7 +60,7 @@ const Select = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 64 64"
-      className="ajui-select-triangle"
+      className="aui-select-triangle"
       aria-hidden="true"
     >
       <path

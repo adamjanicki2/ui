@@ -19,7 +19,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
       {...props}
       ref={ref}
       className={classNames(
-        `ajui-input-base ajui-input-default ajui-corners--${corners}`,
+        `aui-input-base aui-input-default aui-corners--${corners}`,
         className
       )}
     />
