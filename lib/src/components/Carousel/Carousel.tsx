@@ -158,10 +158,10 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             <>
               <Button
                 className={classNames(
-                  "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow-prev",
+                  "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow",
                   leftArrowProps?.className
                 )}
-                style={leftArrowProps?.style}
+                style={{ left: 8, ...leftArrowProps?.style }}
                 corners="pill"
                 aria-label="previous"
                 onClick={() => startTransition(-1)}
@@ -170,10 +170,10 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               </Button>
               <Button
                 className={classNames(
-                  "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow-next",
+                  "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow",
                   rightArrowProps?.className
                 )}
-                style={rightArrowProps?.style}
+                style={{ right: 8, ...rightArrowProps?.style }}
                 corners="pill"
                 aria-label="next"
                 onClick={() => startTransition(1)}
