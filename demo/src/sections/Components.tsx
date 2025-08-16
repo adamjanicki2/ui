@@ -242,7 +242,9 @@ export default function Components() {
         my best to make a robust option that is highly customizable depending on
         the required use case.
       </Para>
-      <Box layout={{ axis: "x", justify: "center", wrap: true }}>
+      <Box
+        layout={{ axis: "x", align: "center", justify: "center", wrap: true }}
+      >
         <Button className="ma1" variant="primary" onClick={buttonAction}>
           Primary
         </Button>
