@@ -4,7 +4,7 @@ import { classNames } from "../../functions";
 
 type Props = Omit<
   React.DetailedHTMLProps<React.SVGAttributes<SVGSVGElement>, SVGSVGElement>,
-  "children"
+  "children" | "viewBox"
 > & {
   /**
    * The version of icon to render
@@ -16,19 +16,21 @@ type Props = Omit<
   size?: number;
 };
 
+const defaultViewBox = "0 0 512 512";
+
 const Icon = React.forwardRef<SVGSVGElement, Props>(
   ({ icon, className, size, style, ...rest }, ref) => {
-    const iconContents = icons[icon];
+    const { contents, viewBox } = icons[icon];
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 64 64"
+        viewBox={viewBox || defaultViewBox}
         className={classNames("aui-icon", className)}
         style={{ width: size, height: size, ...style }}
         {...rest}
         ref={ref}
       >
-        {iconContents.map((icon, i) => (
+        {contents.map((icon, i) => (
           <React.Fragment key={i}>{icon}</React.Fragment>
         ))}
       </svg>

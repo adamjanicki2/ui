@@ -53,6 +53,8 @@
   --aui-layer-backdrop-background: rgba(200, 200, 200, 0.7);
   /* Link */
   --aui-link-color: #0070ff;
+  /* Select */
+  --aui-select-icon: var(--aui-dark-gray);
 }
 
 [data-theme="dark"] {
@@ -89,6 +91,8 @@
   --aui-layer-backdrop-background: rgba(55, 55, 55, 0.7);
   /* Link */
   --aui-link-color: #33bfff;
+  /* Select */
+  --aui-select-icon: var(--aui-moon-gray);
 }
 
 /* General */
@@ -301,13 +305,14 @@
 }
 
 .aui-select-icon {
-  --size: 12px;
+  --size: 10px;
+  color: var(--aui-select-icon);
   width: var(--size);
   height: var(--size);
   position: absolute;
-  top: 50%;
+  top: calc(50% + 1px);
   transform: translateY(-50%);
-  right: calc(var(--size) - 4px);
+  right: var(--size);
   pointer-events: none;
 }
 
