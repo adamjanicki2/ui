@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { InputProps } from "./Input";
 import classNames from "../../functions/classNames";
-import type { CornerType, Style } from "../../types";
+import type { CornerType, Style } from "../../utils/types";
 
 type IconInputProps = {
   /**

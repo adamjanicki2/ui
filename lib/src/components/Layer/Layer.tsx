@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFocusTrap, useScrollLock } from "../../hooks";
 import classNames from "../../functions/classNames";
-import type { DivProps } from "../../types";
+import type { DivProps } from "../../utils/types";
 
 type Props<T extends React.ElementType> = Omit<DivProps, "children"> & {
   /**

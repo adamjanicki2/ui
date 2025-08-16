@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import classNames from "../../functions/classNames";
-import type { CornerType } from "../../types";
+import type { CornerType } from "../../utils/types";
 
 type Props = React.DetailedHTMLProps<
   React.SelectHTMLAttributes<HTMLSelectElement>,

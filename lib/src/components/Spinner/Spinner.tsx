@@ -1,5 +1,5 @@
 import classNames from "../../functions/classNames";
-import type { Style } from "../../types";
+import type { Style } from "../../utils/types";
 
 type Props = {
   /**

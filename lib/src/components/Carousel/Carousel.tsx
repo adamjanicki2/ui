@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { classNames } from "../../functions";
 import Button from "../Button";
-import type { DivProps, Style } from "../../types";
+import type { DivProps, Style } from "../../utils/types";
 
 type ButtonProps = {
   /**
