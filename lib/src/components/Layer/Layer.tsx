@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useFocusTrap, useScrollLock } from "../../hooks";
 import classNames from "../../functions/classNames";
-import type { DivProps } from "../../utils/types";
+import Box, { type BoxProps } from "../Box/Box";
 
-type Props<T extends React.ElementType> = Omit<DivProps, "children"> & {
+type Props<T extends React.ElementType> = Omit<BoxProps, "children"> & {
   /**
    * Callback that fires when the user clicks outside the layer
    */
@@ -61,11 +61,9 @@ const BaseLayer = <T extends React.ElementType>({
   }, [onClose, disableEscape]);
 
   return (
-    <div
-      className={classNames(
-        "aui-flex-y aui-align-center aui-justify-center aui-layer-backdrop",
-        className
-      )}
+    <Box
+      layout={{ axis: "y", align: "center", justify: "center" }}
+      className={classNames("aui-layer-backdrop", className)}
       style={style}
       onMouseDown={onClose}
     >
@@ -76,7 +74,7 @@ const BaseLayer = <T extends React.ElementType>({
           children.props?.onMouseDown?.(e);
         },
       } as any)}
-    </div>
+    </Box>
   );
 };
 

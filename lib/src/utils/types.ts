@@ -27,4 +27,41 @@ type SizeToken = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
 /**
  * Size prop used to transform into a CSS class or style value if a number.
  */
-export type Size = SizeToken | number;
+type Size = SizeToken | number;
+
+/**
+ * Layout props for a box component.
+ */
+export type Layout = {
+  /**
+   * Direction the box spans; along the x-axis or y-axis
+   * (Equivalent to flex-direction)
+   */
+  axis: "x" | "y";
+  /**
+   * Spacing between children of the box
+   */
+  gap?: Size;
+  /**
+   * Alignment orthogonal to the selected axis
+   * (Equivalent to align-items)
+   */
+  align?: "start" | "center" | "end";
+  /**
+   * How to layout the children
+   * (Equivalent to justify-content)
+   */
+  justify?: "start" | "center" | "between" | "end";
+  /**
+   * Padding on the inside of the box
+   */
+  padding?: Size;
+  /**
+   * Margin on the outside of the box
+   */
+  margin?: Size;
+  /**
+   * Whether to allow wrapping of box children
+   */
+  wrap?: boolean;
+};

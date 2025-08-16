@@ -1,8 +1,9 @@
 import React from "react";
-import type { ContentType, CornerType, DivProps } from "../../utils/types";
+import type { ContentType, CornerType } from "../../utils/types";
 import classNames from "../../functions/classNames";
+import Box, { type BoxProps } from "../Box/Box";
 
-type Props = DivProps & {
+type Props = BoxProps & {
   /**
    * The type of badge to display.
    */
@@ -16,7 +17,7 @@ type Props = DivProps & {
 
 const Badge = React.forwardRef<HTMLDivElement, Props>(
   ({ type, className, corners = "rounded", ...rest }, ref) => (
-    <div
+    <Box
       {...rest}
       className={classNames(
         `aui-badge aui-content--${type} aui-corners--${corners}`,

@@ -1,8 +1,9 @@
 import React from "react";
-import type { ContentType, CornerType, DivProps } from "../../utils/types";
+import type { ContentType, CornerType } from "../../utils/types";
 import classNames from "../../functions/classNames";
+import Box, { type BoxProps } from "../Box/Box";
 
-type Props = DivProps & {
+type Props = BoxProps & {
   /**
    * The type of alert to display.
    */
@@ -15,8 +16,8 @@ type Props = DivProps & {
 };
 
 const Alert = React.forwardRef<HTMLDivElement, Props>(
-  ({ type, className, corners = "rounded", ...rest }, ref) => (
-    <div
+  ({ type, corners = "rounded", className, ...rest }, ref) => (
+    <Box
       {...rest}
       className={classNames(
         `aui-alert aui-content--${type} aui-corners--${corners}`,

@@ -161,7 +161,7 @@ export default function Components() {
           point.
         </em>
       </Para>
-      <div className="flex flex-column" style={{ overflow: "hidden" }}>
+      <div className="flex flex-column">
         <Banner className="ma1" type="static">
           This is a static banner
         </Banner>

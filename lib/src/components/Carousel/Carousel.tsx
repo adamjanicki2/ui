@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { classNames } from "../../functions";
 import Button from "../Button";
-import type { DivProps, Style } from "../../utils/types";
+import type { Style } from "../../utils/types";
+import Box, { type BoxProps } from "../Box/Box";
 
 type ButtonProps = {
   /**
@@ -18,7 +19,7 @@ type ButtonProps = {
   style?: Style;
 };
 
-type Props = DivProps & {
+type Props = BoxProps & {
   /**
    * The child elements/slides of the carousel
    */
@@ -138,8 +139,8 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     : undefined;
 
   return (
-    <div {...rest} className={classNames("aui-carousel", className)} ref={ref}>
-      <div
+    <Box {...rest} className={classNames("aui-carousel", className)} ref={ref}>
+      <Box
         className="aui-carousel-slider"
         style={{
           ...animatingStyles,
@@ -147,11 +148,11 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         }}
         onTransitionEnd={onTransitionEnd}
       >
-        <div className="aui-carousel-item">{children[cur]}</div>
-        <div className="aui-carousel-item" aria-hidden>
+        <Box className="aui-carousel-item">{children[cur]}</Box>
+        <Box className="aui-carousel-item" aria-hidden>
           {children[next]}
-        </div>
-      </div>
+        </Box>
+      </Box>
       {length > 1 && (
         <>
           {!hideArrows && (
@@ -183,7 +184,10 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             </>
           )}
           {!hideDots && (
-            <div className="aui-flex-x aui-align-center aui-carousel-dots">
+            <Box
+              layout={{ axis: "x", align: "center", gap: "xs" }}
+              className="aui-carousel-dots"
+            >
               {children.map((_, i) => (
                 <Button
                   key={i}
@@ -197,11 +201,11 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                   style={dotProps?.style}
                 />
               ))}
-            </div>
+            </Box>
           )}
         </>
       )}
-    </div>
+    </Box>
   );
 });
 
