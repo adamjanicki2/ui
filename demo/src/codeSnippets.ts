@@ -76,7 +76,6 @@ export const buttonSnippet = `
 <Button variant="primary">Primary</Button>
 <Button variant="secondary">Secondary</Button>
 <UnstyledButton to="#button">Unstyled</UnstyledButton>
-<IconButton icon="➕" />
 `;
 
 export const carouselSnippet = `

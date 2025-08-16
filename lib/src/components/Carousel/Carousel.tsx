@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { classNames } from "../../functions";
 import Button from "../Button";
-import type { Style } from "../../utils/types";
+import type { Children, Style } from "../../utils/types";
 import Box, { type BoxProps } from "../Box/Box";
+import Icon from "../Icon";
 
 type ButtonProps = {
   /**
    * Children to render inside the button
    */
-  children?: React.ReactNode | React.ReactNode[];
+  children?: Children;
   /**
    * Additional class name to apply to the button
    */
@@ -176,7 +177,9 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                   aria-label="previous"
                   onClick={() => startTransition(-1)}
                 >
-                  {leftArrowProps?.children ?? "←"}
+                  {leftArrowProps?.children ?? (
+                    <Icon icon="left" size={12} style={{ marginRight: 2 }} />
+                  )}
                 </Button>
                 <Button
                   className={classNames(
@@ -188,7 +191,9 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                   aria-label="next"
                   onClick={() => startTransition(1)}
                 >
-                  {rightArrowProps?.children ?? "→"}
+                  {rightArrowProps?.children ?? (
+                    <Icon icon="right" size={12} style={{ marginLeft: 2 }} />
+                  )}
                 </Button>
               </>
             )}

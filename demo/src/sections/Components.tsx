@@ -23,7 +23,6 @@ import {
   Banner,
   Box,
   Button,
-  IconButton,
   Carousel,
   ClickOutside,
   IconInput,
@@ -254,7 +253,6 @@ export default function Components() {
         <UnstyledButton className="ma1" to="#button">
           Unstyled
         </UnstyledButton>
-        <IconButton className="ma1" icon="➕" onClick={buttonAction} />
       </Box>
       <HiddenSnippet>{buttonSnippet}</HiddenSnippet>
       <Heading level={2}>Carousel</Heading>

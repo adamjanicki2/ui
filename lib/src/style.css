@@ -53,6 +53,8 @@
   --aui-layer-backdrop-background: rgba(200, 200, 200, 0.7);
   /* Link */
   --aui-link-color: #0070ff;
+  /* Select */
+  --aui-select-icon: var(--aui-dark-gray);
 }
 
 [data-theme="dark"] {
@@ -89,6 +91,8 @@
   --aui-layer-backdrop-background: rgba(55, 55, 55, 0.7);
   /* Link */
   --aui-link-color: #33bfff;
+  /* Select */
+  --aui-select-icon: var(--aui-moon-gray);
 }
 
 /* General */
@@ -175,7 +179,6 @@
 /* Button */
 .aui-button-base {
   background: none;
-  color: inherit;
   border: none;
   padding: 0;
 }
@@ -191,14 +194,6 @@
   font-weight: 600;
 }
 
-.aui-icon-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity var(--aui-default-transition);
-  padding: var(--aui-m);
-}
-
 .aui-button-base:disabled {
   cursor: default !important;
   opacity: var(--aui-disabled-opacity);
@@ -212,6 +207,7 @@
 }
 
 .aui-button--secondary {
+  color: var(--aui-default-text-color);
   background-color: var(--aui-default-background);
   box-shadow: 0 0 0 1px var(--aui-default-border) inset,
     var(--aui-subtle-box-shadow);
@@ -226,7 +222,6 @@
 
 @media (hover: hover) {
   .aui-button--primary:not([disabled]):hover,
-  .aui-icon-button:not([disabled]):hover,
   .aui-link-default:hover {
     opacity: var(--aui-default-opacity-dim);
   }
@@ -309,14 +304,15 @@
   cursor: default;
 }
 
-.aui-select-triangle {
-  --size: 12px;
+.aui-select-icon {
+  --size: 10px;
+  color: var(--aui-select-icon);
   width: var(--size);
   height: var(--size);
   position: absolute;
-  top: 50%;
+  top: calc(50% + 1px);
   transform: translateY(-50%);
-  right: calc(var(--size) - 4px);
+  right: var(--size);
   pointer-events: none;
 }
 
@@ -329,6 +325,11 @@
   height: 100vh;
   z-index: 10000;
   background: var(--aui-layer-backdrop-background);
+}
+
+/* Icons */
+.aui-icon * {
+  fill: currentColor;
 }
 
 /* Spinner */
