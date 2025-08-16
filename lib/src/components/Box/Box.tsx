@@ -1,8 +1,11 @@
 import React from "react";
-import type { DivProps, Style, Layout } from "../../utils/types";
+import type { Style, Layout } from "../../utils/types";
 import { classNames } from "../../functions";
 
-type Props = DivProps & {
+type Props = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+> & {
   /**
    * The organization of the container and its children.
    */

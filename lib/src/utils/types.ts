@@ -13,13 +13,6 @@ export type ContentType = "success" | "warning" | "error" | "info" | "static";
  */
 export type Style = React.CSSProperties;
 /**
- * Default props for a div element
- */
-export type DivProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
->;
-/**
  * Size variants used for CSS.
  */
 type SizeToken = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
