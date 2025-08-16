@@ -195,7 +195,7 @@ export default function Components() {
         <UnstyledButton className="ma1" to="#button">
           Unstyled
         </UnstyledButton>
-        <IconButton icon="➕" />
+        <IconButton className="ma1" icon="➕" onClick={buttonAction} />
       </div>
       <HiddenSnippet>{buttonSnippet}</HiddenSnippet>
       <Heading level={2}>Carousel</Heading>
