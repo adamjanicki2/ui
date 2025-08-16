@@ -58,6 +58,20 @@ export const bannerSnippet = `
 <Banner type="error">This is an error banner</Banner>
 `;
 
+export const boxSnippet = `
+<Box layout={{ axis: "x", align: "end", justify: "center", padding: "s", gap: "s" }}>
+  <Box layout={{ axis: "y", align: "center", justify: "center", padding: "l" }}>
+    L
+  </Box>
+  <Box layout={{ axis: "y", align: "center", justify: "center", padding: "xl" }}>
+    XL
+  </Box>
+  <Box layout={{ axis: "y", align: "center", justify: "center", padding: "xxl" }}>
+    XXL
+  </Box>
+</Box>
+`;
+
 export const buttonSnippet = `
 <Button variant="primary">Primary</Button>
 <Button variant="secondary">Secondary</Button>

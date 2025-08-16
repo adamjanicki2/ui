@@ -6,6 +6,7 @@ import {
   animatedSnippet,
   badgeSnippet,
   bannerSnippet,
+  boxSnippet,
   burgerSnippet,
   buttonSnippet,
   carouselSnippet,
@@ -20,6 +21,7 @@ import {
   Animated,
   Badge,
   Banner,
+  Box,
   Button,
   IconButton,
   Carousel,
@@ -179,6 +181,61 @@ export default function Components() {
         </Banner>
         <HiddenSnippet>{bannerSnippet}</HiddenSnippet>
       </div>
+      <Heading level={2}>Box</Heading>
+      <Para>
+        I wanted something to standardize the layouts of my pages instead of
+        having a ton of random <code>div</code>s strewn across the page. But
+        more than that, it makes my code more readable by exposing
+        easier-to-understand props like <code>axis</code> to control the flex
+        direction.
+      </Para>
+      <Box layout={{ axis: "y" }}>
+        <Box
+          layout={{
+            axis: "x",
+            align: "end",
+            justify: "center",
+            padding: "s",
+            gap: "s",
+          }}
+          className="bordering"
+        >
+          <Box
+            className="bordering"
+            layout={{
+              axis: "y",
+              align: "center",
+              justify: "center",
+              padding: "l",
+            }}
+          >
+            L
+          </Box>
+          <Box
+            className="bordering"
+            layout={{
+              axis: "y",
+              align: "center",
+              justify: "center",
+              padding: "xl",
+            }}
+          >
+            XL
+          </Box>
+          <Box
+            className="bordering"
+            layout={{
+              axis: "y",
+              align: "center",
+              justify: "center",
+              padding: "xxl",
+            }}
+          >
+            XXL
+          </Box>
+        </Box>
+      </Box>
+      <HiddenSnippet>{boxSnippet}</HiddenSnippet>
       <Heading level={2}>Button</Heading>
       <Para>
         One of the foundational elements in any site is a button, so I've tried
