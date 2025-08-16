@@ -158,7 +158,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             <>
               <Button
                 className={classNames(
-                  "aui-carousel-arrow-prev",
+                  "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow-prev",
                   leftArrowProps?.className
                 )}
                 style={leftArrowProps?.style}
@@ -170,7 +170,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               </Button>
               <Button
                 className={classNames(
-                  "aui-carousel-arrow-next",
+                  "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow-next",
                   rightArrowProps?.className
                 )}
                 style={rightArrowProps?.style}
@@ -183,7 +183,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             </>
           )}
           {!hideDots && (
-            <div className="aui-carousel-dots">
+            <div className="aui-flex-x aui-align-center aui-carousel-dots">
               {children.map((_, i) => (
                 <Button
                   key={i}

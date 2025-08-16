@@ -78,7 +78,7 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
 function transformProps(props: BoxProps) {
   const { axis, gap, align, justify, padding, margin, wrap } = props;
 
-  let style: Style = {};
+  const style: Style = {};
   let className = `aui-flex-${axis}`;
 
   if (align) {

@@ -10,7 +10,6 @@ export { default as Carousel } from "./components/Carousel";
 export { default as ClickOutside } from "./components/ClickOutside";
 export { default as Hamburger } from "./components/Hamburger";
 export * from "./components/Hamburger";
-export { default as InlineCode } from "./components/InlineCode";
 export { default as Input } from "./components/Input";
 export * from "./components/Input";
 export { default as Layer } from "./components/Layer";

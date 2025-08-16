@@ -196,7 +196,7 @@
   justify-content: center;
   align-items: center;
   transition: opacity var(--aui-default-transition);
-  padding: 4px;
+  padding: var(--aui-m);
 }
 
 .aui-button-base:disabled {
@@ -239,7 +239,7 @@
 
 /* Input */
 .aui-input-base {
-  outline: 0px solid transparent;
+  outline: none;
   border: none;
   background-color: inherit;
   color: inherit;
@@ -252,9 +252,6 @@
 }
 
 .aui-icon-input {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
   overflow: scroll;
 }
 
@@ -332,9 +329,6 @@
   height: 100vh;
   z-index: 10000;
   background: var(--aui-layer-backdrop-background);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* Spinner */
@@ -351,23 +345,6 @@
   100% {
     transform: rotate(360deg);
   }
-}
-
-/* Inline Code */
-.aui-inline-code {
-  background-color: var(--aui-default-border);
-  color: var(--aui-default-text-color);
-  border-radius: var(--aui-rounded-radius);
-  transition: background-color var(--aui-default-transition);
-  word-wrap: break-word;
-}
-
-.aui-copy-cursor {
-  cursor: copy;
-}
-
-.aui-inline-code-copied {
-  background-color: var(--aui-success-background);
 }
 
 /* Carousel */
@@ -394,9 +371,6 @@
 
 .aui-carousel-arrow-prev,
 .aui-carousel-arrow-next {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -415,8 +389,6 @@
 
 .aui-carousel-dots {
   position: absolute;
-  display: flex;
-  align-items: center;
   bottom: var(--aui-m);
   transform: translateX(-50%);
   left: 50%;
