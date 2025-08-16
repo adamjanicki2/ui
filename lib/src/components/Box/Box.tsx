@@ -1,11 +1,15 @@
 import React from "react";
-import type { Style, Layout } from "../../utils/types";
+import type { Style, Layout, Children } from "../../utils/types";
 import { classNames } from "../../functions";
 
-type Props = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
+type Props = Omit<
+  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+  "children"
 > & {
+  /**
+   * Children to render inside the box
+   */
+  children?: Children;
   /**
    * The organization of the container and its children.
    */

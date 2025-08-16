@@ -20,14 +20,6 @@ type DefaultButtonProps = React.DetailedHTMLProps<
   LinkElement?: CustomLinkElement;
 };
 
-type IconButtonProps = Omit<DefaultButtonProps, "children"> & {
-  /**
-   * Icon to display inside the button
-   * I would usually use FontAwesome, but for added flexibility, it's any node
-   */
-  icon: React.ReactNode;
-};
-
 type ButtonProps = DefaultButtonProps & {
   /**
    * Type of button
@@ -72,18 +64,6 @@ export const UnstyledButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
       />
     );
   }
-);
-
-export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ icon, className, ...props }, ref) => (
-    <UnstyledButton
-      {...props}
-      className={classNames("aui-icon-button", className)}
-      ref={ref}
-    >
-      {icon}
-    </UnstyledButton>
-  )
 );
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(

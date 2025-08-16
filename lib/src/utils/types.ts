@@ -1,6 +1,10 @@
 import React from "react";
 
 /**
+ * Default children type; can be a node or list of nodes
+ */
+export type Children = React.ReactNode | React.ReactNode[];
+/**
  * The type of corner to display, controlling the border radius property.
  */
 export type CornerType = "pill" | "rounded" | "sharp";
