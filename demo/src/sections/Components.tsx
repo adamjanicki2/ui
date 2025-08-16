@@ -81,7 +81,7 @@ export default function Components() {
         content types are also used for the <code>Badge</code> and{" "}
         <code>Banner</code> components.
       </Para>
-      <div className="flex flex-column">
+      <Box layout={{ axis: "y" }}>
         <Alert className="mv1" type="static">
           This is a static alert
         </Alert>
@@ -98,7 +98,7 @@ export default function Components() {
           This is an error alert
         </Alert>
         <HiddenSnippet>{alertSnippet}</HiddenSnippet>
-      </div>
+      </Box>
       <Heading level={2}>Animated</Heading>
       <Para>
         This is a simple wrapper component that allows you to perform animations
@@ -106,7 +106,7 @@ export default function Components() {
         designing a custom modal for one of my other sites that I wanted to fade
         in an out when the user entered or exited the state.
       </Para>
-      <div className="flex flex-column items-center">
+      <Box layout={{ axis: "y", align: "center" }}>
         <Button
           className="w-fc mb2"
           onClick={() => setAnimatedOpen(!animatedOpen)}
@@ -128,14 +128,14 @@ export default function Components() {
           <Alert type="info">This is an animated alert!</Alert>
         </Animated>
         <HiddenSnippet>{animatedSnippet}</HiddenSnippet>
-      </div>
+      </Box>
       <Heading level={2}>Badge</Heading>
       <Para>
         Like alerts, badges also come in different types, and is represented by
         the same TypeScript type. these are little symbols and are good
         indicators of status of a particular thing.
       </Para>
-      <div className="flex items-center w-fc m-auto">
+      <Box layout={{ axis: "x", align: "center" }} className="w-fc m-auto">
         <Badge className="ma1" type="static">
           Static
         </Badge>
@@ -151,7 +151,7 @@ export default function Components() {
         <Badge className="ma1" type="error">
           Error
         </Badge>
-      </div>
+      </Box>
       <HiddenSnippet>{badgeSnippet}</HiddenSnippet>
       <Heading level={2}>Banner</Heading>
       <Para>
@@ -163,7 +163,7 @@ export default function Components() {
           point.
         </em>
       </Para>
-      <div className="flex flex-column">
+      <Box layout={{ axis: "y" }}>
         <Banner className="ma1" type="static">
           This is a static banner
         </Banner>
@@ -180,7 +180,7 @@ export default function Components() {
           This is an error banner
         </Banner>
         <HiddenSnippet>{bannerSnippet}</HiddenSnippet>
-      </div>
+      </Box>
       <Heading level={2}>Box</Heading>
       <Para>
         I wanted something to standardize the layouts of my pages instead of
@@ -242,7 +242,7 @@ export default function Components() {
         my best to make a robust option that is highly customizable depending on
         the required use case.
       </Para>
-      <div className="flex items-center justify-center flex-wrap">
+      <Box layout={{ axis: "x", justify: "center", wrap: true }}>
         <Button className="ma1" variant="primary" onClick={buttonAction}>
           Primary
         </Button>
@@ -253,7 +253,7 @@ export default function Components() {
           Unstyled
         </UnstyledButton>
         <IconButton className="ma1" icon="➕" onClick={buttonAction} />
-      </div>
+      </Box>
       <HiddenSnippet>{buttonSnippet}</HiddenSnippet>
       <Heading level={2}>Carousel</Heading>
       <Para>
@@ -265,11 +265,11 @@ export default function Components() {
         the complex CSS involved.
       </Para>
       <Carousel className="m-auto br3 white" autoplayInterval={5}>
-        <div className="pa6 bg-red f1 i tc">"We live in a twilight world"</div>
-        <div className="pa6 bg-purple f1 i tc">
+        <Box className="pa6 bg-red f1 i tc">"We live in a twilight world"</Box>
+        <Box className="pa6 bg-purple f1 i tc">
           "We live in a twilight world"
-        </div>
-        <div className="pa6 bg-blue f1 i tc">"We live in a twilight world"</div>
+        </Box>
+        <Box className="pa6 bg-blue f1 i tc">"We live in a twilight world"</Box>
       </Carousel>
       <HiddenSnippet>{carouselSnippet}</HiddenSnippet>
       <Heading level={2}>ClickOutside</Heading>
@@ -280,7 +280,7 @@ export default function Components() {
         an extra element to the DOM, just instead wraps your component with some
         extra hook magic and click listeners.
       </Para>
-      <div className="w-fc m-auto">
+      <Box className="w-fc m-auto">
         <ClickOutside
           onClickOutside={() => {
             setClickOutsideText("You clicked outside!");
@@ -292,7 +292,7 @@ export default function Components() {
         >
           <Alert type="info">{clickOutsideText}</Alert>
         </ClickOutside>
-      </div>
+      </Box>
       <HiddenSnippet>{clickOutsideSnippet}</HiddenSnippet>
       <Heading level={2}>Hamburger</Heading>
       <Para>
@@ -302,7 +302,9 @@ export default function Components() {
         variants of buttons. I've started simple with just 7 different variants,
         which you can checkout below!
       </Para>
-      <div className="flex items-center justify-center flex-wrap">
+      <Box
+        layout={{ axis: "x", align: "center", justify: "center", wrap: true }}
+      >
         <DoubleSpin
           open={hamburgerOpen}
           onClick={toggleHamburger}
@@ -340,7 +342,7 @@ export default function Components() {
           className="ma1"
           style={{ color: "#7F00FF" }}
         />
-      </div>
+      </Box>
       <HiddenSnippet>{burgerSnippet}</HiddenSnippet>
       <Heading level={2}>Input</Heading>
       <Para>
@@ -350,31 +352,34 @@ export default function Components() {
         when building a search bar input, or perhaps you'd like to have a clear
         button at the end of your input.
       </Para>
-      <div className="flex items-center w-fc m-auto flex-wrap">
-        <div className="ma1">
-          <div className="fw5 f6 mb1">Uncontrolled</div>
+      <Box
+        layout={{ axis: "x", align: "center", wrap: true }}
+        className="w-fc m-auto"
+      >
+        <Box className="ma1">
+          <Box className="fw5 f6 mb1">Uncontrolled</Box>
           <Input placeholder="Type something..." />
-        </div>
-        <div className="ma1">
-          <div className="fw5 f6 mb1">Controlled</div>
+        </Box>
+        <Box className="ma1">
+          <Box className="fw5 f6 mb1">Controlled</Box>
           <Input
             placeholder="Type something..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-        </div>
-        <div className="ma1">
-          <div className="fw5 f6 mb1">Icon Input</div>
+        </Box>
+        <Box className="ma1">
+          <Box className="fw5 f6 mb1">Icon Input</Box>
           <IconInput
             startIcon={<span className="ml2">🔎</span>}
             inputProps={{ placeholder: "Search..." }}
           />
-        </div>
-        <div className="ma1">
-          <div className="fw5 f6 mb1">Area</div>
+        </Box>
+        <Box className="ma1">
+          <Box className="fw5 f6 mb1">Area</Box>
           <TextArea placeholder="Type something..." />
-        </div>
-      </div>
+        </Box>
+      </Box>
       <HiddenSnippet>{inputSnippet}</HiddenSnippet>
       <Heading level={2}>Layer</Heading>
       <Para>
@@ -383,19 +388,19 @@ export default function Components() {
         to create a modal or a dropdown menu that should cover the entire
         screen.
       </Para>
-      <div className="flex flex-column items-center">
+      <Box layout={{ axis: "y", align: "center" }}>
         <Button className="w-fc mb2" onClick={() => setLayerOpen(true)}>
           Open layer
         </Button>
         {layerOpen && (
           <Layer onClose={() => setLayerOpen(false)}>
-            <div className="pa5 br3 bg-green fade">
+            <Box className="pa5 br3 bg-green fade">
               <h1>Hello!</h1>
-            </div>
+            </Box>
           </Layer>
         )}
         <HiddenSnippet>{layerSnippet}</HiddenSnippet>
-      </div>
+      </Box>
       <Heading level={2}>Link</Heading>
       <Para>
         Perhaps the most important element in this whole library: links. They
@@ -406,7 +411,7 @@ export default function Components() {
         something more complex, maybe react-router-dom's link element if you're
         working within a router context.
       </Para>
-      <div className="flex items-center w-fc m-auto">
+      <Box layout={{ axis: "x", align: "center" }} className="w-fc m-auto">
         <Link className="ma1" to="#link">
           Internal link
         </Link>
@@ -421,7 +426,7 @@ export default function Components() {
         <UnstyledLink className="ma1" to="#link">
           Unstyled link
         </UnstyledLink>
-      </div>
+      </Box>
       <HiddenSnippet>{linkSnippet}</HiddenSnippet>
       <Heading level={2}>Select</Heading>
       <Para>
@@ -432,35 +437,38 @@ export default function Components() {
         means I had to wrap the select element in an extra <code>div</code>{" "}
         container to store the select itself and the arrow.
       </Para>
-      <div className="flex items-center m-auto w-fc flex-wrap">
-        <div className="ma1">
-          <div className="fw5 f6 mb1">Uncontrolled</div>
+      <Box
+        layout={{ axis: "x", align: "center", wrap: true }}
+        className="m-auto w-fc"
+      >
+        <Box className="ma1">
+          <Box className="fw5 f6 mb1">Uncontrolled</Box>
           <Select
             aria-label="select"
             options={["apple", "orange", "banana", "kiwi"]}
           />
-        </div>
-        <div className="ma1">
-          <div className="fw5 f6 mb1">Controlled</div>
+        </Box>
+        <Box className="ma1">
+          <Box className="fw5 f6 mb1">Controlled</Box>
           <Select
             aria-label="select"
             options={["apple", "orange", "banana", "kiwi"]}
             onChange={(e) => setSelectValue(e.target.value)}
             value={selectValue}
           />
-        </div>
-      </div>
+        </Box>
+      </Box>
       <Heading level={2}>Spinner</Heading>
       <Para>
         The spinner was such a fun one to design: I had to go into Illustrator
         to first make a suitable svg for the spinner icon, and then from there
         it was some fun css animations!
       </Para>
-      <div className="flex items-center m-auto w-fc">
+      <Box layout={{ axis: "x", align: "center" }} className="m-auto w-fc">
         <Spinner className="ma1" />
         <Spinner style={{ height: 36, color: "red" }} className="ma1" />
         <Spinner style={{ height: 48, color: "blue" }} className="ma1" />
-      </div>
+      </Box>
       <HiddenSnippet>{spinnerSnippet}</HiddenSnippet>
     </section>
   );

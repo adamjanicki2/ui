@@ -1,4 +1,4 @@
-import { Link } from "@adamjanicki/ui";
+import { Link, Box } from "@adamjanicki/ui";
 import { importCss } from "src/codeSnippets";
 import Header from "src/components/Heading";
 import Para from "src/components/Para";
@@ -9,7 +9,7 @@ import Hooks from "src/sections/Hooks";
 import Logo from "src/images/logo.svg?react";
 
 const Main = () => (
-  <div className="main-container">
+  <Box className="main-container">
     <h1 className="f1 tc">Welcome to my UI library.</h1>
     <p className="f3 fw5 tc subtitle">
       This is a collection of React components that I use across my projects.
@@ -45,7 +45,7 @@ const Main = () => (
       Adam
     </Para>
     <Logo style={{ color: "#0070ff", height: 48 }} />
-  </div>
+  </Box>
 );
 
 export default Main;

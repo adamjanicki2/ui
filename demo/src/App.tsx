@@ -1,7 +1,7 @@
 import Main from "src/pages/Main";
 import Nav from "src/components/Nav";
 import Footer from "src/components/Footer";
-import { useScrollToHash } from "@adamjanicki/ui";
+import { useScrollToHash, Box } from "@adamjanicki/ui";
 import { useSetDocumentTheme } from "src/hooks";
 
 export default function App() {
@@ -10,7 +10,7 @@ export default function App() {
 
   return (
     <>
-      <div id="welcome" aria-hidden />
+      <Box id="welcome" aria-hidden />
       <Nav />
       <Main />
       <Footer />
