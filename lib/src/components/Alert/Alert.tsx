@@ -1,5 +1,5 @@
 import React from "react";
-import type { ContentType, CornerType, DivProps } from "../../types";
+import type { ContentType, CornerType, DivProps } from "../../utils/types";
 import classNames from "../../functions/classNames";
 
 type Props = DivProps & {

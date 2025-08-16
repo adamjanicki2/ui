@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import classNames from "../../functions/classNames";
-import type { DivProps, Style } from "../../types";
+import type { DivProps, Style } from "../../utils/types";
 
 type Props = DivProps & {
   /**

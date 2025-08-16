@@ -10,7 +10,6 @@ import {
   buttonSnippet,
   carouselSnippet,
   clickOutsideSnippet,
-  inlineCodeSnippet,
   inputSnippet,
   layerSnippet,
   linkSnippet,
@@ -22,11 +21,11 @@ import {
   Badge,
   Banner,
   Button,
+  IconButton,
   Carousel,
   ClickOutside,
   IconInput,
   Input,
-  InlineCode,
   Link,
   UnstyledButton,
   UnstyledLink,
@@ -196,6 +195,7 @@ export default function Components() {
         <UnstyledButton className="ma1" to="#button">
           Unstyled
         </UnstyledButton>
+        <IconButton className="ma1" icon="➕" onClick={buttonAction} />
       </div>
       <HiddenSnippet>{buttonSnippet}</HiddenSnippet>
       <Heading level={2}>Carousel</Heading>
@@ -285,18 +285,6 @@ export default function Components() {
         />
       </div>
       <HiddenSnippet>{burgerSnippet}</HiddenSnippet>
-      <Heading level={2}>InlineCode</Heading>
-      <Para>
-        <>
-          Sometimes it's nice to be able to have a little piece of copyable
-          text, usually code. I never remember how you're supposed to write the
-          function to copy text to the clipboard. And cue the segue to the
-          demonstration of the component itself, the usual way to handle copying
-          to clipboard is:{" "}
-          <InlineCode>navigator.clipboard.writeText("code")</InlineCode>
-        </>
-      </Para>
-      <HiddenSnippet>{inlineCodeSnippet}</HiddenSnippet>
       <Heading level={2}>Input</Heading>
       <Para>
         I have 2 different types of inputs: one is a standard input with some

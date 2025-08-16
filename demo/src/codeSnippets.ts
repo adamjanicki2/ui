@@ -61,7 +61,8 @@ export const bannerSnippet = `
 export const buttonSnippet = `
 <Button variant="primary">Primary</Button>
 <Button variant="secondary">Secondary</Button>
-<UnstyledButton>Unstyled</UnstyledButton>
+<UnstyledButton to="#button">Unstyled</UnstyledButton>
+<IconButton icon="➕" />
 `;
 
 export const carouselSnippet = `
@@ -77,9 +78,6 @@ export const clickOutsideSnippet = `
   <Alert type="info">Click outside me!</Alert>
 </ClickOutside>
 `;
-
-export const inlineCodeSnippet =
-  '<InlineCode>navigator.clipboard.writeText("code")</InlineCode>';
 
 export const inputSnippet = `
 <Input placeholder="Type something..." />

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFocusTrap, useScrollLock } from "../../hooks";
 import classNames from "../../functions/classNames";
-import type { DivProps } from "../../types";
+import type { DivProps } from "../../utils/types";
 
 type Props<T extends React.ElementType> = Omit<DivProps, "children"> & {
   /**
@@ -62,7 +62,10 @@ const BaseLayer = <T extends React.ElementType>({
 
   return (
     <div
-      className={classNames("aui-layer-backdrop", className)}
+      className={classNames(
+        "aui-flex-y aui-align-center aui-justify-center aui-layer-backdrop",
+        className
+      )}
       style={style}
       onMouseDown={onClose}
     >

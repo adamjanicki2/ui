@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { classNames } from "../../functions";
 import Button from "../Button";
-import type { DivProps, Style } from "../../types";
+import type { DivProps, Style } from "../../utils/types";
 
 type ButtonProps = {
   /**
@@ -158,10 +158,10 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             <>
               <Button
                 className={classNames(
-                  "aui-carousel-arrow-prev",
+                  "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow",
                   leftArrowProps?.className
                 )}
-                style={leftArrowProps?.style}
+                style={{ left: 8, ...leftArrowProps?.style }}
                 corners="pill"
                 aria-label="previous"
                 onClick={() => startTransition(-1)}
@@ -170,10 +170,10 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               </Button>
               <Button
                 className={classNames(
-                  "aui-carousel-arrow-next",
+                  "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow",
                   rightArrowProps?.className
                 )}
-                style={rightArrowProps?.style}
+                style={{ right: 8, ...rightArrowProps?.style }}
                 corners="pill"
                 aria-label="next"
                 onClick={() => startTransition(1)}
@@ -183,7 +183,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             </>
           )}
           {!hideDots && (
-            <div className="aui-carousel-dots">
+            <div className="aui-flex-x aui-align-center aui-carousel-dots">
               {children.map((_, i) => (
                 <Button
                   key={i}

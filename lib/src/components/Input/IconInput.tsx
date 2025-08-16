@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { InputProps } from "./Input";
 import classNames from "../../functions/classNames";
-import type { CornerType, Style } from "../../types";
+import type { CornerType, Style } from "../../utils/types";
 
 type IconInputProps = {
   /**
@@ -37,7 +37,7 @@ const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
   ) => (
     <div
       className={classNames(
-        `aui-input-default aui-icon-input aui-corners--${corners}`,
+        `aui-flex-x aui-align-center aui-input-default aui-icon-input aui-corners--${corners}`,
         className
       )}
       style={style}
