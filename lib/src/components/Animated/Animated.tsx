@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import classNames from "../../functions/classNames";
-import type { DivProps, Style } from "../../utils/types";
+import type { Style } from "../../utils/types";
+import Box, { type BoxProps } from "../Box/Box";
 
-type Props = DivProps & {
+type Props = BoxProps & {
   /**
    * Whether to begin the animation.
    * Set to true to start animation, false to start the exit animation.
@@ -50,7 +51,6 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     keepMounted = false,
     animateTo,
     animateFrom,
-    children,
     className,
     style,
     ...rest
@@ -110,7 +110,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const currentAnimation = isAnimatingForward ? animateTo : animateFrom;
 
   return (
-    <div
+    <Box
       className={classNames(className, currentAnimation?.className)}
       style={{
         transition: `all ${duration}s ease-in-out`,
@@ -119,9 +119,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       }}
       {...rest}
       ref={ref}
-    >
-      {children}
-    </div>
+    />
   );
 });
 

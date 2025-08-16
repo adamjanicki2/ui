@@ -5,7 +5,7 @@ import {
   oneDark as dark,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "src/components/snippet.css";
-import { Badge, Button } from "@adamjanicki/ui";
+import { Badge, Button, Box } from "@adamjanicki/ui";
 import { classNames } from "@adamjanicki/ui/functions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faClipboard } from "@fortawesome/free-solid-svg-icons";
@@ -29,11 +29,14 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
   };
 
   return (
-    <div
+    <Box
       className={classNames("snippet-container ba br2 m-auto", className)}
       style={{ maxWidth: "100%", width: "min-content" }}
     >
-      <div className="flex justify-between items-center w-100 bb ph2 pv1">
+      <Box
+        layout={{ axis: "x", align: "center", justify: "between" }}
+        className="w-100 bb ph2 pv1"
+      >
         <p className="f6 fw5 ma0">{lang}</p>
         {copied ? (
           <Badge className="flex items-center" type="success">
@@ -50,7 +53,7 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
             Copy
           </Button>
         )}
-      </div>
+      </Box>
       <pre
         className="flex w-100 pa2 ma0"
         style={{
@@ -72,7 +75,7 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
           {children}
         </SyntaxHighlighter>
       </pre>
-    </div>
+    </Box>
   );
 };
 

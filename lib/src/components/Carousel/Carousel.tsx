@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { classNames } from "../../functions";
 import Button from "../Button";
-import type { DivProps, Style } from "../../utils/types";
+import type { Style } from "../../utils/types";
+import Box, { type BoxProps } from "../Box/Box";
 
 type ButtonProps = {
   /**
@@ -18,7 +19,7 @@ type ButtonProps = {
   style?: Style;
 };
 
-type Props = DivProps & {
+type Props = BoxProps & {
   /**
    * The child elements/slides of the carousel
    */
@@ -65,145 +66,158 @@ type State = {
 
 const DEFAULT_DURATION_S = 1;
 
-const Carousel = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const {
-    children,
-    className,
-    hideArrows,
-    hideDots,
-    dotProps,
-    leftArrowProps,
-    rightArrowProps,
-    ...rest
-  } = props;
-  // min duration
-  const duration = Math.max(props.duration ?? DEFAULT_DURATION_S, 0.1);
-  const autoplayInterval = props.autoplayInterval
-    ? Math.max(duration, props.autoplayInterval)
-    : undefined;
-  const length = children.length;
-  const [state, setState] = useState<State>({
-    cur: 0,
-    delta: 0,
-    animating: false,
-  });
-  const intervalRef = useRef<number | null>(null);
-
-  const { cur, delta, animating } = state;
-  const next = safeMod(cur + delta, length);
-
-  const startTransition = useCallback(
-    (delta: number) => {
-      if (animating || delta === 0) return;
-      setState((old) => ({
-        ...old,
-        delta,
-        animating: true,
-      }));
+const Carousel = React.forwardRef<HTMLDivElement, Props>(
+  (
+    {
+      children,
+      className,
+      hideArrows,
+      hideDots,
+      dotProps,
+      leftArrowProps,
+      rightArrowProps,
+      autoplayInterval,
+      duration,
+      ...rest
     },
-    [animating]
-  );
-
-  const onTransitionEnd = () => {
-    setState(({ delta, cur }) => ({
-      delta,
+    ref
+  ) => {
+    // min duration
+    duration = Math.max(duration ?? DEFAULT_DURATION_S, 0.1);
+    autoplayInterval = autoplayInterval
+      ? Math.max(duration, autoplayInterval)
+      : undefined;
+    const length = children.length;
+    const [state, setState] = useState<State>({
+      cur: 0,
+      delta: 0,
       animating: false,
-      cur: safeMod(cur + delta, length),
-    }));
-  };
+    });
+    const intervalRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    if (autoplayInterval) {
-      intervalRef.current = window.setInterval(() => {
-        startTransition(1);
-      }, autoplayInterval * 1000);
-    }
+    const { cur, delta, animating } = state;
+    const next = safeMod(cur + delta, length);
 
-    return () => {
-      const interval = intervalRef.current;
-      intervalRef.current = null;
-      if (interval) {
-        clearInterval(interval);
-      }
+    const startTransition = useCallback(
+      (delta: number) => {
+        if (animating || delta === 0) return;
+        setState((old) => ({
+          ...old,
+          delta,
+          animating: true,
+        }));
+      },
+      [animating]
+    );
+
+    const onTransitionEnd = () => {
+      setState(({ delta, cur }) => ({
+        delta,
+        animating: false,
+        cur: safeMod(cur + delta, length),
+      }));
     };
-  }, [autoplayInterval, startTransition]);
 
-  if (length <= 0) return null;
-
-  const animatingStyles = animating
-    ? {
-        transform: `translateX(${-(delta / Math.abs(delta)) * 100}%)`,
-        transition: `transform ${duration}s ease-in-out`,
+    useEffect(() => {
+      if (autoplayInterval) {
+        intervalRef.current = window.setInterval(() => {
+          startTransition(1);
+        }, autoplayInterval * 1000);
       }
-    : undefined;
 
-  return (
-    <div {...rest} className={classNames("aui-carousel", className)} ref={ref}>
-      <div
-        className="aui-carousel-slider"
-        style={{
-          ...animatingStyles,
-          flexDirection: delta >= 0 ? "row" : "row-reverse",
-        }}
-        onTransitionEnd={onTransitionEnd}
+      return () => {
+        const interval = intervalRef.current;
+        intervalRef.current = null;
+        if (interval) {
+          clearInterval(interval);
+        }
+      };
+    }, [autoplayInterval, startTransition]);
+
+    if (length <= 0) return null;
+
+    const animatingStyles = animating
+      ? {
+          transform: `translateX(${-(delta / Math.abs(delta)) * 100}%)`,
+          transition: `transform ${duration}s ease-in-out`,
+        }
+      : undefined;
+
+    return (
+      <Box
+        {...rest}
+        className={classNames("aui-carousel", className)}
+        ref={ref}
       >
-        <div className="aui-carousel-item">{children[cur]}</div>
-        <div className="aui-carousel-item" aria-hidden>
-          {children[next]}
-        </div>
-      </div>
-      {length > 1 && (
-        <>
-          {!hideArrows && (
-            <>
-              <Button
-                className={classNames(
-                  "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow",
-                  leftArrowProps?.className
-                )}
-                style={{ left: 8, ...leftArrowProps?.style }}
-                corners="pill"
-                aria-label="previous"
-                onClick={() => startTransition(-1)}
-              >
-                {leftArrowProps?.children ?? "←"}
-              </Button>
-              <Button
-                className={classNames(
-                  "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow",
-                  rightArrowProps?.className
-                )}
-                style={{ right: 8, ...rightArrowProps?.style }}
-                corners="pill"
-                aria-label="next"
-                onClick={() => startTransition(1)}
-              >
-                {rightArrowProps?.children ?? "→"}
-              </Button>
-            </>
-          )}
-          {!hideDots && (
-            <div className="aui-flex-x aui-align-center aui-carousel-dots">
-              {children.map((_, i) => (
+        <Box
+          className="aui-carousel-slider"
+          style={{
+            ...animatingStyles,
+            flexDirection: delta >= 0 ? "row" : "row-reverse",
+          }}
+          onTransitionEnd={onTransitionEnd}
+        >
+          <Box className="aui-carousel-item">{children[cur]}</Box>
+          <Box className="aui-carousel-item" aria-hidden>
+            {children[next]}
+          </Box>
+        </Box>
+        {length > 1 && (
+          <>
+            {!hideArrows && (
+              <>
                 <Button
-                  key={i}
                   className={classNames(
-                    "aui-carousel-dot",
-                    dotProps?.className
+                    "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow",
+                    leftArrowProps?.className
                   )}
+                  style={{ left: 8, ...leftArrowProps?.style }}
                   corners="pill"
-                  disabled={cur === i || animating}
-                  onClick={() => startTransition(i - cur)}
-                  style={dotProps?.style}
-                />
-              ))}
-            </div>
-          )}
-        </>
-      )}
-    </div>
-  );
-});
+                  aria-label="previous"
+                  onClick={() => startTransition(-1)}
+                >
+                  {leftArrowProps?.children ?? "←"}
+                </Button>
+                <Button
+                  className={classNames(
+                    "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow",
+                    rightArrowProps?.className
+                  )}
+                  style={{ right: 8, ...rightArrowProps?.style }}
+                  corners="pill"
+                  aria-label="next"
+                  onClick={() => startTransition(1)}
+                >
+                  {rightArrowProps?.children ?? "→"}
+                </Button>
+              </>
+            )}
+            {!hideDots && (
+              <Box
+                layout={{ axis: "x", align: "center", gap: "xs" }}
+                className="aui-carousel-dots"
+              >
+                {children.map((_, i) => (
+                  <Button
+                    key={i}
+                    className={classNames(
+                      "aui-carousel-dot",
+                      dotProps?.className
+                    )}
+                    corners="pill"
+                    disabled={cur === i || animating}
+                    onClick={() => startTransition(i - cur)}
+                    style={dotProps?.style}
+                  />
+                ))}
+              </Box>
+            )}
+          </>
+        )}
+      </Box>
+    );
+  }
+);
 
 function safeMod(n: number, m: number): number {
   return ((n % m) + m) % m;

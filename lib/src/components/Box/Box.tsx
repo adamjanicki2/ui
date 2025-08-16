@@ -1,82 +1,40 @@
 import React from "react";
-import type { DivProps, Size, Style } from "../../utils/types";
+import type { Style, Layout } from "../../utils/types";
 import { classNames } from "../../functions";
 
-type BoxProps = {
+type Props = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+> & {
   /**
-   * Direction the box spans; along the x-axis or y-axis
-   * (Equivalent to flex-direction)
+   * The organization of the container and its children.
    */
-  axis: "x" | "y";
-  /**
-   * Spacing between children of the box
-   */
-  gap?: Size;
-  /**
-   * Alignment orthogonal to the selected axis
-   * (Equivalent to align-items)
-   */
-  align?: "start" | "center" | "end";
-  /**
-   * How to layout the children
-   * (Equivalent to justify-content)
-   */
-  justify?: "start" | "center" | "between" | "end";
-  /**
-   * Padding on the inside of the box
-   */
-  padding?: Size;
-  /**
-   * Margin on the outside of the box
-   */
-  margin?: Size;
-  /**
-   * Whether to allow wrapping of box children
-   */
-  wrap?: boolean;
+  layout?: Layout;
 };
 
-type Props = DivProps & BoxProps;
-
 const Box = React.forwardRef<HTMLDivElement, Props>(
-  (
-    {
-      axis,
-      gap,
-      align,
-      justify,
-      padding,
-      margin,
-      wrap,
-      className,
-      style,
-      ...rest
-    },
-    ref
-  ) => {
-    const transformedProps = transformProps({
-      axis,
-      gap,
-      align,
-      justify,
-      padding,
-      margin,
-      wrap,
-    });
+  ({ layout, className, style, ...rest }, ref) => {
+    const transformedLayout = transformLayout(layout);
 
     return (
       <div
         {...rest}
-        className={classNames(transformedProps.className, className)}
-        style={{ ...transformedProps.style, ...style }}
+        className={classNames(transformedLayout.className, className)}
+        style={{ ...transformedLayout.style, ...style }}
         ref={ref}
       />
     );
   }
 );
 
-function transformProps(props: BoxProps) {
-  const { axis, gap, align, justify, padding, margin, wrap } = props;
+type CSS = {
+  className?: string;
+  style?: Style;
+};
+
+function transformLayout(layout: Layout | undefined): CSS {
+  if (!layout) return { className: undefined, style: undefined };
+  const { axis, gap, align, justify, padding, margin, wrap } = layout;
 
   const style: Style = {};
   let className = `aui-flex-${axis}`;

@@ -58,6 +58,20 @@ export const bannerSnippet = `
 <Banner type="error">This is an error banner</Banner>
 `;
 
+export const boxSnippet = `
+<Box layout={{ axis: "x", align: "end", justify: "center", padding: "s", gap: "s" }}>
+  <Box layout={{ axis: "y", align: "center", justify: "center", padding: "l" }}>
+    L
+  </Box>
+  <Box layout={{ axis: "y", align: "center", justify: "center", padding: "xl" }}>
+    XL
+  </Box>
+  <Box layout={{ axis: "y", align: "center", justify: "center", padding: "xxl" }}>
+    XXL
+  </Box>
+</Box>
+`;
+
 export const buttonSnippet = `
 <Button variant="primary">Primary</Button>
 <Button variant="secondary">Secondary</Button>
@@ -67,9 +81,9 @@ export const buttonSnippet = `
 
 export const carouselSnippet = `
 <Carousel autoplayInterval={5}>
-  <div className="bg-red">"We live in a twilight world"</div>
-  <div className="bg-green">"We live in a twilight world"</div>
-  <div className="bg-blue">"We live in a twilight world"</div>
+  <Box className="bg-red">"We live in a twilight world"</Box>
+  <Box className="bg-green">"We live in a twilight world"</Box>
+  <Box className="bg-blue">"We live in a twilight world"</Box>
 </Carousel>
 `;
 
@@ -103,9 +117,9 @@ export const burgerSnippet = `
 
 export const layerSnippet = `
 <Layer onClose={() => setLayerOpen(false)}>
-  <div className="bg-white">
+  <Box className="bg-white">
     <h1>Hello!</h1>
-  </div>
+  </Box>
 </Layer>
 `;
 
@@ -137,11 +151,11 @@ export const focusTrapSnippet = `
 const trapRef = useFocusTrap<HTMLDivElement>(true);
 return (
   // disables focus outside of this div
-  <div ref={trapRef}>
+  <Box ref={trapRef}>
     <h1>Modal</h1>
     <p>Some content...</p>
     <button>Close</button>
-  </div>
+  </Box>
 );
 `;
 
@@ -156,11 +170,11 @@ export const scrollLockSnippet = `
 // locks scrolling when modal is open
 useScrollLock(modalOpen);
 return (
-  <div>
+  <Box>
     <h1>Modal</h1>
     <p>Some content...</p>
     <button>Close</button>
-  </div>
+  </Box>
 );
 `;
 
@@ -195,9 +209,9 @@ useWindowResize(() => {
 export const classNamesSnippet = `
 // in any component ...
 // conditionally apply classes
-<div className={classNames("container", isWhite ? "white" : null)}>
+<Box className={classNames("container", isWhite ? "white" : null)}>
   Some content...
-</div>
+</Box>
 `;
 
 export const scrollToIdSnippet = `

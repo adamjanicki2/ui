@@ -2,6 +2,7 @@ import React, { forwardRef } from "react";
 import { InputProps } from "./Input";
 import classNames from "../../functions/classNames";
 import type { CornerType, Style } from "../../utils/types";
+import Box from "../Box";
 
 type IconInputProps = {
   /**
@@ -35,15 +36,16 @@ const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
     { startIcon, endIcon, className, style, corners = "rounded", inputProps },
     ref
   ) => (
-    <div
+    <Box
+      layout={{ axis: "x", align: "center" }}
       className={classNames(
-        `aui-flex-x aui-align-center aui-input-default aui-icon-input aui-corners--${corners}`,
+        `aui-input-default aui-icon-input aui-corners--${corners}`,
         className
       )}
       style={style}
       ref={ref}
     >
-      {startIcon || null}
+      {startIcon}
       <input
         {...inputProps}
         className={classNames(
@@ -51,8 +53,8 @@ const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
           inputProps?.className
         )}
       />
-      {endIcon || null}
-    </div>
+      {endIcon}
+    </Box>
   )
 );
 
