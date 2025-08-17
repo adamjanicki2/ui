@@ -149,7 +149,7 @@ export const layerSnippet = `
 
 export const linkSnippet = `
 <Link to="#link">Internal link</Link>
-<Link to="https://adamovies.com" target="_blank" rel="noreferrer">External link →</Link>
+<Link to="https://adamovies.com" external>External link</Link>
 <UnstyledLink to="#link">Unstyled link</UnstyledLink>
 `;
 

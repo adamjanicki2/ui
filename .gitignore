@@ -17,3 +17,5 @@ lib/*
 !lib/tsconfig.json
 !lib/LICENSE
 !lib/README.md
+!lib/test
+!lib/jest.config.js

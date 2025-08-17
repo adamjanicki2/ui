@@ -117,13 +117,8 @@ export default function UserAction() {
           <Link className="ma1" to="#link">
             Internal link
           </Link>
-          <Link
-            className="ma1"
-            to="https://adamovies.com"
-            target="_blank"
-            rel="noreferrer"
-          >
-            External link →
+          <Link className="ma1" to="https://adamovies.com" external>
+            External link
           </Link>
           <UnstyledLink className="ma1" to="#link">
             Unstyled link

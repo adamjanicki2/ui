@@ -21,6 +21,10 @@ type DefaultLinkProps = BuiltinLinkProps & {
    */
   to: string;
   /**
+   * Whether the link should open in a new tab
+   */
+  external?: boolean;
+  /**
    * [Optional] Custom link element to use
    * This is useful for using a different link element, like a React Router Link
    * If this is not provided, a normal anchor tag will be used
@@ -34,8 +38,12 @@ const DefaultLinkElement: CustomLinkElement = forwardRef<
 >(({ to, ...props }, ref) => <a {...props} href={to} ref={ref} />);
 
 export const UnstyledLink = forwardRef<HTMLAnchorElement, DefaultLinkProps>(
-  ({ LinkElement = DefaultLinkElement, className, ...props }, ref) => (
+  (
+    { LinkElement = DefaultLinkElement, className, external, ...props },
+    ref
+  ) => (
     <LinkElement
+      {...(external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
       {...props}
       className={classNames("aui-action", className)}
       ref={ref}
