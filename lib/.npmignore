@@ -1,5 +1,7 @@
 node_modules
 src
+test
 clean.sh
+jest.config.js
 package-lock.json
 tsconfig.json
