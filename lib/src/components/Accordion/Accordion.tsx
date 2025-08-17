@@ -94,16 +94,16 @@ const Drawer = ({
   const boxRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState<number>();
 
+  const children = item.content;
+
   useEffect(() => {
-    if (boxRef.current) {
+    if (open && children && boxRef.current) {
       setHeight(boxRef.current.offsetHeight);
     }
-  }, [open, item.content]);
+  }, [open, children]);
 
   // TODO: change this to use calc-size when supported
   // https://developer.mozilla.org/en-US/docs/Web/CSS/calc-size#browser_compatibility
-
-  console.log({ height, open });
 
   return (
     <>
@@ -135,7 +135,7 @@ const Drawer = ({
             style: { height, transform: "translateY(0)", opacity: 1 },
           }}
         >
-          <Box ref={boxRef}>{item.content}</Box>
+          <Box ref={boxRef}>{children}</Box>
         </Animated>
       </Box>
       {showDivider && <hr className="aui-accordion-hr" />}
