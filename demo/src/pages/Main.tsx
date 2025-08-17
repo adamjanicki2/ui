@@ -3,9 +3,10 @@ import { importCss } from "src/codeSnippets";
 import Header from "src/components/Heading";
 import Para from "src/components/Para";
 import Snippet from "src/components/Snippet";
-import Components from "src/sections/Components";
-import Functions from "src/sections/Functions";
-import Hooks from "src/sections/Hooks";
+import Presentation from "src/sections/Presentation";
+import Signals from "src/sections/Signals";
+import UserAction from "src/sections/UserAction";
+import Miscellaneous from "src/sections/Miscellaneous";
 import Logo from "src/images/logo.svg?react";
 
 const Main = () => (
@@ -27,10 +28,10 @@ const Main = () => (
       example.
     </Para>
     <Snippet>{importCss}</Snippet>
-    <Components />
-    <Hooks />
-    <Functions />
-    <hr className="ba b--moon-gray mv3" />
+    <Presentation />
+    <Signals />
+    <UserAction />
+    <Miscellaneous />
     <Para>
       And that's it! I hope you find this fun little library useful. If you want
       to play around with any of these components, you can head over to my{" "}
