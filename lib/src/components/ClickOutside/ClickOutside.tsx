@@ -1,11 +1,11 @@
 import React, { cloneElement, useCallback, useEffect, useRef } from "react";
 
-type Props<T extends React.ElementType> = {
+type Props = {
   /**
    * The children to render.
    * IMPORTANT: The child must be a single element which can hold a ref.
    */
-  children: React.ReactElement<React.ComponentPropsWithRef<T>>;
+  children: React.ReactElement<any>;
   /**
    * The function to call when a click occurs outside the child element.
    *
@@ -14,10 +14,10 @@ type Props<T extends React.ElementType> = {
   onClickOutside: (event: MouseEvent) => void;
 };
 
-const ClickOutside = <T extends React.ElementType>({
+const ClickOutside = ({
   children,
   onClickOutside,
-}: Props<T>): React.JSX.Element => {
+}: Props): React.JSX.Element => {
   const ref = useRef<Element | null>(null);
   const clickWithinChildRef = useRef(false);
   const startedRef = useRef(false);
@@ -56,11 +56,11 @@ const ClickOutside = <T extends React.ElementType>({
     ref,
     onClick: (event: React.SyntheticEvent) => {
       // point of this is to let us know that click originated
-      // from the child element, so we can ignore it if the click ends outside
+      // from the child element, so we can ignore it
       clickWithinChildRef.current = true;
       children.props?.onClick?.(event);
     },
-  } as any);
+  });
 };
 
 export default ClickOutside;

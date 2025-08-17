@@ -3,7 +3,7 @@ import { useFocusTrap, useScrollLock } from "../../hooks";
 import classNames from "../../functions/classNames";
 import Box, { type BoxProps } from "../Box/Box";
 
-type Props<T extends React.ElementType> = Omit<BoxProps, "children"> & {
+type Props = Omit<BoxProps, "children"> & {
   /**
    * Callback that fires when the user clicks outside the layer
    */
@@ -12,7 +12,7 @@ type Props<T extends React.ElementType> = Omit<BoxProps, "children"> & {
    * The child of the layer.
    * IMPORTANT: the child must be able to accept a ref
    */
-  children: React.ReactElement<React.ComponentPropsWithRef<T>>;
+  children: React.ReactElement<any>;
   /**
    * [Optional] Whether to disable the escape key to close the layer
    * @default false
@@ -30,72 +30,79 @@ type Props<T extends React.ElementType> = Omit<BoxProps, "children"> & {
   disableScrollLock?: boolean;
 };
 
-type BaseProps<T extends React.ElementType> = Omit<
-  Props<T>,
-  "disableScrollLock" | "returnFocusOnEscape"
-> & {
+type BaseProps = Omit<Props, "disableScrollLock" | "returnFocusOnEscape"> & {
   visible: boolean;
 };
 
-const BaseLayer = <T extends React.ElementType>({
-  onClose,
-  children,
-  style,
-  className,
-  disableEscape = false,
-  visible,
-}: BaseProps<T>): React.JSX.Element => {
-  const focusRef = useFocusTrap<HTMLElement>(visible);
+const BaseLayer = React.forwardRef<HTMLDivElement, BaseProps>(
+  (
+    {
+      onClose,
+      children,
+      className,
+      disableEscape = false,
+      visible,
+      onMouseDown,
+      ...rest
+    },
+    ref
+  ) => {
+    const focusRef = useFocusTrap<HTMLElement>(visible);
 
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose?.();
-      }
-    };
+    useEffect(() => {
+      const handleEscape = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+          onClose?.();
+        }
+      };
 
-    if (!disableEscape) document.addEventListener("keydown", handleEscape);
-    return () => {
-      if (!disableEscape) document.removeEventListener("keydown", handleEscape);
-    };
-  }, [onClose, disableEscape]);
+      if (!disableEscape) document.addEventListener("keydown", handleEscape);
+      return () => {
+        if (!disableEscape)
+          document.removeEventListener("keydown", handleEscape);
+      };
+    }, [onClose, disableEscape]);
 
-  return (
-    <Box
-      layout={{ axis: "y", align: "center", justify: "center" }}
-      className={classNames("aui-layer-backdrop", className)}
-      style={style}
-      onMouseDown={onClose}
-    >
-      {React.cloneElement(children, {
-        ref: focusRef,
-        onMouseDown: (e: React.SyntheticEvent) => {
-          e.stopPropagation();
-          children.props?.onMouseDown?.(e);
-        },
-      } as any)}
-    </Box>
-  );
-};
+    return (
+      <Box
+        layout={{ axis: "y", align: "center", justify: "center" }}
+        {...rest}
+        className={classNames("aui-layer-backdrop", className)}
+        onMouseDown={(e) => {
+          onMouseDown?.(e);
+          onClose?.();
+        }}
+        ref={ref}
+      >
+        {React.cloneElement(children, {
+          ref: focusRef,
+          onMouseDown: (e: React.SyntheticEvent) => {
+            e.stopPropagation();
+            children.props?.onMouseDown?.(e);
+          },
+        })}
+      </Box>
+    );
+  }
+);
 
-const Layer = <T extends React.ElementType>({
-  returnFocusOnEscape,
-  disableScrollLock,
-  ...props
-}: Props<T>): React.JSX.Element => {
-  // Lock and unlock on mount and unmount
-  useScrollLock(!disableScrollLock);
+const Layer = React.forwardRef<HTMLDivElement, Props>(
+  ({ returnFocusOnEscape, disableScrollLock, ...rest }, ref) => {
+    // Lock and unlock on mount and unmount
+    useScrollLock(!disableScrollLock);
 
-  useEffect(() => {
-    return () => {
-      const activeEl = document.activeElement as HTMLElement;
-      if (!returnFocusOnEscape) {
-        activeEl?.blur?.();
-      }
-    };
-  }, [returnFocusOnEscape]);
+    useEffect(
+      () => () => {
+        const activeEl = document.activeElement as HTMLElement;
+        if (!returnFocusOnEscape) {
+          activeEl?.blur?.();
+        }
+      },
+      [returnFocusOnEscape]
+    );
 
-  return <BaseLayer {...props} visible />;
-};
+    return <BaseLayer {...rest} visible ref={ref} />;
+  }
+);
 
 export default Layer;
