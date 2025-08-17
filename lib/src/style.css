@@ -64,7 +64,7 @@
   --aui-default-text-color: white;
   --aui-default-background: var(--aui-obsidian);
   --aui-default-border: var(--aui-dark-gray);
-  --aui-container-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.26);
+  --aui-container-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.36);
   /* Buttons */
   --aui-button-primary-background: white;
   --aui-button-primary-color: var(--aui-obsidian);
