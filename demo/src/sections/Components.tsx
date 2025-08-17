@@ -84,7 +84,7 @@ export default function Components() {
         tricky problem.
       </Para>
       <Accordion
-        className="aui-m-auto"
+        className="m-auto"
         style={{ width: "calc(min(100%, 512px))" }}
         drawers={[
           {
