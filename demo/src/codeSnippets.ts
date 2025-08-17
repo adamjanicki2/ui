@@ -100,7 +100,7 @@ export const boxSnippet = `
 export const buttonSnippet = `
 <Button variant="primary">Primary</Button>
 <Button variant="secondary">Secondary</Button>
-<UnstyledButton to="#button">Unstyled</UnstyledButton>
+<UnstyledButton>Unstyled</UnstyledButton>
 `;
 
 export const carouselSnippet = `

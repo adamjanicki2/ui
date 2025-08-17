@@ -47,9 +47,15 @@ const Accordion = React.forwardRef<HTMLDivElement, Props>(
             item={item}
             open={openIndices.has(i)}
             onOpenChange={(open) =>
-              setOpenIndices((prev) =>
-                open ? prev.add(i) : prev.difference(new Set([i]))
-              )
+              setOpenIndices((prev) => {
+                const next = new Set(prev);
+                if (open) {
+                  next.add(i);
+                } else {
+                  next.delete(i);
+                }
+                return next;
+              })
             }
             duration={duration}
             showDivider={!hideDividers && i < drawers.length - 1}
@@ -96,6 +102,8 @@ const Drawer = ({
 
   // TODO: change this to use calc-size when supported
   // https://developer.mozilla.org/en-US/docs/Web/CSS/calc-size#browser_compatibility
+
+  console.log({ height, open });
 
   return (
     <>
