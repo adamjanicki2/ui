@@ -18,6 +18,31 @@ root.render(
 );
 `;
 
+export const accordionSnippet = `
+<Accordion
+  drawers={[
+    {
+      label: "Success",
+      content: (
+        <Alert type="success">We live in a Twilight World.</Alert>
+      ),
+    },
+    {
+      label: "Info",
+      content: (
+        <Alert type="info">We live in a Twilight World.</Alert>
+      ),
+    },
+    {
+      label: "Error",
+      content: (
+        <Alert type="error">We live in a Twilight World.</Alert>
+      ),
+    },
+  ]}
+/>
+`;
+
 export const alertSnippet = `
 <Alert type="static">This is a static alert</Alert>
 <Alert type="info">This is an info alert</Alert>

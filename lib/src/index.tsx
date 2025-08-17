@@ -1,4 +1,5 @@
 // Components
+export { default as Accordion } from "./components/Accordion";
 export { default as Alert } from "./components/Alert";
 export { default as Animated } from "./components/Animated";
 export { default as Badge } from "./components/Badge";

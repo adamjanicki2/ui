@@ -2,6 +2,7 @@ import Heading from "src/components/Heading";
 import Para from "src/components/Para";
 import HiddenSnippet from "src/components/HiddenSnippet";
 import {
+  accordionSnippet,
   alertSnippet,
   animatedSnippet,
   badgeSnippet,
@@ -17,6 +18,7 @@ import {
   spinnerSnippet,
 } from "src/codeSnippets";
 import {
+  Accordion,
   Alert,
   Animated,
   Badge,
@@ -73,6 +75,45 @@ export default function Components() {
         breaking changes, whatever best serves me and my apps! Now let's get
         into it.
       </Para>
+      <Heading level={2}>Accordion</Heading>
+      <Para>
+        Any webdev is going to know how insanely tricky it is to animate an
+        accordion due to it being <em>(for the moment)</em> difficult to animate
+        from 0 height to auto height. So this solution is inefficient
+        performance wise, but it was still fun to work on solving since it's a
+        tricky problem.
+      </Para>
+      <Accordion
+        className="aui-m-auto"
+        style={{ width: "calc(min(100%, 512px))" }}
+        drawers={[
+          {
+            label: "Success",
+            content: (
+              <Box className="ph3 pb3">
+                <Alert type="success">We live in a Twilight World.</Alert>
+              </Box>
+            ),
+          },
+          {
+            label: "Info",
+            content: (
+              <Box className="ph3 pb3">
+                <Alert type="info">We live in a Twilight World.</Alert>
+              </Box>
+            ),
+          },
+          {
+            label: "Error",
+            content: (
+              <Box className="ph3 pb3">
+                <Alert type="error">We live in a Twilight World.</Alert>
+              </Box>
+            ),
+          },
+        ]}
+      />
+      <HiddenSnippet>{accordionSnippet}</HiddenSnippet>
       <Heading level={2}>Alert</Heading>
       <Para>
         Alerts can have different types: <code>static</code>, <code>info</code>,{" "}

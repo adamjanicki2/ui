@@ -138,6 +138,28 @@
   border-color: var(--aui-default-border);
 }
 
+/* Accordion */
+.aui-accordion {
+  background-color: var(--aui-default-background);
+  box-shadow: 0 0 0 1px var(--aui-default-border) inset,
+    var(--aui-subtle-box-shadow);
+}
+.aui-accordion-label {
+  font-weight: 600;
+}
+
+.aui-accordion-hr {
+  border: none;
+  height: var(--aui-xxs);
+  background-color: var(--aui-default-border);
+  width: 100%;
+  margin: 0;
+}
+
+.aui-accordion-arrow {
+  color: var(--aui-select-icon);
+}
+
 /* Alert */
 .aui-alert {
   padding: var(--aui-l);
