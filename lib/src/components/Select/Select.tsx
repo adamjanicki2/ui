@@ -50,7 +50,7 @@ const Select = (
     <select
       {...props}
       ref={ref}
-      className={`aui-select-base aui-corners--${corners}`}
+      className={`aui-select aui-corners--${corners}`}
       disabled={disabled}
     >
       {options.map((option, index) => (

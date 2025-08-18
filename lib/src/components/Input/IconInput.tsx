@@ -39,7 +39,7 @@ const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
     <Box
       layout={{ axis: "x", align: "center" }}
       className={classNames(
-        `aui-input-default aui-icon-input aui-corners--${corners}`,
+        `aui-input aui-icon-input aui-corners--${corners}`,
         className
       )}
       style={style}

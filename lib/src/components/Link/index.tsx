@@ -1,3 +1,3 @@
-import Link from "./Link";
+import Link, { UnstyledLink, ButtonLink } from "./Link";
 export default Link;
-export * from "./Link";
+export { UnstyledLink, ButtonLink };

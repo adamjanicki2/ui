@@ -15,6 +15,7 @@ import {
   Input,
   Link,
   UnstyledButton,
+  ButtonLink,
   UnstyledLink,
   Select,
   TextArea,
@@ -113,16 +114,16 @@ export default function UserAction() {
           something more complex, maybe react-router-dom's link element if
           you're working within a router context.
         </Para>
-        <Box layout={{ axis: "x", align: "center" }} className="w-fc m-auto">
-          <Link className="ma1" to="#link">
-            Internal link
-          </Link>
-          <Link className="ma1" to="https://adamovies.com" external>
+        <Box
+          layout={{ axis: "x", align: "center", gap: "l", wrap: true }}
+          className="w-fc m-auto"
+        >
+          <Link to="#link">Internal link</Link>
+          <Link to="https://adamovies.com" external>
             External link
           </Link>
-          <UnstyledLink className="ma1" to="#link">
-            Unstyled link
-          </UnstyledLink>
+          <UnstyledLink to="#link">Unstyled link</UnstyledLink>
+          <ButtonLink to="#link">Button link</ButtonLink>
         </Box>
         <HiddenSnippet>{linkSnippet}</HiddenSnippet>
       </>

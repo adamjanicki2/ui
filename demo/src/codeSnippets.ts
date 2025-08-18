@@ -151,6 +151,7 @@ export const linkSnippet = `
 <Link to="#link">Internal link</Link>
 <Link to="https://adamovies.com" external>External link</Link>
 <UnstyledLink to="#link">Unstyled link</UnstyledLink>
+<ButtonLink to="#link">Button link</ButtonLink>
 `;
 
 export const selectSnippet = `

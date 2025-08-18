@@ -201,7 +201,7 @@
 }
 
 /* Button */
-.aui-button-base {
+.aui-button {
   background: none;
   border: none;
   padding: 0;
@@ -218,7 +218,7 @@
   font-weight: 600;
 }
 
-.aui-button-base:disabled {
+.aui-button:disabled {
   cursor: default !important;
   opacity: var(--aui-disabled-opacity);
 }
@@ -238,7 +238,7 @@
   transition: box-shadow var(--aui-default-transition);
 }
 
-.aui-link-default {
+.aui-link {
   font-weight: 600;
   color: var(--aui-link-color);
   transition: opacity var(--aui-default-transition);
@@ -246,7 +246,7 @@
 
 @media (hover: hover) {
   .aui-button--primary:not([disabled]):hover,
-  .aui-link-default:hover {
+  .aui-link:hover {
     opacity: var(--aui-default-opacity-dim);
   }
 
@@ -279,19 +279,19 @@
   width: 100%;
 }
 
-.aui-input-default {
+.aui-input {
   transition: box-shadow var(--aui-default-transition);
   box-shadow: 0 0 0 1px var(--aui-default-border) inset,
     var(--aui-subtle-box-shadow);
   background-color: var(--aui-default-background);
 }
 
-.aui-input-default:disabled {
+.aui-input:disabled {
   opacity: var(--aui-disabled-opacity);
   cursor: default;
 }
 
-.aui-input-default:not([disabled]):focus-within,
+.aui-input:not([disabled]):focus-within,
 .aui-select-container:not([disabled]):focus-within {
   box-shadow: 0 0 0 1px var(--aui-default-border) inset,
     var(--aui-subtle-box-shadow), 0 0 0 3px var(--aui-focus-ring-color);
@@ -308,7 +308,7 @@
   background-color: var(--aui-default-background);
 }
 
-.aui-select-base {
+.aui-select {
   width: 100%;
   color: inherit;
   border: none;

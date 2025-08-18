@@ -19,7 +19,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       {...props}
       ref={ref}
       className={classNames(
-        `aui-input-base aui-input-default aui-corners--${corners}`,
+        `aui-input-base aui-input aui-corners--${corners}`,
         className
       )}
       rows={rows}
