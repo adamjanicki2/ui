@@ -1,24 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import Box from "../Box";
+import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
 import { UnstyledButton } from "../Button";
 import Animated from "../Animated";
-import type { Style } from "../../utils/types";
 import { classNames } from "../../functions";
 
-type Props = {
+type Props = Omit<BoxProps, "children"> & {
   /**
    * Drawers to render as accordion sections
    */
   drawers: Drawer[];
-  /**
-   * [Optional] additional class name to apply to the accordion
-   */
-  className?: string;
-  /**
-   * [Optional] additional styles to apply to the accordion
-   */
-  style?: Style;
   /**
    * Duration of the drawer animation (in seconds)
    */
@@ -31,14 +22,14 @@ type Props = {
 };
 
 const Accordion = React.forwardRef<HTMLDivElement, Props>(
-  ({ drawers, className, style, duration, hideDividers }, ref) => {
+  ({ drawers, className, duration, hideDividers, ...rest }, ref) => {
     const [openIndices, setOpenIndices] = useState<Set<number>>(new Set());
 
     return (
       <Box
         layout={{ axis: "y" }}
+        {...rest}
         className={classNames("aui-accordion aui-corners--rounded", className)}
-        style={style}
         ref={ref}
       >
         {drawers.map((item, i) => (
