@@ -41,7 +41,7 @@ describe("Link", () => {
         >
           Unstyled
         </UnstyledLink>
-        <ButtonLink to="#" data-testid="button">
+        <ButtonLink to="#" data-testid="button" LinkElement={CustomLinkElement}>
           Button
         </ButtonLink>
       </>

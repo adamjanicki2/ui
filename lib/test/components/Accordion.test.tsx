@@ -47,7 +47,10 @@ describe("Accordion", () => {
       const button = screen.getByText(id);
       await userEvent.click(button);
       const child = screen.getByTestId(`drawer-${id}`);
-      const animated = child.parentElement?.parentElement!;
+      const animated = child.parentElement?.parentElement;
+      if (!animated) {
+        throw new Error("expected animated to be present");
+      }
       const style = getComputedStyle(animated);
       expect(style.height).toBeGreaterThan(0);
       expect(style.visibility).not.toBe("hidden");
