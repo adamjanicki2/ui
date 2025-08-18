@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import { Alert } from "../../src";
+import { Banner } from "../../src";
 
-describe("Alert", () => {
+describe("Banner", () => {
   it("renders", () => {
-    render(<Alert type="success">Success</Alert>);
+    render(<Banner type="success">Success</Banner>);
     expect(screen.getByText("Success")).toBeInTheDocument();
   });
 });

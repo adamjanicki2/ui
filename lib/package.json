@@ -1,6 +1,6 @@
 {
   "name": "@adamjanicki/ui",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "description": "Basic UI components and hooks for React in TypeScript",
   "type": "module",
   "main": "./index.js",
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "clean": "./clean.sh",
-    "lint": "eslint src --max-warnings=0",
+    "lint": "eslint src test --max-warnings=0",
     "test": "jest",
     "build": "npm run clean && npm run lint && npm run test && tsc; cp src/style.css ./style.css",
     "prepare": "npm run build",

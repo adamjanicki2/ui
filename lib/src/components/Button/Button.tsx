@@ -1,26 +1,13 @@
-import React, { forwardRef } from "react";
-import { type CustomLinkElement, UnstyledLink } from "../Link/Link";
+import React from "react";
 import type { CornerType } from "../../utils/types";
 import classNames from "../../functions/classNames";
 
 type DefaultButtonProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
-> & {
-  /**
-   * [Optional] This can be used as a link if the `to` prop is provided
-   * If this is the case, the onClick event will be ignored
-   */
-  to?: string;
-  /**
-   * [Optional] Custom link element to use
-   * This is useful for using a different link element, like a React Router Link
-   * If this is not provided, a normal anchor tag will be used
-   */
-  LinkElement?: CustomLinkElement;
-};
+>;
 
-type ButtonProps = DefaultButtonProps & {
+export type VisualButtonProps = {
   /**
    * Type of button
    * @default "primary"
@@ -38,54 +25,37 @@ type ButtonProps = DefaultButtonProps & {
   size?: "regular" | "small";
 };
 
-export const UnstyledButton = forwardRef<HTMLButtonElement, DefaultButtonProps>(
-  ({ to, LinkElement, className, ...props }, ref) => {
-    className = classNames("aui-button-base", className);
-    if (to) {
-      return (
-        <UnstyledLink
-          to={to}
-          className={className}
-          style={props.style}
-          role="button"
-          LinkElement={LinkElement}
-          // accessibility props
-          aria-label={props["aria-label"]}
-        >
-          {props.children}
-        </UnstyledLink>
-      );
-    }
-    return (
-      <button
-        {...props}
-        className={classNames("aui-action", className)}
-        ref={ref}
-      />
-    );
-  }
-);
+type ButtonProps = DefaultButtonProps & VisualButtonProps;
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      variant = "primary",
-      corners = "rounded",
-      className,
-      size = "regular",
-      ...rest
-    },
-    ref
-  ) => (
+export const UnstyledButton = React.forwardRef<
+  HTMLButtonElement,
+  DefaultButtonProps
+>(({ className, ...props }, ref) => (
+  <button
+    {...props}
+    className={classNames("aui-action aui-button", className)}
+    ref={ref}
+  />
+));
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ variant, corners, className, size, ...rest }, ref) => (
     <UnstyledButton
       {...rest}
       className={classNames(
-        `aui-button--${variant} aui-button-size--${size} aui-corners--${corners}`,
+        getButtonClassName({ variant, corners, size }),
         className
       )}
       ref={ref}
     />
   )
 );
+
+export const getButtonClassName = ({
+  variant = "primary",
+  corners = "rounded",
+  size = "regular",
+}: VisualButtonProps) =>
+  `aui-button--${variant} aui-button-size--${size} aui-corners--${corners}`;
 
 export default Button;

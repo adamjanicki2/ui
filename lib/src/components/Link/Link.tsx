@@ -1,25 +1,25 @@
-import React, { forwardRef } from "react";
+import React from "react";
+import { getButtonClassName, type VisualButtonProps } from "../Button/Button";
 import classNames from "../../functions/classNames";
 
-type BuiltinLinkProps = Omit<
+type BaseLinkProps = Omit<
   React.DetailedHTMLProps<
     React.AnchorHTMLAttributes<HTMLAnchorElement>,
     HTMLAnchorElement
   >,
   "href"
->;
-
-export type CustomLinkElement = React.ForwardRefExoticComponent<
-  BuiltinLinkProps & {
-    to: string;
-  } & React.RefAttributes<HTMLAnchorElement>
->;
-
-type DefaultLinkProps = BuiltinLinkProps & {
+> & {
   /**
    * URL to navigate to
    */
   to: string;
+};
+
+type CustomLinkElement = React.ForwardRefExoticComponent<
+  BaseLinkProps & React.RefAttributes<HTMLAnchorElement>
+>;
+
+type LinkProps = BaseLinkProps & {
   /**
    * Whether the link should open in a new tab
    */
@@ -32,30 +32,41 @@ type DefaultLinkProps = BuiltinLinkProps & {
   LinkElement?: CustomLinkElement;
 };
 
-const DefaultLinkElement: CustomLinkElement = forwardRef<
-  HTMLAnchorElement,
-  Partial<BuiltinLinkProps & { to: string }>
->(({ to, ...props }, ref) => <a {...props} href={to} ref={ref} />);
+export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
+  ({ LinkElement, to, className, external, ...rest }, ref) => {
+    const props = {
+      ...(external ? { target: "_blank", rel: "noreferrer noopener" } : {}),
+      ...rest,
+      className: classNames("aui-action", className),
+    };
 
-export const UnstyledLink = forwardRef<HTMLAnchorElement, DefaultLinkProps>(
-  (
-    { LinkElement = DefaultLinkElement, className, external, ...props },
-    ref
-  ) => (
-    <LinkElement
-      {...(external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
-      {...props}
-      className={classNames("aui-action", className)}
-      ref={ref}
-    />
-  )
+    if (LinkElement) {
+      return <LinkElement {...props} to={to} ref={ref} />;
+    }
+
+    return <a {...props} href={to} ref={ref} />;
+  }
 );
 
-const Link = forwardRef<HTMLAnchorElement, DefaultLinkProps>(
+export const ButtonLink = React.forwardRef<
+  HTMLAnchorElement,
+  LinkProps & VisualButtonProps
+>(({ className, variant, corners, size, ...props }, ref) => (
+  <UnstyledLink
+    {...props}
+    className={classNames(
+      getButtonClassName({ variant, corners, size }),
+      className
+    )}
+    ref={ref}
+  />
+));
+
+const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
   ({ className, ...props }, ref) => (
     <UnstyledLink
       {...props}
-      className={classNames("aui-link-default", className)}
+      className={classNames("aui-link", className)}
       ref={ref}
     />
   )

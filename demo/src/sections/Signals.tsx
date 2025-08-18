@@ -52,22 +52,15 @@ export default function Signals() {
           by the same TypeScript type. these are little symbols and are good
           indicators of status of a particular thing.
         </Para>
-        <Box layout={{ axis: "x", align: "center" }} className="w-fc m-auto">
-          <Badge className="ma1" type="static">
-            Static
-          </Badge>
-          <Badge className="ma1" type="info">
-            Info
-          </Badge>
-          <Badge className="ma1" type="success">
-            Success
-          </Badge>
-          <Badge className="ma1" type="warning">
-            Warning
-          </Badge>
-          <Badge className="ma1" type="error">
-            Error
-          </Badge>
+        <Box
+          layout={{ axis: "x", align: "center", gap: "m", padding: "s" }}
+          className="w-fc m-auto"
+        >
+          <Badge type="static">Static</Badge>
+          <Badge type="info">Info</Badge>
+          <Badge type="success">Success</Badge>
+          <Badge type="warning">Warning</Badge>
+          <Badge type="error">Error</Badge>
         </Box>
         <HiddenSnippet>{badgeSnippet}</HiddenSnippet>
       </>
@@ -84,22 +77,12 @@ export default function Signals() {
             point.
           </em>
         </Para>
-        <Box layout={{ axis: "y" }}>
-          <Banner className="ma1" type="static">
-            This is a static banner
-          </Banner>
-          <Banner className="ma1" type="info">
-            This is an info banner
-          </Banner>
-          <Banner className="ma1" type="success">
-            This is a success banner
-          </Banner>
-          <Banner className="ma1" type="warning">
-            This is a warning banner
-          </Banner>
-          <Banner className="ma1" type="error">
-            This is an error banner
-          </Banner>
+        <Box layout={{ axis: "y", gap: "m", padding: "s" }}>
+          <Banner type="static">This is a static banner</Banner>
+          <Banner type="info">This is an info banner</Banner>
+          <Banner type="success">This is a success banner</Banner>
+          <Banner type="warning">This is a warning banner</Banner>
+          <Banner type="error">This is an error banner</Banner>
           <HiddenSnippet>{bannerSnippet}</HiddenSnippet>
         </Box>
       </>
