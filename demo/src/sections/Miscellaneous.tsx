@@ -74,43 +74,48 @@ export default function Miscellaneous() {
           variants, which you can checkout below!
         </Para>
         <Box
-          layout={{ axis: "x", align: "center", justify: "center", wrap: true }}
+          layout={{
+            axis: "x",
+            align: "center",
+            justify: "center",
+            gap: "m",
+            padding: "s",
+            wrap: true,
+          }}
         >
           <DoubleSpin
             open={hamburgerOpen}
             onClick={toggleHamburger}
-            className="ma1 red"
+            className="red"
           />
           <DoubleFlip
             open={hamburgerOpen}
             onClick={toggleHamburger}
-            className="ma1 orange"
+            className="orange"
           />
           <DoubleCross
             open={hamburgerOpen}
             onClick={toggleHamburger}
-            className="ma1 yellow"
+            className="yellow"
           />
           <TripleSpin
             open={hamburgerOpen}
             onClick={toggleHamburger}
-            className="ma1 green"
+            className="green"
           />
           <TripleFlip
             open={hamburgerOpen}
             onClick={toggleHamburger}
-            className="ma1 blue"
+            className="blue"
           />
           <TripleFade
             open={hamburgerOpen}
             onClick={toggleHamburger}
-            className="ma1"
             style={{ color: "#4B0082" }}
           />
           <TriplePrestige
             open={hamburgerOpen}
             onClick={toggleHamburger}
-            className="ma1"
             style={{ color: "#7F00FF" }}
           />
         </Box>
@@ -154,10 +159,13 @@ export default function Miscellaneous() {
           to first make a suitable svg for the spinner icon, and then from there
           it was some fun css animations!
         </Para>
-        <Box layout={{ axis: "x", align: "center" }} className="m-auto w-fc">
-          <Spinner className="ma1" />
-          <Spinner style={{ height: 36, color: "red" }} className="ma1" />
-          <Spinner style={{ height: 48, color: "blue" }} className="ma1" />
+        <Box
+          layout={{ axis: "x", align: "center", gap: "m", padding: "s" }}
+          className="m-auto w-fc"
+        >
+          <Spinner />
+          <Spinner style={{ height: 36, color: "red" }} />
+          <Spinner style={{ height: 48, color: "blue" }} />
         </Box>
         <HiddenSnippet>{spinnerSnippet}</HiddenSnippet>
       </>

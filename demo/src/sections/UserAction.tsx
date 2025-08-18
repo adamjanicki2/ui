@@ -46,17 +46,22 @@ export default function UserAction() {
           depending on the required use case.
         </Para>
         <Box
-          layout={{ axis: "x", align: "center", justify: "center", wrap: true }}
+          layout={{
+            axis: "x",
+            align: "center",
+            justify: "center",
+            gap: "m",
+            padding: "s",
+            wrap: true,
+          }}
         >
-          <Button className="ma1" variant="primary" onClick={buttonAction}>
+          <Button variant="primary" onClick={buttonAction}>
             Primary
           </Button>
-          <Button className="ma1" variant="secondary" onClick={buttonAction}>
+          <Button variant="secondary" onClick={buttonAction}>
             Secondary
           </Button>
-          <UnstyledButton className="ma1" onClick={buttonAction}>
-            Unstyled
-          </UnstyledButton>
+          <UnstyledButton onClick={buttonAction}>Unstyled</UnstyledButton>
         </Box>
         <HiddenSnippet>{buttonSnippet}</HiddenSnippet>
       </>
@@ -72,14 +77,20 @@ export default function UserAction() {
           a clear button at the end of your input.
         </Para>
         <Box
-          layout={{ axis: "x", align: "center", wrap: true }}
+          layout={{
+            axis: "x",
+            align: "center",
+            gap: "m",
+            padding: "s",
+            wrap: true,
+          }}
           className="w-fc m-auto"
         >
-          <Box className="ma1">
+          <Box>
             <Box className="fw5 f6 mb1">Uncontrolled</Box>
             <Input placeholder="Type something..." />
           </Box>
-          <Box className="ma1">
+          <Box>
             <Box className="fw5 f6 mb1">Controlled</Box>
             <Input
               placeholder="Type something..."
@@ -87,14 +98,14 @@ export default function UserAction() {
               onChange={(e) => setInputValue(e.target.value)}
             />
           </Box>
-          <Box className="ma1">
+          <Box>
             <Box className="fw5 f6 mb1">Icon Input</Box>
             <IconInput
               startIcon={<span className="ml2">🔎</span>}
               inputProps={{ placeholder: "Search..." }}
             />
           </Box>
-          <Box className="ma1">
+          <Box>
             <Box className="fw5 f6 mb1">Area</Box>
             <TextArea placeholder="Type something..." />
           </Box>
@@ -141,17 +152,23 @@ export default function UserAction() {
           arrow.
         </Para>
         <Box
-          layout={{ axis: "x", align: "center", wrap: true }}
+          layout={{
+            axis: "x",
+            align: "center",
+            gap: "m",
+            padding: "s",
+            wrap: true,
+          }}
           className="m-auto w-fc"
         >
-          <Box className="ma1">
+          <Box>
             <Box className="fw5 f6 mb1">Uncontrolled</Box>
             <Select
               aria-label="select"
               options={["apple", "orange", "banana", "kiwi"]}
             />
           </Box>
-          <Box className="ma1">
+          <Box>
             <Box className="fw5 f6 mb1">Controlled</Box>
             <Select
               aria-label="select"

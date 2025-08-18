@@ -121,7 +121,6 @@ export const inputSnippet = `
 <Input placeholder="Type something..." />
 <Input
   placeholder="Type something..."
-  className="ma1 bg-white"
   value={inputValue}
   onChange={(e) => setInputValue(e.target.value)}
 />
@@ -141,7 +140,7 @@ export const burgerSnippet = `
 
 export const layerSnippet = `
 <Layer onClose={() => setLayerOpen(false)}>
-  <Box className="bg-white">
+  <Box className="bg-green">
     <h1>Hello!</h1>
   </Box>
 </Layer>
@@ -165,7 +164,7 @@ const fruits = ["apple", "orange", "banana", "kiwi"];
 `;
 
 export const spinnerSnippet = `
-<Spinner className="ma1" />
+<Spinner />
 <Spinner style={{ height: 36, color: "red" }} />
 <Spinner style={{ height: 48, color: "blue" }} />
 `;
