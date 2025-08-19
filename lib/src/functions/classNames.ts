@@ -7,5 +7,8 @@
 export default function classNames(
   ...classNames: Array<string | null | undefined>
 ): string {
-  return classNames.filter(Boolean).join(" ");
+  return classNames
+    .map((className) => className?.trim())
+    .filter(Boolean)
+    .join(" ");
 }
