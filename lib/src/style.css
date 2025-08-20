@@ -172,7 +172,7 @@
 
 /* Badge */
 .aui-badge {
-  padding: var(--aui-xxs) 6px;
+  padding: var(--aui-xxs) var(--aui-xs);
   border-style: solid;
   border-width: 1px;
   font-weight: 500;
