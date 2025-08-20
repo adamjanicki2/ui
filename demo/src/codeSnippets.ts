@@ -84,11 +84,11 @@ export const bannerSnippet = `
 `;
 
 export const boxSnippet = `
-<Box layout={{ axis: "x", align: "end", justify: "center", padding: "s", gap: "s" }}>
-  <Box layout={{ axis: "y", align: "center", justify: "center", padding: "l" }}>
+<Box layout={{ axis: "x", align: "end", justify: "center", padding: "xs", gap: "xs" }}>
+  <Box layout={{ axis: "y", align: "center", justify: "center", padding: "m" }}>
     L
   </Box>
-  <Box layout={{ axis: "y", align: "center", justify: "center", padding: "xl" }}>
+  <Box layout={{ axis: "y", align: "center", justify: "center", padding: "l" }}>
     XL
   </Box>
   <Box layout={{ axis: "y", align: "center", justify: "center", padding: "xxl" }}>

@@ -78,8 +78,8 @@ export default function Miscellaneous() {
             axis: "x",
             align: "center",
             justify: "center",
-            gap: "m",
-            padding: "s",
+            gap: "s",
+            padding: "xs",
             wrap: true,
           }}
         >
@@ -139,11 +139,11 @@ export default function Miscellaneous() {
             align: "center",
             justify: "center",
             wrap: true,
-            gap: "m",
+            gap: "s",
           }}
         >
           {iconTypes.map((icon, i) => (
-            <Box key={i} layout={{ axis: "y", align: "center", padding: "s" }}>
+            <Box key={i} layout={{ axis: "y", align: "center", padding: "xs" }}>
               <span className="fw5 f6 mb1">{icon}</span>
               <Icon icon={icon} size={16} />
             </Box>
@@ -163,8 +163,8 @@ export default function Miscellaneous() {
           layout={{
             axis: "x",
             align: "center",
-            gap: "m",
-            padding: "s",
+            gap: "s",
+            padding: "xs",
             width: "fit",
             marginX: "auto",
           }}

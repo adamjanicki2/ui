@@ -200,7 +200,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
             )}
             {!hideDots && (
               <Box
-                layout={{ axis: "x", align: "center", gap: "xs" }}
+                layout={{ axis: "x", align: "center", gap: "xxs" }}
                 className="aui-carousel-dots"
               >
                 {children.map((_, i) => (
