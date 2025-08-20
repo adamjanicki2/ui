@@ -461,343 +461,86 @@
   justify-content: flex-end;
 }
 
+/* Begin SCSS */
+
+/* Shared spacing scale for gap/padding/margin utilities */
+$aui-space: (
+  none: 0,
+  xxs: var(--aui-xxs),
+  xs: var(--aui-xs),
+  s: var(--aui-s),
+  m: var(--aui-m),
+  l: var(--aui-l),
+  xl: var(--aui-xl),
+  xxl: var(--aui-xxl),
+);
+
 /* Gap */
-.aui-gap-none {
-  gap: 0;
-}
-.aui-gap-xxs {
-  gap: var(--aui-xxs);
-}
-.aui-gap-xs {
-  gap: var(--aui-xs);
-}
-.aui-gap-s {
-  gap: var(--aui-s);
-}
-.aui-gap-m {
-  gap: var(--aui-m);
-}
-.aui-gap-l {
-  gap: var(--aui-l);
-}
-.aui-gap-xl {
-  gap: var(--aui-xl);
-}
-.aui-gap-xxl {
-  gap: var(--aui-xxl);
+@each $k, $v in $aui-space {
+  .aui-gap-#{$k} {
+    gap: $v;
+  }
 }
 
 /* Padding */
-.aui-pa-none {
-  padding: 0;
-}
-.aui-pa-xxs {
-  padding: var(--aui-xxs);
-}
-.aui-pa-xs {
-  padding: var(--aui-xs);
-}
-.aui-pa-s {
-  padding: var(--aui-s);
-}
-.aui-pa-m {
-  padding: var(--aui-m);
-}
-.aui-pa-l {
-  padding: var(--aui-l);
-}
-.aui-pa-xl {
-  padding: var(--aui-xl);
-}
-.aui-pa-xxl {
-  padding: var(--aui-xxl);
-}
-.aui-pt-none {
-  padding-top: 0;
-}
-.aui-pt-xxs {
-  padding-top: var(--aui-xxs);
-}
-.aui-pt-xs {
-  padding-top: var(--aui-xs);
-}
-.aui-pt-s {
-  padding-top: var(--aui-s);
-}
-.aui-pt-m {
-  padding-top: var(--aui-m);
-}
-.aui-pt-l {
-  padding-top: var(--aui-l);
-}
-.aui-pt-xl {
-  padding-top: var(--aui-xl);
-}
-.aui-pt-xxl {
-  padding-top: var(--aui-xxl);
-}
-.aui-pb-none {
-  padding-bottom: 0;
-}
-.aui-pb-xxs {
-  padding-bottom: var(--aui-xxs);
-}
-.aui-pb-xs {
-  padding-bottom: var(--aui-xs);
-}
-.aui-pb-s {
-  padding-bottom: var(--aui-s);
-}
-.aui-pb-m {
-  padding-bottom: var(--aui-m);
-}
-.aui-pb-l {
-  padding-bottom: var(--aui-l);
-}
-.aui-pb-xl {
-  padding-bottom: var(--aui-xl);
-}
-.aui-pb-xxl {
-  padding-bottom: var(--aui-xxl);
-}
-.aui-pl-none {
-  padding-left: 0;
-}
-.aui-pl-xxs {
-  padding-left: var(--aui-xxs);
-}
-.aui-pl-xs {
-  padding-left: var(--aui-xs);
-}
-.aui-pl-s {
-  padding-left: var(--aui-s);
-}
-.aui-pl-m {
-  padding-left: var(--aui-m);
-}
-.aui-pl-l {
-  padding-left: var(--aui-l);
-}
-.aui-pl-xl {
-  padding-left: var(--aui-xl);
-}
-.aui-pl-xxl {
-  padding-left: var(--aui-xxl);
-}
-.aui-pr-none {
-  padding-right: 0;
-}
-.aui-pr-xxs {
-  padding-right: var(--aui-xxs);
-}
-.aui-pr-xs {
-  padding-right: var(--aui-xs);
-}
-.aui-pr-s {
-  padding-right: var(--aui-s);
-}
-.aui-pr-m {
-  padding-right: var(--aui-m);
-}
-.aui-pr-l {
-  padding-right: var(--aui-l);
-}
-.aui-pr-xl {
-  padding-right: var(--aui-xl);
-}
-.aui-pr-xxl {
-  padding-right: var(--aui-xxl);
+$aui-padding-props: (
+  pa: padding,
+  pt: padding-top,
+  pb: padding-bottom,
+  pl: padding-left,
+  pr: padding-right,
+);
+@each $prefix, $prop in $aui-padding-props {
+  @each $k, $v in $aui-space {
+    .aui-#{$prefix}-#{$k} {
+      #{$prop}: $v;
+    }
+  }
 }
 
 /* Margin */
-.aui-ma-auto {
-  margin: auto;
-}
-.aui-ma-none {
-  margin: 0;
-}
-.aui-ma-xxs {
-  margin: var(--aui-xxs);
-}
-.aui-ma-xs {
-  margin: var(--aui-xs);
-}
-.aui-ma-s {
-  margin: var(--aui-s);
-}
-.aui-ma-m {
-  margin: var(--aui-m);
-}
-.aui-ma-l {
-  margin: var(--aui-l);
-}
-.aui-ma-xl {
-  margin: var(--aui-xl);
-}
-.aui-ma-xxl {
-  margin: var(--aui-xxl);
-}
-.aui-mt-auto {
-  margin-top: auto;
-}
-.aui-mt-none {
-  margin-top: 0;
-}
-.aui-mt-xxs {
-  margin-top: var(--aui-xxs);
-}
-.aui-mt-xs {
-  margin-top: var(--aui-xs);
-}
-.aui-mt-s {
-  margin-top: var(--aui-s);
-}
-.aui-mt-m {
-  margin-top: var(--aui-m);
-}
-.aui-mt-l {
-  margin-top: var(--aui-l);
-}
-.aui-mt-xl {
-  margin-top: var(--aui-xl);
-}
-.aui-mt-xxl {
-  margin-top: var(--aui-xxl);
-}
-.aui-mb-auto {
-  margin-bottom: auto;
-}
-.aui-mb-none {
-  margin-bottom: 0;
-}
-.aui-mb-xxs {
-  margin-bottom: var(--aui-xxs);
-}
-.aui-mb-xs {
-  margin-bottom: var(--aui-xs);
-}
-.aui-mb-s {
-  margin-bottom: var(--aui-s);
-}
-.aui-mb-m {
-  margin-bottom: var(--aui-m);
-}
-.aui-mb-l {
-  margin-bottom: var(--aui-l);
-}
-.aui-mb-xl {
-  margin-bottom: var(--aui-xl);
-}
-.aui-mb-xxl {
-  margin-bottom: var(--aui-xxl);
-}
-.aui-ml-auto {
-  margin-left: auto;
-}
-.aui-ml-none {
-  margin-left: 0;
-}
-.aui-ml-xxs {
-  margin-left: var(--aui-xxs);
-}
-.aui-ml-xs {
-  margin-left: var(--aui-xs);
-}
-.aui-ml-s {
-  margin-left: var(--aui-s);
-}
-.aui-ml-m {
-  margin-left: var(--aui-m);
-}
-.aui-ml-l {
-  margin-left: var(--aui-l);
-}
-.aui-ml-xl {
-  margin-left: var(--aui-xl);
-}
-.aui-ml-xxl {
-  margin-left: var(--aui-xxl);
-}
-.aui-mr-auto {
-  margin-right: auto;
-}
-.aui-mr-none {
-  margin-right: 0;
-}
-.aui-mr-xxs {
-  margin-right: var(--aui-xxs);
-}
-.aui-mr-xs {
-  margin-right: var(--aui-xs);
-}
-.aui-mr-s {
-  margin-right: var(--aui-s);
-}
-.aui-mr-m {
-  margin-right: var(--aui-m);
-}
-.aui-mr-l {
-  margin-right: var(--aui-l);
-}
-.aui-mr-xl {
-  margin-right: var(--aui-xl);
-}
-.aui-mr-xxl {
-  margin-right: var(--aui-xxl);
+$aui-margin-props: (
+  ma: margin,
+  mt: margin-top,
+  mb: margin-bottom,
+  ml: margin-left,
+  mr: margin-right,
+);
+
+/* Auto margin variants (padding never has auto) */
+@each $prefix, $prop in $aui-margin-props {
+  .aui-#{$prefix}-auto {
+    #{$prop}: auto;
+  }
 }
 
-/* Width */
-.aui-w-full {
-  width: 100%;
-}
-.aui-w-fit {
-  width: fit-content;
-}
-.aui-w-min {
-  width: min-content;
-}
-.aui-w-max {
-  width: max-content;
+/* Tokenized margin variants */
+@each $prefix, $prop in $aui-margin-props {
+  @each $k, $v in $aui-space {
+    .aui-#{$prefix}-#{$k} {
+      #{$prop}: $v;
+    }
+  }
 }
 
-/* Max Width */
-.aui-mw-full {
-  max-width: 100%;
-}
-.aui-mw-fit {
-  max-width: fit-content;
-}
-.aui-mw-min {
-  max-width: min-content;
-}
-.aui-mw-max {
-  max-width: max-content;
-}
+/* Width / Height / Max-Width / Max-Height */
+$aui-dimension-props: (
+  w: width,
+  mw: max-width,
+  h: height,
+  mh: max-height,
+);
+$aui-dimension-vals: (
+  full: 100%,
+  fit: fit-content,
+  min: min-content,
+  max: max-content,
+);
 
-/* Height */
-.aui-h-full {
-  height: 100%;
-}
-.aui-h-fit {
-  height: fit-content;
-}
-.aui-h-min {
-  height: min-content;
-}
-.aui-h-max {
-  height: max-content;
-}
-
-/* Max Height */
-.aui-mh-full {
-  max-height: 100%;
-}
-.aui-mh-fit {
-  max-height: fit-content;
-}
-.aui-mh-min {
-  max-height: min-content;
-}
-.aui-mh-max {
-  max-height: max-content;
+@each $short, $prop in $aui-dimension-props {
+  @each $name, $val in $aui-dimension-vals {
+    .aui-#{$short}-#{$name} {
+      #{$prop}: $val;
+    }
+  }
 }
