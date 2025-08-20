@@ -12,7 +12,7 @@
     "url": "git+https://github.com/adamjanicki2/ui.git"
   },
   "scripts": {
-    "clean": "./clean.sh",
+    "clean": "python clean.py",
     "lint": "eslint src test --max-warnings=0",
     "test": "jest",
     "scss": "sass --no-source-map --style=compressed src/style.scss style.css",
