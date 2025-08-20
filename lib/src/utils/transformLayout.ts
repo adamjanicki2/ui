@@ -15,6 +15,13 @@ const spacingPrefixMap = {
   marginRight: "mr",
 } as const;
 
+const dimensionPrefixMap = {
+  width: "w",
+  maxWidth: "mw",
+  height: "h",
+  maxHeight: "mh",
+} as const;
+
 export default function transformLayout(
   layout: Layout | undefined
 ): string | null {
@@ -42,6 +49,8 @@ export default function transformLayout(
     marginRight,
     marginX,
     marginY,
+
+    ...rest
   } = layout;
 
   let className = axis ? `aui-flex-${axis}` : null;
@@ -72,6 +81,15 @@ export default function transformLayout(
   spacingProps.forEach(([prop, value]) => {
     if (value) {
       const prefix = spacingPrefixMap[prop];
+      className = classNames(className, `aui-${prefix}-${value}`);
+    }
+  });
+
+  const dimensionProps = ["width", "height", "maxWidth", "maxHeight"] as const;
+  dimensionProps.forEach((prop) => {
+    const value = rest[prop];
+    if (value) {
+      const prefix = dimensionPrefixMap[prop];
       className = classNames(className, `aui-${prefix}-${value}`);
     }
   });

@@ -20,7 +20,7 @@ export type Style = React.CSSProperties;
 /**
  * Used for width and height
  */
-export type SizeDimension = "fill" | "fit" | "min" | "auto" | number;
+export type SizeDimension = "full" | "fit" | "min" | "max";
 /**
  * Size variants used for CSS.
  */
@@ -44,7 +44,6 @@ export type Layout = {
   justify?: "start" | "center" | "between" | "around" | "end";
   /** Whether to allow wrapping of layout children */
   wrap?: boolean;
-  grow?: number;
 
   // Spacing
 
@@ -77,4 +76,15 @@ export type Layout = {
   marginLeft?: AutoSize;
   /** Right margin outside the layout */
   marginRight?: AutoSize;
+
+  // Width & Height
+
+  /** Width of the layout */
+  width?: SizeDimension;
+  /** Maximum width of the layout */
+  maxWidth?: SizeDimension;
+  /** Height of the laout */
+  height?: SizeDimension;
+  /** Maximum of the layout */
+  maxHeight?: SizeDimension;
 };
