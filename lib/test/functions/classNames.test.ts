@@ -8,4 +8,8 @@ describe("classNames", () => {
   it("discards null, undefined, and empty string", () => {
     expect(classNames(null, "a", "", "b", undefined, "c")).toBe("a b c");
   });
+
+  it("ignores extraneous spaces", () => {
+    expect(classNames(" more ", "spaces ", " here")).toBe("more spaces here");
+  });
 });

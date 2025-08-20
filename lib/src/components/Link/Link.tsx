@@ -12,7 +12,7 @@ type BaseLinkProps = Omit<
   /**
    * URL to navigate to
    */
-  to: string;
+  to?: string;
 };
 
 type CustomLinkElement = React.ForwardRefExoticComponent<
