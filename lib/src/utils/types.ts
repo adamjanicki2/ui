@@ -1,5 +1,4 @@
 import React from "react";
-import sizes from "./sizes";
 
 /**
  * Default children type; can be a node or list of nodes
@@ -24,7 +23,7 @@ export type SizeDimension = "full" | "fit" | "min" | "max";
 /**
  * Size variants used for CSS.
  */
-type SizeToken = keyof typeof sizes;
+type SizeToken = "none" | "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
 /**
  * Used for margin
  */
