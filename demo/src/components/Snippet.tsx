@@ -30,12 +30,19 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
 
   return (
     <Box
-      className={classNames("snippet-container ba br2 m-auto", className)}
-      style={{ maxWidth: "100%", width: "min-content" }}
+      layout={{ marginX: "auto", maxWidth: "full", width: "min" }}
+      className={classNames("snippet-container ba br2", className)}
     >
       <Box
-        layout={{ axis: "x", align: "center", justify: "between" }}
-        className="w-100 bb ph2 pv1"
+        layout={{
+          axis: "x",
+          align: "center",
+          justify: "between",
+          width: "full",
+          paddingX: "m",
+          paddingY: "s",
+        }}
+        className="bb"
       >
         <p className="f6 fw5 ma0">{lang}</p>
         {copied ? (

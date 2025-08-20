@@ -53,8 +53,14 @@ export default function Signals() {
           indicators of status of a particular thing.
         </Para>
         <Box
-          layout={{ axis: "x", align: "center", gap: "m", padding: "s" }}
-          className="w-fc m-auto"
+          layout={{
+            axis: "x",
+            align: "center",
+            gap: "m",
+            padding: "s",
+            marginX: "auto",
+            width: "fit",
+          }}
         >
           <Badge type="static">Static</Badge>
           <Badge type="info">Info</Badge>

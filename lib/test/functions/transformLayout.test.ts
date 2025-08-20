@@ -8,8 +8,8 @@ describe("transformLayout", () => {
 
   it("transforms for simple case", () => {
     expect(
-      transformLayout({ axis: "x", align: "center", gap: "s", margin: "auto" })
-    ).toBe("aui-flex-x aui-align-center aui-gap-s aui-ma-auto");
+      transformLayout({ axis: "-x", align: "center", gap: "s", margin: "auto" })
+    ).toBe("aui-flex--x aui-align-center aui-gap-s aui-ma-auto");
   });
 
   it("transforms and prioritizes more specific properties", () => {
@@ -68,7 +68,7 @@ describe("transformLayout", () => {
         height: "min",
         maxHeight: "max",
       })
-    ).toBe("aui-w-full aui-mw-fit aui-h-min aui-mh-max");
+    ).toBe("aui-w-full aui-h-min aui-mw-fit aui-mh-max");
   });
 
   it("handles a full complex layout", () => {

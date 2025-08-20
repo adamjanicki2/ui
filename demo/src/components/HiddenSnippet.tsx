@@ -6,7 +6,7 @@ export default function HiddenSnippet(props: Props) {
   const [show, setShow] = useState(false);
   return (
     <>
-      <Box layout={{ axis: "x", justify: "end" }} className="w-100">
+      <Box layout={{ axis: "x", justify: "end", width: "full" }}>
         <Button
           className="mv2"
           onClick={() => setShow(!show)}

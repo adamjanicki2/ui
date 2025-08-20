@@ -1,6 +1,8 @@
 import React from "react";
 import { getButtonClassName, type VisualButtonProps } from "../Button/Button";
 import classNames from "../../functions/classNames";
+import { Layout } from "../../utils/types";
+import transformLayout from "../../utils/transformLayout";
 
 type BaseLinkProps = Omit<
   React.DetailedHTMLProps<
@@ -30,14 +32,18 @@ type LinkProps = BaseLinkProps & {
    * If this is not provided, a normal anchor tag will be used
    */
   LinkElement?: CustomLinkElement;
+  /**
+   * Additional styles to apply to the layout that are transformed to classNames to be easier to override if needed
+   */
+  layout?: Layout;
 };
 
 export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ LinkElement, to, className, external, ...rest }, ref) => {
+  ({ LinkElement, to, className, external, layout, ...rest }, ref) => {
     const props = {
       ...(external ? { target: "_blank", rel: "noreferrer noopener" } : {}),
       ...rest,
-      className: classNames("aui-action", className),
+      className: classNames("aui-action", transformLayout(layout), className),
     };
 
     if (LinkElement) {

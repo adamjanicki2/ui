@@ -1,11 +1,17 @@
 import React from "react";
-import type { CornerType } from "../../utils/types";
+import type { CornerType, Layout } from "../../utils/types";
 import classNames from "../../functions/classNames";
+import transformLayout from "../../utils/transformLayout";
 
 type DefaultButtonProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
->;
+> & {
+  /**
+   * Additional styles to apply to the layout that are transformed to classNames to be easier to override if needed
+   */
+  layout?: Layout;
+};
 
 export type VisualButtonProps = {
   /**
@@ -30,10 +36,14 @@ type ButtonProps = DefaultButtonProps & VisualButtonProps;
 export const UnstyledButton = React.forwardRef<
   HTMLButtonElement,
   DefaultButtonProps
->(({ className, ...props }, ref) => (
+>(({ className, layout, ...props }, ref) => (
   <button
     {...props}
-    className={classNames("aui-action aui-button", className)}
+    className={classNames(
+      "aui-action aui-button",
+      transformLayout(layout),
+      className
+    )}
     ref={ref}
   />
 ));

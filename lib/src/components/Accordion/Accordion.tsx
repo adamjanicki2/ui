@@ -22,12 +22,12 @@ type Props = Omit<BoxProps, "children"> & {
 };
 
 const Accordion = React.forwardRef<HTMLDivElement, Props>(
-  ({ drawers, className, duration, hideDividers, ...rest }, ref) => {
+  ({ drawers, className, duration, hideDividers, layout, ...rest }, ref) => {
     const [openIndices, setOpenIndices] = useState<Set<number>>(new Set());
 
     return (
       <Box
-        layout={{ axis: "y" }}
+        layout={{ axis: "y", ...layout }}
         {...rest}
         className={classNames("aui-accordion aui-corners--rounded", className)}
         ref={ref}

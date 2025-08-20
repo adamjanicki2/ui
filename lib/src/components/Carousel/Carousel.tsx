@@ -151,11 +151,12 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
         ref={ref}
       >
         <Box
-          className="aui-carousel-slider"
-          style={{
-            ...animatingStyles,
-            flexDirection: delta >= 0 ? "row" : "row-reverse",
+          layout={{
+            axis: delta >= 0 ? "x" : "-x",
+            width: "full",
+            height: "full",
           }}
+          style={animatingStyles}
           onTransitionEnd={onTransitionEnd}
         >
           <Box className="aui-carousel-item">{children[cur]}</Box>

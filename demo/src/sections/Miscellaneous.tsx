@@ -47,7 +47,7 @@ export default function Miscellaneous() {
           doesn't add an extra element to the DOM, just instead wraps your
           component with some extra hook magic and click listeners.
         </Para>
-        <Box className="w-fc m-auto">
+        <Box layout={{ width: "fit", marginX: "auto" }}>
           <ClickOutside
             onClickOutside={() => {
               setClickOutsideText("You clicked outside!");
@@ -160,8 +160,14 @@ export default function Miscellaneous() {
           it was some fun css animations!
         </Para>
         <Box
-          layout={{ axis: "x", align: "center", gap: "m", padding: "s" }}
-          className="m-auto w-fc"
+          layout={{
+            axis: "x",
+            align: "center",
+            gap: "m",
+            padding: "s",
+            width: "fit",
+            marginX: "auto",
+          }}
         >
           <Spinner />
           <Spinner style={{ height: 36, color: "red" }} />

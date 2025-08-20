@@ -10,7 +10,7 @@ import Miscellaneous from "src/sections/Miscellaneous";
 import Logo from "src/images/logo.svg?react";
 
 const Main = () => (
-  <Box className="main-container">
+  <Box className="main-container" layout={{ width: "full" }}>
     <h1 className="f1 tc">Welcome to my UI library.</h1>
     <p className="f3 fw5 tc subtitle">
       This is a collection of React components that I use across my projects.
