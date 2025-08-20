@@ -43,6 +43,7 @@ const BaseLayer = React.forwardRef<HTMLDivElement, BaseProps>(
       disableEscape = false,
       visible,
       onMouseDown,
+      layout,
       ...rest
     },
     ref
@@ -65,7 +66,7 @@ const BaseLayer = React.forwardRef<HTMLDivElement, BaseProps>(
 
     return (
       <Box
-        layout={{ axis: "y", align: "center", justify: "center" }}
+        layout={{ axis: "y", align: "center", justify: "center", ...layout }}
         {...rest}
         className={classNames("aui-layer-backdrop", className)}
         onMouseDown={(e) => {
