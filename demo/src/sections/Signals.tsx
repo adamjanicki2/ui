@@ -56,8 +56,8 @@ export default function Signals() {
           layout={{
             axis: "x",
             align: "center",
-            gap: "m",
-            padding: "s",
+            gap: "s",
+            padding: "xs",
             marginX: "auto",
             width: "fit",
           }}
@@ -83,7 +83,7 @@ export default function Signals() {
             point.
           </em>
         </Para>
-        <Box layout={{ axis: "y", gap: "m", padding: "s" }}>
+        <Box layout={{ axis: "y", gap: "s", padding: "xs" }}>
           <Banner type="static">This is a static banner</Banner>
           <Banner type="info">This is an info banner</Banner>
           <Banner type="success">This is a success banner</Banner>

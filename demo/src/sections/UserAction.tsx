@@ -50,8 +50,8 @@ export default function UserAction() {
             axis: "x",
             align: "center",
             justify: "center",
-            gap: "m",
-            padding: "s",
+            gap: "s",
+            padding: "xs",
             wrap: true,
           }}
         >
@@ -80,8 +80,8 @@ export default function UserAction() {
           layout={{
             axis: "x",
             align: "center",
-            gap: "m",
-            padding: "s",
+            gap: "s",
+            padding: "xs",
             wrap: true,
             width: "fit",
             marginX: "auto",
@@ -130,7 +130,7 @@ export default function UserAction() {
           layout={{
             axis: "x",
             align: "center",
-            gap: "l",
+            gap: "m",
             wrap: true,
             width: "fit",
             marginX: "auto",
@@ -163,8 +163,8 @@ export default function UserAction() {
           layout={{
             axis: "x",
             align: "center",
-            gap: "m",
-            padding: "s",
+            gap: "s",
+            padding: "xs",
             wrap: true,
             width: "fit",
             marginX: "auto",

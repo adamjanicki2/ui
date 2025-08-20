@@ -39,8 +39,8 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
           align: "center",
           justify: "between",
           width: "full",
-          paddingX: "m",
-          paddingY: "s",
+          paddingX: "s",
+          paddingY: "xs",
         }}
         className="bb"
       >

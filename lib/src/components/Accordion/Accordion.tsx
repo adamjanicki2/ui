@@ -100,7 +100,7 @@ const Drawer = ({
     <>
       <Box layout={{ axis: "y" }}>
         <UnstyledButton onClick={() => onOpenChange(!open)}>
-          <Box layout={{ axis: "x", align: "center", gap: "m", padding: "l" }}>
+          <Box layout={{ axis: "x", align: "center", gap: "s", padding: "m" }}>
             <Icon
               size={12}
               icon={open ? "down" : "right"}

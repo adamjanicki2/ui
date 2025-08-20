@@ -1,11 +1,11 @@
 /* General styles */
 :root {
   /* Sizing */
-  --aui-xxs: 1px;
-  --aui-xs: 2px;
-  --aui-s: 4px;
-  --aui-m: 8px;
-  --aui-l: 16px;
+  --aui-xxs: 2px;
+  --aui-xs: 4px;
+  --aui-s: 8px;
+  --aui-m: 16px;
+  --aui-l: 24px;
   --aui-xl: 32px;
   --aui-xxl: 64px;
   /* General colors */
@@ -152,7 +152,7 @@
 
 .aui-accordion-hr {
   border: none;
-  height: var(--aui-xxs);
+  height: 1px;
   background-color: var(--aui-default-border);
   width: 100%;
   margin: 0;
@@ -164,7 +164,7 @@
 
 /* Alert */
 .aui-alert {
-  padding: var(--aui-l);
+  padding: var(--aui-m);
   border-style: solid;
   border-width: 1px;
   font-weight: 400;
@@ -172,7 +172,7 @@
 
 /* Badge */
 .aui-badge {
-  padding: 2px 6px;
+  padding: var(--aui-xxs) 6px;
   border-style: solid;
   border-width: 1px;
   font-weight: 500;
@@ -182,7 +182,7 @@
 
 /* Banner */
 .aui-banner {
-  padding: 24px var(--aui-xl);
+  padding: var(--aui-l) var(--aui-xl);
   border: none;
   font-weight: 400;
   width: 100%;
@@ -208,12 +208,12 @@
 }
 
 .aui-button-size--regular {
-  padding: var(--aui-m);
+  padding: var(--aui-s);
   font-weight: 600;
 }
 
 .aui-button-size--small {
-  padding: var(--aui-s);
+  padding: var(--aui-xs);
   font-size: 12px;
   font-weight: 600;
 }
@@ -262,7 +262,7 @@
   border: none;
   background-color: inherit;
   color: inherit;
-  padding: var(--aui-m);
+  padding: var(--aui-s);
   font-weight: 400;
 }
 
@@ -316,7 +316,7 @@
   box-shadow: none;
   cursor: pointer;
   background-color: transparent;
-  padding: var(--aui-m) 28px var(--aui-m) var(--aui-m);
+  padding: var(--aui-s) 28px var(--aui-s) var(--aui-s);
   font-weight: 600;
   appearance: none;
   -webkit-appearance: none;
@@ -360,7 +360,7 @@
 .aui-spinner {
   animation: aui-spinner-animation 1s linear infinite;
   transform-origin: center;
-  height: 24px;
+  height: var(--aui-l);
 }
 
 @keyframes aui-spinner-animation {
@@ -392,21 +392,21 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
+  width: var(--aui-l);
+  height: var(--aui-l);
   padding: 0;
 }
 
 .aui-carousel-dots {
   position: absolute;
-  bottom: var(--aui-m);
+  bottom: var(--aui-s);
   transform: translateX(-50%);
   left: 50%;
 }
 
 .aui-carousel-dot {
-  width: var(--aui-l);
-  height: var(--aui-m);
+  width: var(--aui-m);
+  height: var(--aui-s);
   padding: 0;
 }
 

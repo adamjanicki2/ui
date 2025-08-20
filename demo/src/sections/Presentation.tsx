@@ -51,7 +51,7 @@ export default function Presentation() {
             {
               label: "Success",
               content: (
-                <Box layout={{ padding: "l", paddingTop: "none" }}>
+                <Box layout={{ padding: "m", paddingTop: "none" }}>
                   <Alert type="success">We live in a Twilight World.</Alert>
                 </Box>
               ),
@@ -59,7 +59,7 @@ export default function Presentation() {
             {
               label: "Info",
               content: (
-                <Box layout={{ padding: "l", paddingTop: "none" }}>
+                <Box layout={{ padding: "m", paddingTop: "none" }}>
                   <Alert type="info">We live in a Twilight World.</Alert>
                 </Box>
               ),
@@ -67,7 +67,7 @@ export default function Presentation() {
             {
               label: "Error",
               content: (
-                <Box layout={{ padding: "l", paddingTop: "none" }}>
+                <Box layout={{ padding: "m", paddingTop: "none" }}>
                   <Alert type="error">We live in a Twilight World.</Alert>
                 </Box>
               ),
@@ -125,8 +125,8 @@ export default function Presentation() {
               axis: "x",
               align: "end",
               justify: "center",
-              padding: "s",
-              gap: "s",
+              padding: "xs",
+              gap: "xs",
             }}
             className="bordering"
           >
@@ -136,7 +136,7 @@ export default function Presentation() {
                 axis: "y",
                 align: "center",
                 justify: "center",
-                padding: "l",
+                padding: "m",
               }}
             >
               L
