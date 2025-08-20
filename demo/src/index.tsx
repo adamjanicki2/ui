@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "@adamjanicki/ui/style.css";
+import "@adamjanicki/ui/style.scss";
 import "tachyons/css/tachyons.min.css";
 import "src/css/style.css";
 import "src/css/media.css";

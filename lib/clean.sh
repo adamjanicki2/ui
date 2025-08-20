@@ -33,7 +33,7 @@ for entry in "${entries[@]}"; do
   fi
 done
 
-additional_files=("index.js" "index.d.ts")
+additional_files=("index.js" "index.d.ts" "style.css")
 
 for file in "${additional_files[@]}"; do
   if [[ -f "$file" ]]; then

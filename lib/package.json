@@ -15,7 +15,8 @@
     "clean": "./clean.sh",
     "lint": "eslint src test --max-warnings=0",
     "test": "jest",
-    "build": "npm run clean && npm run lint && npm run test && tsc; cp src/style.css ./style.css",
+    "scss": "sass --no-source-map --style=compressed src/style.scss style.css",
+    "build": "npm run clean && npm run lint && npm test && tsc && npm run scss",
     "prepare": "npm run build",
     "dryrun": "npm publish --dry-run"
   },
@@ -32,6 +33,7 @@
     "@types/react-dom": "^19.1.7",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
+    "sass": "^1.90.0",
     "ts-jest": "^29.4.1",
     "typescript": "^5.9.2"
   }
