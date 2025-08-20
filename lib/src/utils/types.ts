@@ -34,7 +34,7 @@ export type Layout = {
   // General layout
 
   /** Direction the layout spans; along the x-axis or y-axis (Equivalent to flex-direction) */
-  axis?: "x" | "y";
+  axis?: "x" | "y" | "-x" | "-y";
   /** Spacing between children of the layout */
   gap?: SizeToken;
   /** Alignment orthogonal to the selected axis (Equivalent to align-items) */

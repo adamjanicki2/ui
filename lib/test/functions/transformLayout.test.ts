@@ -8,8 +8,8 @@ describe("transformLayout", () => {
 
   it("transforms for simple case", () => {
     expect(
-      transformLayout({ axis: "x", align: "center", gap: "s", margin: "auto" })
-    ).toBe("aui-flex-x aui-align-center aui-gap-s aui-ma-auto");
+      transformLayout({ axis: "-x", align: "center", gap: "s", margin: "auto" })
+    ).toBe("aui-flex--x aui-align-center aui-gap-s aui-ma-auto");
   });
 
   it("transforms and prioritizes more specific properties", () => {
