@@ -68,7 +68,7 @@ describe("transformLayout", () => {
         height: "min",
         maxHeight: "max",
       })
-    ).toBe("aui-w-full aui-mw-fit aui-h-min aui-mh-max");
+    ).toBe("aui-w-full aui-h-min aui-mw-fit aui-mh-max");
   });
 
   it("handles a full complex layout", () => {

@@ -83,8 +83,9 @@ export default function UserAction() {
             gap: "m",
             padding: "s",
             wrap: true,
+            width: "fit",
+            marginX: "auto",
           }}
-          className="w-fc m-auto"
         >
           <Box>
             <Box className="fw5 f6 mb1">Uncontrolled</Box>
@@ -126,7 +127,14 @@ export default function UserAction() {
           you're working within a router context.
         </Para>
         <Box
-          layout={{ axis: "x", align: "center", gap: "l", wrap: true }}
+          layout={{
+            axis: "x",
+            align: "center",
+            gap: "l",
+            wrap: true,
+            width: "fit",
+            marginX: "auto",
+          }}
           className="w-fc m-auto"
         >
           <Link to="#link">Internal link</Link>
@@ -158,6 +166,8 @@ export default function UserAction() {
             gap: "m",
             padding: "s",
             wrap: true,
+            width: "fit",
+            marginX: "auto",
           }}
           className="m-auto w-fc"
         >
