@@ -97,6 +97,165 @@
   --aui-select-icon: var(--aui-moon-gray);
 }
 
+//////////////////////////////
+// Main layout styles begin //
+//////////////////////////////
+
+/* Flex & Alignment */
+.aui-flex-x,
+.aui-flex-y,
+.aui-flex--x,
+.aui-flex--y {
+  display: flex;
+}
+.aui-flex-x {
+  flex-direction: row;
+}
+.aui-flex-y {
+  flex-direction: column;
+}
+.aui-flex--x {
+  flex-direction: row-reverse;
+}
+.aui-flex--y {
+  flex-direction: column-reverse;
+}
+.aui-flex-wrap {
+  flex-wrap: wrap;
+}
+
+.aui-align-start {
+  align-items: flex-start;
+}
+.aui-align-center {
+  align-items: center;
+}
+.aui-align-end {
+  align-items: flex-end;
+}
+
+.aui-justify-start {
+  justify-content: flex-start;
+}
+.aui-justify-center {
+  justify-content: center;
+}
+.aui-justify-between {
+  justify-content: space-between;
+}
+.aui-justify-around {
+  justify-content: space-around;
+}
+.aui-justify-end {
+  justify-content: flex-end;
+}
+
+/* Begin SCSS */
+
+/* Icon sizing */
+$aui-icon-size: (
+  xxs: 8px,
+  xs: 12px,
+  s: 16px,
+  m: 24px,
+  l: 32px,
+  xl: 48px,
+  xxl: 64px,
+);
+
+@each $k, $v in $aui-icon-size {
+  .aui-icon-#{$k} {
+    width: $v;
+    height: $v;
+  }
+}
+
+/* Shared spacing scale for gap/padding/margin utilities */
+$aui-space: (
+  none: 0,
+  xxs: var(--aui-xxs),
+  xs: var(--aui-xs),
+  s: var(--aui-s),
+  m: var(--aui-m),
+  l: var(--aui-l),
+  xl: var(--aui-xl),
+  xxl: var(--aui-xxl),
+);
+
+/* Gap */
+@each $k, $v in $aui-space {
+  .aui-gap-#{$k} {
+    gap: $v;
+  }
+}
+
+/* Padding */
+$aui-padding-props: (
+  pa: padding,
+  pt: padding-top,
+  pb: padding-bottom,
+  pl: padding-left,
+  pr: padding-right,
+);
+@each $prefix, $prop in $aui-padding-props {
+  @each $k, $v in $aui-space {
+    .aui-#{$prefix}-#{$k} {
+      #{$prop}: $v;
+    }
+  }
+}
+
+/* Margin */
+$aui-margin-props: (
+  ma: margin,
+  mt: margin-top,
+  mb: margin-bottom,
+  ml: margin-left,
+  mr: margin-right,
+);
+
+/* Auto margin variants (padding never has auto) */
+@each $prefix, $prop in $aui-margin-props {
+  .aui-#{$prefix}-auto {
+    #{$prop}: auto;
+  }
+}
+
+/* Tokenized margin variants */
+@each $prefix, $prop in $aui-margin-props {
+  @each $k, $v in $aui-space {
+    .aui-#{$prefix}-#{$k} {
+      #{$prop}: $v;
+    }
+  }
+}
+
+/* Width / Height / Max-Width / Max-Height */
+$aui-dimension-props: (
+  w: width,
+  mw: max-width,
+  h: height,
+  mh: max-height,
+);
+$aui-dimension-vals: (
+  full: 100%,
+  fit: fit-content,
+  min: min-content,
+  max: max-content,
+);
+
+@each $short, $prop in $aui-dimension-props {
+  @each $name, $val in $aui-dimension-vals {
+    .aui-#{$short}-#{$name} {
+      #{$prop}: $val;
+    }
+  }
+}
+
+///////////////////
+// Main scss end //
+///////////////////
+
 /* General */
 .aui-corners--rounded {
   border-radius: var(--aui-rounded-radius);
@@ -329,11 +488,14 @@
 }
 
 .aui-select-icon {
+  --size: 10px;
   color: var(--aui-select-icon);
+  width: var(--size);
+  height: var(--size);
   position: absolute;
   top: calc(50% + 1px);
   transform: translateY(-50%);
-  right: 10px;
+  right: var(--size);
   pointer-events: none;
 }
 
@@ -406,157 +568,4 @@
   width: var(--aui-m);
   height: var(--aui-s);
   padding: 0;
-}
-
-/* Prepare yourself */
-
-/* Flex & Alignment */
-.aui-flex-x,
-.aui-flex-y,
-.aui-flex--x,
-.aui-flex--y {
-  display: flex;
-}
-.aui-flex-x {
-  flex-direction: row;
-}
-.aui-flex-y {
-  flex-direction: column;
-}
-.aui-flex--x {
-  flex-direction: row-reverse;
-}
-.aui-flex--y {
-  flex-direction: column-reverse;
-}
-.aui-flex-wrap {
-  flex-wrap: wrap;
-}
-
-.aui-align-start {
-  align-items: flex-start;
-}
-.aui-align-center {
-  align-items: center;
-}
-.aui-align-end {
-  align-items: flex-end;
-}
-
-.aui-justify-start {
-  justify-content: flex-start;
-}
-.aui-justify-center {
-  justify-content: center;
-}
-.aui-justify-between {
-  justify-content: space-between;
-}
-.aui-justify-around {
-  justify-content: space-around;
-}
-.aui-justify-end {
-  justify-content: flex-end;
-}
-
-/* Begin SCSS */
-
-/* Icon sizing */
-$aui-icon-size: (
-  xxs: 8px,
-  xs: 12px,
-  s: 16px,
-  m: 24px,
-  l: 32px,
-  xl: 48px,
-  xxl: 64px,
-);
-
-@each $k, $v in $aui-icon-size {
-  .aui-icon-#{$k} {
-    width: $v;
-    height: $v;
-  }
-}
-
-/* Shared spacing scale for gap/padding/margin utilities */
-$aui-space: (
-  none: 0,
-  xxs: var(--aui-xxs),
-  xs: var(--aui-xs),
-  s: var(--aui-s),
-  m: var(--aui-m),
-  l: var(--aui-l),
-  xl: var(--aui-xl),
-  xxl: var(--aui-xxl),
-);
-
-/* Gap */
-@each $k, $v in $aui-space {
-  .aui-gap-#{$k} {
-    gap: $v;
-  }
-}
-
-/* Padding */
-$aui-padding-props: (
-  pa: padding,
-  pt: padding-top,
-  pb: padding-bottom,
-  pl: padding-left,
-  pr: padding-right,
-);
-@each $prefix, $prop in $aui-padding-props {
-  @each $k, $v in $aui-space {
-    .aui-#{$prefix}-#{$k} {
-      #{$prop}: $v;
-    }
-  }
-}
-
-/* Margin */
-$aui-margin-props: (
-  ma: margin,
-  mt: margin-top,
-  mb: margin-bottom,
-  ml: margin-left,
-  mr: margin-right,
-);
-
-/* Auto margin variants (padding never has auto) */
-@each $prefix, $prop in $aui-margin-props {
-  .aui-#{$prefix}-auto {
-    #{$prop}: auto;
-  }
-}
-
-/* Tokenized margin variants */
-@each $prefix, $prop in $aui-margin-props {
-  @each $k, $v in $aui-space {
-    .aui-#{$prefix}-#{$k} {
-      #{$prop}: $v;
-    }
-  }
-}
-
-/* Width / Height / Max-Width / Max-Height */
-$aui-dimension-props: (
-  w: width,
-  mw: max-width,
-  h: height,
-  mh: max-height,
-);
-$aui-dimension-vals: (
-  full: 100%,
-  fit: fit-content,
-  min: min-content,
-  max: max-content,
-);
-
-@each $short, $prop in $aui-dimension-props {
-  @each $name, $val in $aui-dimension-vals {
-    .aui-#{$short}-#{$name} {
-      #{$prop}: $val;
-    }
-  }
 }
