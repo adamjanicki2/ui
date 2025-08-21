@@ -16,26 +16,21 @@ type Props = Omit<
   size?: number;
 };
 
-const defaultViewBox = "0 0 512 512";
+const defaultViewBox = "0 0 16 16";
 
 const Icon = React.forwardRef<SVGSVGElement, Props>(
-  ({ icon, className, size, style, ...rest }, ref) => {
-    const { contents, viewBox } = icons[icon];
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox={viewBox || defaultViewBox}
-        className={classNames("aui-icon", className)}
-        style={{ width: size, height: size, ...style }}
-        {...rest}
-        ref={ref}
-      >
-        {contents.map((icon, i) => (
-          <React.Fragment key={i}>{icon}</React.Fragment>
-        ))}
-      </svg>
-    );
-  }
+  ({ icon, className, size, style, ...rest }, ref) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox={defaultViewBox}
+      className={classNames("aui-icon", className)}
+      style={{ width: size, height: size, ...style }}
+      {...rest}
+      ref={ref}
+    >
+      {icons[icon]}
+    </svg>
+  )
 );
 
 export default Icon;
