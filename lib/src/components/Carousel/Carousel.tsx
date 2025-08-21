@@ -179,7 +179,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                   onClick={() => startTransition(-1)}
                 >
                   {leftArrowProps?.children ?? (
-                    <Icon icon="left" size={12} style={{ marginRight: 2 }} />
+                    <Icon icon="left" size="xs" style={{ marginRight: 2 }} />
                   )}
                 </Button>
                 <Button
@@ -193,7 +193,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                   onClick={() => startTransition(1)}
                 >
                   {rightArrowProps?.children ?? (
-                    <Icon icon="right" size={12} style={{ marginLeft: 2 }} />
+                    <Icon icon="right" size="xs" style={{ marginLeft: 2 }} />
                   )}
                 </Button>
               </>

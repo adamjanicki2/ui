@@ -144,8 +144,8 @@ export default function Miscellaneous() {
         >
           {iconTypes.map((icon, i) => (
             <Box key={i} layout={{ axis: "y", align: "center", padding: "xs" }}>
-              <span className="fw5 f6 mb1">{icon}</span>
-              <Icon icon={icon} size={16} />
+              <span className="fw5 f7 mb1">{icon}</span>
+              <Icon icon={icon} size="s" className="subtitle" />
             </Box>
           ))}
         </Box>

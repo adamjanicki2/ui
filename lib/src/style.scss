@@ -329,14 +329,11 @@
 }
 
 .aui-select-icon {
-  --size: 10px;
   color: var(--aui-select-icon);
-  width: var(--size);
-  height: var(--size);
   position: absolute;
   top: calc(50% + 1px);
   transform: translateY(-50%);
-  right: var(--size);
+  right: 10px;
   pointer-events: none;
 }
 
@@ -353,6 +350,7 @@
 
 /* Icons */
 .aui-icon * {
+  color: currentColor;
   fill: currentColor;
 }
 
@@ -462,6 +460,24 @@
 }
 
 /* Begin SCSS */
+
+/* Icon sizing */
+$aui-icon-size: (
+  xxs: 8px,
+  xs: 12px,
+  s: 16px,
+  m: 24px,
+  l: 32px,
+  xl: 48px,
+  xxl: 64px,
+);
+
+@each $k, $v in $aui-icon-size {
+  .aui-icon-#{$k} {
+    width: $v;
+    height: $v;
+  }
+}
 
 /* Shared spacing scale for gap/padding/margin utilities */
 $aui-space: (

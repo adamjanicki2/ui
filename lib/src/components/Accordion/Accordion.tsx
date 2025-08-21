@@ -102,7 +102,7 @@ const Drawer = ({
         <UnstyledButton onClick={() => onOpenChange(!open)}>
           <Box layout={{ axis: "x", align: "center", gap: "s", padding: "m" }}>
             <Icon
-              size={12}
+              size="xs"
               icon={open ? "down" : "right"}
               className="aui-accordion-arrow"
             />
