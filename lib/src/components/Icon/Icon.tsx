@@ -11,31 +11,24 @@ type Props = Omit<
    */
   icon: IconType;
   /**
-   * Size of the icon
+   * Size of the icon; will control both width and height
+   * @default "s"
    */
-  size?: number;
+  size?: "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
 };
 
-const defaultViewBox = "0 0 512 512";
-
 const Icon = React.forwardRef<SVGSVGElement, Props>(
-  ({ icon, className, size, style, ...rest }, ref) => {
-    const { contents, viewBox } = icons[icon];
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox={viewBox || defaultViewBox}
-        className={classNames("aui-icon", className)}
-        style={{ width: size, height: size, ...style }}
-        {...rest}
-        ref={ref}
-      >
-        {contents.map((icon, i) => (
-          <React.Fragment key={i}>{icon}</React.Fragment>
-        ))}
-      </svg>
-    );
-  }
+  ({ icon, className, size = "s", ...rest }, ref) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      className={classNames("aui-icon", `aui-icon-${size}`, className)}
+      {...rest}
+      ref={ref}
+    >
+      {icons[icon]}
+    </svg>
+  )
 );
 
 export default Icon;

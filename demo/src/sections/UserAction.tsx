@@ -19,6 +19,7 @@ import {
   UnstyledLink,
   Select,
   TextArea,
+  Icon,
 } from "@adamjanicki/ui";
 
 export default function UserAction() {
@@ -102,7 +103,7 @@ export default function UserAction() {
           <Box>
             <Box className="fw5 f6 mb1">Icon Input</Box>
             <IconInput
-              startIcon={<span className="ml2">🔎</span>}
+              startIcon={<Icon className="ml2" icon="search" />}
               inputProps={{ placeholder: "Search..." }}
             />
           </Box>
