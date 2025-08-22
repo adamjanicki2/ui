@@ -19,3 +19,6 @@ lib/*
 !lib/README.md
 !lib/test
 !lib/jest.config.js
+
+# Python
+.DS_Store
