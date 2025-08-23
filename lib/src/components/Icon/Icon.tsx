@@ -26,7 +26,7 @@ const Icon = React.forwardRef<SVGSVGElement, Props>(
       {...rest}
       ref={ref}
     >
-      {icons[icon]}
+      <path d={icons[icon]} />
     </svg>
   )
 );
