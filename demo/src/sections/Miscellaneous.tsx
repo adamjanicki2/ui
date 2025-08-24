@@ -18,6 +18,7 @@ import {
 } from "@adamjanicki/ui/components/Hamburger";
 import { useState } from "react";
 import { iconTypes } from "@adamjanicki/ui/components/Icon/icons";
+import { Tooltip } from "@adamjanicki/ui-extended";
 
 export default function Miscellaneous() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
@@ -143,10 +144,17 @@ export default function Miscellaneous() {
           }}
         >
           {iconTypes.map((icon, i) => (
-            <Box key={i} layout={{ axis: "y", align: "center", padding: "xs" }}>
-              <span className="fw5 f7 mb1">{icon}</span>
-              <Icon icon={icon} size="s" className="subtitle" />
-            </Box>
+            <Tooltip
+              offset={4}
+              tooltipContent={
+                <Box className="tooltip f7 fw6 br3" layout={{ padding: "xs" }}>
+                  {icon}
+                </Box>
+              }
+              key={i}
+            >
+              <Icon icon={icon} size="m" className="subtitle" />
+            </Tooltip>
           ))}
         </Box>
       </>
