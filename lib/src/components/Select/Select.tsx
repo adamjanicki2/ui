@@ -59,7 +59,7 @@ const Select = (
         </option>
       ))}
     </select>
-    <Icon icon="down" className="aui-select-icon" aria-hidden />
+    <Icon icon="chevron-down" className="aui-select-icon" aria-hidden />
   </Box>
 );
 

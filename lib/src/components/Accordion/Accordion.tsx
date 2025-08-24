@@ -103,7 +103,7 @@ const Drawer = ({
           <Box layout={{ axis: "x", align: "center", gap: "s", padding: "m" }}>
             <Icon
               size="xs"
-              icon={open ? "down" : "right"}
+              icon={open ? "chevron-down" : "chevron-right"}
               className="aui-accordion-arrow"
             />
             <span className="aui-accordion-label">{item.label}</span>
