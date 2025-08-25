@@ -21,7 +21,7 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
   ({ layout, className, ...rest }, ref) => (
     <div
       {...rest}
-      className={classNames("aui-box", transformLayout(layout), className)}
+      className={classNames(transformLayout(layout), className)}
       ref={ref}
     />
   )
