@@ -5,3 +5,4 @@ clean.py
 jest.config.js
 package-lock.json
 tsconfig.json
+vite.config.ts
