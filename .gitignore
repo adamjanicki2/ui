@@ -19,7 +19,6 @@ lib/*
 !lib/README.md
 !lib/test
 !lib/jest.config.js
-!lib/vite.config.ts
 
 # Python
 .DS_Store
