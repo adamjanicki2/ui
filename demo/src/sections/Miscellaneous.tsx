@@ -148,7 +148,7 @@ export default function Miscellaneous() {
               offset={4}
               tooltipContent={
                 <Box className="tooltip f7 fw6 br3" layout={{ padding: "xs" }}>
-                  {icon}
+                  {i + 1}: {icon}
                 </Box>
               }
               key={i}

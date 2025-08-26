@@ -1,6 +1,6 @@
 # @adamjanicki/ui
 
-**Warning: use at own risk, these are mainly for personal use across my other sites, so while I strive to write good code, there may be bugs!**
+**Warning: use at own risk! These are mainly for personal use across my other sites, so while I strive to write good code, there may be bugs, and I make breaking changes semi-frequently!**
 
 ## Installation
 
@@ -24,7 +24,7 @@ const App = () => {
 
 ## Importing CSS
 
-Unfortunately, there was no great way to handle CSS. I often hate how large libraries make it extremely difficult to override CSS without using `!important`, or using inline styles. So, I've decided to just import the CSS directly into your project. Here's an example of how to do it:
+Unfortunately, there was no great way to handle CSS. I often hate how large libraries make it extremely difficult to override CSS without using `!important`, or using inline styles. So, I've decided to just allow importing the CSS directly into your project. Here's an example of how to do it:
 
 ```ts
 import React from "react";
