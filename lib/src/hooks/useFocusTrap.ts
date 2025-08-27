@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 
 const selector =
   'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
@@ -12,55 +12,43 @@ const selector =
  */
 const useFocusTrap = <T extends HTMLElement>(isActive = true) => {
   const trapRef = useRef<T | null>(null);
-  const focusableElements = useRef<NodeListOf<T> | null>(null);
-
-  const updateFocusableElements = useCallback(() => {
-    if (trapRef.current) {
-      focusableElements.current = trapRef.current.querySelectorAll<T>(selector);
-    }
-  }, []);
 
   useEffect(() => {
-    if (!isActive || !trapRef.current) return;
-
-    updateFocusableElements();
+    const trap = trapRef.current;
+    if (!isActive || !trap) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Tab") return;
-      if (
-        !focusableElements.current ||
-        focusableElements.current.length === 0
-      ) {
-        return event.preventDefault();
+
+      const focusableElements = trap.querySelectorAll<HTMLElement>(selector);
+      if (!focusableElements.length) {
+        event.preventDefault();
+        return;
       }
 
-      const { activeElement } = document;
-      const firstEl = focusableElements.current[0];
-      const lastEl =
-        focusableElements.current[focusableElements.current.length - 1];
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+      const active = document.activeElement;
 
-      if (event.shiftKey && activeElement === firstEl) {
-        lastEl.focus();
-        event.preventDefault();
-      } else if (!event.shiftKey && activeElement === lastEl) {
-        firstEl.focus();
-        event.preventDefault();
-      } else if (!trapRef.current?.contains(activeElement as Node)) {
-        (event.shiftKey ? lastEl : firstEl).focus();
-        event.preventDefault();
+      if (event.shiftKey) {
+        if (active === first || !trap.contains(active)) {
+          last.focus();
+          event.preventDefault();
+        }
+      } else {
+        if (active === last || !trap.contains(active)) {
+          first.focus();
+          event.preventDefault();
+        }
       }
     };
 
-    const observer = new MutationObserver(updateFocusableElements);
-    observer.observe(trapRef.current, { childList: true, subtree: true });
-
-    document.addEventListener("keydown", handleKeyDown);
+    trap.addEventListener("keydown", handleKeyDown, true);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      observer.disconnect();
+      trap.removeEventListener("keydown", handleKeyDown, true);
     };
-  }, [isActive, updateFocusableElements]);
+  }, [isActive]);
 
   return trapRef;
 };
