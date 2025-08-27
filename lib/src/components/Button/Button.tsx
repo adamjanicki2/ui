@@ -49,11 +49,12 @@ export const UnstyledButton = React.forwardRef<
 ));
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, corners, className, size, ...rest }, ref) => (
+  ({ variant, layout, corners, className, size, ...rest }, ref) => (
     <UnstyledButton
       {...rest}
       className={classNames(
         getButtonClassName({ variant, corners, size }),
+        transformLayout(layout),
         className
       )}
       ref={ref}

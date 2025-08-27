@@ -30,39 +30,45 @@ type Props = Omit<BoxProps, "children"> & {
   disableScrollLock?: boolean;
 };
 
-type BaseProps = Omit<Props, "disableScrollLock" | "returnFocusOnEscape"> & {
-  visible: boolean;
-};
-
-const BaseLayer = React.forwardRef<HTMLDivElement, BaseProps>(
+const Layer = React.forwardRef<HTMLDivElement, Props>(
   (
     {
+      returnFocusOnEscape,
+      disableScrollLock,
       onClose,
       children,
       className,
       disableEscape = false,
-      visible,
       onMouseDown,
       layout,
       ...rest
     },
     ref
   ) => {
-    const focusRef = useFocusTrap<HTMLElement>(visible);
+    const focusRef = useFocusTrap<HTMLElement>(true);
+    // Lock and unlock on mount and unmount
+    useScrollLock(!disableScrollLock);
 
     useEffect(() => {
+      if (disableEscape) return;
+
       const handleEscape = (event: KeyboardEvent) => {
         if (event.key === "Escape") {
+          if (!returnFocusOnEscape) {
+            const activeEl = document.activeElement as HTMLElement | null;
+            activeEl?.blur?.();
+          }
+
           onClose?.();
         }
       };
 
-      if (!disableEscape) document.addEventListener("keydown", handleEscape);
+      document.addEventListener("keydown", handleEscape);
+
       return () => {
-        if (!disableEscape)
-          document.removeEventListener("keydown", handleEscape);
+        document.removeEventListener("keydown", handleEscape);
       };
-    }, [onClose, disableEscape]);
+    }, [onClose, disableEscape, returnFocusOnEscape]);
 
     return (
       <Box
@@ -84,25 +90,6 @@ const BaseLayer = React.forwardRef<HTMLDivElement, BaseProps>(
         })}
       </Box>
     );
-  }
-);
-
-const Layer = React.forwardRef<HTMLDivElement, Props>(
-  ({ returnFocusOnEscape, disableScrollLock, ...rest }, ref) => {
-    // Lock and unlock on mount and unmount
-    useScrollLock(!disableScrollLock);
-
-    useEffect(
-      () => () => {
-        const activeEl = document.activeElement as HTMLElement;
-        if (!returnFocusOnEscape) {
-          activeEl?.blur?.();
-        }
-      },
-      [returnFocusOnEscape]
-    );
-
-    return <BaseLayer {...rest} visible ref={ref} />;
   }
 );
 
