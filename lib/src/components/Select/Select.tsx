@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import classNames from "../../functions/classNames";
 import type { CornerType } from "../../utils/types";
 import Box from "../Box";
@@ -26,41 +26,44 @@ type Props = React.DetailedHTMLProps<
   corners?: CornerType;
 };
 
-const Select = (
-  {
-    className,
-    options,
-    getOptionLabel,
-    corners = "rounded",
-    style,
-    disabled,
-    ...props
-  }: Props,
-  ref: React.Ref<HTMLSelectElement>
-) => (
-  <Box
-    className={classNames(
-      "aui-select-container",
-      `aui-corners--${corners}`,
-      disabled ? "aui-select-disabled" : undefined,
-      className
-    )}
-    style={style}
-  >
-    <select
-      {...props}
-      ref={ref}
-      className={`aui-select aui-corners--${corners}`}
-      disabled={disabled}
+const Select = React.forwardRef<HTMLSelectElement, Props>(
+  (
+    {
+      className,
+      options,
+      getOptionLabel,
+      corners = "rounded",
+      style,
+      disabled,
+      ...props
+    },
+    ref
+  ) => (
+    <Box
+      layout={{ axis: "x", align: "center" }}
+      className={classNames(
+        "aui-select-container",
+        `aui-corners--${corners}`,
+        disabled ? "aui-select-disabled" : undefined,
+        className
+      )}
+      style={style}
     >
-      {options.map((option, index) => (
-        <option key={index} value={option}>
-          {getOptionLabel?.(option) || option}
-        </option>
-      ))}
-    </select>
-    <Icon icon="chevron-down" className="aui-select-icon" aria-hidden />
-  </Box>
+      <select
+        {...props}
+        ref={ref}
+        className={`aui-select aui-corners--${corners}`}
+        disabled={disabled}
+      >
+        {options.map((option, index) => (
+          <option key={index} value={option}>
+            {getOptionLabel?.(option) || option}
+          </option>
+        ))}
+      </select>
+      <Icon icon="chevron-down" className="aui-select-icon" aria-hidden />
+    </Box>
+  )
 );
 
-export default forwardRef(Select);
+export default Select;

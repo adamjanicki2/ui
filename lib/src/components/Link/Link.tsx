@@ -4,7 +4,7 @@ import classNames from "../../functions/classNames";
 import { Layout } from "../../utils/types";
 import transformLayout from "../../utils/transformLayout";
 
-type BaseLinkProps = Omit<
+export type BaseLinkProps = Omit<
   React.DetailedHTMLProps<
     React.AnchorHTMLAttributes<HTMLAnchorElement>,
     HTMLAnchorElement
@@ -14,7 +14,7 @@ type BaseLinkProps = Omit<
   /**
    * URL to navigate to
    */
-  to?: string;
+  to: string;
 };
 
 type CustomLinkElement = React.ForwardRefExoticComponent<
@@ -57,11 +57,12 @@ export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
 export const ButtonLink = React.forwardRef<
   HTMLAnchorElement,
   LinkProps & VisualButtonProps
->(({ className, variant, corners, size, ...props }, ref) => (
+>(({ className, layout, variant, corners, size, ...props }, ref) => (
   <UnstyledLink
     {...props}
     className={classNames(
       getButtonClassName({ variant, corners, size }),
+      transformLayout(layout),
       className
     )}
     ref={ref}
@@ -69,10 +70,10 @@ export const ButtonLink = React.forwardRef<
 ));
 
 const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ className, ...props }, ref) => (
+  ({ className, layout, ...props }, ref) => (
     <UnstyledLink
       {...props}
-      className={classNames("aui-link", className)}
+      className={classNames("aui-link", transformLayout(layout), className)}
       ref={ref}
     />
   )

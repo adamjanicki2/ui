@@ -2,7 +2,7 @@ import React from "react";
 import icons, { type IconType } from "./icons";
 import { classNames } from "../../functions";
 
-type Props = Omit<
+export type Props = Omit<
   React.DetailedHTMLProps<React.SVGAttributes<SVGSVGElement>, SVGSVGElement>,
   "children" | "viewBox"
 > & {
