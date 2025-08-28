@@ -146,6 +146,15 @@ export const layerSnippet = `
 </Layer>
 `;
 
+export const modalSnippet = `
+<Modal onClose={() => setModalOpen(false)} onConfirm={() => {}}>
+  <Box>
+    Welcome to my modal. You can put all sorts of stuff in here if
+    you'd like.
+  </Box>
+</Modal>
+`;
+
 export const linkSnippet = `
 <Link to="#link">Internal link</Link>
 <Link to="https://adamovies.com" external>External link</Link>

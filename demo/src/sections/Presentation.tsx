@@ -8,6 +8,7 @@ import {
   boxSnippet,
   carouselSnippet,
   layerSnippet,
+  modalSnippet,
 } from "src/codeSnippets";
 import {
   Accordion,
@@ -17,11 +18,13 @@ import {
   Button,
   Carousel,
   Layer,
+  Modal,
 } from "@adamjanicki/ui";
 
 export default function Presentation() {
   const [animatedOpen, setAnimatedOpen] = useState(false);
   const [layerOpen, setLayerOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <section id="layout-section">
@@ -213,6 +216,31 @@ export default function Presentation() {
             </Layer>
           )}
           <HiddenSnippet>{layerSnippet}</HiddenSnippet>
+        </Box>
+      </>
+
+      {/* Modal */}
+      <>
+        <Heading level={2}>Modal</Heading>
+        <Para>
+          Built as a simple wrapper on top of the lower-level Layer component,
+          the Modal component seeks to provide an easy interface for commonly
+          used modal design patterns, providing props for doing something on
+          confirm and close.
+        </Para>
+        <Box layout={{ axis: "y", align: "center" }}>
+          <Button className="w-fc mb2" onClick={() => setModalOpen(true)}>
+            Open Modal
+          </Button>
+          {modalOpen && (
+            <Modal onClose={() => setModalOpen(false)} onConfirm={() => {}}>
+              <Box>
+                Welcome to my modal. You can put all sorts of stuff in here if
+                you'd like.
+              </Box>
+            </Modal>
+          )}
+          <HiddenSnippet>{modalSnippet}</HiddenSnippet>
         </Box>
       </>
     </section>

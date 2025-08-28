@@ -1,5 +1,5 @@
 import { render, fireEvent } from "@testing-library/react";
-import { Button, UnstyledButton } from "../../src";
+import { Button, UnstyledButton, IconButton } from "../../src";
 
 describe("Button", () => {
   it("renders a button and fires onClick", async () => {
@@ -8,12 +8,13 @@ describe("Button", () => {
       <>
         <Button onClick={callback}>Regular</Button>
         <UnstyledButton onClick={callback}>Unstyled</UnstyledButton>
+        <IconButton icon="not-a-moon" onClick={callback} />
       </>
     );
     const buttons = container.querySelectorAll("button");
-    expect(buttons.length).toBe(2);
+    expect(buttons.length).toBe(3);
 
     buttons.forEach(fireEvent.click);
-    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenCalledTimes(3);
   });
 });

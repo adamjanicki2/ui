@@ -140,6 +140,17 @@
   border-color: var(--aui-default-border);
 }
 
+/* Modal and general use */
+.aui-modal {
+  color: var(--aui-default-text-color);
+  background-color: var(--aui-default-background);
+  box-shadow: 0 0 0 1px var(--aui-default-border) inset,
+    var(--aui-container-box-shadow);
+  border-radius: var(--aui-rounded-radius);
+  min-width: 40%;
+  max-width: 100%;
+}
+
 /* Accordion */
 .aui-accordion {
   background-color: var(--aui-default-background);
@@ -238,6 +249,19 @@
   transition: box-shadow var(--aui-default-transition);
 }
 
+.aui-dim,
+.aui-undim {
+  transition: opacity var(--aui-default-transition);
+}
+
+.aui-dim {
+  opacity: 1;
+}
+
+.aui-undim {
+  opacity: var(--aui-default-opacity-dim);
+}
+
 .aui-link {
   font-weight: 600;
   color: var(--aui-link-color);
@@ -246,6 +270,7 @@
 
 @media (hover: hover) {
   .aui-button--primary:not([disabled]):hover,
+  .aui-dim:not([disabled]):hover,
   .aui-link:hover {
     opacity: var(--aui-default-opacity-dim);
   }
@@ -253,6 +278,10 @@
   .aui-button--secondary:not([disabled]):hover {
     box-shadow: 0 0 0 1px var(--aui-button-secondary-border-hover) inset,
       var(--aui-subtle-box-shadow);
+  }
+
+  .aui-undim:not([disabled]):hover {
+    opacity: 1;
   }
 }
 

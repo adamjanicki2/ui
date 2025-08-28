@@ -14,11 +14,6 @@ type Props = Omit<BoxProps, "children"> & {
    */
   children: React.ReactElement<any>;
   /**
-   * [Optional] Whether to disable the escape key to close the layer
-   * @default false
-   */
-  disableEscape?: boolean;
-  /**
    * [Optional] Whether to return focus to the element that triggered the layer
    * @default false
    */
@@ -38,7 +33,6 @@ const Layer = React.forwardRef<HTMLDivElement, Props>(
       onClose,
       children,
       className,
-      disableEscape = false,
       onMouseDown,
       layout,
       ...rest
@@ -50,8 +44,6 @@ const Layer = React.forwardRef<HTMLDivElement, Props>(
     useScrollLock(!disableScrollLock);
 
     useEffect(() => {
-      if (disableEscape) return;
-
       const handleEscape = (event: KeyboardEvent) => {
         if (event.key === "Escape") {
           if (!returnFocusOnEscape) {
@@ -68,7 +60,7 @@ const Layer = React.forwardRef<HTMLDivElement, Props>(
       return () => {
         document.removeEventListener("keydown", handleEscape);
       };
-    }, [onClose, disableEscape, returnFocusOnEscape]);
+    }, [onClose, returnFocusOnEscape]);
 
     return (
       <Box
