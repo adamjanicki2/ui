@@ -232,14 +232,16 @@ export default function Presentation() {
           <Button className="w-fc mb2" onClick={() => setModalOpen(true)}>
             Open Modal
           </Button>
-          {modalOpen && (
-            <Modal onClose={() => setModalOpen(false)} onConfirm={() => {}}>
-              <Box>
-                Welcome to my modal. You can put all sorts of stuff in here if
-                you'd like.
-              </Box>
-            </Modal>
-          )}
+          <Modal
+            open={modalOpen}
+            onClose={() => setModalOpen(false)}
+            onConfirm={() => {}}
+          >
+            <Box>
+              Welcome to my modal. You can put all sorts of stuff in here if
+              you'd like.
+            </Box>
+          </Modal>
           <HiddenSnippet>{modalSnippet}</HiddenSnippet>
         </Box>
       </>

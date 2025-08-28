@@ -147,7 +147,11 @@ export const layerSnippet = `
 `;
 
 export const modalSnippet = `
-<Modal onClose={() => setModalOpen(false)} onConfirm={() => {}}>
+<Modal
+  open={modalOpen}
+  onClose={() => setModalOpen(false)}
+  onConfirm={() => {}}
+>
   <Box>
     Welcome to my modal. You can put all sorts of stuff in here if
     you'd like.

@@ -1,8 +1,8 @@
 import React from "react";
 import Box, { type BoxProps } from "../Box/Box";
 import Layer from "../Layer";
-import { classNames } from "../../functions";
 import Button, { IconButton } from "../Button";
+import Animated from "../Animated";
 
 type Props = BoxProps & {
   /**
@@ -20,6 +20,10 @@ type Props = BoxProps & {
    */
   cancelLabel?: React.ReactNode;
   /**
+   * Whether the modal is open or not
+   */
+  open: boolean;
+  /**
    * Callback that fires when the user closes the modal
    */
   onClose: () => void;
@@ -33,63 +37,68 @@ type Props = BoxProps & {
 const Modal = React.forwardRef<HTMLDivElement, Props>(
   (
     {
+      open,
       onClose,
       onConfirm,
       confirmLabel = "Ok",
       cancelLabel = "Cancel",
-      className,
       returnFocusOnEscape,
-      layout,
-      children,
       ...rest
     },
     ref
   ) => {
     return (
-      <Layer onClose={onClose} returnFocusOnEscape={returnFocusOnEscape}>
-        <Box
-          role="dialog"
-          aria-modal="true"
-          className={classNames("aui-modal aui-corners--rounded", className)}
-          layout={{ axis: "y", padding: "m", gap: "m", ...layout }}
-          {...rest}
-          ref={ref}
-        >
+      <Animated
+        className="aui-modal-backdrop"
+        animated={open}
+        animateTo={{ style: { opacity: 1 } }}
+        animateFrom={{ style: { opacity: 0 } }}
+      >
+        <Layer onClose={onClose} returnFocusOnEscape={returnFocusOnEscape}>
           <Box
-            layout={{
-              axis: "x",
-              align: "center",
-              justify: "end",
-              width: "full",
-            }}
+            role="dialog"
+            aria-modal="true"
+            className="aui-modal aui-corners--rounded"
+            layout={{ axis: "y", padding: "m", gap: "m" }}
           >
-            <IconButton icon="x" onClick={onClose} />
-          </Box>
-          {/* children here */}
-          {children}
-          <Box
-            layout={{
-              axis: "x",
-              align: "center",
-              justify: "end",
-              width: "full",
-              gap: "m",
-            }}
-          >
-            <Button variant="secondary" onClick={onClose}>
-              {cancelLabel}
-            </Button>
-            <Button
-              onClick={() => {
-                onConfirm();
-                onClose();
+            <Box
+              layout={{
+                axis: "x",
+                align: "center",
+                justify: "end",
+                width: "full",
               }}
             >
-              {confirmLabel}
-            </Button>
+              <IconButton icon="x" onClick={onClose} />
+            </Box>
+
+            {/* children here */}
+            <Box {...rest} ref={ref} />
+
+            <Box
+              layout={{
+                axis: "x",
+                align: "center",
+                justify: "end",
+                width: "full",
+                gap: "m",
+              }}
+            >
+              <Button variant="secondary" onClick={onClose}>
+                {cancelLabel}
+              </Button>
+              <Button
+                onClick={() => {
+                  onConfirm();
+                  onClose();
+                }}
+              >
+                {confirmLabel}
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      </Layer>
+        </Layer>
+      </Animated>
     );
   }
 );

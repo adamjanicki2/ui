@@ -358,13 +358,16 @@
 }
 
 /* Layer */
+.aui-modal-backdrop,
+.aui-layer-backdrop {
+  z-index: 10000;
+}
 .aui-layer-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 10000;
   background: var(--aui-layer-backdrop-background);
 }
 
