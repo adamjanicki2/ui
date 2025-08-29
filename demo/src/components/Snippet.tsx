@@ -5,10 +5,8 @@ import {
   oneDark as dark,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "src/components/snippet.css";
-import { Badge, Button, Box } from "@adamjanicki/ui";
+import { Badge, Button, Box, Icon } from "@adamjanicki/ui";
 import { classNames } from "@adamjanicki/ui/functions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faClipboard } from "@fortawesome/free-solid-svg-icons";
 import { useTheme } from "src/hooks";
 
 export type Props = {
@@ -46,17 +44,22 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
       >
         <p className="f6 fw5 ma0">{lang}</p>
         {copied ? (
-          <Badge className="flex items-center" type="success">
-            <FontAwesomeIcon icon={faCheck} className="mr1" /> Copied
+          <Badge
+            layout={{ axis: "x", align: "center", gap: "xs" }}
+            className="flex items-center"
+            type="success"
+          >
+            <Icon icon="check" /> Copied
           </Badge>
         ) : (
           <Button
+            layout={{ axis: "x", align: "center", gap: "xs" }}
             onClick={copyCode}
-            style={{ padding: "3px 6px" }}
-            className="f6 fw6"
+            size="small"
             variant="secondary"
+            style={{ paddingTop: 3, paddingBottom: 3 }}
           >
-            <FontAwesomeIcon icon={faClipboard} className="mr1" />
+            <Icon icon="clipboard" />
             Copy
           </Button>
         )}
