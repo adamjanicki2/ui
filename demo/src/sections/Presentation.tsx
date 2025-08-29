@@ -96,9 +96,13 @@ export default function Presentation() {
             {animatedOpen ? "Unanimate" : "Animate"} Alert
           </Button>
           <Animated
+            debug
             keepMounted
-            duration={0.8}
-            animated={animatedOpen}
+            duration={{
+              forward: 0.25,
+              reverse: 1,
+            }}
+            visible={animatedOpen}
             animateTo={{
               style: { opacity: 1, transform: "rotate(0)" },
             }}

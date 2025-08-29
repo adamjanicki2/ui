@@ -19,7 +19,7 @@ export default function HiddenSnippet(props: Props) {
       <Animated
         layout={{ axis: "x", justify: "center" }}
         className="w-100"
-        animated={show}
+        visible={show}
         animateTo={{ style: { opacity: 1 } }}
         animateFrom={{ style: { opacity: 0 } }}
       >

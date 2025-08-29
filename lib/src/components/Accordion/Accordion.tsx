@@ -113,7 +113,7 @@ const Drawer = ({
           style={{ overflow: "hidden" }}
           keepMounted
           duration={duration}
-          animated={open}
+          visible={open}
           animateFrom={{
             style: {
               visibility: "hidden",

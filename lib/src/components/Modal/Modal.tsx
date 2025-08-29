@@ -50,7 +50,7 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
     return (
       <Animated
         className="aui-modal-backdrop"
-        animated={open}
+        visible={open}
         animateTo={{ style: { opacity: 1 } }}
         animateFrom={{ style: { opacity: 0 } }}
       >

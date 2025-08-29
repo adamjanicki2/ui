@@ -5,15 +5,26 @@ import Box, { type BoxProps } from "../Box/Box";
 
 type Props = BoxProps & {
   /**
-   * Whether to begin the animation.
+   * Whether to begin the animation and render the component.
    * Set to true to start animation, false to start the exit animation.
    */
-  animated: boolean;
+  visible: boolean;
   /**
    * Duration of the animation in seconds
    * @default 0.25
    */
-  duration?: number;
+  duration?:
+    | number
+    | {
+        /**
+         * Length of the forward direction
+         */
+        forward: number;
+        /**
+         * Length of the reverse direction
+         */
+        reverse: number;
+      };
   /**
    * Whether to keep the component mounted when it is not animated
    * @default false
@@ -42,22 +53,34 @@ type Props = BoxProps & {
      */
     style?: Style;
   };
+  debug?: true;
 };
 
 const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
-    animated,
+    visible,
     duration = 0.25,
     keepMounted = false,
     animateTo,
     animateFrom,
     className,
     style,
+    debug,
     ...rest
   } = props;
 
-  const [shouldRender, setShouldRender] = useState(animated || keepMounted);
-  const [isAnimatingForward, setIsAnimatingForward] = useState(false);
+  let forwardDuration: number;
+  let reverseDuration: number;
+  if (typeof duration === "number") {
+    forwardDuration = duration;
+    reverseDuration = duration;
+  } else {
+    forwardDuration = duration.forward;
+    reverseDuration = duration.reverse;
+  }
+
+  const [shouldRender, setShouldRender] = useState(visible || keepMounted);
+  const [isAnimatingForward, setIsAnimatingForward] = useState(visible);
 
   const timeoutRef = useRef<number | null>(null);
   const animationFrameRef = useRef<number | null>(null);
@@ -75,37 +98,30 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   };
 
   useEffect(() => {
-    // initiate forward animation
-    if (animated && shouldRender) {
-      clearRefs();
+    clearRefs();
+
+    if (visible) {
+      setShouldRender(true);
       animationFrameRef.current = requestAnimationFrame(() =>
         setIsAnimatingForward(true)
       );
-    }
-
-    return clearRefs;
-  }, [animated, shouldRender]);
-
-  useEffect(() => {
-    // make container element appear on DOM
-    if (animated) {
-      setShouldRender(true);
-    }
-    // initiate reverse animation
-    else {
-      clearRefs();
+    } else {
       setIsAnimatingForward(false);
       timeoutRef.current = window.setTimeout(() => {
         if (!keepMounted) {
           setShouldRender(false);
         }
-      }, duration * 1000);
+      }, reverseDuration * 1000);
     }
+  }, [visible, keepMounted, reverseDuration]);
 
-    return clearRefs;
-  }, [animated, duration, keepMounted]);
+  if (debug) console.log({ visible, shouldRender, isAnimatingForward });
 
   if (!shouldRender) return null;
+
+  const transition = `all ${
+    isAnimatingForward ? forwardDuration : reverseDuration
+  }s ease-in-out`;
 
   const currentAnimation = isAnimatingForward ? animateTo : animateFrom;
 
@@ -113,7 +129,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     <Box
       className={classNames(className, currentAnimation?.className)}
       style={{
-        transition: `all ${duration}s ease-in-out`,
+        transition,
         ...style,
         ...currentAnimation?.style,
       }}
