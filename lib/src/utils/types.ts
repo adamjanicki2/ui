@@ -23,11 +23,15 @@ export type SizeDimension = "full" | "fit" | "min" | "max";
 /**
  * Size variants used for CSS.
  */
-type SizeToken = "none" | "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
+export type SizeToken = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
+/**
+ * Size variants used for padding & margin
+ */
+type SpacingSize = "none" | "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
 /**
  * Used for margin
  */
-type AutoSize = SizeToken | "auto";
+type AutoSize = SpacingSize | "auto";
 
 /** Layout props for a component */
 export type Layout = {
@@ -36,7 +40,7 @@ export type Layout = {
   /** Direction the layout spans; along the x-axis or y-axis (Equivalent to flex-direction) */
   axis?: "x" | "y" | "-x" | "-y";
   /** Spacing between children of the layout */
-  gap?: SizeToken;
+  gap?: SpacingSize;
   /** Alignment orthogonal to the selected axis (Equivalent to align-items) */
   align?: "start" | "center" | "end";
   /** How to layout the children (Equivalent to justify-content) */
@@ -47,19 +51,19 @@ export type Layout = {
   // Spacing
 
   /** Padding inside the layout */
-  padding?: SizeToken;
+  padding?: SpacingSize;
   /** Horizontal padding inside the layout */
-  paddingX?: SizeToken;
+  paddingX?: SpacingSize;
   /** Vertical padding inside the layout */
-  paddingY?: SizeToken;
+  paddingY?: SpacingSize;
   /** Top padding inside the layout */
-  paddingTop?: SizeToken;
+  paddingTop?: SpacingSize;
   /** Bottom padding inside the layout */
-  paddingBottom?: SizeToken;
+  paddingBottom?: SpacingSize;
   /** Left padding inside the layout */
-  paddingLeft?: SizeToken;
+  paddingLeft?: SpacingSize;
   /** Right padding inside the layout */
-  paddingRight?: SizeToken;
+  paddingRight?: SpacingSize;
 
   /** Margin outside the layout */
   margin?: AutoSize;

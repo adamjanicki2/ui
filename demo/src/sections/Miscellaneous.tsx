@@ -2,11 +2,20 @@ import Heading from "src/components/Heading";
 import Para from "src/components/Para";
 import HiddenSnippet from "src/components/HiddenSnippet";
 import {
+  avatarSnippet,
   burgerSnippet,
   clickOutsideSnippet,
   spinnerSnippet,
 } from "src/codeSnippets";
-import { Alert, Box, ClickOutside, Link, Spinner, Icon } from "@adamjanicki/ui";
+import {
+  Alert,
+  Box,
+  ClickOutside,
+  Link,
+  Spinner,
+  Icon,
+  Avatar,
+} from "@adamjanicki/ui";
 import {
   DoubleCross,
   DoubleFlip,
@@ -182,6 +191,39 @@ export default function Miscellaneous() {
           <Spinner style={{ height: 48, color: "blue" }} />
         </Box>
         <HiddenSnippet>{spinnerSnippet}</HiddenSnippet>
+      </>
+
+      {/* Avatar */}
+      <>
+        <Heading level={2}>Avatar</Heading>
+        <Para>
+          U often find myself remaking a component to render a user's profile
+          picture or icon in many of my sites. This flexible component allows
+          you to configure either a background image, or a letter icon.
+        </Para>
+        <Box
+          layout={{
+            axis: "x",
+            align: "center",
+            gap: "s",
+            padding: "xs",
+            width: "fit",
+            marginX: "auto",
+          }}
+        >
+          <Avatar username="A" corners="pill" size="m" />
+          <Avatar username="B" corners="pill" size="m" />
+          <Avatar username="C" corners="pill" size="m" />
+          <Avatar username="D" corners="pill" size="m" />
+          <Avatar username="E" corners="pill" size="m" />
+          <Avatar
+            backgroundImage="https://adamjanicki.xyz/images/logo512.png"
+            username="A"
+            corners="sharp"
+            size="m"
+          />
+        </Box>
+        <HiddenSnippet>{avatarSnippet}</HiddenSnippet>
       </>
     </section>
   );

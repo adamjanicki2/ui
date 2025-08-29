@@ -1,6 +1,7 @@
 import React from "react";
 import icons, { type IconType } from "./icons";
 import { classNames } from "../../functions";
+import type { SizeToken } from "../../utils/types";
 
 export type Props = Omit<
   React.DetailedHTMLProps<React.SVGAttributes<SVGSVGElement>, SVGSVGElement>,
@@ -14,7 +15,7 @@ export type Props = Omit<
    * Size of the icon; will control both width and height
    * @default "s"
    */
-  size?: "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
+  size?: SizeToken;
 };
 
 const Icon = React.forwardRef<SVGSVGElement, Props>(
