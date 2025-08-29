@@ -8,7 +8,7 @@ type Props = Omit<BoxProps, "children"> & {
    * How to treat the border radius of the avatar
    * @default "rounded"
    */
-  corners: CornerType;
+  corners?: CornerType;
   /**
    * Size of the avatar
    * @default "s"
