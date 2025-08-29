@@ -101,6 +101,7 @@ export const buttonSnippet = `
 <Button variant="primary">Primary</Button>
 <Button variant="secondary">Secondary</Button>
 <UnstyledButton>Unstyled</UnstyledButton>
+<IconButton icon="download" />
 `;
 
 export const carouselSnippet = `
@@ -146,6 +147,19 @@ export const layerSnippet = `
 </Layer>
 `;
 
+export const modalSnippet = `
+<Modal
+  open={modalOpen}
+  onClose={() => setModalOpen(false)}
+  onConfirm={() => {}}
+>
+  <Box>
+    Welcome to my modal. You can put all sorts of stuff in here if
+    you'd like.
+  </Box>
+</Modal>
+`;
+
 export const linkSnippet = `
 <Link to="#link">Internal link</Link>
 <Link to="https://adamovies.com" external>External link</Link>
@@ -168,6 +182,19 @@ export const spinnerSnippet = `
 <Spinner style={{ height: 36, color: "red" }} />
 <Spinner style={{ height: 48, color: "blue" }} />
 `;
+
+export const avatarSnippet = `
+<Avatar username="A" corners="pill" size="m" />
+<Avatar username="B" corners="pill" size="m" />
+<Avatar username="C" corners="pill" size="m" />
+<Avatar username="D" corners="pill" size="m" />
+<Avatar username="E" corners="pill" size="m" />
+<Avatar
+  backgroundImage="https://adamjanicki.xyz/images/logo512.png"
+  username="A"
+  corners="sharp"
+  size="m"
+/>`;
 
 export const focusTrapSnippet = `
 // in your modal component ...

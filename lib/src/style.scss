@@ -21,7 +21,7 @@
   --aui-disabled-opacity: 0.5;
   --aui-default-transition: 0.25s ease-in-out;
   --aui-default-opacity-dim: 0.75;
-  --aui-container-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);
+  --aui-floating-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   /* Corners */
   --aui-sharp-radius: 0;
   --aui-rounded-radius: 8px;
@@ -49,9 +49,16 @@
   --aui-info-color: #0d47a1;
   --aui-info-border: #90caf9;
 
+  /* Avatar colors */
+  --aui-avatar-purple: #bc54d6;
+  --aui-avatar-blue: #618bdc;
+  --aui-avatar-red: #ee6060;
+  --aui-avatar-green: #add386;
+  --aui-avatar-yellow: #f5c76d;
+
   --aui-static-background: #e8e8e8;
   /* Layer */
-  --aui-layer-backdrop-background: rgba(200, 200, 200, 0.7);
+  --aui-layer-backdrop-background: rgba(200, 200, 200, 0.6);
   /* Link */
   --aui-link-color: #0070ff;
   /* Select */
@@ -64,7 +71,7 @@
   --aui-default-text-color: white;
   --aui-default-background: var(--aui-obsidian);
   --aui-default-border: var(--aui-dark-gray);
-  --aui-container-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.36);
+  --aui-floating-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   /* Buttons */
   --aui-button-primary-background: white;
   --aui-button-primary-color: var(--aui-obsidian);
@@ -87,6 +94,13 @@
   --aui-info-background: #335f72;
   --aui-info-color: #d4f1f5;
   --aui-info-border: #1d8ea4;
+
+  /* Avatar colors */
+  --aui-avatar-purple: #771199;
+  --aui-avatar-blue: #0b4cce;
+  --aui-avatar-red: #bb1111;
+  --aui-avatar-green: #307040;
+  --aui-avatar-yellow: #bb8822;
 
   --aui-static-background: var(--aui-darkest-gray);
   /* Layer */
@@ -140,11 +154,22 @@
   border-color: var(--aui-default-border);
 }
 
+/* Modal and general use */
+.aui-modal {
+  color: var(--aui-default-text-color);
+  background-color: var(--aui-default-background);
+  box-shadow: 0 0 0 1px var(--aui-default-border) inset,
+    var(--aui-floating-box-shadow);
+  border-radius: var(--aui-rounded-radius);
+  min-width: 40%;
+  max-width: 100%;
+}
+
 /* Accordion */
 .aui-accordion {
   background-color: var(--aui-default-background);
   box-shadow: 0 0 0 1px var(--aui-default-border) inset,
-    var(--aui-container-box-shadow);
+    var(--aui-subtle-box-shadow);
 }
 .aui-accordion-label {
   font-weight: 600;
@@ -168,6 +193,12 @@
   border-style: solid;
   border-width: 1px;
   font-weight: 400;
+}
+
+.aui-avatar {
+  overflow: hidden;
+  text-align: center;
+  font-weight: 600;
 }
 
 /* Badge */
@@ -238,6 +269,19 @@
   transition: box-shadow var(--aui-default-transition);
 }
 
+.aui-dim,
+.aui-undim {
+  transition: opacity var(--aui-default-transition);
+}
+
+.aui-dim {
+  opacity: 1;
+}
+
+.aui-undim {
+  opacity: var(--aui-default-opacity-dim);
+}
+
 .aui-link {
   font-weight: 600;
   color: var(--aui-link-color);
@@ -246,6 +290,7 @@
 
 @media (hover: hover) {
   .aui-button--primary:not([disabled]):hover,
+  .aui-dim:not([disabled]):hover,
   .aui-link:hover {
     opacity: var(--aui-default-opacity-dim);
   }
@@ -253,6 +298,10 @@
   .aui-button--secondary:not([disabled]):hover {
     box-shadow: 0 0 0 1px var(--aui-button-secondary-border-hover) inset,
       var(--aui-subtle-box-shadow);
+  }
+
+  .aui-undim:not([disabled]):hover {
+    opacity: 1;
   }
 }
 
@@ -329,13 +378,16 @@
 }
 
 /* Layer */
+.aui-modal-backdrop,
+.aui-layer-backdrop {
+  z-index: 10000;
+}
 .aui-layer-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 10000;
   background: var(--aui-layer-backdrop-background);
 }
 
@@ -453,6 +505,39 @@
 }
 
 /* Begin SCSS */
+
+$aui-avatar-color: (
+  "red": var(--aui-avatar-red),
+  "yellow": var(--aui-avatar-yellow),
+  "green": var(--aui-avatar-green),
+  "blue": var(--aui-avatar-blue),
+  "purple": var(--aui-avatar-purple),
+);
+
+@each $k, $v in $aui-avatar-color {
+  .aui-avatar-#{$k} {
+    background-color: $v;
+  }
+}
+
+$aui-avatar-size: (
+  xxs: 12px,
+  xs: 16px,
+  s: 24px,
+  m: 32px,
+  l: 48px,
+  xl: 64px,
+  xxl: 128px,
+);
+
+@each $k, $v in $aui-avatar-size {
+  .aui-avatar-#{$k} {
+    width: $v;
+    height: $v;
+    line-height: $v;
+    font-size: 0.8 * $v;
+  }
+}
 
 /* Icon sizing */
 $aui-icon-size: (

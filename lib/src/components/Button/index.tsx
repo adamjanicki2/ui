@@ -1,3 +1,3 @@
-import Button, { UnstyledButton } from "./Button";
-export { UnstyledButton };
+import Button, { UnstyledButton, IconButton } from "./Button";
+export { UnstyledButton, IconButton };
 export default Button;

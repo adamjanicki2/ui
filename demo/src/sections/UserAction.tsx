@@ -17,6 +17,7 @@ import {
   UnstyledButton,
   ButtonLink,
   UnstyledLink,
+  IconButton,
   Select,
   TextArea,
   Icon,
@@ -63,6 +64,7 @@ export default function UserAction() {
             Secondary
           </Button>
           <UnstyledButton onClick={buttonAction}>Unstyled</UnstyledButton>
+          <IconButton icon="download" size="m" onClick={buttonAction} />
         </Box>
         <HiddenSnippet>{buttonSnippet}</HiddenSnippet>
       </>

@@ -2,6 +2,7 @@
 export { default as Accordion } from "./components/Accordion";
 export { default as Alert } from "./components/Alert";
 export { default as Animated } from "./components/Animated";
+export { default as Avatar } from "./components/Avatar";
 export { default as Badge } from "./components/Badge";
 export { default as Banner } from "./components/Banner";
 export { default as Box } from "./components/Box";
@@ -17,6 +18,7 @@ export * from "./components/Input";
 export { default as Layer } from "./components/Layer";
 export { default as Link } from "./components/Link";
 export * from "./components/Link";
+export { default as Modal } from "./components/Modal";
 export { default as Select } from "./components/Select";
 export { default as Spinner } from "./components/Spinner";
 // Hooks
