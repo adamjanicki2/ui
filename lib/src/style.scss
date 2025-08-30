@@ -451,6 +451,15 @@
   padding: 0;
 }
 
+/* Popover */
+.aui-popover {
+  background-color: var(--aui-default-background);
+  border: 1px solid var(--aui-default-border);
+  box-shadow: var(--aui-floating-box-shadow);
+  border-radius: var(--aui-rounded-radius);
+  z-index: 100;
+}
+
 //////////////////////////////
 // Main layout styles begin //
 //////////////////////////////

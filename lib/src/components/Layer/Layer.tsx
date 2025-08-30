@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useFocusTrap, useScrollLock } from "../../hooks";
 import classNames from "../../functions/classNames";
 import Box, { type BoxProps } from "../Box/Box";
+import useMergeRefs from "../../hooks/useMergeRefs";
 
 type Props = Omit<BoxProps, "children"> & {
   /**
@@ -62,6 +63,8 @@ const Layer = React.forwardRef<HTMLDivElement, Props>(
       };
     }, [onClose, returnFocusOnEscape]);
 
+    const mergedRef = useMergeRefs(focusRef, children.props.ref);
+
     return (
       <Box
         layout={{ axis: "y", align: "center", justify: "center", ...layout }}
@@ -74,7 +77,7 @@ const Layer = React.forwardRef<HTMLDivElement, Props>(
         ref={ref}
       >
         {React.cloneElement(children, {
-          ref: focusRef,
+          ref: mergedRef,
           onMouseDown: (e: React.SyntheticEvent) => {
             e.stopPropagation();
             children.props?.onMouseDown?.(e);
