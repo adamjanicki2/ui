@@ -24,16 +24,11 @@ type Props = {
    * @default "click"
    */
   mouseEvent?: keyof typeof mouseEvents;
-  /**
-   * Additional elements to ignore
-   */
-  ignoreElements?: (HTMLElement | null)[];
 };
 
 const ClickOutside = ({
   children,
   onClickOutside,
-  ignoreElements = [],
   mouseEvent = "click",
 }: Props): React.JSX.Element => {
   const ref = useRef<Element | null>(null);
@@ -60,17 +55,16 @@ const ClickOutside = ({
 
       if (!startedRef.current || !childElement || clickedWithinChild) return;
 
-      const isInside = isClickInsideElements(
-        event,
-        childElement,
-        ...ignoreElements
-      );
+      const path = event.composedPath?.() || [];
+      const isInside =
+        path.includes(childElement) ||
+        childElement.contains(event.target as Node);
 
       if (!isInside) {
         onClickOutside(event);
       }
     },
-    [onClickOutside, ignoreElements]
+    [onClickOutside]
   );
 
   useEffect(() => {
@@ -91,16 +85,5 @@ const ClickOutside = ({
     },
   });
 };
-
-function isClickInsideElements(
-  event: MouseEvent,
-  ...elements: (HTMLElement | Element | null)[]
-) {
-  const path = event.composedPath?.() || [];
-
-  return elements.some(
-    (el) => el && (path.includes(el) || el.contains(event.target as Node))
-  );
-}
 
 export default ClickOutside;
