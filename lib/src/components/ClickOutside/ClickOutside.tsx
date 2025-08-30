@@ -1,4 +1,11 @@
 import React, { cloneElement, useCallback, useEffect, useRef } from "react";
+import useMergeRefs from "../../hooks/useMergeRefs";
+
+const mouseEvents = {
+  click: "onClick",
+  mousedown: "onMouseDown",
+  mouseup: "onMouseUp",
+} as const;
 
 type Props = {
   /**
@@ -12,11 +19,17 @@ type Props = {
    * @param event - The mouse event object
    */
   onClickOutside: (event: MouseEvent) => void;
+  /**
+   * The mouse event to trigger on
+   * @default "click"
+   */
+  mouseEvent?: keyof typeof mouseEvents;
 };
 
 const ClickOutside = ({
   children,
   onClickOutside,
+  mouseEvent = "click",
 }: Props): React.JSX.Element => {
   const ref = useRef<Element | null>(null);
   const clickWithinChildRef = useRef(false);
@@ -38,9 +51,16 @@ const ClickOutside = ({
       const clickedWithinChild = clickWithinChildRef.current;
       clickWithinChildRef.current = false;
 
-      if (!startedRef.current || !ref.current || clickedWithinChild) return;
+      const childElement = ref.current;
 
-      if (!event.composedPath().includes(ref.current)) {
+      if (!startedRef.current || !childElement || clickedWithinChild) return;
+
+      const path = event.composedPath?.() || [];
+      const isInside =
+        path.includes(childElement) ||
+        childElement.contains(event.target as Node);
+
+      if (!isInside) {
         onClickOutside(event);
       }
     },
@@ -48,17 +68,20 @@ const ClickOutside = ({
   );
 
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [handleClickOutside]);
+    document.addEventListener(mouseEvent, handleClickOutside);
+    return () => document.removeEventListener(mouseEvent, handleClickOutside);
+  }, [handleClickOutside, mouseEvent]);
+
+  const mergedRef = useMergeRefs(ref, children.props.ref);
+  const mouseEventPropName = mouseEvents[mouseEvent];
 
   return cloneElement(children, {
-    ref,
-    onClick: (event: React.SyntheticEvent) => {
+    ref: mergedRef,
+    [mouseEventPropName]: (event: React.SyntheticEvent) => {
       // point of this is to let us know that click originated
       // from the child element, so we can ignore it
       clickWithinChildRef.current = true;
-      children.props?.onClick?.(event);
+      children.props?.[mouseEventPropName]?.(event);
     },
   });
 };
