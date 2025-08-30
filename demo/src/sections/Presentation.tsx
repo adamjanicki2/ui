@@ -97,8 +97,8 @@ export default function Presentation() {
           </Button>
           <Animated
             keepMounted
-            duration={0.8}
-            animated={animatedOpen}
+            duration={1}
+            visible={animatedOpen}
             animateTo={{
               style: { opacity: 1, transform: "rotate(0)" },
             }}

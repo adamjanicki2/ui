@@ -55,7 +55,7 @@ export const animatedSnippet = `
 <Animated
   keepMounted
   duration={0.8}
-  animated={animatedOpen}
+  visible={animatedOpen}
   animateTo={{
     style: { opacity: 1, transform: "rotate(0)" },
   }}

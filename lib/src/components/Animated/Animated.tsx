@@ -5,15 +5,26 @@ import Box, { type BoxProps } from "../Box/Box";
 
 type Props = BoxProps & {
   /**
-   * Whether to begin the animation.
+   * Whether to begin the animation and render the component.
    * Set to true to start animation, false to start the exit animation.
    */
-  animated: boolean;
+  visible: boolean;
   /**
    * Duration of the animation in seconds
    * @default 0.25
    */
-  duration?: number;
+  duration?:
+    | number
+    | {
+        /**
+         * Length of the forward direction
+         */
+        forward: number;
+        /**
+         * Length of the reverse direction
+         */
+        reverse: number;
+      };
   /**
    * Whether to keep the component mounted when it is not animated
    * @default false
@@ -42,13 +53,21 @@ type Props = BoxProps & {
      */
     style?: Style;
   };
+  /**
+   * The properties to apply a transition
+   * @default ['all']
+   */
+  transitionProperties?: string[];
 };
+
+type Phase = "from" | "forward" | "reverse";
 
 const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
-    animated,
+    visible,
     duration = 0.25,
     keepMounted = false,
+    transitionProperties = ["all"],
     animateTo,
     animateFrom,
     className,
@@ -56,8 +75,15 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     ...rest
   } = props;
 
-  const [shouldRender, setShouldRender] = useState(animated || keepMounted);
-  const [isAnimatingForward, setIsAnimatingForward] = useState(false);
+  const forwardDuration =
+    typeof duration === "number" ? duration : duration.forward;
+  const reverseDuration =
+    typeof duration === "number" ? duration : duration.reverse;
+
+  const instantForward = forwardDuration <= 0;
+  const instantReverse = reverseDuration <= 0;
+
+  const [phase, setPhase] = useState<Phase>("from");
 
   const timeoutRef = useRef<number | null>(null);
   const animationFrameRef = useRef<number | null>(null);
@@ -75,45 +101,53 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   };
 
   useEffect(() => {
-    // initiate forward animation
-    if (animated && shouldRender) {
-      clearRefs();
-      animationFrameRef.current = requestAnimationFrame(() =>
-        setIsAnimatingForward(true)
-      );
-    }
+    clearRefs();
 
-    return clearRefs;
-  }, [animated, shouldRender]);
-
-  useEffect(() => {
-    // make container element appear on DOM
-    if (animated) {
-      setShouldRender(true);
-    }
-    // initiate reverse animation
-    else {
-      clearRefs();
-      setIsAnimatingForward(false);
-      timeoutRef.current = window.setTimeout(() => {
-        if (!keepMounted) {
-          setShouldRender(false);
+    if (visible) {
+      if (phase !== "forward") {
+        if (instantForward) {
+          setPhase("forward");
+        } else {
+          animationFrameRef.current = requestAnimationFrame(() =>
+            setPhase("forward")
+          );
         }
-      }, duration * 1000);
+      }
+    } else if (phase !== "from") {
+      if (instantReverse) {
+        setPhase("from");
+      } else if (phase !== "reverse") {
+        setPhase("reverse");
+      } else if (phase === "reverse") {
+        timeoutRef.current = window.setTimeout(
+          () => setPhase("from"),
+          reverseDuration * 1000
+        );
+      }
     }
 
     return clearRefs;
-  }, [animated, duration, keepMounted]);
+  }, [visible, phase, instantForward, instantReverse, reverseDuration]);
 
-  if (!shouldRender) return null;
+  if (phase === "from" && !keepMounted && !visible) return null;
 
-  const currentAnimation = isAnimatingForward ? animateTo : animateFrom;
+  const currentAnimation =
+    phase === "forward" || (visible && instantForward)
+      ? animateTo
+      : animateFrom;
+
+  let transition: string | undefined = undefined;
+  if (phase === "forward" && !instantForward) {
+    transition = makeTransition(transitionProperties, forwardDuration);
+  } else if (phase === "reverse" && !instantReverse) {
+    transition = makeTransition(transitionProperties, reverseDuration);
+  }
 
   return (
     <Box
       className={classNames(className, currentAnimation?.className)}
       style={{
-        transition: `all ${duration}s ease-in-out`,
+        transition,
         ...style,
         ...currentAnimation?.style,
       }}
@@ -122,5 +156,12 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     />
   );
 });
+
+const makeTransition = (transitionProperties: string[], duration: number) =>
+  transitionProperties.length > 0
+    ? transitionProperties
+        .map((prop) => `${prop} ${duration}s ease-in-out`)
+        .join(", ")
+    : undefined;
 
 export default Animated;
