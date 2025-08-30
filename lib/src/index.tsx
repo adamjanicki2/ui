@@ -19,8 +19,6 @@ export { default as Layer } from "./components/Layer";
 export { default as Link } from "./components/Link";
 export * from "./components/Link";
 export { default as Modal } from "./components/Modal";
-export { default as Popover } from "./components/Popover";
-export * from "./components/Popover";
 export { default as Select } from "./components/Select";
 export { default as Spinner } from "./components/Spinner";
 // Hooks
