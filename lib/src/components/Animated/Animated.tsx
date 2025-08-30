@@ -53,8 +53,9 @@ type Props = BoxProps & {
      */
     style?: Style;
   };
-  debug?: true;
 };
+
+type Phase = "from" | "forward" | "reverse";
 
 const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
@@ -65,22 +66,18 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     animateFrom,
     className,
     style,
-    debug,
     ...rest
   } = props;
 
-  let forwardDuration: number;
-  let reverseDuration: number;
-  if (typeof duration === "number") {
-    forwardDuration = duration;
-    reverseDuration = duration;
-  } else {
-    forwardDuration = duration.forward;
-    reverseDuration = duration.reverse;
-  }
+  const forwardDuration =
+    typeof duration === "number" ? duration : duration.forward;
+  const reverseDuration =
+    typeof duration === "number" ? duration : duration.reverse;
 
-  const [shouldRender, setShouldRender] = useState(visible || keepMounted);
-  const [isAnimatingForward, setIsAnimatingForward] = useState(visible);
+  const instantForward = forwardDuration <= 0;
+  const instantReverse = reverseDuration <= 0;
+
+  const [phase, setPhase] = useState<Phase>("from");
 
   const timeoutRef = useRef<number | null>(null);
   const animationFrameRef = useRef<number | null>(null);
@@ -101,29 +98,44 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     clearRefs();
 
     if (visible) {
-      setShouldRender(true);
-      animationFrameRef.current = requestAnimationFrame(() =>
-        setIsAnimatingForward(true)
-      );
-    } else {
-      setIsAnimatingForward(false);
-      timeoutRef.current = window.setTimeout(() => {
-        if (!keepMounted) {
-          setShouldRender(false);
+      if (phase !== "forward") {
+        if (instantForward) {
+          setPhase("forward");
+        } else {
+          animationFrameRef.current = requestAnimationFrame(() =>
+            setPhase("forward")
+          );
         }
-      }, reverseDuration * 1000);
+      }
+    } else if (phase !== "from") {
+      if (instantReverse) {
+        setPhase("from");
+      } else if (phase !== "reverse") {
+        setPhase("reverse");
+      } else if (phase === "reverse") {
+        timeoutRef.current = window.setTimeout(
+          () => setPhase("from"),
+          reverseDuration * 1000
+        );
+      }
     }
-  }, [visible, keepMounted, reverseDuration]);
 
-  if (debug) console.log({ visible, shouldRender, isAnimatingForward });
+    return clearRefs;
+  }, [visible, phase, instantForward, instantReverse, reverseDuration]);
 
-  if (!shouldRender) return null;
+  if (phase === "from" && !keepMounted && !visible) return null;
 
-  const transition = `all ${
-    isAnimatingForward ? forwardDuration : reverseDuration
-  }s ease-in-out`;
+  const currentAnimation =
+    phase === "forward" || (visible && instantForward)
+      ? animateTo
+      : animateFrom;
 
-  const currentAnimation = isAnimatingForward ? animateTo : animateFrom;
+  let transition: string | undefined = undefined;
+  if (phase === "forward" && !instantForward) {
+    transition = `all ${forwardDuration}s ease-in-out`;
+  } else if (phase === "reverse" && !instantReverse) {
+    transition = `all ${reverseDuration}s ease-in-out`;
+  }
 
   return (
     <Box
