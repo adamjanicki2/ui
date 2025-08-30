@@ -53,6 +53,11 @@ type Props = BoxProps & {
      */
     style?: Style;
   };
+  /**
+   * The properties to apply a transition
+   * @default ['all']
+   */
+  transitionProperties?: string[];
 };
 
 type Phase = "from" | "forward" | "reverse";
@@ -62,6 +67,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     visible,
     duration = 0.25,
     keepMounted = false,
+    transitionProperties = ["all"],
     animateTo,
     animateFrom,
     className,
@@ -132,9 +138,9 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   let transition: string | undefined = undefined;
   if (phase === "forward" && !instantForward) {
-    transition = `all ${forwardDuration}s ease-in-out`;
+    transition = makeTransition(transitionProperties, forwardDuration);
   } else if (phase === "reverse" && !instantReverse) {
-    transition = `all ${reverseDuration}s ease-in-out`;
+    transition = makeTransition(transitionProperties, reverseDuration);
   }
 
   return (
@@ -150,5 +156,12 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     />
   );
 });
+
+const makeTransition = (transitionProperties: string[], duration: number) =>
+  transitionProperties.length > 0
+    ? transitionProperties
+        .map((prop) => `${prop} ${duration}s ease-in-out`)
+        .join(", ")
+    : undefined;
 
 export default Animated;
