@@ -21,6 +21,7 @@ export * from "./components/Link";
 export { default as Modal } from "./components/Modal";
 export { default as Select } from "./components/Select";
 export { default as Spinner } from "./components/Spinner";
+export { default as ui } from "./components/ui";
 // Hooks
 export * from "./hooks";
 // Functions

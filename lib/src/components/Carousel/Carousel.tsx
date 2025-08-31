@@ -169,8 +169,9 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
             {!hideArrows && (
               <>
                 <Button
+                  layout={{ axis: "x", align: "center", justify: "center" }}
                   className={classNames(
-                    "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow",
+                    "aui-carousel-arrow",
                     leftArrowProps?.className
                   )}
                   style={{ left: 8, ...leftArrowProps?.style }}
@@ -187,8 +188,9 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                   )}
                 </Button>
                 <Button
+                  layout={{ axis: "x", align: "center", justify: "center" }}
                   className={classNames(
-                    "aui-flex-x aui-align-center aui-justify-center aui-carousel-arrow",
+                    "aui-carousel-arrow",
                     rightArrowProps?.className
                   )}
                   style={{ right: 8, ...rightArrowProps?.style }}
