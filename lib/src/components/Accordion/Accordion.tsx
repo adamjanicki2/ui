@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
 import { UnstyledButton } from "../Button";
@@ -22,39 +22,23 @@ type Props = Omit<BoxProps, "children"> & {
 };
 
 const Accordion = React.forwardRef<HTMLDivElement, Props>(
-  ({ drawers, className, duration, hideDividers, layout, ...rest }, ref) => {
-    const [openIndices, setOpenIndices] = useState<Set<number>>(new Set());
-
-    return (
-      <Box
-        layout={{ axis: "y", ...layout }}
-        {...rest}
-        className={classNames("aui-accordion aui-corners--rounded", className)}
-        ref={ref}
-      >
-        {drawers.map((item, i) => (
-          <Drawer
-            key={i}
-            item={item}
-            open={openIndices.has(i)}
-            onOpenChange={(open) =>
-              setOpenIndices((prev) => {
-                const next = new Set(prev);
-                if (open) {
-                  next.add(i);
-                } else {
-                  next.delete(i);
-                }
-                return next;
-              })
-            }
-            duration={duration}
-            showDivider={!hideDividers && i < drawers.length - 1}
-          />
-        ))}
-      </Box>
-    );
-  }
+  ({ drawers, className, duration, hideDividers, layout, ...rest }, ref) => (
+    <Box
+      layout={{ axis: "y", ...layout }}
+      {...rest}
+      className={classNames("aui-accordion aui-corners--rounded", className)}
+      ref={ref}
+    >
+      {drawers.map((item, i) => (
+        <Drawer
+          key={i}
+          item={item}
+          duration={duration}
+          showDivider={!hideDividers && i < drawers.length - 1}
+        />
+      ))}
+    </Box>
+  )
 );
 
 type Drawer = {
@@ -66,26 +50,26 @@ type Drawer = {
    * Content hidden within this accordion drawer
    */
   content: React.ReactNode;
+  /**
+   * Whether the drawer is open
+   */
+  open: boolean;
+  /**
+   * Callback that fires when the open state changes for this drawer
+   */
+  onOpenChange: (open: boolean) => void;
 };
 
 type DrawerProps = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
   item: Drawer;
   duration?: number;
   showDivider: boolean;
 };
-const Drawer = ({
-  item,
-  open,
-  onOpenChange,
-  duration,
-  showDivider,
-}: DrawerProps) => {
+const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
   const boxRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState<number>();
 
-  const children = item.content;
+  const { content: children, open, onOpenChange } = item;
 
   useEffect(() => {
     if (open && children && boxRef.current) {
