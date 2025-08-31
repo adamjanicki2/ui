@@ -45,7 +45,7 @@ export type Props = {
    */
   style?: Style;
   /**
-   * [Optional] round corners of the bars
+   * [Optional] round borders of the bars
    */
   rounded?: boolean;
 };

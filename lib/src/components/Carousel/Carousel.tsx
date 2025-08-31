@@ -169,13 +169,17 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
             {!hideArrows && (
               <>
                 <Button
-                  fx={{ axis: "x", align: "center", justify: "center" }}
+                  fx={{
+                    axis: "x",
+                    align: "center",
+                    justify: "center",
+                    radius: "max",
+                  }}
                   className={classNames(
                     "aui-carousel-arrow",
                     leftArrowProps?.className
                   )}
                   style={{ left: 8, ...leftArrowProps?.style }}
-                  corners="pill"
                   aria-label="previous"
                   onClick={() => startTransition(-1)}
                 >
@@ -188,13 +192,17 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                   )}
                 </Button>
                 <Button
-                  fx={{ axis: "x", align: "center", justify: "center" }}
+                  fx={{
+                    axis: "x",
+                    align: "center",
+                    justify: "center",
+                    radius: "max",
+                  }}
                   className={classNames(
                     "aui-carousel-arrow",
                     rightArrowProps?.className
                   )}
                   style={{ right: 8, ...rightArrowProps?.style }}
-                  corners="pill"
                   aria-label="next"
                   onClick={() => startTransition(1)}
                 >
@@ -220,7 +228,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                       "aui-carousel-dot",
                       dotProps?.className
                     )}
-                    corners="pill"
+                    fx={{ radius: "max" }}
                     disabled={cur === i || animating}
                     onClick={() => startTransition(i - cur)}
                     style={dotProps?.style}

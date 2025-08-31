@@ -184,15 +184,14 @@ export const spinnerSnippet = `
 `;
 
 export const avatarSnippet = `
-<Avatar username="A" corners="pill" size="m" />
-<Avatar username="B" corners="pill" size="m" />
-<Avatar username="C" corners="pill" size="m" />
-<Avatar username="D" corners="pill" size="m" />
-<Avatar username="E" corners="pill" size="m" />
+<Avatar username="A" size="m" />
+<Avatar username="B" size="m" />
+<Avatar username="C" size="m" />
+<Avatar username="D" size="m" />
+<Avatar username="E" size="m" />
 <Avatar
   backgroundImage="https://adamjanicki.xyz/images/logo512.png"
   username="A"
-  corners="sharp"
   size="m"
 />`;
 

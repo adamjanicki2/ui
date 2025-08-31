@@ -1,24 +1,15 @@
 import classNames from "../../functions/classNames";
-import type { Style } from "../../utils/types";
+import ui from "../ui";
 
-type Props = {
-  /**
-   * [Optional] Additional class names to apply to the spinner.
-   */
-  className?: string;
-  /**
-   * [Optional] Additional styles to apply to the spinner.
-   */
-  style?: Style;
-};
+type Props = Omit<React.ComponentProps<typeof ui.svg>, "children" | "viewBox">;
 
 const Spinner = ({ className, ...props }: Props) => (
   // Designed on 2023-08-18
   <svg
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
     viewBox="0 0 512 512"
     className={classNames("aui-spinner", className)}
-    {...props}
   >
     <path
       fill="currentColor"

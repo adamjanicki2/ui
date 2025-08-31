@@ -48,6 +48,8 @@ export default function transformFx(fx: Fx | undefined): string | null {
     marginX,
     marginY,
 
+    radius,
+
     ...rest
   } = fx;
 
@@ -82,6 +84,10 @@ export default function transformFx(fx: Fx | undefined): string | null {
       className = classNames(className, `aui-${prefix}-${value}`);
     }
   });
+
+  if (radius) {
+    className = classNames(className, `aui-br-${radius}`);
+  }
 
   const dimensionProps = ["width", "height", "maxWidth", "maxHeight"] as const;
   dimensionProps.forEach((prop) => {

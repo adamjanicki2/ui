@@ -24,9 +24,9 @@ type Props = Omit<BoxProps, "children"> & {
 const Accordion = React.forwardRef<HTMLDivElement, Props>(
   ({ drawers, className, duration, hideDividers, fx, ...rest }, ref) => (
     <Box
-      fx={{ axis: "y", ...fx }}
+      fx={{ axis: "y", radius: "rounded", ...fx }}
       {...rest}
-      className={classNames("aui-accordion aui-corners--rounded", className)}
+      className={classNames("aui-accordion", className)}
       ref={ref}
     >
       {drawers.map((item, i) => (

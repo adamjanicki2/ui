@@ -1,13 +1,11 @@
 import React from "react";
 import classNames from "../../functions/classNames";
-import type { CornerType } from "../../utils/types";
-import Box from "../Box";
+import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
+import ui from "../ui";
 
-type Props = React.DetailedHTMLProps<
-  React.SelectHTMLAttributes<HTMLSelectElement>,
-  HTMLSelectElement
-> & {
+type SelectProps = React.ComponentProps<typeof ui.select>;
+type Props = Omit<BoxProps, "children"> & {
   /**
    * Array of options to display in the select
    */
@@ -20,50 +18,39 @@ type Props = React.DetailedHTMLProps<
    */
   getOptionLabel?: (option: string) => string;
   /**
-   * [Optional] The corner style of the select element.
-   * @default "rounded"
+   * Props to pass to the underlying select element
    */
-  corners?: CornerType;
+  selectProps?: SelectProps;
 };
 
 const Select = React.forwardRef<HTMLSelectElement, Props>(
-  (
-    {
-      className,
-      options,
-      getOptionLabel,
-      corners = "rounded",
-      style,
-      disabled,
-      ...props
-    },
-    ref
-  ) => (
-    <Box
-      fx={{ axis: "x", align: "center" }}
-      className={classNames(
-        "aui-select-container",
-        `aui-corners--${corners}`,
-        disabled ? "aui-select-disabled" : undefined,
-        className
-      )}
-      style={style}
-    >
-      <select
-        {...props}
-        ref={ref}
-        className={`aui-select aui-corners--${corners}`}
-        disabled={disabled}
+  ({ className, options, fx, getOptionLabel, selectProps, ...rest }, ref) => {
+    const { className: selectClassName } = selectProps || {};
+    return (
+      <Box
+        fx={{ axis: "x", align: "center", radius: "rounded", ...fx }}
+        className={classNames(
+          "aui-select-container",
+          selectProps?.disabled ? "aui-select-disabled" : undefined,
+          className
+        )}
+        {...rest}
       >
-        {options.map((option, index) => (
-          <option key={index} value={option}>
-            {getOptionLabel?.(option) || option}
-          </option>
-        ))}
-      </select>
-      <Icon icon="chevron-down" className="aui-select-icon" aria-hidden />
-    </Box>
-  )
+        <ui.select
+          {...selectProps}
+          className={classNames("aui-select", selectClassName)}
+          ref={ref}
+        >
+          {options.map((option, index) => (
+            <option key={index} value={option}>
+              {getOptionLabel?.(option) || option}
+            </option>
+          ))}
+        </ui.select>
+        <Icon icon="chevron-down" className="aui-select-icon" aria-hidden />
+      </Box>
+    );
+  }
 );
 
 export default Select;
