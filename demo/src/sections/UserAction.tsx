@@ -21,6 +21,7 @@ import {
   Select,
   TextArea,
   Icon,
+  ui,
 } from "@adamjanicki/ui";
 
 export default function UserAction() {
@@ -30,7 +31,7 @@ export default function UserAction() {
   const buttonAction = () => window.alert("You clicked me!");
 
   return (
-    <section id="user-action-section">
+    <ui.section id="user-action-section">
       <Heading level={1}>User Action</Heading>
       <Para>
         I was trying to think of a good word for this heading; form wouldn't
@@ -124,10 +125,11 @@ export default function UserAction() {
           Perhaps the most important element in this whole library: links. They
           are so crucial to any app, and I always used to have to waste a lot of
           time setting up and overriding annoying default link styles. This link
-          is meant to be <em>extremely</em> customizable: you can override the
-          underlying link element from an anchor element <code>{"<a>"}</code> to
-          something more complex, maybe react-router-dom's link element if
-          you're working within a router context.
+          is meant to be <ui.em>extremely</ui.em> customizable: you can override
+          the underlying link element from an anchor element{" "}
+          <ui.code>{"<a>"}</ui.code> to something more complex, maybe
+          react-router-dom's link element if you're working within a router
+          context.
         </Para>
         <Box
           layout={{
@@ -159,8 +161,8 @@ export default function UserAction() {
           select element. I've tried to mitigate the differences by manually
           adding a dropdown arrow and hiding the native dropdown, but it's not
           perfect because this means I had to wrap the select element in an
-          extra <code>div</code> container to store the select itself and the
-          arrow.
+          extra <ui.code>div</ui.code> container to store the select itself and
+          the arrow.
         </Para>
         <Box
           layout={{
@@ -193,6 +195,6 @@ export default function UserAction() {
         </Box>
         <HiddenSnippet>{selectSnippet}</HiddenSnippet>
       </>
-    </section>
+    </ui.section>
   );
 }

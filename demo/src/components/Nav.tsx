@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "src/components/nav.css";
-import { Link, UnstyledLink, Hamburger, Box } from "@adamjanicki/ui";
-import Logo from "src/images/logo.svg?react";
+import { Link, UnstyledLink, Hamburger, Box, ui, Icon } from "@adamjanicki/ui";
 
 type NavlinkProps = {
   to: string;
@@ -13,35 +12,46 @@ const Nav = () => {
   const closeMenu = () => setOpen(false);
 
   const Navlink = (props: NavlinkProps) => (
-    <li className="navlink-li">
+    <ui.li className="navlink-li">
       <Link className="navlink" onClick={closeMenu} {...props} />
-    </li>
+    </ui.li>
   );
 
   return (
-    <nav className="flex items-center justify-between w-100 nav pv2 ph4">
+    <ui.nav
+      layout={{
+        axis: "x",
+        align: "center",
+        justify: "between",
+        width: "full",
+        paddingY: "s",
+        paddingX: "l",
+      }}
+      className="nav"
+    >
       <Box
         layout={{ axis: "x", align: "center", justify: "between" }}
         className="bar-container"
       >
         <UnstyledLink className="nav-title" to="#welcome">
-          <span className="desktop">@adamjanicki/ui</span>
-          <Logo style={{ height: 32 }} className="mobile" />
+          <Box className="desktop">@adamjanicki/ui</Box>
+          <Icon icon="architect" size="l" className="mobile" />
         </UnstyledLink>
         <Box className="mobile">
           <Hamburger open={open} onClick={() => setOpen(!open)} />
         </Box>
       </Box>
-      <ul
-        className="flex items-center desktop link-container ma0"
+      <ui.ul
+        layout={{ axis: "x", align: "center", margin: "none" }}
+        className="desktop link-container"
         style={{ display: open ? "flex" : undefined }}
       >
         <Navlink to="#presentation">Presentation</Navlink>
         <Navlink to="#signals">Signals</Navlink>
         <Navlink to="#user-action">User Action</Navlink>
         <Navlink to="#miscellaneous">Miscellaneous</Navlink>
-      </ul>
-    </nav>
+      </ui.ul>
+    </ui.nav>
   );
 };
 

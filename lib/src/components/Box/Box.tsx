@@ -1,31 +1,7 @@
 import React from "react";
-import type { Layout, Children } from "../../utils/types";
-import { classNames } from "../../functions";
-import transformLayout from "../../utils/transformLayout";
+import ui from "../ui";
 
-type Props = Omit<
-  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-  "children"
-> & {
-  /**
-   * Children to render inside the box
-   */
-  children?: Children;
-  /**
-   * The organization of the container and its children.
-   */
-  layout?: Layout;
-};
+const Box = ui.div;
+export type BoxProps = React.ComponentProps<typeof Box>;
 
-const Box = React.forwardRef<HTMLDivElement, Props>(
-  ({ layout, className, ...rest }, ref) => (
-    <div
-      {...rest}
-      className={classNames(transformLayout(layout), className)}
-      ref={ref}
-    />
-  )
-);
-
-export type { Props as BoxProps };
 export default Box;

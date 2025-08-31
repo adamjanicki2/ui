@@ -8,6 +8,7 @@ export default function HiddenSnippet(props: Props) {
     <>
       <Box layout={{ axis: "x", justify: "end", width: "full" }}>
         <Button
+          layout={{ marginY: "s" }}
           className="mv2"
           onClick={() => setShow(!show)}
           variant="secondary"
@@ -17,8 +18,7 @@ export default function HiddenSnippet(props: Props) {
         </Button>
       </Box>
       <Animated
-        layout={{ axis: "x", justify: "center" }}
-        className="w-100"
+        layout={{ axis: "x", justify: "center", width: "full" }}
         visible={show}
         animateTo={{ style: { opacity: 1 } }}
         animateFrom={{ style: { opacity: 0 } }}

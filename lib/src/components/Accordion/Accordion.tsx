@@ -90,7 +90,7 @@ const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
               icon={open ? "chevron-down" : "chevron-right"}
               className="aui-accordion-arrow"
             />
-            <span className="aui-accordion-label">{item.label}</span>
+            <Box className="aui-accordion-label">{item.label}</Box>
           </Box>
         </UnstyledButton>
         <Animated

@@ -1,4 +1,4 @@
-import { Link, Select } from "@adamjanicki/ui";
+import { Link, Select, ui } from "@adamjanicki/ui";
 import { useTheme, type Theme } from "src/hooks/useTheme";
 
 const labels = {
@@ -9,14 +9,17 @@ const labels = {
 const Footer = () => {
   const { theme, setTheme } = useTheme();
   return (
-    <footer className="pv5 flex flex-column bt b--moon-gray bw1 items-center justify-center w-100">
+    <ui.footer
+      layout={{ axis: "y", align: "center", justify: "center", width: "full" }}
+      className="pv5 bt b--moon-gray bw1"
+    >
       <Select
         options={["light", "dark"]}
         value={theme}
         onChange={(e) => setTheme(e.target.value as Theme)}
         getOptionLabel={(option) => labels[option as Theme]}
       />
-      <p className="fw5 f5">
+      <ui.p className="fw5 f5">
         Est. 2024 Built from scratch by{" "}
         <Link
           target="_blank"
@@ -26,8 +29,8 @@ const Footer = () => {
         >
           Adam
         </Link>
-      </p>
-    </footer>
+      </ui.p>
+    </ui.footer>
   );
 };
 

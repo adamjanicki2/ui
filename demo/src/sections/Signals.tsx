@@ -2,11 +2,11 @@ import Heading from "src/components/Heading";
 import Para from "src/components/Para";
 import HiddenSnippet from "src/components/HiddenSnippet";
 import { alertSnippet, badgeSnippet, bannerSnippet } from "src/codeSnippets";
-import { Alert, Badge, Banner, Box } from "@adamjanicki/ui";
+import { Alert, Badge, Banner, Box, ui } from "@adamjanicki/ui";
 
 export default function Signals() {
   return (
-    <section id="signals-section">
+    <ui.section id="signals-section">
       <Heading level={1}>Signals</Heading>
       <Para>
         This section includes all components that involve signaling information
@@ -20,10 +20,11 @@ export default function Signals() {
       <>
         <Heading level={2}>Alert</Heading>
         <Para>
-          Alerts can have different types: <code>static</code>,{" "}
-          <code>info</code>, <code>success</code>, <code>warning</code>, and{" "}
-          <code>error</code>. The content types are also used for the{" "}
-          <code>Badge</code> and <code>Banner</code> components.
+          Alerts can have different types: <ui.code>static</ui.code>,{" "}
+          <ui.code>info</ui.code>, <ui.code>success</ui.code>,{" "}
+          <ui.code>warning</ui.code>, and <ui.code>error</ui.code>. The content
+          types are also used for the <ui.code>Badge</ui.code> and{" "}
+          <ui.code>Banner</ui.code> components.
         </Para>
         <Box layout={{ axis: "y" }}>
           <Alert className="mv1" type="static">
@@ -77,11 +78,11 @@ export default function Signals() {
         <Para>
           Banners are virtually the same as alerts, but are meant for the tops
           of pages and contain more important information. Therefore, they have
-          a default style of <code>width: 100%</code> applied to them.{" "}
-          <em>
+          a default style of <ui.code>width: 100%</ui.code> applied to them.{" "}
+          <ui.em>
             I've taken the liberty of hiding the overflow here, but you get the
             point.
-          </em>
+          </ui.em>
         </Para>
         <Box layout={{ axis: "y", gap: "s", padding: "xs" }}>
           <Banner type="static">This is a static banner</Banner>
@@ -92,6 +93,6 @@ export default function Signals() {
           <HiddenSnippet>{bannerSnippet}</HiddenSnippet>
         </Box>
       </>
-    </section>
+    </ui.section>
   );
 }
