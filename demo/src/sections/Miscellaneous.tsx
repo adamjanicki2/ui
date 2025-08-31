@@ -15,6 +15,7 @@ import {
   Spinner,
   Icon,
   Avatar,
+  ui,
 } from "@adamjanicki/ui";
 import {
   DoubleCross,
@@ -35,7 +36,7 @@ export default function Miscellaneous() {
   const toggleHamburger = () => setHamburgerOpen(!hamburgerOpen);
 
   return (
-    <section id="miscellaneous-section">
+    <ui.section id="miscellaneous-section">
       <Heading level={1}>Miscellaneous</Heading>
       <Para>
         Probably the most fun set of components, although{" "}
@@ -79,9 +80,9 @@ export default function Miscellaneous() {
         <Para>
           I've had a recent fascination with making a custom hamburger button
           after I realized how fun it is to mess around with the{" "}
-          <code>transform</code> css property to create all sorts of different
-          variants of buttons. I've started simple with just 7 different
-          variants, which you can checkout below!
+          <ui.code>transform</ui.code> css property to create all sorts of
+          different variants of buttons. I've started simple with just 7
+          different variants, which you can checkout below!
         </Para>
         <Box
           layout={{
@@ -225,6 +226,6 @@ export default function Miscellaneous() {
         </Box>
         <HiddenSnippet>{avatarSnippet}</HiddenSnippet>
       </>
-    </section>
+    </ui.section>
   );
 }

@@ -19,6 +19,7 @@ import {
   Carousel,
   Layer,
   Modal,
+  ui,
 } from "@adamjanicki/ui";
 
 export default function Presentation() {
@@ -28,7 +29,7 @@ export default function Presentation() {
   const [openDrawers, setOpenDrawers] = useState<Set<number>>(new Set());
 
   return (
-    <section id="layout-section">
+    <ui.section id="layout-section">
       <Heading level={1}>Presentation</Heading>
       <Para>
         Perhaps the most foundational of the sections of components within my
@@ -111,10 +112,10 @@ export default function Presentation() {
         <Heading level={2}>Box</Heading>
         <Para>
           I wanted something to standardize the layouts of my pages instead of
-          having a ton of random <code>div</code>s strewn across the page. But
-          more than that, it makes my code more readable by exposing
-          easier-to-understand props like <code>axis</code> to control the flex
-          direction.
+          having a ton of random <ui.code>div</ui.code>s strewn across the page.
+          But more than that, it makes my code more readable by exposing
+          easier-to-understand props like <ui.code>axis</ui.code> to control the
+          flex direction.
         </Para>
         <Box layout={{ axis: "y" }}>
           <Box
@@ -239,6 +240,6 @@ export default function Presentation() {
           <HiddenSnippet>{modalSnippet}</HiddenSnippet>
         </Box>
       </>
-    </section>
+    </ui.section>
   );
 }

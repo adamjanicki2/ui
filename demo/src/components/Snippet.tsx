@@ -5,7 +5,7 @@ import {
   oneDark as dark,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "src/components/snippet.css";
-import { Badge, Button, Box, Icon } from "@adamjanicki/ui";
+import { Badge, Button, Box, Icon, ui } from "@adamjanicki/ui";
 import { classNames } from "@adamjanicki/ui/functions";
 import { useTheme } from "src/hooks";
 
@@ -42,7 +42,7 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
         }}
         className="bb"
       >
-        <p className="f6 fw5 ma0">{lang}</p>
+        <ui.p className="f6 fw5 ma0">{lang}</ui.p>
         {copied ? (
           <Badge
             layout={{ axis: "x", align: "center", gap: "xs" }}
@@ -64,8 +64,8 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
           </Button>
         )}
       </Box>
-      <pre
-        className="flex w-100 pa2 ma0"
+      <ui.pre
+        layout={{ axis: "x", width: "full", margin: "none", padding: "s" }}
         style={{
           overflow: "scroll",
           maxHeight: "70vh",
@@ -84,7 +84,7 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
         >
           {children}
         </SyntaxHighlighter>
-      </pre>
+      </ui.pre>
     </Box>
   );
 };

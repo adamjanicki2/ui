@@ -1,4 +1,4 @@
-import { Link, Box } from "@adamjanicki/ui";
+import { Link, Box, Icon, ui } from "@adamjanicki/ui";
 import { importCss } from "src/codeSnippets";
 import Header from "src/components/Heading";
 import Para from "src/components/Para";
@@ -7,16 +7,15 @@ import Presentation from "src/sections/Presentation";
 import Signals from "src/sections/Signals";
 import UserAction from "src/sections/UserAction";
 import Miscellaneous from "src/sections/Miscellaneous";
-import Logo from "src/images/logo.svg?react";
 
 const Main = () => (
   <Box className="main-container" layout={{ width: "full" }}>
-    <h1 className="f1 tc">Welcome to my UI library.</h1>
-    <p className="f3 fw5 tc subtitle">
+    <ui.h1 className="f1 tc">Welcome to my UI library.</ui.h1>
+    <ui.p className="f3 fw5 tc subtitle">
       This is a collection of React components that I use across my projects.
-      <br />
+      <ui.br />
       Checkout the docs and examples below to see what's available.
-    </p>
+    </ui.p>
     <Snippet lang="bash">npm install --save @adamjanicki/ui</Snippet>
     <Header level={1}>Setup</Header>
     <Para>
@@ -39,13 +38,13 @@ const Main = () => (
         React Playground
       </Link>{" "}
       to see them in action and play around.
-      <br />
-      <br />
+      <ui.br />
+      <ui.br />
       Thanks,
-      <br />
+      <ui.br />
       Adam
     </Para>
-    <Logo style={{ color: "#0070ff", height: 48 }} />
+    <Icon icon="architect" size="xl" style={{ color: "#0070ff" }} />
   </Box>
 );
 
