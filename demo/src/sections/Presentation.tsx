@@ -25,6 +25,7 @@ export default function Presentation() {
   const [animatedOpen, setAnimatedOpen] = useState(false);
   const [layerOpen, setLayerOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [openDrawers, setOpenDrawers] = useState<Set<number>>(new Set());
 
   return (
     <section id="layout-section">
@@ -50,32 +51,25 @@ export default function Presentation() {
         <Accordion
           className="m-auto"
           style={{ width: "calc(min(100%, 512px))" }}
-          drawers={[
-            {
-              label: "Success",
-              content: (
-                <Box layout={{ padding: "m", paddingTop: "none" }}>
-                  <Alert type="success">We live in a Twilight World.</Alert>
-                </Box>
-              ),
-            },
-            {
-              label: "Info",
-              content: (
-                <Box layout={{ padding: "m", paddingTop: "none" }}>
-                  <Alert type="info">We live in a Twilight World.</Alert>
-                </Box>
-              ),
-            },
-            {
-              label: "Error",
-              content: (
-                <Box layout={{ padding: "m", paddingTop: "none" }}>
-                  <Alert type="error">We live in a Twilight World.</Alert>
-                </Box>
-              ),
-            },
-          ]}
+          drawers={(["success", "info", "error"] as const).map((status, i) => ({
+            label: status,
+            content: (
+              <Box layout={{ padding: "m", paddingTop: "none" }}>
+                <Alert type={status}>We live in a Twilight World.</Alert>
+              </Box>
+            ),
+            open: openDrawers.has(i),
+            onOpenChange: (open) =>
+              setOpenDrawers((prev) => {
+                const next = new Set(prev);
+                if (open) {
+                  next.add(i);
+                } else {
+                  next.delete(i);
+                }
+                return next;
+              }),
+          }))}
         />
         <HiddenSnippet>{accordionSnippet}</HiddenSnippet>
       </>
