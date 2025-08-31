@@ -9,7 +9,7 @@ type Props = Omit<BoxProps, "children"> & {
   /**
    * Drawers to render as accordion sections
    */
-  drawers: Drawer[];
+  drawers: UncontrolledDrawer[] | ControlledDrawer[];
   /**
    * Duration of the drawer animation (in seconds)
    */
@@ -35,19 +35,20 @@ const Accordion = React.forwardRef<HTMLDivElement, Props>(
         {drawers.map((item, i) => (
           <Drawer
             key={i}
-            item={item}
-            open={openIndices.has(i)}
-            onOpenChange={(open) =>
-              setOpenIndices((prev) => {
-                const next = new Set(prev);
-                if (open) {
-                  next.add(i);
-                } else {
-                  next.delete(i);
-                }
-                return next;
-              })
-            }
+            item={{
+              open: openIndices.has(i),
+              onOpenChange: (open) =>
+                setOpenIndices((prev) => {
+                  const next = new Set(prev);
+                  if (open) {
+                    next.add(i);
+                  } else {
+                    next.delete(i);
+                  }
+                  return next;
+                }),
+              ...item,
+            }}
             duration={duration}
             showDivider={!hideDividers && i < drawers.length - 1}
           />
@@ -57,7 +58,7 @@ const Accordion = React.forwardRef<HTMLDivElement, Props>(
   }
 );
 
-type Drawer = {
+type UncontrolledDrawer = {
   /**
    * Label for the accordion drawer
    */
@@ -68,24 +69,27 @@ type Drawer = {
   content: React.ReactNode;
 };
 
-type DrawerProps = {
+type ControlledDrawer = UncontrolledDrawer & {
+  /**
+   * Whether the drawer is open
+   */
   open: boolean;
+  /**
+   * Callback that fires when the open state changes for this drawer
+   */
   onOpenChange: (open: boolean) => void;
-  item: Drawer;
+};
+
+type DrawerProps = {
+  item: ControlledDrawer;
   duration?: number;
   showDivider: boolean;
 };
-const Drawer = ({
-  item,
-  open,
-  onOpenChange,
-  duration,
-  showDivider,
-}: DrawerProps) => {
+const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
   const boxRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState<number>();
 
-  const children = item.content;
+  const { content: children, open, onOpenChange } = item;
 
   useEffect(() => {
     if (open && children && boxRef.current) {
