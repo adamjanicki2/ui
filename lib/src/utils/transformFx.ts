@@ -1,4 +1,4 @@
-import { Layout } from "./types";
+import { Fx } from "./types";
 import { classNames } from "../functions";
 
 // Prefix maps for padding and margin keys
@@ -22,10 +22,8 @@ const dimensionPrefixMap = {
   maxHeight: "mh",
 } as const;
 
-export default function transformLayout(
-  layout: Layout | undefined
-): string | null {
-  if (!layout) return null;
+export default function transformFx(fx: Fx | undefined): string | null {
+  if (!fx) return null;
 
   const {
     axis,
@@ -51,7 +49,7 @@ export default function transformLayout(
     marginY,
 
     ...rest
-  } = layout;
+  } = fx;
 
   let className = axis ? `aui-flex-${axis}` : null;
 

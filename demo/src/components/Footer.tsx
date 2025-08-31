@@ -10,7 +10,7 @@ const Footer = () => {
   const { theme, setTheme } = useTheme();
   return (
     <ui.footer
-      layout={{ axis: "y", align: "center", justify: "center", width: "full" }}
+      fx={{ axis: "y", align: "center", justify: "center", width: "full" }}
       className="pv5 bt b--moon-gray bw1"
     >
       <Select

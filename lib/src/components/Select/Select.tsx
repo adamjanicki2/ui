@@ -40,7 +40,7 @@ const Select = React.forwardRef<HTMLSelectElement, Props>(
     ref
   ) => (
     <Box
-      layout={{ axis: "x", align: "center" }}
+      fx={{ axis: "x", align: "center" }}
       className={classNames(
         "aui-select-container",
         `aui-corners--${corners}`,

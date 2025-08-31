@@ -37,7 +37,7 @@ const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
     ref
   ) => (
     <Box
-      layout={{ axis: "x", align: "center" }}
+      fx={{ axis: "x", align: "center" }}
       className={classNames(
         `aui-input aui-icon-input aui-corners--${corners}`,
         className

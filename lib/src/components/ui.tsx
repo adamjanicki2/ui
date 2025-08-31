@@ -1,25 +1,25 @@
 import React from "react";
-import type { Layout } from "../utils/types";
+import type { Fx } from "../utils/types";
 import { classNames } from "../functions";
-import transformLayout from "../utils/transformLayout";
+import transformFx from "../utils/transformFx";
 
 type HtmlTag = keyof React.JSX.IntrinsicElements;
 
 type Props<T extends HtmlTag> = React.ComponentPropsWithRef<T> & {
   /**
-   * The organization of this element and its children.
+   * The VFX or other organizational css to apply to this element.
    * Properties are translated to class names before being applied.
    */
-  layout?: Layout;
+  fx?: Fx;
 };
 
-function createLayoutElement<T extends HtmlTag>(tag: T) {
+function createFxElement<T extends HtmlTag>(tag: T) {
   const Component = React.forwardRef<React.ComponentRef<T>, Props<T>>(
-    ({ layout, className, ...props }, ref) =>
+    ({ fx, className, ...props }, ref) =>
       React.createElement(tag, {
         ...props,
         ref,
-        className: classNames(transformLayout(layout), className),
+        className: classNames(transformFx(fx), className),
       })
   );
 
@@ -27,7 +27,7 @@ function createLayoutElement<T extends HtmlTag>(tag: T) {
 }
 
 type HtmlTags = {
-  [K in HtmlTag]: ReturnType<typeof createLayoutElement<K>>;
+  [K in HtmlTag]: ReturnType<typeof createFxElement<K>>;
 };
 
 const ui = new Proxy(
@@ -38,7 +38,7 @@ const ui = new Proxy(
       if (cachedComponent) {
         return cachedComponent;
       }
-      const component = createLayoutElement(tag);
+      const component = createFxElement(tag);
       cache[tag] = component;
       return component;
     },

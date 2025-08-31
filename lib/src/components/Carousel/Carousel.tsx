@@ -151,7 +151,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
         ref={ref}
       >
         <Box
-          layout={{
+          fx={{
             axis: delta >= 0 ? "x" : "-x",
             width: "full",
             height: "full",
@@ -169,7 +169,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
             {!hideArrows && (
               <>
                 <Button
-                  layout={{ axis: "x", align: "center", justify: "center" }}
+                  fx={{ axis: "x", align: "center", justify: "center" }}
                   className={classNames(
                     "aui-carousel-arrow",
                     leftArrowProps?.className
@@ -188,7 +188,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                   )}
                 </Button>
                 <Button
-                  layout={{ axis: "x", align: "center", justify: "center" }}
+                  fx={{ axis: "x", align: "center", justify: "center" }}
                   className={classNames(
                     "aui-carousel-arrow",
                     rightArrowProps?.className
@@ -210,7 +210,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
             )}
             {!hideDots && (
               <Box
-                layout={{ axis: "x", align: "center", gap: "xxs" }}
+                fx={{ axis: "x", align: "center", gap: "xxs" }}
                 className="aui-carousel-dots"
               >
                 {children.map((_, i) => (

@@ -22,9 +22,9 @@ type Props = Omit<BoxProps, "children"> & {
 };
 
 const Accordion = React.forwardRef<HTMLDivElement, Props>(
-  ({ drawers, className, duration, hideDividers, layout, ...rest }, ref) => (
+  ({ drawers, className, duration, hideDividers, fx, ...rest }, ref) => (
     <Box
-      layout={{ axis: "y", ...layout }}
+      fx={{ axis: "y", ...fx }}
       {...rest}
       className={classNames("aui-accordion aui-corners--rounded", className)}
       ref={ref}
@@ -82,9 +82,9 @@ const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
 
   return (
     <>
-      <Box layout={{ axis: "y" }}>
+      <Box fx={{ axis: "y" }}>
         <UnstyledButton onClick={() => onOpenChange(!open)}>
-          <Box layout={{ axis: "x", align: "center", gap: "s", padding: "m" }}>
+          <Box fx={{ axis: "x", align: "center", gap: "s", padding: "m" }}>
             <Icon
               size="xs"
               icon={open ? "chevron-down" : "chevron-right"}

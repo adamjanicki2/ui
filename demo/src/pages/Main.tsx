@@ -9,7 +9,7 @@ import UserAction from "src/sections/UserAction";
 import Miscellaneous from "src/sections/Miscellaneous";
 
 const Main = () => (
-  <Box className="main-container" layout={{ width: "full" }}>
+  <Box className="main-container" fx={{ width: "full" }}>
     <ui.h1 className="f1 tc">Welcome to my UI library.</ui.h1>
     <ui.p className="f3 fw5 tc subtitle">
       This is a collection of React components that I use across my projects.

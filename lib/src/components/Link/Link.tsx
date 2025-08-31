@@ -1,8 +1,8 @@
 import React from "react";
 import { getButtonClassName, type VisualButtonProps } from "../Button/Button";
 import classNames from "../../functions/classNames";
-import { Layout } from "../../utils/types";
-import transformLayout from "../../utils/transformLayout";
+import { Fx } from "../../utils/types";
+import transformFx from "../../utils/transformFx";
 
 export type BaseLinkProps = Omit<
   React.DetailedHTMLProps<
@@ -33,17 +33,18 @@ type LinkProps = BaseLinkProps & {
    */
   LinkElement?: CustomLinkElement;
   /**
-   * Additional styles to apply to the layout that are transformed to classNames to be easier to override if needed
+   * The VFX or other organizational css to apply to this element.
+   * Properties are translated to class names before being applied.
    */
-  layout?: Layout;
+  fx?: Fx;
 };
 
 export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ LinkElement, to, className, external, layout, ...rest }, ref) => {
+  ({ LinkElement, to, className, external, fx, ...rest }, ref) => {
     const props = {
       ...(external ? { target: "_blank", rel: "noreferrer noopener" } : {}),
       ...rest,
-      className: classNames("aui-action", transformLayout(layout), className),
+      className: classNames("aui-action", transformFx(fx), className),
     };
 
     if (LinkElement) {
@@ -57,12 +58,12 @@ export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
 export const ButtonLink = React.forwardRef<
   HTMLAnchorElement,
   LinkProps & VisualButtonProps
->(({ className, layout, variant, corners, size, ...props }, ref) => (
+>(({ className, fx, variant, corners, size, ...props }, ref) => (
   <UnstyledLink
     {...props}
     className={classNames(
       getButtonClassName({ variant, corners, size }),
-      transformLayout(layout),
+      transformFx(fx),
       className
     )}
     ref={ref}
@@ -70,10 +71,10 @@ export const ButtonLink = React.forwardRef<
 ));
 
 const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ className, layout, ...props }, ref) => (
+  ({ className, fx, ...props }, ref) => (
     <UnstyledLink
       {...props}
-      className={classNames("aui-link", transformLayout(layout), className)}
+      className={classNames("aui-link", transformFx(fx), className)}
       ref={ref}
     />
   )
