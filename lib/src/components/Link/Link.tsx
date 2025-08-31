@@ -40,7 +40,7 @@ type LinkProps = BaseLinkProps & {
 };
 
 export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ LinkElement, to, className, external, fx, ...rest }, ref) => {
+  ({ LinkElement, to, className, fx, external, ...rest }, ref) => {
     const props = {
       ...(external ? { target: "_blank", rel: "noreferrer noopener" } : {}),
       ...rest,
@@ -58,23 +58,20 @@ export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
 export const ButtonLink = React.forwardRef<
   HTMLAnchorElement,
   LinkProps & VisualButtonProps
->(({ className, fx, variant, corners, size, ...props }, ref) => (
+>(({ className, variant, fx, size, ...props }, ref) => (
   <UnstyledLink
     {...props}
-    className={classNames(
-      getButtonClassName({ variant, corners, size }),
-      transformFx(fx),
-      className
-    )}
+    className={classNames(getButtonClassName({ variant, size }), className)}
+    fx={{ radius: "rounded", ...fx }}
     ref={ref}
   />
 ));
 
 const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ className, fx, ...props }, ref) => (
+  ({ className, ...props }, ref) => (
     <UnstyledLink
       {...props}
-      className={classNames("aui-link", transformFx(fx), className)}
+      className={classNames("aui-link", className)}
       ref={ref}
     />
   )

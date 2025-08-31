@@ -22,10 +22,11 @@
   --aui-default-transition: 0.25s ease-in-out;
   --aui-default-opacity-dim: 0.75;
   --aui-floating-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  /* Corners */
-  --aui-sharp-radius: 0;
-  --aui-rounded-radius: 8px;
-  --aui-pill-radius: 9999px;
+  /* Border radii */
+  --aui-radius-none: 0;
+  --aui-radius-subtle: 4px;
+  --aui-radius-rounded: 8px;
+  --aui-radius-max: 10000px;
   /* Buttons */
   --aui-button-primary-background: black;
   --aui-button-primary-color: white;
@@ -109,19 +110,6 @@
   --aui-link-color: #33bfff;
   /* Select */
   --aui-select-icon: var(--aui-moon-gray);
-}
-
-/* General */
-.aui-corners--rounded {
-  border-radius: var(--aui-rounded-radius);
-}
-
-.aui-corners--pill {
-  border-radius: var(--aui-pill-radius);
-}
-
-.aui-corners--sharp {
-  border-radius: var(--aui-sharp-radius);
 }
 
 .aui-content--success {
@@ -521,13 +509,13 @@ $aui-avatar-color: (
 }
 
 $aui-avatar-size: (
-  xxs: 12px,
-  xs: 16px,
-  s: 24px,
-  m: 32px,
-  l: 48px,
-  xl: 64px,
-  xxl: 128px,
+  "xxs": 12px,
+  "xs": 16px,
+  "s": 24px,
+  "m": 32px,
+  "l": 48px,
+  "xl": 64px,
+  "xxl": 128px,
 );
 
 @each $k, $v in $aui-avatar-size {
@@ -541,13 +529,13 @@ $aui-avatar-size: (
 
 /* Icon sizing */
 $aui-icon-size: (
-  xxs: 8px,
-  xs: 12px,
-  s: 16px,
-  m: 24px,
-  l: 32px,
-  xl: 48px,
-  xxl: 64px,
+  "xxs": 8px,
+  "xs": 12px,
+  "s": 16px,
+  "m": 24px,
+  "l": 32px,
+  "xl": 48px,
+  "xxl": 64px,
 );
 
 @each $k, $v in $aui-icon-size {
@@ -559,14 +547,14 @@ $aui-icon-size: (
 
 /* Shared spacing scale for gap/padding/margin utilities */
 $aui-space: (
-  none: 0,
-  xxs: var(--aui-xxs),
-  xs: var(--aui-xs),
-  s: var(--aui-s),
-  m: var(--aui-m),
-  l: var(--aui-l),
-  xl: var(--aui-xl),
-  xxl: var(--aui-xxl),
+  "none": 0,
+  "xxs": var(--aui-xxs),
+  "xs": var(--aui-xs),
+  "s": var(--aui-s),
+  "m": var(--aui-m),
+  "l": var(--aui-l),
+  "xl": var(--aui-xl),
+  "xxl": var(--aui-xxl),
 );
 
 /* Gap */
@@ -578,11 +566,11 @@ $aui-space: (
 
 /* Padding */
 $aui-padding-props: (
-  pa: padding,
-  pt: padding-top,
-  pb: padding-bottom,
-  pl: padding-left,
-  pr: padding-right,
+  "pa": padding,
+  "pt": padding-top,
+  "pb": padding-bottom,
+  "pl": padding-left,
+  "pr": padding-right,
 );
 @each $prefix, $prop in $aui-padding-props {
   @each $k, $v in $aui-space {
@@ -594,11 +582,11 @@ $aui-padding-props: (
 
 /* Margin */
 $aui-margin-props: (
-  ma: margin,
-  mt: margin-top,
-  mb: margin-bottom,
-  ml: margin-left,
-  mr: margin-right,
+  "ma": margin,
+  "mt": margin-top,
+  "mb": margin-bottom,
+  "ml": margin-left,
+  "mr": margin-right,
 );
 
 /* Auto margin variants (padding never has auto) */
@@ -619,16 +607,16 @@ $aui-margin-props: (
 
 /* Width / Height / Max-Width / Max-Height */
 $aui-dimension-props: (
-  w: width,
-  mw: max-width,
-  h: height,
-  mh: max-height,
+  "w": width,
+  "mw": max-width,
+  "h": height,
+  "mh": max-height,
 );
 $aui-dimension-vals: (
-  full: 100%,
-  fit: fit-content,
-  min: min-content,
-  max: max-content,
+  "full": 100%,
+  "fit": fit-content,
+  "min": min-content,
+  "max": max-content,
 );
 
 @each $short, $prop in $aui-dimension-props {
@@ -636,6 +624,21 @@ $aui-dimension-vals: (
     .aui-#{$short}-#{$name} {
       #{$prop}: $val;
     }
+  }
+}
+
+/* Border radius */
+$aui-border-radius: (
+  "none": var(--aui-radius-none),
+  "subtle": var(--aui-radius-subtle),
+  "rounded": var(--aui-radius-rounded),
+  "max": var(--aui-radius-max),
+);
+
+/* Gap */
+@each $k, $v in $aui-border-radius {
+  .aui-br-#{$k} {
+    border-radius: $v;
   }
 }
 

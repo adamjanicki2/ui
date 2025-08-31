@@ -1,27 +1,16 @@
 import React, { forwardRef } from "react";
-import type { CornerType } from "../../utils/types";
 import classNames from "../../functions/classNames";
+import ui from "../ui";
 
-type TextAreaProps = React.DetailedHTMLProps<
-  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-  HTMLTextAreaElement
-> & {
-  /**
-   * Type of corners on the text area
-   * @default "rounded"
-   */
-  corners?: CornerType;
-};
+type Props = React.ComponentProps<typeof ui.textarea>;
 
-const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ className, rows = 3, corners = "rounded", ...props }, ref) => (
-    <textarea
+const TextArea = forwardRef<HTMLTextAreaElement, Props>(
+  ({ className, rows = 3, fx, ...props }, ref) => (
+    <ui.textarea
       {...props}
       ref={ref}
-      className={classNames(
-        `aui-input-base aui-input aui-corners--${corners}`,
-        className
-      )}
+      className={classNames(`aui-input-base aui-input`, className)}
+      fx={{ radius: "rounded", ...fx }}
       rows={rows}
     />
   )

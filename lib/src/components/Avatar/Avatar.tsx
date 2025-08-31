@@ -1,14 +1,9 @@
 import React, { useState } from "react";
-import type { CornerType, SizeToken, Style } from "../../utils/types";
+import type { SizeToken, Style } from "../../utils/types";
 import Box, { type BoxProps } from "../Box/Box";
 import { classNames } from "../../functions";
 
 type Props = Omit<BoxProps, "children"> & {
-  /**
-   * How to treat the border radius of the avatar
-   * @default "rounded"
-   */
-  corners?: CornerType;
   /**
    * Size of the avatar
    * @default "s"
@@ -27,22 +22,14 @@ type Props = Omit<BoxProps, "children"> & {
 
 const Avatar = React.forwardRef<HTMLDivElement, Props>(
   (
-    {
-      size = "s",
-      backgroundImage,
-      className,
-      style,
-      corners = "rounded",
-      username,
-      ...rest
-    },
+    { size = "s", backgroundImage, className, style, username, fx, ...rest },
     ref
   ) => {
     const [imageError, setImageError] = useState(false);
     const useFallback = imageError || !backgroundImage;
 
     const color = chooseColor(username);
-    let avatarClassName = `aui-avatar aui-corners--${corners}`;
+    let avatarClassName = `aui-avatar`;
 
     if (useFallback) {
       avatarClassName = classNames(avatarClassName, `aui-avatar-${color}`);
@@ -64,6 +51,7 @@ const Avatar = React.forwardRef<HTMLDivElement, Props>(
       <Box
         className={classNames(avatarClassName, className)}
         style={{ ...avatarStyle, ...style }}
+        fx={{ radius: "rounded", ...fx }}
         {...rest}
         ref={ref}
       >

@@ -1,31 +1,18 @@
 import React, { forwardRef } from "react";
-import type { CornerType } from "../../utils/types";
 import classNames from "../../functions/classNames";
+import ui from "../ui";
 
-type Props = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
-> & {
-  /**
-   * Type of corners on the input
-   * @default "rounded"
-   */
-  corners?: CornerType;
-};
+export type Props = React.ComponentProps<typeof ui.input>;
 
 const Input = forwardRef<HTMLInputElement, Props>(
-  ({ className, corners = "rounded", ...props }, ref) => (
-    <input
+  ({ className, fx, ...props }, ref) => (
+    <ui.input
       {...props}
       ref={ref}
-      className={classNames(
-        `aui-input-base aui-input aui-corners--${corners}`,
-        className
-      )}
+      fx={{ radius: "rounded", ...fx }}
+      className={classNames(`aui-input-base aui-input`, className)}
     />
   )
 );
-
-export type InputProps = React.ComponentProps<typeof Input>;
 
 export default Input;

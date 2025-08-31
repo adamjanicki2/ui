@@ -198,7 +198,7 @@ export default function Miscellaneous() {
       <>
         <Heading level={2}>Avatar</Heading>
         <Para>
-          U often find myself remaking a component to render a user's profile
+          I often find myself remaking a component to render a user's profile
           picture or icon in many of my sites. This flexible component allows
           you to configure either a background image, or a letter icon.
         </Para>
@@ -212,15 +212,14 @@ export default function Miscellaneous() {
             marginX: "auto",
           }}
         >
-          <Avatar username="A" corners="pill" size="m" />
-          <Avatar username="B" corners="pill" size="m" />
-          <Avatar username="C" corners="pill" size="m" />
-          <Avatar username="D" corners="pill" size="m" />
-          <Avatar username="E" corners="pill" size="m" />
+          <Avatar username="A" size="m" />
+          <Avatar username="B" size="m" />
+          <Avatar username="C" size="m" />
+          <Avatar username="D" size="m" />
+          <Avatar username="E" size="m" />
           <Avatar
             backgroundImage="https://adamjanicki.xyz/images/logo512.png"
             username="A"
-            corners="sharp"
             size="m"
           />
         </Box>

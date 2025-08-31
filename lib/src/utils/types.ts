@@ -5,10 +5,6 @@ import React from "react";
  */
 export type Children = React.ReactNode | React.ReactNode[];
 /**
- * The type of corner to display, controlling the border radius property.
- */
-export type CornerType = "pill" | "rounded" | "sharp";
-/**
  * The type of message associated with a piece of content.
  */
 export type ContentType = "success" | "warning" | "error" | "info" | "static";
@@ -84,4 +80,7 @@ export type Fx = {
   height?: SizeDimension;
   /** Maximum of the content */
   maxHeight?: SizeDimension;
+
+  /** Border radius of the content */
+  radius?: "none" | "subtle" | "rounded" | "max";
 };

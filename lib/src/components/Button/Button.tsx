@@ -1,7 +1,5 @@
 import React from "react";
-import type { CornerType } from "../../utils/types";
 import classNames from "../../functions/classNames";
-import transformFx from "../../utils/transformFx";
 import Icon, { Props as IconProps } from "../Icon/Icon";
 import ui from "../ui";
 
@@ -14,11 +12,6 @@ export type VisualButtonProps = {
    */
   variant?: "primary" | "secondary";
   /**
-   * Type of corners on the button
-   * @default "rounded"
-   */
-  corners?: CornerType;
-  /**
    * [Optional] Size of the button, if wishing to make smaller
    * @default "regular"
    */
@@ -30,10 +23,10 @@ type ButtonProps = DefaultButtonProps & VisualButtonProps;
 export const UnstyledButton = React.forwardRef<
   HTMLButtonElement,
   DefaultButtonProps
->(({ className, fx, ...props }, ref) => (
-  <button
+>(({ className, ...props }, ref) => (
+  <ui.button
     {...props}
-    className={classNames("aui-action aui-button", transformFx(fx), className)}
+    className={classNames("aui-action aui-button", className)}
     ref={ref}
   />
 ));
@@ -74,14 +67,11 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 );
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, fx, corners, className, size, ...rest }, ref) => (
+  ({ variant, className, fx, size, ...rest }, ref) => (
     <UnstyledButton
       {...rest}
-      className={classNames(
-        getButtonClassName({ variant, corners, size }),
-        transformFx(fx),
-        className
-      )}
+      fx={{ radius: "rounded", ...fx }}
+      className={classNames(getButtonClassName({ variant, size }), className)}
       ref={ref}
     />
   )
@@ -89,9 +79,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
 export const getButtonClassName = ({
   variant = "primary",
-  corners = "rounded",
   size = "regular",
-}: VisualButtonProps) =>
-  `aui-button--${variant} aui-button-size--${size} aui-corners--${corners}`;
+}: VisualButtonProps) => `aui-button--${variant} aui-button-size--${size}`;
 
 export default Button;
