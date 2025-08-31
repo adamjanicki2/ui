@@ -77,6 +77,9 @@ const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
     }
   }, [open, children]);
 
+  // TODO: change this to use calc-size when supported
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/calc-size#browser_compatibility
+
   return (
     <>
       <Box layout={{ axis: "y" }}>
