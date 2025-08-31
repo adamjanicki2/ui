@@ -19,7 +19,7 @@ const Nav = () => {
 
   return (
     <ui.nav
-      layout={{
+      fx={{
         axis: "x",
         align: "center",
         justify: "between",
@@ -30,7 +30,7 @@ const Nav = () => {
       className="nav"
     >
       <Box
-        layout={{ axis: "x", align: "center", justify: "between" }}
+        fx={{ axis: "x", align: "center", justify: "between" }}
         className="bar-container"
       >
         <UnstyledLink className="nav-title" to="#welcome">
@@ -42,7 +42,7 @@ const Nav = () => {
         </Box>
       </Box>
       <ui.ul
-        layout={{ axis: "x", align: "center", margin: "none" }}
+        fx={{ axis: "x", align: "center", margin: "none" }}
         className="desktop link-container"
         style={{ display: open ? "flex" : undefined }}
       >

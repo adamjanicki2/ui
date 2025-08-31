@@ -27,67 +27,61 @@ export type SizeToken = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
 /**
  * Size variants used for padding & margin
  */
-type SpacingSize = "none" | "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
+type SpacingSize = SizeToken | "none";
 /**
  * Used for margin
  */
 type AutoSize = SpacingSize | "auto";
 
-/** Layout props for a component */
-export type Layout = {
-  // General layout
-
-  /** Direction the layout spans; along the x-axis or y-axis (Equivalent to flex-direction) */
+/** visual styling props for an element. Gets transformed into a set of class names. */
+export type Fx = {
+  /** Direction the content spans; along the x-axis or y-axis (Equivalent to flex-direction) */
   axis?: "x" | "y" | "-x" | "-y";
-  /** Spacing between children of the layout */
+  /** Spacing between children of the content */
   gap?: SpacingSize;
   /** Alignment orthogonal to the selected axis (Equivalent to align-items) */
   align?: "start" | "center" | "end";
-  /** How to layout the children (Equivalent to justify-content) */
+  /** How to content the children (Equivalent to justify-content) */
   justify?: "start" | "center" | "between" | "around" | "end";
-  /** Whether to allow wrapping of layout children */
+  /** Whether to allow wrapping of children */
   wrap?: boolean;
 
-  // Spacing
-
-  /** Padding inside the layout */
+  /** Padding inside the content */
   padding?: SpacingSize;
-  /** Horizontal padding inside the layout */
+  /** Horizontal padding inside the content */
   paddingX?: SpacingSize;
-  /** Vertical padding inside the layout */
+  /** Vertical padding inside the content */
   paddingY?: SpacingSize;
-  /** Top padding inside the layout */
+  /** Top padding inside the content */
   paddingTop?: SpacingSize;
-  /** Bottom padding inside the layout */
+  /** Bottom padding inside the content */
   paddingBottom?: SpacingSize;
-  /** Left padding inside the layout */
+  /** Left padding inside the content */
   paddingLeft?: SpacingSize;
-  /** Right padding inside the layout */
+  /** Right padding inside the content */
   paddingRight?: SpacingSize;
 
-  /** Margin outside the layout */
+  /** Margin outside the content */
   margin?: AutoSize;
-  /** Horizontal margin outside the layout */
+  /** Horizontal margin outside the content */
   marginX?: AutoSize;
-  /** Vertical margin outside the layout */
+  /** Vertical margin outside the content */
   marginY?: AutoSize;
-  /** Top margin outside the layout */
+  /** Top margin outside the content */
   marginTop?: AutoSize;
-  /** Bottom margin outside the layout */
+  /** Bottom margin outside the content */
   marginBottom?: AutoSize;
-  /** Left margin outside the layout */
+  /** Left margin outside the content */
   marginLeft?: AutoSize;
-  /** Right margin outside the layout */
+  /** Right margin outside the content */
   marginRight?: AutoSize;
 
-  // Width & Height
-
-  /** Width of the layout */
+  /** Width of the content */
   width?: SizeDimension;
-  /** Maximum width of the layout */
+  /** Maximum width of the content */
   maxWidth?: SizeDimension;
-  /** Height of the laout */
+  /** Height of the content */
   height?: SizeDimension;
-  /** Maximum of the layout */
+  /** Maximum of the content */
   maxHeight?: SizeDimension;
 };

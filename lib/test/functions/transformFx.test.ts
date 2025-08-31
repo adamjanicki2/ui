@@ -1,20 +1,20 @@
-import transformLayout from "../../src/utils/transformLayout";
+import transformFx from "../../src/utils/transformFx";
 
-describe("transformLayout", () => {
-  it("returns null when layout is undefined or empty", () => {
-    expect(transformLayout(undefined)).toBeNull();
-    expect(transformLayout({})).toBeNull();
+describe("transformFx", () => {
+  it("returns null when fx is undefined or empty", () => {
+    expect(transformFx(undefined)).toBeNull();
+    expect(transformFx({})).toBeNull();
   });
 
   it("transforms for simple case", () => {
     expect(
-      transformLayout({ axis: "-x", align: "center", gap: "s", margin: "auto" })
+      transformFx({ axis: "-x", align: "center", gap: "s", margin: "auto" })
     ).toBe("aui-flex--x aui-align-center aui-gap-s aui-ma-auto");
   });
 
   it("transforms and prioritizes more specific properties", () => {
     expect(
-      transformLayout({
+      transformFx({
         paddingLeft: "xxl",
         paddingRight: "l",
         paddingTop: "m",
@@ -28,7 +28,7 @@ describe("transformLayout", () => {
 
   it("transforms and falls back to axis sizing when needed", () => {
     expect(
-      transformLayout({
+      transformFx({
         marginLeft: "xxl",
         marginTop: "m",
         marginX: "xs",
@@ -39,7 +39,7 @@ describe("transformLayout", () => {
 
   it("handles flex options with wrap, justify, and align together", () => {
     expect(
-      transformLayout({
+      transformFx({
         axis: "y",
         wrap: true,
         justify: "between",
@@ -53,7 +53,7 @@ describe("transformLayout", () => {
 
   it("uses paddingX and paddingY when side-specific values are missing", () => {
     expect(
-      transformLayout({
+      transformFx({
         paddingX: "s",
         paddingY: "m",
       })
@@ -62,7 +62,7 @@ describe("transformLayout", () => {
 
   it("applies width/height/maxWidth/maxHeight correctly", () => {
     expect(
-      transformLayout({
+      transformFx({
         width: "full",
         maxWidth: "fit",
         height: "min",
@@ -71,9 +71,9 @@ describe("transformLayout", () => {
     ).toBe("aui-w-full aui-h-min aui-mw-fit aui-mh-max");
   });
 
-  it("handles a full complex layout", () => {
+  it("handles a full complex fx", () => {
     expect(
-      transformLayout({
+      transformFx({
         axis: "x",
         wrap: true,
         align: "center",

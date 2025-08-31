@@ -1,20 +1,11 @@
 import React from "react";
-import type { CornerType, Layout } from "../../utils/types";
+import type { CornerType } from "../../utils/types";
 import classNames from "../../functions/classNames";
-import transformLayout from "../../utils/transformLayout";
+import transformFx from "../../utils/transformFx";
 import Icon, { Props as IconProps } from "../Icon/Icon";
+import ui from "../ui";
 
-type BaseButtonProps = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
->;
-
-type DefaultButtonProps = BaseButtonProps & {
-  /**
-   * Additional styles to apply to the layout that are transformed to classNames to be easier to override if needed
-   */
-  layout?: Layout;
-};
+type DefaultButtonProps = React.ComponentProps<typeof ui.button>;
 
 export type VisualButtonProps = {
   /**
@@ -39,19 +30,15 @@ type ButtonProps = DefaultButtonProps & VisualButtonProps;
 export const UnstyledButton = React.forwardRef<
   HTMLButtonElement,
   DefaultButtonProps
->(({ className, layout, ...props }, ref) => (
+>(({ className, fx, ...props }, ref) => (
   <button
     {...props}
-    className={classNames(
-      "aui-action aui-button",
-      transformLayout(layout),
-      className
-    )}
+    className={classNames("aui-action aui-button", transformFx(fx), className)}
     ref={ref}
   />
 ));
 
-type IconButtonProps = Omit<BaseButtonProps, "children"> & {
+type IconButtonProps = Omit<DefaultButtonProps, "children"> & {
   /**
    * The hover effect to play when the user hovers over the button
    * @default "dim"
@@ -72,11 +59,11 @@ type IconButtonProps = Omit<BaseButtonProps, "children"> & {
 };
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ icon, size, iconProps, variant = "dim", className, ...rest }, ref) => {
+  ({ icon, size, fx, iconProps, variant = "dim", className, ...rest }, ref) => {
     return (
       <UnstyledButton
         {...rest}
-        layout={{ axis: "x", align: "center", justify: "center" }}
+        fx={{ axis: "x", align: "center", justify: "center", ...fx }}
         className={classNames(`aui-${variant}`, className)}
         ref={ref}
       >
@@ -87,12 +74,12 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 );
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, layout, corners, className, size, ...rest }, ref) => (
+  ({ variant, fx, corners, className, size, ...rest }, ref) => (
     <UnstyledButton
       {...rest}
       className={classNames(
         getButtonClassName({ variant, corners, size }),
-        transformLayout(layout),
+        transformFx(fx),
         className
       )}
       ref={ref}

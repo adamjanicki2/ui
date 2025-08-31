@@ -59,10 +59,10 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
             role="dialog"
             aria-modal="true"
             className="aui-modal aui-corners--rounded"
-            layout={{ axis: "y", padding: "m", gap: "m" }}
+            fx={{ axis: "y", padding: "m", gap: "m" }}
           >
             <Box
-              layout={{
+              fx={{
                 axis: "x",
                 align: "center",
                 justify: "end",
@@ -76,7 +76,7 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
             <Box {...rest} ref={ref} />
 
             <Box
-              layout={{
+              fx={{
                 axis: "x",
                 align: "center",
                 justify: "end",
