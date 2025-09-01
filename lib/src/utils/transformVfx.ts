@@ -55,6 +55,7 @@ export default function transformVfx(vfx: Vfx | undefined): string | null {
     color,
     backgroundColor,
     opacity,
+    cursor,
   } = vfx;
 
   const classes: string[] = [];
@@ -121,6 +122,7 @@ export default function transformVfx(vfx: Vfx | undefined): string | null {
   if (color) classes.push(`aui-c-${color}`);
   if (backgroundColor) classes.push(`aui-bg-${backgroundColor}`);
   if (opacity) classes.push(`aui-op-${opacity}`);
+  if (cursor) classes.push(`aui-cur-${cursor}`);
 
   return classes.join(" ") || null;
 }

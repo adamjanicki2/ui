@@ -570,6 +570,13 @@ $z-indexes: "auto" auto, "floating" 100, "nav" 1000, "max" 10000;
   }
 }
 
+$cursors: auto, pointer;
+@each $cursor in $cursors {
+  .aui-cur-#{$cursor} {
+    cursor: $cursor;
+  }
+}
+
 // Requires more specificity than the utils
 .aui-select-icon {
   --size: 10px;

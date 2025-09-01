@@ -110,4 +110,7 @@ export type Vfx = {
   color?: Color;
   /** Background color */
   backgroundColor?: Color;
+
+  /** Supported cursor values */
+  cursor?: "auto" | "pointer";
 };
