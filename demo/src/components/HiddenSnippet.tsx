@@ -9,7 +9,6 @@ export default function HiddenSnippet(props: Props) {
       <Box vfx={{ axis: "x", justify: "end", width: "full" }}>
         <Button
           vfx={{ marginY: "s" }}
-          className="mv2"
           onClick={() => setShow(!show)}
           variant="secondary"
           size="small"
@@ -20,8 +19,8 @@ export default function HiddenSnippet(props: Props) {
       <Animated
         vfx={{ axis: "x", justify: "center", width: "full" }}
         visible={show}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        animateTo={{ vfx: { opacity: "full" } }}
+        animateFrom={{ vfx: { opacity: "none" } }}
       >
         <Snippet {...props} />
       </Animated>

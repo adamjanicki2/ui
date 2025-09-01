@@ -65,6 +65,7 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
               radius: "rounded",
               maxWidth: "full",
               shadow: "floating",
+              border: true,
               color: "default",
               backgroundColor: "default",
             }}

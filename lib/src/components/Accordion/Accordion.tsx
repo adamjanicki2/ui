@@ -29,6 +29,7 @@ const Accordion = React.forwardRef<HTMLDivElement, Props>(
         color: "default",
         backgroundColor: "default",
         shadow: "subtle",
+        border: true,
         ...vfx,
       }}
       {...rest}

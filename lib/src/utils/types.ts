@@ -92,13 +92,13 @@ export type Vfx = {
   borderColor?: "default" | "primary";
 
   /** Box shadow presets */
-  shadow?: "subtle" | "floating" | "sharp";
+  shadow?: "subtle" | "floating" | "none";
 
   /** Opacity presets */
   opacity?: "none" | "disabled" | "dim" | "full";
 
   /** Font size */
-  fontSize?: SizeToken;
+  fontSize?: SizeToken | "default";
   /** Font weight */
   fontWeight?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   /** Text alignment */
@@ -110,4 +110,7 @@ export type Vfx = {
   color?: Color;
   /** Background color */
   backgroundColor?: Color;
+
+  /** Supported cursor values */
+  cursor?: "auto" | "pointer";
 };
