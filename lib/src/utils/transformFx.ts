@@ -130,12 +130,17 @@ const mapBorders: Transformer = ({
   return className;
 };
 
-const mapMiscellaneous: Transformer = ({ radius, shadow }) => {
+const mapMiscellaneous: Transformer = ({
+  radius,
+  shadow,
+  color,
+  backgroundColor,
+}) => {
   let className = radius ? `aui-radius-${radius}` : null;
-
-  if (shadow) {
-    className = classNames(className, `aui-shadow-${shadow}`);
-  }
+  if (shadow) className = classNames(className, `aui-shadow-${shadow}`);
+  if (color) className = classNames(className, `aui-c-${color}`);
+  if (backgroundColor)
+    className = classNames(className, `aui-bg-${backgroundColor}`);
 
   return className;
 };

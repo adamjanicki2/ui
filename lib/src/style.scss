@@ -18,7 +18,8 @@
   --aui-darkest-gray: #333;
   --aui-obsidian: #121212;
   --aui-focus-ring-color: #b2dbfa;
-  --aui-default-text-color: black;
+  --aui-color-default: black;
+  --aui-color-muted: var(--aui-dark-gray);
   --aui-default-background: white;
   --aui-default-border: var(--aui-moon-gray);
 
@@ -66,7 +67,7 @@
   --aui-avatar-yellow: #f5c76d;
 
   --aui-static-background: #e8e8e8;
-  --aui-static-color: var(--aui-default-text-color);
+  --aui-static-color: var(--aui-color-default);
   --aui-static-border: var(--aui-default-border);
 
   /* Layer */
@@ -74,12 +75,12 @@
 
   /* Link & Select */
   --aui-link-color: #0070ff;
-  --aui-select-icon: var(--aui-dark-gray);
 }
 
 [data-theme="dark"] {
   --aui-focus-ring-color: #6699cc;
-  --aui-default-text-color: white;
+  --aui-color-default: white;
+  --aui-color-muted: var(--aui-moon-gray);
   --aui-default-background: var(--aui-obsidian);
   --aui-default-border: var(--aui-dark-gray);
   --aui-floating-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -107,7 +108,7 @@
   --aui-info-border: #1d8ea4;
 
   --aui-static-background: var(--aui-darkest-gray);
-  --aui-static-color: var(--aui-default-text-color);
+  --aui-static-color: var(--aui-color-default);
   --aui-static-border: var(--aui-default-border);
 
   --aui-avatar-purple: #771199;
@@ -118,7 +119,6 @@
 
   --aui-layer-backdrop-background: rgba(55, 55, 55, 0.7);
   --aui-link-color: #33bfff;
-  --aui-select-icon: var(--aui-moon-gray);
 }
 
 /* =======================
@@ -134,7 +134,7 @@
 
 // Modal and Accordion
 .aui-modal {
-  color: var(--aui-default-text-color);
+  color: var(--aui-color-default);
   background-color: var(--aui-default-background);
   box-shadow: 0 0 0 1px var(--aui-default-border) inset,
     var(--aui-floating-box-shadow);
@@ -161,7 +161,7 @@
 }
 
 .aui-accordion-arrow {
-  color: var(--aui-select-icon);
+  color: var(--aui-color-muted);
 }
 
 // Signals
@@ -234,7 +234,7 @@
 }
 
 .aui-button-secondary {
-  color: var(--aui-default-text-color);
+  color: var(--aui-color-default);
   background-color: var(--aui-default-background);
   box-shadow: 0 0 0 1px var(--aui-default-border) inset,
     var(--aui-subtle-box-shadow);
@@ -560,7 +560,7 @@ $border-radius: none var(--aui-radius-none), subtle var(--aui-radius-subtle),
 $border-widths: none 0px, xs 1px, s 2px, m 4px, l 8px, xl 16px;
 $border-styles: solid solid, dotted dotted, dashed dashed, none none;
 $border-colors: default var(--aui-default-border),
-  primary var(--aui-default-text-color);
+  primary var(--aui-color-default);
 $border-sides: ba border, bt border-top, br border-right, bb border-bottom,
   bl border-left;
 
@@ -631,10 +631,22 @@ $text-align: left right center;
   font-style: italic;
 }
 
+// Colors
+$colors: "default" var(--aui-color-default), "muted" var(--aui-color-muted),
+  "inherit" inherit, "transparent" transparent;
+@each $token, $color in $colors {
+  .aui-c-#{$token} {
+    color: $color;
+  }
+  .aui-bg-#{$token} {
+    background-color: $color;
+  }
+}
+
 // Requires more specificity than the utils
 .aui-select-icon {
   --size: 10px;
-  color: var(--aui-select-icon);
+  color: var(--aui-color-muted);
   width: var(--size);
   height: var(--size);
   position: absolute;
