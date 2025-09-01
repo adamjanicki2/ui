@@ -51,8 +51,8 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
       <Animated
         vfx={{ z: "max" }}
         visible={open}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        animateTo={{ vfx: { opacity: "full" } }}
+        animateFrom={{ vfx: { opacity: "none" } }}
       >
         <Layer onClose={onClose} returnFocusOnEscape={returnFocusOnEscape}>
           <Box

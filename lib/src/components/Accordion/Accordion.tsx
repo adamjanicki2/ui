@@ -99,7 +99,7 @@ const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
           </Box>
         </UnstyledButton>
         <Animated
-          style={{ overflow: "hidden" }}
+          vfx={{ overflow: "hidden" }}
           keepMounted
           duration={duration}
           visible={open}

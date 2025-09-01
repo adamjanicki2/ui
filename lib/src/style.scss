@@ -192,13 +192,13 @@
 }
 
 @media (hover: hover) {
-  .aui-button--primary:not([disabled]):hover,
+  .aui-button-primary:not([disabled]):hover,
   .aui-dim:not([disabled]):hover,
   .aui-link:hover {
     opacity: var(--aui-opacity-dim);
   }
 
-  .aui-button--secondary:not([disabled]):hover {
+  .aui-button-secondary:not([disabled]):hover {
     box-shadow: 0 0 0 1px var(--aui-button-secondary-border-hover) inset,
       var(--aui-subtle-box-shadow);
   }
@@ -308,7 +308,6 @@
   transform: translateY(-50%);
   width: var(--aui-l);
   height: var(--aui-l);
-  padding: 0;
 }
 
 .aui-carousel-dots {
@@ -331,7 +330,7 @@ $positions: static, relative, absolute, fixed, sticky;
   }
 }
 
-$flex-directions: x row, y column, "--x" row-reverse, "--y" column-reverse;
+$flex-directions: x row, y column, "-x" row-reverse, "-y" column-reverse;
 
 @each $class, $dir in $flex-directions {
   .aui-flex-#{$class} {
@@ -560,20 +559,20 @@ $bg-colors: "default" var(--aui-default-background),
   }
 }
 
-$overflows: "scroll", "hidden";
+$overflows: "scroll" scroll, "hidden" hidden;
 @each $token, $overflow in $overflows {
-  .aui-of-#{$token} {
+  .aui-ov-#{$token} {
     overflow: $overflow;
   }
-  .aui-of-x-#{$token} {
+  .aui-ov-x-#{$token} {
     overflow-x: $overflow;
   }
-  .aui-of-y-#{$token} {
+  .aui-ov-y-#{$token} {
     overflow-y: $overflow;
   }
 }
 
-$z-indexes: "auto" auto, "floating" 100, "nav" 1000, "max", 10000;
+$z-indexes: "auto" auto, "floating" 100, "nav" 1000, "max" 10000;
 @each $token, $z in $z-indexes {
   .aui-z-#{$token} {
     z-index: $z;

@@ -184,6 +184,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                     align: "center",
                     justify: "center",
                     radius: "max",
+                    padding: "none",
                   }}
                   className={classNames(
                     "aui-carousel-arrow",
@@ -207,6 +208,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                     align: "center",
                     justify: "center",
                     radius: "max",
+                    padding: "none",
                   }}
                   className={classNames(
                     "aui-carousel-arrow",

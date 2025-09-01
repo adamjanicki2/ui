@@ -42,9 +42,9 @@ const mapLayout: Transformer = ({
   if (align) className = classNames(className, `aui-align-${align}`);
   if (justify) className = classNames(className, `aui-justify-${justify}`);
   if (gap) className = classNames(className, `aui-gap-${gap}`);
-  if (overflow) className = classNames(className, `aui-of-${overflow}`);
-  if (overflowX) className = classNames(className, `aui-of-x-${overflowX}`);
-  if (overflowY) className = classNames(className, `aui-of-y-${overflowY}`);
+  if (overflow) className = classNames(className, `aui-ov-${overflow}`);
+  if (overflowX) className = classNames(className, `aui-ov-x-${overflowX}`);
+  if (overflowY) className = classNames(className, `aui-ov-y-${overflowY}`);
   if (z) className = classNames(className, `aui-z-${z}`);
 
   return className;
