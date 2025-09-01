@@ -24,11 +24,12 @@ const dimensionPrefixMap = {
 
 type Transformer = (fx: Fx) => string | null;
 
-const mapLayout: Transformer = ({ axis, wrap, align, justify }) => {
+const mapLayout: Transformer = ({ axis, wrap, align, justify, gap }) => {
   let className: string | null = axis ? `aui-flex-${axis}` : null;
   if (wrap) className = classNames(className, "aui-flex-wrap");
   if (align) className = classNames(className, `aui-align-${align}`);
   if (justify) className = classNames(className, `aui-justify-${justify}`);
+  if (gap) className = classNames(className, `aui-gap-${gap}`);
   return className;
 };
 

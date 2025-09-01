@@ -15,7 +15,7 @@ const Badge = React.forwardRef<HTMLDivElement, Props>(
     <Box
       {...rest}
       fx={{ radius: "rounded", ...fx }}
-      className={classNames(`aui-badge aui-content--${type}`, className)}
+      className={classNames(`aui-badge aui-content-${type}`, className)}
       ref={ref}
     />
   )

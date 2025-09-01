@@ -15,7 +15,7 @@ const Alert = React.forwardRef<HTMLDivElement, Props>(
     <Box
       {...rest}
       fx={{ radius: "rounded", ...fx }}
-      className={classNames(`aui-alert aui-content--${type}`, className)}
+      className={classNames(`aui-alert aui-content-${type}`, className)}
       ref={ref}
     />
   )
