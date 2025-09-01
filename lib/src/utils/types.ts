@@ -83,4 +83,35 @@ export type Fx = {
 
   /** Border radius of the content */
   radius?: "none" | "subtle" | "rounded" | "max";
+  /** Border for all edges */
+  border?: boolean;
+  /** Border top */
+  borderTop?: boolean;
+  /** Border bottom */
+  borderBottom?: boolean;
+  /** Border left */
+  borderLeft?: boolean;
+  /** Border right */
+  borderRight?: boolean;
+  /** Border thickness */
+  borderWidth?: SpacingSize;
+  /** Border type */
+  borderStyle?: "none" | "solid" | "dotted" | "dashed";
+  /** Border color */
+  borderColor?: "default" | "primary";
+
+  /** Box shadow presets */
+  shadow?: "subtle" | "floating" | "sharp";
+
+  /** Opacity presets */
+  opacity?: "none" | "disabled" | "dim" | "full";
+
+  /** Font size */
+  fontSize?: SizeToken;
+  /** Font weight */
+  fontWeight?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  /** Text alignment */
+  textAlign?: "center" | "left" | "right";
+  /** Use italics? */
+  italics?: boolean;
 };

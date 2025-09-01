@@ -22,49 +22,34 @@ const dimensionPrefixMap = {
   maxHeight: "mh",
 } as const;
 
-export default function transformFx(fx: Fx | undefined): string | null {
-  if (!fx) return null;
+type Transformer = (fx: Fx) => string | null;
 
-  const {
-    axis,
-    gap,
-    align,
-    justify,
-    wrap,
-
-    padding,
-    paddingTop,
-    paddingBottom,
-    paddingLeft,
-    paddingRight,
-    paddingX,
-    paddingY,
-
-    margin,
-    marginTop,
-    marginBottom,
-    marginLeft,
-    marginRight,
-    marginX,
-    marginY,
-
-    radius,
-
-    ...rest
-  } = fx;
-
-  let className = axis ? `aui-flex-${axis}` : null;
-
+const mapLayout: Transformer = ({ axis, wrap, align, justify }) => {
+  let className: string | null = axis ? `aui-flex-${axis}` : null;
   if (wrap) className = classNames(className, "aui-flex-wrap");
   if (align) className = classNames(className, `aui-align-${align}`);
   if (justify) className = classNames(className, `aui-justify-${justify}`);
+  return className;
+};
 
-  // Gap
-  if (gap) {
-    className = classNames(className, `aui-gap-${gap}`);
-  }
-
-  // Padding & margin
+const mapSpacing: Transformer = ({
+  padding,
+  paddingX,
+  paddingY,
+  paddingBottom,
+  paddingTop,
+  paddingLeft,
+  paddingRight,
+  margin,
+  marginX,
+  marginY,
+  marginTop,
+  marginBottom,
+  marginLeft,
+  marginRight,
+}) => {
+  // Use your existing spacingPrefixMap logic
+  let className: string | null = null;
   const spacingProps = [
     ["padding", padding],
     ["paddingTop", paddingTop ?? paddingY],
@@ -85,18 +70,104 @@ export default function transformFx(fx: Fx | undefined): string | null {
     }
   });
 
-  if (radius) {
-    className = classNames(className, `aui-br-${radius}`);
-  }
+  return className;
+};
 
-  const dimensionProps = ["width", "height", "maxWidth", "maxHeight"] as const;
+const dimensionProps = ["width", "height", "maxWidth", "maxHeight"] as const;
+
+const mapDimensions: Transformer = (fx) => {
+  let className: string | null = null;
   dimensionProps.forEach((prop) => {
-    const value = rest[prop];
+    const value = fx[prop];
+    if (value)
+      className = classNames(
+        className,
+        `aui-${dimensionPrefixMap[prop]}-${value}`
+      );
+  });
+  return className;
+};
+
+const mapBorders: Transformer = ({
+  border,
+  borderTop,
+  borderBottom,
+  borderLeft,
+  borderRight,
+  borderWidth,
+  borderStyle,
+  borderColor,
+}) => {
+  let className: string | null = null;
+
+  const sides = {
+    ba: border,
+    bt: borderTop,
+    bb: borderBottom,
+    bl: borderLeft,
+    br: borderRight,
+  } as const;
+
+  Object.entries(sides).forEach(([prefix, value]) => {
     if (value) {
-      const prefix = dimensionPrefixMap[prop];
+      className = classNames(className, `aui-${prefix}`);
+    }
+  });
+
+  const modifiers = {
+    bw: borderWidth,
+    bs: borderStyle,
+    bc: borderColor,
+  } as const;
+
+  Object.entries(modifiers).forEach(([prefix, value]) => {
+    if (value) {
       className = classNames(className, `aui-${prefix}-${value}`);
     }
   });
 
   return className;
+};
+
+const mapMiscellaneous: Transformer = ({ radius, shadow }) => {
+  let className = radius ? `aui-radius-${radius}` : null;
+
+  if (shadow) {
+    className = classNames(className, `aui-shadow-${shadow}`);
+  }
+
+  return className;
+};
+
+const mapTypography: Transformer = ({
+  fontSize,
+  fontWeight,
+  textAlign,
+  italics,
+}) => {
+  let className: string | null = null;
+
+  if (fontSize) className = classNames(className, `aui-f-${fontSize}`);
+  if (fontWeight) className = classNames(className, `aui-fw-${fontWeight}`);
+  if (textAlign) className = classNames(className, `aui-ta-${textAlign}`);
+  if (italics) className = classNames(className, `aui-it`);
+
+  return className;
+};
+
+const transformers = [
+  mapLayout,
+  mapSpacing,
+  mapDimensions,
+  mapBorders,
+  mapTypography,
+  mapMiscellaneous,
+] as const;
+
+export default function transformFx(fx: Fx | undefined): string | null {
+  if (!fx) return null;
+  const combinedClasses = classNames(
+    ...transformers.map((transformer) => transformer(fx))
+  );
+  return combinedClasses || null;
 }
