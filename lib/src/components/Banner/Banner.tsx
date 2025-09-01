@@ -14,7 +14,7 @@ const Banner = React.forwardRef<HTMLDivElement, Props>(
   ({ type, className, ...rest }, ref) => (
     <Box
       {...rest}
-      className={classNames(`aui-content--${type} aui-banner`, className)}
+      className={classNames(`aui-content-${type} aui-banner`, className)}
       ref={ref}
     />
   )

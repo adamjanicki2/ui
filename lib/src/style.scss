@@ -1,4 +1,7 @@
-/* General styles */
+////////////////////////////////////
+// @adamjanicki/ui root css class //
+////////////////////////////////////
+///
 :root {
   /* Sizing */
   --aui-xxs: 2px;
@@ -8,31 +11,37 @@
   --aui-l: 24px;
   --aui-xl: 32px;
   --aui-xxl: 64px;
-  /* General colors */
+
+  /* Colors */
   --aui-moon-gray: #ccc;
   --aui-dark-gray: #555;
   --aui-darkest-gray: #333;
   --aui-obsidian: #121212;
   --aui-focus-ring-color: #b2dbfa;
-  --aui-default-text-color: black;
+  --aui-color-default: black;
+  --aui-color-muted: var(--aui-dark-gray);
   --aui-default-background: white;
   --aui-default-border: var(--aui-moon-gray);
+
   /* General values */
-  --aui-disabled-opacity: 0.5;
+  --aui-opacity-disabled: 0.5;
+  --aui-opacity-dim: 0.75;
   --aui-default-transition: 0.25s ease-in-out;
-  --aui-default-opacity-dim: 0.75;
   --aui-floating-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  /* Border radii */
+
+  /* Border radius */
   --aui-radius-none: 0;
   --aui-radius-subtle: 4px;
   --aui-radius-rounded: 8px;
   --aui-radius-max: 10000px;
+
   /* Buttons */
   --aui-button-primary-background: black;
   --aui-button-primary-color: white;
   --aui-button-secondary-border-hover: var(--aui-darkest-gray);
   --aui-subtle-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16);
   --aui-button-primary-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.36);
+
   /* Content types */
   --aui-success-background: #dff2e1;
   --aui-success-color: #1b5e20;
@@ -50,7 +59,7 @@
   --aui-info-color: #0d47a1;
   --aui-info-border: #90caf9;
 
-  /* Avatar colors */
+  /* Avatar */
   --aui-avatar-purple: #bc54d6;
   --aui-avatar-blue: #618bdc;
   --aui-avatar-red: #ee6060;
@@ -58,28 +67,30 @@
   --aui-avatar-yellow: #f5c76d;
 
   --aui-static-background: #e8e8e8;
+  --aui-static-color: var(--aui-color-default);
+  --aui-static-border: var(--aui-default-border);
+
   /* Layer */
   --aui-layer-backdrop-background: rgba(200, 200, 200, 0.6);
-  /* Link */
+
+  /* Link & Select */
   --aui-link-color: #0070ff;
-  /* Select */
-  --aui-select-icon: var(--aui-dark-gray);
 }
 
 [data-theme="dark"] {
-  /* General colors */
   --aui-focus-ring-color: #6699cc;
-  --aui-default-text-color: white;
+  --aui-color-default: white;
+  --aui-color-muted: var(--aui-moon-gray);
   --aui-default-background: var(--aui-obsidian);
   --aui-default-border: var(--aui-dark-gray);
   --aui-floating-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  /* Buttons */
+
   --aui-button-primary-background: white;
   --aui-button-primary-color: var(--aui-obsidian);
   --aui-button-secondary-border-hover: var(--aui-moon-gray);
   --aui-subtle-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   --aui-button-primary-box-shadow: 0 1px 2px rgba(64, 64, 64, 0.8);
-  /* Content types */
+
   --aui-success-background: #2a5733;
   --aui-success-color: #d9efd8;
   --aui-success-border: #439e4a;
@@ -96,64 +107,42 @@
   --aui-info-color: #d4f1f5;
   --aui-info-border: #1d8ea4;
 
-  /* Avatar colors */
+  --aui-static-background: var(--aui-darkest-gray);
+  --aui-static-color: var(--aui-color-default);
+  --aui-static-border: var(--aui-default-border);
+
   --aui-avatar-purple: #771199;
   --aui-avatar-blue: #0b4cce;
   --aui-avatar-red: #bb1111;
   --aui-avatar-green: #307040;
   --aui-avatar-yellow: #bb8822;
 
-  --aui-static-background: var(--aui-darkest-gray);
-  /* Layer */
   --aui-layer-backdrop-background: rgba(55, 55, 55, 0.7);
-  /* Link */
   --aui-link-color: #33bfff;
-  /* Select */
-  --aui-select-icon: var(--aui-moon-gray);
 }
 
-.aui-content--success {
-  background-color: var(--aui-success-background);
-  color: var(--aui-success-color);
-  border-color: var(--aui-success-border);
+/* =======================
+   Content Types
+======================= */
+@each $type in "success", "warning", "error", "info", "static" {
+  .aui-content-#{$type} {
+    background-color: var(--aui-#{$type}-background);
+    color: var(--aui-#{$type}-color);
+    border-color: var(--aui-#{$type}-border);
+  }
 }
 
-.aui-content--warning {
-  background-color: var(--aui-warning-background);
-  color: var(--aui-warning-color);
-  border-color: var(--aui-warning-border);
-}
-
-.aui-content--error {
-  background-color: var(--aui-error-background);
-  color: var(--aui-error-color);
-  border-color: var(--aui-error-border);
-}
-
-.aui-content--info {
-  background-color: var(--aui-info-background);
-  color: var(--aui-info-color);
-  border-color: var(--aui-info-border);
-}
-
-.aui-content--static {
-  background-color: var(--aui-static-background);
-  color: var(--aui-default-text-color);
-  border-color: var(--aui-default-border);
-}
-
-/* Modal and general use */
+// Modal and Accordion
 .aui-modal {
-  color: var(--aui-default-text-color);
+  color: var(--aui-color-default);
   background-color: var(--aui-default-background);
   box-shadow: 0 0 0 1px var(--aui-default-border) inset,
     var(--aui-floating-box-shadow);
-  border-radius: var(--aui-rounded-radius);
+  border-radius: var(--aui-radius-rounded);
   min-width: 40%;
   max-width: 100%;
 }
 
-/* Accordion */
 .aui-accordion {
   background-color: var(--aui-default-background);
   box-shadow: 0 0 0 1px var(--aui-default-border) inset,
@@ -172,10 +161,10 @@
 }
 
 .aui-accordion-arrow {
-  color: var(--aui-select-icon);
+  color: var(--aui-color-muted);
 }
 
-/* Alert */
+// Signals
 .aui-alert {
   padding: var(--aui-m);
   border-style: solid;
@@ -189,7 +178,6 @@
   font-weight: 600;
 }
 
-/* Badge */
 .aui-badge {
   padding: var(--aui-xxs) var(--aui-xs);
   border-style: solid;
@@ -199,15 +187,13 @@
   width: fit-content;
 }
 
-/* Banner */
 .aui-banner {
   padding: var(--aui-l) var(--aui-xl);
-  border: none;
   font-weight: 400;
   width: 100%;
 }
 
-/* Action (link/button) */
+// Buttons and Links
 .aui-action {
   color: inherit;
   text-decoration: none;
@@ -219,19 +205,17 @@
   outline: none;
 }
 
-/* Button */
 .aui-button {
   background: none;
   border: none;
   padding: 0;
 }
 
-.aui-button-size--regular {
+.aui-button-size-regular {
   padding: var(--aui-s);
   font-weight: 600;
 }
-
-.aui-button-size--small {
+.aui-button-size-small {
   padding: var(--aui-xs);
   font-size: 12px;
   font-weight: 600;
@@ -239,18 +223,18 @@
 
 .aui-button:disabled {
   cursor: default !important;
-  opacity: var(--aui-disabled-opacity);
+  opacity: var(--aui-opacity-disabled);
 }
 
-.aui-button--primary {
+.aui-button-primary {
   background-color: var(--aui-button-primary-background);
   color: var(--aui-button-primary-color);
   box-shadow: var(--aui-button-primary-box-shadow);
   transition: opacity var(--aui-default-transition);
 }
 
-.aui-button--secondary {
-  color: var(--aui-default-text-color);
+.aui-button-secondary {
+  color: var(--aui-color-default);
   background-color: var(--aui-default-background);
   box-shadow: 0 0 0 1px var(--aui-default-border) inset,
     var(--aui-subtle-box-shadow);
@@ -261,13 +245,11 @@
 .aui-undim {
   transition: opacity var(--aui-default-transition);
 }
-
 .aui-dim {
   opacity: 1;
 }
-
 .aui-undim {
-  opacity: var(--aui-default-opacity-dim);
+  opacity: var(--aui-opacity-dim);
 }
 
 .aui-link {
@@ -280,7 +262,7 @@
   .aui-button--primary:not([disabled]):hover,
   .aui-dim:not([disabled]):hover,
   .aui-link:hover {
-    opacity: var(--aui-default-opacity-dim);
+    opacity: var(--aui-opacity-dim);
   }
 
   .aui-button--secondary:not([disabled]):hover {
@@ -293,7 +275,7 @@
   }
 }
 
-/* Input */
+// Input and Select
 .aui-input-base {
   outline: none;
   border: none;
@@ -310,7 +292,6 @@
 .aui-icon-input {
   overflow: scroll;
 }
-
 .aui-icon-input input {
   background-color: transparent;
   width: 100%;
@@ -324,7 +305,7 @@
 }
 
 .aui-input:disabled {
-  opacity: var(--aui-disabled-opacity);
+  opacity: var(--aui-opacity-disabled);
   cursor: default;
 }
 
@@ -334,7 +315,6 @@
     var(--aui-subtle-box-shadow), 0 0 0 3px var(--aui-focus-ring-color);
 }
 
-/* Select */
 .aui-select-container {
   position: relative;
   padding: 0;
@@ -361,15 +341,16 @@
 }
 
 .aui-select-disabled * {
-  opacity: var(--aui-disabled-opacity);
+  opacity: var(--aui-opacity-disabled);
   cursor: default;
 }
 
-/* Layer */
+// Layer
 .aui-modal-backdrop,
 .aui-layer-backdrop {
   z-index: 10000;
 }
+
 .aui-layer-backdrop {
   position: fixed;
   top: 0;
@@ -379,13 +360,12 @@
   background: var(--aui-layer-backdrop-background);
 }
 
-/* Icons */
+// Icons and Spinner
 .aui-icon * {
   color: currentColor;
   fill: currentColor;
 }
 
-/* Spinner */
 .aui-spinner {
   animation: aui-spinner-animation 1s linear infinite;
   transform-origin: center;
@@ -401,7 +381,7 @@
   }
 }
 
-/* Carousel */
+// Carousel
 .aui-carousel {
   max-width: 100%;
   position: relative;
@@ -439,61 +419,36 @@
   padding: 0;
 }
 
-//////////////////////////
-// Main fx styles begin //
-//////////////////////////
+// Layout Utilities
+$flex-directions: x row, y column, "--x" row-reverse, "--y" column-reverse;
 
-/* Flex & Alignment */
-.aui-flex-x,
-.aui-flex-y,
-.aui-flex--x,
-.aui-flex--y {
-  display: flex;
+@each $class, $dir in $flex-directions {
+  .aui-flex-#{$class} {
+    display: flex;
+    flex-direction: $dir;
+  }
 }
-.aui-flex-x {
-  flex-direction: row;
-}
-.aui-flex-y {
-  flex-direction: column;
-}
-.aui-flex--x {
-  flex-direction: row-reverse;
-}
-.aui-flex--y {
-  flex-direction: column-reverse;
-}
+
 .aui-flex-wrap {
   flex-wrap: wrap;
 }
 
-.aui-align-start {
-  align-items: flex-start;
-}
-.aui-align-center {
-  align-items: center;
-}
-.aui-align-end {
-  align-items: flex-end;
+$align-items: start flex-start, center center, end flex-end;
+@each $class, $val in $align-items {
+  .aui-align-#{$class} {
+    align-items: $val;
+  }
 }
 
-.aui-justify-start {
-  justify-content: flex-start;
-}
-.aui-justify-center {
-  justify-content: center;
-}
-.aui-justify-between {
-  justify-content: space-between;
-}
-.aui-justify-around {
-  justify-content: space-around;
-}
-.aui-justify-end {
-  justify-content: flex-end;
+$justify-items: start flex-start, center center, end flex-end,
+  between space-between, around space-around;
+@each $class, $val in $justify-items {
+  .aui-justify-#{$class} {
+    justify-content: $val;
+  }
 }
 
-/* Begin SCSS */
-
+// Avatar and Icon Utilities
 $aui-avatar-color: (
   "red": var(--aui-avatar-red),
   "yellow": var(--aui-avatar-yellow),
@@ -501,7 +456,6 @@ $aui-avatar-color: (
   "blue": var(--aui-avatar-blue),
   "purple": var(--aui-avatar-purple),
 );
-
 @each $k, $v in $aui-avatar-color {
   .aui-avatar-#{$k} {
     background-color: $v;
@@ -509,15 +463,14 @@ $aui-avatar-color: (
 }
 
 $aui-avatar-size: (
-  "xxs": 12px,
-  "xs": 16px,
-  "s": 24px,
-  "m": 32px,
-  "l": 48px,
-  "xl": 64px,
-  "xxl": 128px,
+  xxs: 12px,
+  xs: 16px,
+  s: 24px,
+  m: 32px,
+  l: 48px,
+  xl: 64px,
+  xxl: 128px,
 );
-
 @each $k, $v in $aui-avatar-size {
   .aui-avatar-#{$k} {
     width: $v;
@@ -527,17 +480,15 @@ $aui-avatar-size: (
   }
 }
 
-/* Icon sizing */
 $aui-icon-size: (
-  "xxs": 8px,
-  "xs": 12px,
-  "s": 16px,
-  "m": 24px,
-  "l": 32px,
-  "xl": 48px,
-  "xxl": 64px,
+  xxs: 8px,
+  xs: 12px,
+  s: 16px,
+  m: 24px,
+  l: 32px,
+  xl: 48px,
+  xxl: 64px,
 );
-
 @each $k, $v in $aui-icon-size {
   .aui-icon-#{$k} {
     width: $v;
@@ -545,114 +496,157 @@ $aui-icon-size: (
   }
 }
 
-/* Shared spacing scale for gap/padding/margin utilities */
+// Spacing Utilities
 $aui-space: (
-  "none": 0,
-  "xxs": var(--aui-xxs),
-  "xs": var(--aui-xs),
-  "s": var(--aui-s),
-  "m": var(--aui-m),
-  "l": var(--aui-l),
-  "xl": var(--aui-xl),
-  "xxl": var(--aui-xxl),
+  none: 0,
+  xxs: var(--aui-xxs),
+  xs: var(--aui-xs),
+  s: var(--aui-s),
+  m: var(--aui-m),
+  l: var(--aui-l),
+  xl: var(--aui-xl),
+  xxl: var(--aui-xxl),
 );
 
-/* Gap */
+$padding-props: pa padding, pt padding-top, pb padding-bottom, pl padding-left,
+  pr padding-right;
+@each $prefix, $prop in $padding-props {
+  @each $k, $v in $aui-space {
+    .aui-#{$prefix}-#{$k} {
+      #{$prop}: $v;
+    }
+  }
+}
+
+$margin-props: ma margin, mt margin-top, mb margin-bottom, ml margin-left,
+  mr margin-right;
+@each $prefix, $prop in $margin-props {
+  .aui-#{$prefix}-auto {
+    #{$prop}: auto;
+  }
+  @each $k, $v in $aui-space {
+    .aui-#{$prefix}-#{$k} {
+      #{$prop}: $v;
+    }
+  }
+}
+
 @each $k, $v in $aui-space {
   .aui-gap-#{$k} {
     gap: $v;
   }
 }
 
-/* Padding */
-$aui-padding-props: (
-  "pa": padding,
-  "pt": padding-top,
-  "pb": padding-bottom,
-  "pl": padding-left,
-  "pr": padding-right,
-);
-@each $prefix, $prop in $aui-padding-props {
-  @each $k, $v in $aui-space {
-    .aui-#{$prefix}-#{$k} {
-      #{$prop}: $v;
-    }
-  }
-}
-
-/* Margin */
-$aui-margin-props: (
-  "ma": margin,
-  "mt": margin-top,
-  "mb": margin-bottom,
-  "ml": margin-left,
-  "mr": margin-right,
-);
-
-/* Auto margin variants (padding never has auto) */
-@each $prefix, $prop in $aui-margin-props {
-  .aui-#{$prefix}-auto {
-    #{$prop}: auto;
-  }
-}
-
-/* Tokenized margin variants */
-@each $prefix, $prop in $aui-margin-props {
-  @each $k, $v in $aui-space {
-    .aui-#{$prefix}-#{$k} {
-      #{$prop}: $v;
-    }
-  }
-}
-
-/* Width / Height / Max-Width / Max-Height */
-$aui-dimension-props: (
-  "w": width,
-  "mw": max-width,
-  "h": height,
-  "mh": max-height,
-);
-$aui-dimension-vals: (
-  "full": 100%,
-  "fit": fit-content,
-  "min": min-content,
-  "max": max-content,
-);
-
-@each $short, $prop in $aui-dimension-props {
-  @each $name, $val in $aui-dimension-vals {
+// Dimension Utilities
+$dimension-props: w width, mw max-width, h height, mh max-height;
+$dimension-vals: full 100%, fit fit-content, min min-content, max max-content;
+@each $short, $prop in $dimension-props {
+  @each $name, $val in $dimension-vals {
     .aui-#{$short}-#{$name} {
       #{$prop}: $val;
     }
   }
 }
 
-/* Border radius */
-$aui-border-radius: (
-  "none": var(--aui-radius-none),
-  "subtle": var(--aui-radius-subtle),
-  "rounded": var(--aui-radius-rounded),
-  "max": var(--aui-radius-max),
-);
-
-/* Gap */
-@each $k, $v in $aui-border-radius {
-  .aui-br-#{$k} {
+// Border & Shadow Utilities
+$border-radius: none var(--aui-radius-none), subtle var(--aui-radius-subtle),
+  rounded var(--aui-radius-rounded), max var(--aui-radius-max);
+@each $k, $v in $border-radius {
+  .aui-radius-#{$k} {
     border-radius: $v;
   }
 }
 
-///////////////////
-// Main scss end //
-///////////////////
+$border-widths: none 0px, xs 1px, s 2px, m 4px, l 8px, xl 16px;
+$border-styles: solid solid, dotted dotted, dashed dashed, none none;
+$border-colors: default var(--aui-default-border),
+  primary var(--aui-color-default);
+$border-sides: ba border, bt border-top, br border-right, bb border-bottom,
+  bl border-left;
 
-////////////////////////////////////
-// Styles needing more precedence //
-////////////////////////////////////
+@each $token, $prop in $border-sides {
+  .aui-#{$token} {
+    #{$prop}: 1px solid var(--aui-default-border);
+  }
+}
+@each $token, $val in $border-widths {
+  .aui-bw-#{$token} {
+    border-width: $val;
+  }
+}
+@each $token, $val in $border-styles {
+  .aui-bs-#{$token} {
+    border-style: $val;
+  }
+}
+@each $token, $val in $border-colors {
+  .aui-bc-#{$token} {
+    border-color: $val;
+  }
+}
 
+$shadows: sharp (0 0 0 1px var(--aui-default-border) inset),
+  subtle
+    (0 0 0 1px var(--aui-default-border) inset, var(--aui-subtle-box-shadow)),
+  floating
+    (0 0 0 1px var(--aui-default-border) inset, var(--aui-floating-box-shadow)),
+  none none;
+@each $token, $val in $shadows {
+  .aui-shadow-#{$token} {
+    box-shadow: $val;
+  }
+}
+
+$opacity: none 0, disabled var(--aui-opacity-disabled),
+  dim var(--aui-opacity-dim), full 1;
+@each $token, $val in $opacity {
+  .aui-op-#{$token} {
+    opacity: $val;
+  }
+}
+
+// Typography Utilities
+$font-sizes: xxs 10px, xs 12px, s 16px, m 20px, l 24px, xl 32px, xxl 48px;
+@each $token, $size in $font-sizes {
+  .aui-f-#{$token} {
+    font-size: $size;
+  }
+}
+
+$font-weights: 1 2 3 4 5 6 7 8 9;
+@each $w in $font-weights {
+  .aui-fw-#{$w} {
+    font-weight: $w * 100;
+  }
+}
+
+$text-align: left right center;
+@each $align in $text-align {
+  .aui-ta-#{$align} {
+    text-align: $align;
+  }
+}
+
+.aui-it {
+  font-style: italic;
+}
+
+// Colors
+$colors: "default" var(--aui-color-default), "muted" var(--aui-color-muted),
+  "inherit" inherit, "transparent" transparent;
+@each $token, $color in $colors {
+  .aui-c-#{$token} {
+    color: $color;
+  }
+  .aui-bg-#{$token} {
+    background-color: $color;
+  }
+}
+
+// Requires more specificity than the utils
 .aui-select-icon {
   --size: 10px;
-  color: var(--aui-select-icon);
+  color: var(--aui-color-muted);
   width: var(--size);
   height: var(--size);
   position: absolute;

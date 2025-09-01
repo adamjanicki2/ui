@@ -80,6 +80,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 export const getButtonClassName = ({
   variant = "primary",
   size = "regular",
-}: VisualButtonProps) => `aui-button--${variant} aui-button-size--${size}`;
+}: VisualButtonProps) => `aui-button-${variant} aui-button-size-${size}`;
 
 export default Button;
