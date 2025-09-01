@@ -135,12 +135,14 @@ const mapMiscellaneous: Transformer = ({
   shadow,
   color,
   backgroundColor,
+  opacity,
 }) => {
   let className = radius ? `aui-radius-${radius}` : null;
   if (shadow) className = classNames(className, `aui-shadow-${shadow}`);
   if (color) className = classNames(className, `aui-c-${color}`);
   if (backgroundColor)
     className = classNames(className, `aui-bg-${backgroundColor}`);
+  if (opacity) className = classNames(className, `aui-op-${opacity}`);
 
   return className;
 };
