@@ -98,7 +98,7 @@ export type Vfx = {
   opacity?: "none" | "disabled" | "dim" | "full";
 
   /** Font size */
-  fontSize?: SizeToken;
+  fontSize?: SizeToken | "default";
   /** Font weight */
   fontWeight?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   /** Text alignment */
