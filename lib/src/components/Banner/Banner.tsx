@@ -11,10 +11,17 @@ type Props = BoxProps & {
 };
 
 const Banner = React.forwardRef<HTMLDivElement, Props>(
-  ({ type, className, ...rest }, ref) => (
+  ({ type, className, vfx, ...rest }, ref) => (
     <Box
       {...rest}
-      className={classNames(`aui-content-${type} aui-banner`, className)}
+      vfx={{
+        fontWeight: 4,
+        paddingY: "l",
+        paddingX: "xl",
+        width: "full",
+        ...vfx,
+      }}
+      className={classNames(`aui-content-${type}`, className)}
       ref={ref}
     />
   )

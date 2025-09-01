@@ -24,11 +24,21 @@ type Props = Omit<BoxProps, "children"> & {
 };
 
 const Select = React.forwardRef<HTMLSelectElement, Props>(
-  ({ className, options, fx, getOptionLabel, selectProps, ...rest }, ref) => {
+  ({ className, options, vfx, getOptionLabel, selectProps, ...rest }, ref) => {
     const { className: selectClassName } = selectProps || {};
     return (
       <Box
-        fx={{ axis: "x", align: "center", radius: "rounded", ...fx }}
+        vfx={{
+          pos: "relative",
+          width: "fit",
+          axis: "x",
+          align: "center",
+          radius: "rounded",
+          backgroundColor: "default",
+          color: "default",
+          padding: "none",
+          ...vfx,
+        }}
         className={classNames(
           "aui-select-container",
           selectProps?.disabled ? "aui-select-disabled" : undefined,

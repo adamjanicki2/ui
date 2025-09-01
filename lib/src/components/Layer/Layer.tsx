@@ -35,7 +35,7 @@ const Layer = React.forwardRef<HTMLDivElement, Props>(
       children,
       className,
       onMouseDown,
-      fx,
+      vfx,
       ...rest
     },
     ref
@@ -67,7 +67,14 @@ const Layer = React.forwardRef<HTMLDivElement, Props>(
 
     return (
       <Box
-        fx={{ axis: "y", align: "center", justify: "center", ...fx }}
+        vfx={{
+          pos: "fixed",
+          axis: "y",
+          align: "center",
+          justify: "center",
+          z: "max",
+          ...vfx,
+        }}
         {...rest}
         className={classNames("aui-layer-backdrop", className)}
         onMouseDown={(e) => {

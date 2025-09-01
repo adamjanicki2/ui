@@ -5,12 +5,12 @@ import ui from "../ui";
 type Props = React.ComponentProps<typeof ui.textarea>;
 
 const TextArea = forwardRef<HTMLTextAreaElement, Props>(
-  ({ className, rows = 3, fx, ...props }, ref) => (
+  ({ className, rows = 3, vfx, ...props }, ref) => (
     <ui.textarea
       {...props}
       ref={ref}
       className={classNames(`aui-input-base aui-input`, className)}
-      fx={{ radius: "rounded", ...fx }}
+      vfx={{ radius: "rounded", ...vfx }}
       rows={rows}
     />
   )

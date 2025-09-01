@@ -67,12 +67,14 @@ type State = {
 
 const DEFAULT_DURATION_S = 1;
 
+const itemVfx = { width: "full", height: "full" } as const;
+
 const Carousel = React.forwardRef<HTMLDivElement, Props>(
   (
     {
       children,
-      className,
       hideArrows,
+      vfx,
       hideDots,
       dotProps,
       leftArrowProps,
@@ -147,11 +149,17 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
     return (
       <Box
         {...rest}
-        className={classNames("aui-carousel", className)}
+        vfx={{
+          maxWidth: "full",
+          width: "fit",
+          pos: "relative",
+          overflow: "hidden",
+          ...vfx,
+        }}
         ref={ref}
       >
         <Box
-          fx={{
+          vfx={{
             axis: delta >= 0 ? "x" : "-x",
             width: "full",
             height: "full",
@@ -159,8 +167,10 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
           style={animatingStyles}
           onTransitionEnd={onTransitionEnd}
         >
-          <Box className="aui-carousel-item">{children[cur]}</Box>
-          <Box className="aui-carousel-item" aria-hidden>
+          <Box vfx={itemVfx} className="aui-carousel-item">
+            {children[cur]}
+          </Box>
+          <Box vfx={itemVfx} className="aui-carousel-item" aria-hidden>
             {children[next]}
           </Box>
         </Box>
@@ -169,11 +179,12 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
             {!hideArrows && (
               <>
                 <Button
-                  fx={{
+                  vfx={{
                     axis: "x",
                     align: "center",
                     justify: "center",
                     radius: "max",
+                    padding: "none",
                   }}
                   className={classNames(
                     "aui-carousel-arrow",
@@ -192,11 +203,12 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                   )}
                 </Button>
                 <Button
-                  fx={{
+                  vfx={{
                     axis: "x",
                     align: "center",
                     justify: "center",
                     radius: "max",
+                    padding: "none",
                   }}
                   className={classNames(
                     "aui-carousel-arrow",
@@ -218,7 +230,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
             )}
             {!hideDots && (
               <Box
-                fx={{ axis: "x", align: "center", gap: "xxs" }}
+                vfx={{ axis: "x", align: "center", gap: "xxs" }}
                 className="aui-carousel-dots"
               >
                 {children.map((_, i) => (
@@ -228,7 +240,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                       "aui-carousel-dot",
                       dotProps?.className
                     )}
-                    fx={{ radius: "max" }}
+                    vfx={{ radius: "max", padding: "none" }}
                     disabled={cur === i || animating}
                     onClick={() => startTransition(i - cur)}
                     style={dotProps?.style}

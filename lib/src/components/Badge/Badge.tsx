@@ -11,10 +11,18 @@ type Props = BoxProps & {
 };
 
 const Badge = React.forwardRef<HTMLDivElement, Props>(
-  ({ type, className, fx, ...rest }, ref) => (
+  ({ type, className, vfx, ...rest }, ref) => (
     <Box
       {...rest}
-      fx={{ radius: "rounded", ...fx }}
+      vfx={{
+        radius: "rounded",
+        paddingY: "xxs",
+        paddingX: "xs",
+        fontWeight: 5,
+        fontSize: "s",
+        width: "fit",
+        ...vfx,
+      }}
       className={classNames(`aui-badge aui-content-${type}`, className)}
       ref={ref}
     />

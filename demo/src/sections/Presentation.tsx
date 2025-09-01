@@ -55,7 +55,7 @@ export default function Presentation() {
           drawers={(["success", "info", "error"] as const).map((status, i) => ({
             label: status,
             content: (
-              <Box fx={{ padding: "m", paddingTop: "none" }}>
+              <Box vfx={{ padding: "m", paddingTop: "none" }}>
                 <Alert type={status}>We live in a Twilight World.</Alert>
               </Box>
             ),
@@ -83,7 +83,7 @@ export default function Presentation() {
           when designing a custom modal for one of my other sites that I wanted
           to fade in an out when the user entered or exited the state.
         </Para>
-        <Box fx={{ axis: "y", align: "center" }}>
+        <Box vfx={{ axis: "y", align: "center" }}>
           <Button
             className="w-fc mb2"
             onClick={() => setAnimatedOpen(!animatedOpen)}
@@ -117,9 +117,9 @@ export default function Presentation() {
           easier-to-understand props like <ui.code>axis</ui.code> to control the
           flex direction.
         </Para>
-        <Box fx={{ axis: "y" }}>
+        <Box vfx={{ axis: "y" }}>
           <Box
-            fx={{
+            vfx={{
               axis: "x",
               align: "end",
               justify: "center",
@@ -130,7 +130,7 @@ export default function Presentation() {
           >
             <Box
               className="bordering"
-              fx={{
+              vfx={{
                 axis: "y",
                 align: "center",
                 justify: "center",
@@ -141,7 +141,7 @@ export default function Presentation() {
             </Box>
             <Box
               className="bordering"
-              fx={{
+              vfx={{
                 axis: "y",
                 align: "center",
                 justify: "center",
@@ -152,7 +152,7 @@ export default function Presentation() {
             </Box>
             <Box
               className="bordering"
-              fx={{
+              vfx={{
                 axis: "y",
                 align: "center",
                 justify: "center",
@@ -199,7 +199,7 @@ export default function Presentation() {
           want to create a modal or a dropdown menu that should cover the entire
           screen.
         </Para>
-        <Box fx={{ axis: "y", align: "center" }}>
+        <Box vfx={{ axis: "y", align: "center" }}>
           <Button className="w-fc mb2" onClick={() => setLayerOpen(true)}>
             Open layer
           </Button>
@@ -223,7 +223,7 @@ export default function Presentation() {
           used modal design patterns, providing props for doing something on
           confirm and close.
         </Para>
-        <Box fx={{ axis: "y", align: "center" }}>
+        <Box vfx={{ axis: "y", align: "center" }}>
           <Button className="w-fc mb2" onClick={() => setModalOpen(true)}>
             Open Modal
           </Button>

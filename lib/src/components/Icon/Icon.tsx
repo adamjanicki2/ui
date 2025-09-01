@@ -2,9 +2,10 @@ import React from "react";
 import icons, { type IconType } from "./icons";
 import { classNames } from "../../functions";
 import type { SizeToken } from "../../utils/types";
+import ui from "../ui";
 
 export type Props = Omit<
-  React.DetailedHTMLProps<React.SVGAttributes<SVGSVGElement>, SVGSVGElement>,
+  React.ComponentProps<typeof ui.svg>,
   "children" | "viewBox"
 > & {
   /**
@@ -20,7 +21,7 @@ export type Props = Omit<
 
 const Icon = React.forwardRef<SVGSVGElement, Props>(
   ({ icon, className, size = "s", ...rest }, ref) => (
-    <svg
+    <ui.svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 16 16"
       className={classNames("aui-icon", `aui-icon-${size}`, className)}
@@ -28,7 +29,7 @@ const Icon = React.forwardRef<SVGSVGElement, Props>(
       ref={ref}
     >
       <path d={icons[icon]} />
-    </svg>
+    </ui.svg>
   )
 );
 

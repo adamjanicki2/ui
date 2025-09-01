@@ -5,11 +5,11 @@ import ui from "../ui";
 export type Props = React.ComponentProps<typeof ui.input>;
 
 const Input = forwardRef<HTMLInputElement, Props>(
-  ({ className, fx, ...props }, ref) => (
+  ({ className, vfx, ...props }, ref) => (
     <ui.input
       {...props}
       ref={ref}
-      fx={{ radius: "rounded", ...fx }}
+      vfx={{ radius: "rounded", ...vfx }}
       className={classNames(`aui-input-base aui-input`, className)}
     />
   )

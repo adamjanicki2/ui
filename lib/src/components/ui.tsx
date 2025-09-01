@@ -1,7 +1,7 @@
 import React from "react";
-import type { Fx } from "../utils/types";
+import type { Vfx } from "../utils/types";
 import { classNames } from "../functions";
-import transformFx from "../utils/transformFx";
+import transformVfx from "../utils/transformVfx";
 
 type HtmlTag = keyof React.JSX.IntrinsicElements;
 
@@ -10,16 +10,16 @@ type Props<T extends HtmlTag> = React.ComponentPropsWithRef<T> & {
    * The VFX or other organizational css to apply to this element.
    * Properties are translated to class names before being applied.
    */
-  fx?: Fx;
+  vfx?: Vfx;
 };
 
-function createFxElement<T extends HtmlTag>(tag: T) {
+function createVfxElement<T extends HtmlTag>(tag: T) {
   const Component = React.forwardRef<React.ComponentRef<T>, Props<T>>(
-    ({ fx, className, ...props }, ref) =>
+    ({ vfx, className, ...props }, ref) =>
       React.createElement(tag, {
         ...props,
         ref,
-        className: classNames(transformFx(fx), className),
+        className: classNames(transformVfx(vfx), className),
       })
   );
 
@@ -27,7 +27,7 @@ function createFxElement<T extends HtmlTag>(tag: T) {
 }
 
 type HtmlTags = {
-  [K in HtmlTag]: ReturnType<typeof createFxElement<K>>;
+  [K in HtmlTag]: ReturnType<typeof createVfxElement<K>>;
 };
 
 const ui = new Proxy(
@@ -38,7 +38,7 @@ const ui = new Proxy(
       if (cachedComponent) {
         return cachedComponent;
       }
-      const component = createFxElement(tag);
+      const component = createVfxElement(tag);
       cache[tag] = component;
       return component;
     },

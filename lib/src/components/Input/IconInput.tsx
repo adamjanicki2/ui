@@ -20,24 +20,35 @@ type IconInputProps = Omit<BoxProps, "children"> & {
 };
 
 const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
-  ({ startIcon, endIcon, className, fx, inputProps, ...rest }, ref) => {
+  ({ startIcon, endIcon, className, vfx, inputProps, ...rest }, ref) => {
     const {
       className: inputClassName,
-      fx: inputFx,
+      vfx: inputVfx,
       ...restInputProps
     } = inputProps || {};
 
     return (
       <Box
-        fx={{ axis: "x", align: "center", radius: "rounded", ...fx }}
-        className={classNames(`aui-input aui-icon-input`, className)}
+        vfx={{
+          axis: "x",
+          align: "center",
+          radius: "rounded",
+          overflow: "scroll",
+          ...vfx,
+        }}
+        className={classNames(`aui-input`, className)}
         {...rest}
         ref={ref}
       >
         {startIcon}
         <ui.input
           {...restInputProps}
-          fx={{ radius: "rounded", ...inputFx }}
+          vfx={{
+            radius: "rounded",
+            backgroundColor: "transparent",
+            width: "full",
+            ...inputVfx,
+          }}
           className={classNames(`aui-input-base`, inputClassName)}
         />
         {endIcon}

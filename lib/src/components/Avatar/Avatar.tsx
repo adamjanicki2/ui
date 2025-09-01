@@ -22,14 +22,14 @@ type Props = Omit<BoxProps, "children"> & {
 
 const Avatar = React.forwardRef<HTMLDivElement, Props>(
   (
-    { size = "s", backgroundImage, className, style, username, fx, ...rest },
+    { size = "s", backgroundImage, className, style, username, vfx, ...rest },
     ref
   ) => {
     const [imageError, setImageError] = useState(false);
     const useFallback = imageError || !backgroundImage;
 
     const color = chooseColor(username);
-    let avatarClassName = `aui-avatar`;
+    let avatarClassName: string | null = null;
 
     if (useFallback) {
       avatarClassName = classNames(avatarClassName, `aui-avatar-${color}`);
@@ -51,7 +51,13 @@ const Avatar = React.forwardRef<HTMLDivElement, Props>(
       <Box
         className={classNames(avatarClassName, className)}
         style={{ ...avatarStyle, ...style }}
-        fx={{ radius: "rounded", ...fx }}
+        vfx={{
+          radius: "rounded",
+          overflow: "hidden",
+          fontWeight: 6,
+          textAlign: "center",
+          ...vfx,
+        }}
         {...rest}
         ref={ref}
       >

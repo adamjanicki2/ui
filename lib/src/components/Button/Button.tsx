@@ -52,11 +52,14 @@ type IconButtonProps = Omit<DefaultButtonProps, "children"> & {
 };
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ icon, size, fx, iconProps, variant = "dim", className, ...rest }, ref) => {
+  (
+    { icon, size, vfx, iconProps, variant = "dim", className, ...rest },
+    ref
+  ) => {
     return (
       <UnstyledButton
         {...rest}
-        fx={{ axis: "x", align: "center", justify: "center", ...fx }}
+        vfx={{ axis: "x", align: "center", justify: "center", ...vfx }}
         className={classNames(`aui-${variant}`, className)}
         ref={ref}
       >
@@ -66,20 +69,32 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   }
 );
 
+const vfxBySize = {
+  small: { fontSize: "xs", padding: "xs" },
+  regular: { padding: "s" },
+} as const;
+
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, className, fx, size, ...rest }, ref) => (
-    <UnstyledButton
-      {...rest}
-      fx={{ radius: "rounded", ...fx }}
-      className={classNames(getButtonClassName({ variant, size }), className)}
-      ref={ref}
-    />
-  )
+  ({ variant, className, vfx, size, ...rest }, ref) => {
+    const { vfx: additionalVfx, className: additionalClassName } =
+      getButtonProps({ variant, size });
+    return (
+      <UnstyledButton
+        {...rest}
+        vfx={{ ...additionalVfx, ...vfx }}
+        className={classNames(additionalClassName, className)}
+        ref={ref}
+      />
+    );
+  }
 );
 
-export const getButtonClassName = ({
+export const getButtonProps = ({
   variant = "primary",
   size = "regular",
-}: VisualButtonProps) => `aui-button-${variant} aui-button-size-${size}`;
+}: VisualButtonProps) => ({
+  className: `aui-button-${variant}`,
+  vfx: { ...vfxBySize[size], radius: "rounded", fontWeight: 6 } as const,
+});
 
 export default Button;

@@ -121,9 +121,7 @@
   --aui-link-color: #33bfff;
 }
 
-/* =======================
-   Content Types
-======================= */
+// Content types
 @each $type in "success", "warning", "error", "info", "static" {
   .aui-content-#{$type} {
     background-color: var(--aui-#{$type}-background);
@@ -132,65 +130,11 @@
   }
 }
 
-// Modal and Accordion
-.aui-modal {
-  color: var(--aui-color-default);
-  background-color: var(--aui-default-background);
-  box-shadow: 0 0 0 1px var(--aui-default-border) inset,
-    var(--aui-floating-box-shadow);
-  border-radius: var(--aui-radius-rounded);
-  min-width: 40%;
-  max-width: 100%;
-}
-
-.aui-accordion {
-  background-color: var(--aui-default-background);
-  box-shadow: 0 0 0 1px var(--aui-default-border) inset,
-    var(--aui-subtle-box-shadow);
-}
-.aui-accordion-label {
-  font-weight: 600;
-}
-
-.aui-accordion-hr {
-  border: none;
-  height: 1px;
-  background-color: var(--aui-default-border);
-  width: 100%;
-  margin: 0;
-}
-
-.aui-accordion-arrow {
-  color: var(--aui-color-muted);
-}
-
 // Signals
-.aui-alert {
-  padding: var(--aui-m);
-  border-style: solid;
-  border-width: 1px;
-  font-weight: 400;
-}
-
-.aui-avatar {
-  overflow: hidden;
-  text-align: center;
-  font-weight: 600;
-}
-
+.aui-alert,
 .aui-badge {
-  padding: var(--aui-xxs) var(--aui-xs);
   border-style: solid;
   border-width: 1px;
-  font-weight: 500;
-  font-size: 14px;
-  width: fit-content;
-}
-
-.aui-banner {
-  padding: var(--aui-l) var(--aui-xl);
-  font-weight: 400;
-  width: 100%;
 }
 
 // Buttons and Links
@@ -209,16 +153,6 @@
   background: none;
   border: none;
   padding: 0;
-}
-
-.aui-button-size-regular {
-  padding: var(--aui-s);
-  font-weight: 600;
-}
-.aui-button-size-small {
-  padding: var(--aui-xs);
-  font-size: 12px;
-  font-weight: 600;
 }
 
 .aui-button:disabled {
@@ -253,19 +187,18 @@
 }
 
 .aui-link {
-  font-weight: 600;
   color: var(--aui-link-color);
   transition: opacity var(--aui-default-transition);
 }
 
 @media (hover: hover) {
-  .aui-button--primary:not([disabled]):hover,
+  .aui-button-primary:not([disabled]):hover,
   .aui-dim:not([disabled]):hover,
   .aui-link:hover {
     opacity: var(--aui-opacity-dim);
   }
 
-  .aui-button--secondary:not([disabled]):hover {
+  .aui-button-secondary:not([disabled]):hover {
     box-shadow: 0 0 0 1px var(--aui-button-secondary-border-hover) inset,
       var(--aui-subtle-box-shadow);
   }
@@ -289,14 +222,6 @@
   background-color: var(--aui-focus-ring-color);
 }
 
-.aui-icon-input {
-  overflow: scroll;
-}
-.aui-icon-input input {
-  background-color: transparent;
-  width: 100%;
-}
-
 .aui-input {
   transition: box-shadow var(--aui-default-transition);
   box-shadow: 0 0 0 1px var(--aui-default-border) inset,
@@ -316,9 +241,6 @@
 }
 
 .aui-select-container {
-  position: relative;
-  padding: 0;
-  width: fit-content;
   transition: box-shadow var(--aui-default-transition);
   box-shadow: 0 0 0 1px var(--aui-default-border) inset,
     var(--aui-subtle-box-shadow);
@@ -346,13 +268,7 @@
 }
 
 // Layer
-.aui-modal-backdrop,
 .aui-layer-backdrop {
-  z-index: 10000;
-}
-
-.aui-layer-backdrop {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -382,19 +298,8 @@
 }
 
 // Carousel
-.aui-carousel {
-  max-width: 100%;
-  position: relative;
-  overflow: hidden;
-  min-height: var(--aui-xxl);
-  min-width: var(--aui-xxl);
-  width: fit-content;
-}
-
 .aui-carousel-item {
   flex: 0 0 100%;
-  width: 100%;
-  height: 100%;
 }
 
 .aui-carousel-arrow {
@@ -403,7 +308,6 @@
   transform: translateY(-50%);
   width: var(--aui-l);
   height: var(--aui-l);
-  padding: 0;
 }
 
 .aui-carousel-dots {
@@ -416,11 +320,17 @@
 .aui-carousel-dot {
   width: var(--aui-m);
   height: var(--aui-s);
-  padding: 0;
 }
 
 // Layout Utilities
-$flex-directions: x row, y column, "--x" row-reverse, "--y" column-reverse;
+$positions: static, relative, absolute, fixed, sticky;
+@each $pos in $positions {
+  .aui-pos-#{$pos} {
+    position: $pos;
+  }
+}
+
+$flex-directions: x row, y column, "-x" row-reverse, "-y" column-reverse;
 
 @each $class, $dir in $flex-directions {
   .aui-flex-#{$class} {
@@ -606,7 +516,7 @@ $opacity: none 0, disabled var(--aui-opacity-disabled),
 }
 
 // Typography Utilities
-$font-sizes: xxs 10px, xs 12px, s 16px, m 20px, l 24px, xl 32px, xxl 48px;
+$font-sizes: xxs 10px, xs 12px, s 14px, m 16px, l 20px, xl 24px, xxl 32px;
 @each $token, $size in $font-sizes {
   .aui-f-#{$token} {
     font-size: $size;
@@ -635,11 +545,37 @@ $text-align: left right center;
 $colors: "default" var(--aui-color-default), "muted" var(--aui-color-muted),
   "inherit" inherit, "transparent" transparent;
 @each $token, $color in $colors {
-  .aui-c-#{$token} {
-    color: $color;
-  }
   .aui-bg-#{$token} {
     background-color: $color;
+  }
+}
+
+$bg-colors: "default" var(--aui-default-background),
+  "muted" var(--aui-static-background), "inherit" inherit,
+  "transparent" transparent;
+@each $token, $color in $bg-colors {
+  .aui-bg-#{$token} {
+    background-color: $color;
+  }
+}
+
+$overflows: "scroll" scroll, "hidden" hidden;
+@each $token, $overflow in $overflows {
+  .aui-ov-#{$token} {
+    overflow: $overflow;
+  }
+  .aui-ov-x-#{$token} {
+    overflow-x: $overflow;
+  }
+  .aui-ov-y-#{$token} {
+    overflow-y: $overflow;
+  }
+}
+
+$z-indexes: "auto" auto, "floating" 100, "nav" 1000, "max" 10000;
+@each $token, $z in $z-indexes {
+  .aui-z-#{$token} {
+    z-index: $z;
   }
 }
 
