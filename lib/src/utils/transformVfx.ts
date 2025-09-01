@@ -1,198 +1,126 @@
 import { Vfx } from "./types";
-import { classNames } from "../functions";
-
-// Prefix maps for padding and margin keys
-const spacingPrefixMap = {
-  padding: "pa",
-  paddingTop: "pt",
-  paddingBottom: "pb",
-  paddingLeft: "pl",
-  paddingRight: "pr",
-  margin: "ma",
-  marginTop: "mt",
-  marginBottom: "mb",
-  marginLeft: "ml",
-  marginRight: "mr",
-} as const;
-
-const dimensionPrefixMap = {
-  width: "w",
-  maxWidth: "mw",
-  height: "h",
-  maxHeight: "mh",
-} as const;
-
-type Transformer = (vfx: Vfx) => string | null;
-
-const mapLayout: Transformer = ({
-  pos,
-  axis,
-  wrap,
-  align,
-  justify,
-  gap,
-  overflow,
-  overflowX,
-  overflowY,
-  z,
-}) => {
-  let className: string | null = pos ? `aui-pos-${pos}` : null;
-  if (axis) className = classNames(className, `aui-flex-${axis}`);
-  if (wrap) className = classNames(className, "aui-flex-wrap");
-  if (align) className = classNames(className, `aui-align-${align}`);
-  if (justify) className = classNames(className, `aui-justify-${justify}`);
-  if (gap) className = classNames(className, `aui-gap-${gap}`);
-  if (overflow) className = classNames(className, `aui-ov-${overflow}`);
-  if (overflowX) className = classNames(className, `aui-ov-x-${overflowX}`);
-  if (overflowY) className = classNames(className, `aui-ov-y-${overflowY}`);
-  if (z) className = classNames(className, `aui-z-${z}`);
-
-  return className;
-};
-
-const mapSpacing: Transformer = ({
-  padding,
-  paddingX,
-  paddingY,
-  paddingBottom,
-  paddingTop,
-  paddingLeft,
-  paddingRight,
-  margin,
-  marginX,
-  marginY,
-  marginTop,
-  marginBottom,
-  marginLeft,
-  marginRight,
-}) => {
-  // Use your existing spacingPrefixMap logic
-  let className: string | null = null;
-  const spacingProps = [
-    ["padding", padding],
-    ["paddingTop", paddingTop ?? paddingY],
-    ["paddingBottom", paddingBottom ?? paddingY],
-    ["paddingLeft", paddingLeft ?? paddingX],
-    ["paddingRight", paddingRight ?? paddingX],
-    ["margin", margin],
-    ["marginTop", marginTop ?? marginY],
-    ["marginBottom", marginBottom ?? marginY],
-    ["marginLeft", marginLeft ?? marginX],
-    ["marginRight", marginRight ?? marginX],
-  ] as const;
-
-  spacingProps.forEach(([prop, value]) => {
-    if (value) {
-      const prefix = spacingPrefixMap[prop];
-      className = classNames(className, `aui-${prefix}-${value}`);
-    }
-  });
-
-  return className;
-};
-
-const dimensionProps = ["width", "height", "maxWidth", "maxHeight"] as const;
-
-const mapDimensions: Transformer = (vfx) => {
-  let className: string | null = null;
-  dimensionProps.forEach((prop) => {
-    const value = vfx[prop];
-    if (value)
-      className = classNames(
-        className,
-        `aui-${dimensionPrefixMap[prop]}-${value}`
-      );
-  });
-  return className;
-};
-
-const mapBorders: Transformer = ({
-  border,
-  borderTop,
-  borderBottom,
-  borderLeft,
-  borderRight,
-  borderWidth,
-  borderStyle,
-  borderColor,
-}) => {
-  let className: string | null = null;
-
-  const sides = {
-    ba: border,
-    bt: borderTop,
-    bb: borderBottom,
-    bl: borderLeft,
-    br: borderRight,
-  } as const;
-
-  Object.entries(sides).forEach(([prefix, value]) => {
-    if (value) {
-      className = classNames(className, `aui-${prefix}`);
-    }
-  });
-
-  const modifiers = {
-    bw: borderWidth,
-    bs: borderStyle,
-    bc: borderColor,
-  } as const;
-
-  Object.entries(modifiers).forEach(([prefix, value]) => {
-    if (value) {
-      className = classNames(className, `aui-${prefix}-${value}`);
-    }
-  });
-
-  return className;
-};
-
-const mapMiscellaneous: Transformer = ({
-  radius,
-  shadow,
-  color,
-  backgroundColor,
-  opacity,
-}) => {
-  let className = radius ? `aui-radius-${radius}` : null;
-  if (shadow) className = classNames(className, `aui-shadow-${shadow}`);
-  if (color) className = classNames(className, `aui-c-${color}`);
-  if (backgroundColor)
-    className = classNames(className, `aui-bg-${backgroundColor}`);
-  if (opacity) className = classNames(className, `aui-op-${opacity}`);
-
-  return className;
-};
-
-const mapTypography: Transformer = ({
-  fontSize,
-  fontWeight,
-  textAlign,
-  italics,
-}) => {
-  let className: string | null = null;
-
-  if (fontSize) className = classNames(className, `aui-f-${fontSize}`);
-  if (fontWeight) className = classNames(className, `aui-fw-${fontWeight}`);
-  if (textAlign) className = classNames(className, `aui-ta-${textAlign}`);
-  if (italics) className = classNames(className, `aui-it`);
-
-  return className;
-};
-
-const transformers = [
-  mapLayout,
-  mapSpacing,
-  mapDimensions,
-  mapBorders,
-  mapTypography,
-  mapMiscellaneous,
-] as const;
 
 export default function transformVfx(vfx: Vfx | undefined): string | null {
   if (!vfx) return null;
-  const combinedClasses = classNames(
-    ...transformers.map((transformer) => transformer(vfx))
-  );
-  return combinedClasses || null;
+
+  const {
+    pos,
+    axis,
+    wrap,
+    align,
+    justify,
+    gap,
+    overflow,
+    overflowX,
+    overflowY,
+    z,
+
+    padding,
+    paddingX,
+    paddingY,
+    paddingTop,
+    paddingBottom,
+    paddingLeft,
+    paddingRight,
+
+    margin,
+    marginX,
+    marginY,
+    marginTop,
+    marginBottom,
+    marginLeft,
+    marginRight,
+
+    width,
+    height,
+    maxWidth,
+    maxHeight,
+
+    border,
+    borderTop,
+    borderBottom,
+    borderRight,
+    borderLeft,
+    borderColor,
+    borderStyle,
+    borderWidth,
+
+    fontSize,
+    fontWeight,
+    textAlign,
+    italics,
+
+    radius,
+    shadow,
+    color,
+    backgroundColor,
+    opacity,
+  } = vfx;
+
+  const classes: string[] = [];
+
+  // --- Layout ---
+  if (pos) classes.push(`aui-pos-${pos}`);
+  if (axis) classes.push(`aui-flex-${axis}`);
+  if (wrap) classes.push("aui-flex-wrap");
+  if (align) classes.push(`aui-align-${align}`);
+  if (justify) classes.push(`aui-justify-${justify}`);
+  if (gap) classes.push(`aui-gap-${gap}`);
+  if (overflow) classes.push(`aui-ov-${overflow}`);
+  if (overflowX) classes.push(`aui-ov-x-${overflowX}`);
+  if (overflowY) classes.push(`aui-ov-y-${overflowY}`);
+  if (z) classes.push(`aui-z-${z}`);
+
+  // --- Spacing ---
+  const pt = paddingTop ?? paddingY;
+  const pb = paddingBottom ?? paddingY;
+  const pl = paddingLeft ?? paddingX;
+  const pr = paddingRight ?? paddingX;
+  const mt = marginTop ?? marginY;
+  const mb = marginBottom ?? marginY;
+  const ml = marginLeft ?? marginX;
+  const mr = marginRight ?? marginX;
+
+  if (padding) classes.push(`aui-pa-${padding}`);
+  if (pt) classes.push(`aui-pt-${pt}`);
+  if (pb) classes.push(`aui-pb-${pb}`);
+  if (pl) classes.push(`aui-pl-${pl}`);
+  if (pr) classes.push(`aui-pr-${pr}`);
+  if (margin) classes.push(`aui-ma-${margin}`);
+  if (mt) classes.push(`aui-mt-${mt}`);
+  if (mb) classes.push(`aui-mb-${mb}`);
+  if (ml) classes.push(`aui-ml-${ml}`);
+  if (mr) classes.push(`aui-mr-${mr}`);
+
+  // --- Dimensions ---
+  if (width) classes.push(`aui-w-${width}`);
+  if (height) classes.push(`aui-h-${height}`);
+  if (maxWidth) classes.push(`aui-mw-${maxWidth}`);
+  if (maxHeight) classes.push(`aui-mh-${maxHeight}`);
+
+  // --- Borders ---
+  if (border) classes.push("aui-ba");
+  if (borderTop) classes.push("aui-bt");
+  if (borderBottom) classes.push("aui-bb");
+  if (borderLeft) classes.push("aui-bl");
+  if (borderRight) classes.push("aui-br");
+
+  if (borderWidth) classes.push(`aui-bw-${borderWidth}`);
+  if (borderStyle) classes.push(`aui-bs-${borderStyle}`);
+  if (borderColor) classes.push(`aui-bc-${borderColor}`);
+
+  // --- Typography ---
+  if (fontSize) classes.push(`aui-f-${fontSize}`);
+  if (fontWeight) classes.push(`aui-fw-${fontWeight}`);
+  if (textAlign) classes.push(`aui-ta-${textAlign}`);
+  if (italics) classes.push("aui-it");
+
+  // --- Misc ---
+  if (radius) classes.push(`aui-radius-${radius}`);
+  if (shadow) classes.push(`aui-shadow-${shadow}`);
+  if (color) classes.push(`aui-c-${color}`);
+  if (backgroundColor) classes.push(`aui-bg-${backgroundColor}`);
+  if (opacity) classes.push(`aui-op-${opacity}`);
+
+  return classes.join(" ") || null;
 }
