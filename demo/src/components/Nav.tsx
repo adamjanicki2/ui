@@ -19,7 +19,7 @@ const Nav = () => {
 
   return (
     <ui.nav
-      fx={{
+      vfx={{
         axis: "x",
         align: "center",
         justify: "between",
@@ -30,7 +30,7 @@ const Nav = () => {
       className="nav"
     >
       <Box
-        fx={{ axis: "x", align: "center", justify: "between" }}
+        vfx={{ axis: "x", align: "center", justify: "between" }}
         className="bar-container"
       >
         <UnstyledLink className="nav-title" to="#welcome">
@@ -42,7 +42,7 @@ const Nav = () => {
         </Box>
       </Box>
       <ui.ul
-        fx={{ axis: "x", align: "center", margin: "none" }}
+        vfx={{ axis: "x", align: "center", margin: "none" }}
         className="desktop link-container"
         style={{ display: open ? "flex" : undefined }}
       >

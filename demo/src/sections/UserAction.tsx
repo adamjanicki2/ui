@@ -49,7 +49,7 @@ export default function UserAction() {
           depending on the required use case.
         </Para>
         <Box
-          fx={{
+          vfx={{
             axis: "x",
             align: "center",
             justify: "center",
@@ -81,7 +81,7 @@ export default function UserAction() {
           a clear button at the end of your input.
         </Para>
         <Box
-          fx={{
+          vfx={{
             axis: "x",
             align: "center",
             gap: "s",
@@ -132,7 +132,7 @@ export default function UserAction() {
           context.
         </Para>
         <Box
-          fx={{
+          vfx={{
             axis: "x",
             align: "center",
             gap: "m",
@@ -165,7 +165,7 @@ export default function UserAction() {
           the arrow.
         </Para>
         <Box
-          fx={{
+          vfx={{
             axis: "x",
             align: "center",
             gap: "s",

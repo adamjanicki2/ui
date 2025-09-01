@@ -58,7 +58,7 @@ export default function Miscellaneous() {
           doesn't add an extra element to the DOM, just instead wraps your
           component with some extra hook magic and click listeners.
         </Para>
-        <Box fx={{ width: "fit", marginX: "auto" }}>
+        <Box vfx={{ width: "fit", marginX: "auto" }}>
           <ClickOutside
             onClickOutside={() => {
               setClickOutsideText("You clicked outside!");
@@ -85,7 +85,7 @@ export default function Miscellaneous() {
           different variants, which you can checkout below!
         </Para>
         <Box
-          fx={{
+          vfx={{
             axis: "x",
             align: "center",
             justify: "center",
@@ -145,7 +145,7 @@ export default function Miscellaneous() {
           icons as I possibly can!
         </Para>
         <Box
-          fx={{
+          vfx={{
             axis: "x",
             align: "center",
             justify: "center",
@@ -157,7 +157,7 @@ export default function Miscellaneous() {
             <Tooltip
               offset={4}
               tooltipContent={
-                <Box className="tooltip f7 fw6 br3" fx={{ padding: "xs" }}>
+                <Box className="tooltip f7 fw6 br3" vfx={{ padding: "xs" }}>
                   {i + 1}: {icon}
                 </Box>
               }
@@ -178,7 +178,7 @@ export default function Miscellaneous() {
           it was some fun css animations!
         </Para>
         <Box
-          fx={{
+          vfx={{
             axis: "x",
             align: "center",
             gap: "s",
@@ -203,7 +203,7 @@ export default function Miscellaneous() {
           you to configure either a background image, or a letter icon.
         </Para>
         <Box
-          fx={{
+          vfx={{
             axis: "x",
             align: "center",
             gap: "s",

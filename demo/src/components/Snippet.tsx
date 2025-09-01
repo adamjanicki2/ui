@@ -28,11 +28,11 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
 
   return (
     <Box
-      fx={{ marginX: "auto", maxWidth: "full", width: "min" }}
+      vfx={{ marginX: "auto", maxWidth: "full", width: "min" }}
       className={classNames("snippet-container ba br2", className)}
     >
       <Box
-        fx={{
+        vfx={{
           axis: "x",
           align: "center",
           justify: "between",
@@ -45,7 +45,7 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
         <ui.p className="f6 fw5 ma0">{lang}</ui.p>
         {copied ? (
           <Badge
-            fx={{ axis: "x", align: "center", gap: "xs" }}
+            vfx={{ axis: "x", align: "center", gap: "xs" }}
             className="flex items-center"
             type="success"
           >
@@ -53,7 +53,7 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
           </Badge>
         ) : (
           <Button
-            fx={{ axis: "x", align: "center", gap: "xs" }}
+            vfx={{ axis: "x", align: "center", gap: "xs" }}
             onClick={copyCode}
             size="small"
             variant="secondary"
@@ -65,7 +65,7 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
         )}
       </Box>
       <ui.pre
-        fx={{ axis: "x", width: "full", margin: "none", padding: "s" }}
+        vfx={{ axis: "x", width: "full", margin: "none", padding: "s" }}
         style={{
           overflow: "scroll",
           maxHeight: "70vh",

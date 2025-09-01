@@ -9,8 +9,11 @@ export type SizeToken = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
 type SpacingSize = SizeToken | "none";
 type AutoSize = SpacingSize | "auto";
 type Color = "default" | "muted" | "inherit" | "transparent";
+type Overflow = "hidden" | "scroll";
 
-export type Fx = {
+export type Vfx = {
+  /** Element's positioning */
+  pos?: "static" | "relative" | "absolute" | "fixed" | "sticky";
   /** Direction the content spans; along the x-axis or y-axis (Equivalent to flex-direction) */
   axis?: "x" | "y" | "-x" | "-y";
   /** Spacing between children of the content */
@@ -21,6 +24,14 @@ export type Fx = {
   justify?: "start" | "center" | "between" | "around" | "end";
   /** Whether to allow wrapping of children */
   wrap?: boolean;
+  /** How to handle overflow in the container */
+  overflow?: Overflow;
+  /** How to handle overflow in the X direction */
+  overflowX?: Overflow;
+  /** How to handle overflow in the Y direction */
+  overflowY?: Overflow;
+  /** Z-index to position the element at */
+  z?: "auto" | "floating" | "nav" | "max";
 
   /** Padding inside the content */
   padding?: SpacingSize;

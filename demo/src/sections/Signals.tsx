@@ -26,7 +26,7 @@ export default function Signals() {
           types are also used for the <ui.code>Badge</ui.code> and{" "}
           <ui.code>Banner</ui.code> components.
         </Para>
-        <Box fx={{ axis: "y" }}>
+        <Box vfx={{ axis: "y" }}>
           <Alert className="mv1" type="static">
             This is a static alert
           </Alert>
@@ -54,7 +54,7 @@ export default function Signals() {
           indicators of status of a particular thing.
         </Para>
         <Box
-          fx={{
+          vfx={{
             axis: "x",
             align: "center",
             gap: "s",
@@ -84,7 +84,7 @@ export default function Signals() {
             point.
           </ui.em>
         </Para>
-        <Box fx={{ axis: "y", gap: "s", padding: "xs" }}>
+        <Box vfx={{ axis: "y", gap: "s", padding: "xs" }}>
           <Banner type="static">This is a static banner</Banner>
           <Banner type="info">This is an info banner</Banner>
           <Banner type="success">This is a success banner</Banner>

@@ -84,14 +84,14 @@ export const bannerSnippet = `
 `;
 
 export const boxSnippet = `
-<Box fx={{ axis: "x", align: "end", justify: "center", padding: "xs", gap: "xs" }}>
-  <Box fx={{ axis: "y", align: "center", justify: "center", padding: "m" }}>
+<Box vfx={{ axis: "x", align: "end", justify: "center", padding: "xs", gap: "xs" }}>
+  <Box vfx={{ axis: "y", align: "center", justify: "center", padding: "m" }}>
     L
   </Box>
-  <Box fx={{ axis: "y", align: "center", justify: "center", padding: "l" }}>
+  <Box vfx={{ axis: "y", align: "center", justify: "center", padding: "l" }}>
     XL
   </Box>
-  <Box fx={{ axis: "y", align: "center", justify: "center", padding: "xxl" }}>
+  <Box vfx={{ axis: "y", align: "center", justify: "center", padding: "xxl" }}>
     XXL
   </Box>
 </Box>

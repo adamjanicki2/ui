@@ -49,7 +49,7 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
   ) => {
     return (
       <Animated
-        className="aui-modal-backdrop"
+        vfx={{ z: "max" }}
         visible={open}
         animateTo={{ style: { opacity: 1 } }}
         animateFrom={{ style: { opacity: 0 } }}
@@ -58,11 +58,19 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
           <Box
             role="dialog"
             aria-modal="true"
-            className="aui-modal"
-            fx={{ axis: "y", padding: "m", gap: "m", radius: "rounded" }}
+            vfx={{
+              axis: "y",
+              padding: "m",
+              gap: "m",
+              radius: "rounded",
+              maxWidth: "full",
+              shadow: "floating",
+              color: "default",
+              backgroundColor: "default",
+            }}
           >
             <Box
-              fx={{
+              vfx={{
                 axis: "x",
                 align: "center",
                 justify: "end",
@@ -76,7 +84,7 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
             <Box {...rest} ref={ref} />
 
             <Box
-              fx={{
+              vfx={{
                 axis: "x",
                 align: "center",
                 justify: "end",

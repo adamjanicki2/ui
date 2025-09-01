@@ -1,8 +1,8 @@
 import React from "react";
-import { getButtonClassName, type VisualButtonProps } from "../Button/Button";
+import { getButtonProps, type VisualButtonProps } from "../Button/Button";
 import classNames from "../../functions/classNames";
-import { Fx } from "../../utils/types";
-import transformFx from "../../utils/transformFx";
+import { Vfx } from "../../utils/types";
+import transformVfx from "../../utils/transformVfx";
 
 export type BaseLinkProps = Omit<
   React.DetailedHTMLProps<
@@ -36,15 +36,15 @@ type LinkProps = BaseLinkProps & {
    * The VFX or other organizational css to apply to this element.
    * Properties are translated to class names before being applied.
    */
-  fx?: Fx;
+  vfx?: Vfx;
 };
 
 export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ LinkElement, to, className, fx, external, ...rest }, ref) => {
+  ({ LinkElement, to, className, vfx, external, ...rest }, ref) => {
     const props = {
       ...(external ? { target: "_blank", rel: "noreferrer noopener" } : {}),
       ...rest,
-      className: classNames("aui-action", transformFx(fx), className),
+      className: classNames("aui-action", transformVfx(vfx), className),
     };
 
     if (LinkElement) {
@@ -58,19 +58,29 @@ export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
 export const ButtonLink = React.forwardRef<
   HTMLAnchorElement,
   LinkProps & VisualButtonProps
->(({ className, variant, fx, size, ...props }, ref) => (
-  <UnstyledLink
-    {...props}
-    className={classNames(getButtonClassName({ variant, size }), className)}
-    fx={{ radius: "rounded", ...fx }}
-    ref={ref}
-  />
-));
+>(({ className, variant, vfx, size, ...props }, ref) => {
+  const { vfx: additionalVfx, className: additionalClassName } = getButtonProps(
+    {
+      variant,
+      size,
+    }
+  );
 
-const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ className, ...props }, ref) => (
+  return (
     <UnstyledLink
       {...props}
+      className={classNames(additionalClassName, className)}
+      vfx={{ ...additionalVfx, ...vfx }}
+      ref={ref}
+    />
+  );
+});
+
+const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
+  ({ className, vfx, ...props }, ref) => (
+    <UnstyledLink
+      {...props}
+      vfx={{ fontWeight: 6, ...vfx }}
       className={classNames("aui-link", className)}
       ref={ref}
     />

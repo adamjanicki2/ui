@@ -1,20 +1,20 @@
-import transformFx from "../../src/utils/transformFx";
+import transformVfx from "../../src/utils/transformVfx";
 
-describe("transformFx", () => {
-  it("returns null when fx is undefined or empty", () => {
-    expect(transformFx(undefined)).toBeNull();
-    expect(transformFx({})).toBeNull();
+describe("transformVfx", () => {
+  it("returns null when vfx is undefined or empty", () => {
+    expect(transformVfx(undefined)).toBeNull();
+    expect(transformVfx({})).toBeNull();
   });
 
   it("transforms for simple case", () => {
     expect(
-      transformFx({ axis: "-x", align: "center", gap: "s", margin: "auto" })
+      transformVfx({ axis: "-x", align: "center", gap: "s", margin: "auto" })
     ).toBe("aui-flex--x aui-align-center aui-gap-s aui-ma-auto");
   });
 
   it("transforms and prioritizes more specific properties", () => {
     expect(
-      transformFx({
+      transformVfx({
         paddingLeft: "xxl",
         paddingRight: "l",
         paddingTop: "m",
@@ -28,7 +28,7 @@ describe("transformFx", () => {
 
   it("transforms and falls back to axis sizing when needed", () => {
     expect(
-      transformFx({
+      transformVfx({
         marginLeft: "xxl",
         marginTop: "m",
         marginX: "xs",
@@ -39,7 +39,7 @@ describe("transformFx", () => {
 
   it("handles flex options with wrap, justify, and align together", () => {
     expect(
-      transformFx({
+      transformVfx({
         axis: "y",
         wrap: true,
         justify: "between",
@@ -53,7 +53,7 @@ describe("transformFx", () => {
 
   it("uses paddingX and paddingY when side-specific values are missing", () => {
     expect(
-      transformFx({
+      transformVfx({
         paddingX: "s",
         paddingY: "m",
       })
@@ -62,7 +62,7 @@ describe("transformFx", () => {
 
   it("applies width/height/maxWidth/maxHeight correctly", () => {
     expect(
-      transformFx({
+      transformVfx({
         width: "full",
         maxWidth: "fit",
         height: "min",
@@ -71,9 +71,9 @@ describe("transformFx", () => {
     ).toBe("aui-w-full aui-h-min aui-mw-fit aui-mh-max");
   });
 
-  it("handles a full complex fx", () => {
+  it("handles a full complex vfx", () => {
     expect(
-      transformFx({
+      transformVfx({
         axis: "x",
         wrap: true,
         align: "center",

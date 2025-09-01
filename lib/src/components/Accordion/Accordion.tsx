@@ -3,7 +3,6 @@ import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
 import { UnstyledButton } from "../Button";
 import Animated from "../Animated";
-import { classNames } from "../../functions";
 
 type Props = Omit<BoxProps, "children"> & {
   /**
@@ -22,11 +21,17 @@ type Props = Omit<BoxProps, "children"> & {
 };
 
 const Accordion = React.forwardRef<HTMLDivElement, Props>(
-  ({ drawers, className, duration, hideDividers, fx, ...rest }, ref) => (
+  ({ drawers, duration, hideDividers, vfx, ...rest }, ref) => (
     <Box
-      fx={{ axis: "y", radius: "rounded", ...fx }}
+      vfx={{
+        axis: "y",
+        radius: "rounded",
+        color: "default",
+        backgroundColor: "default",
+        shadow: "subtle",
+        ...vfx,
+      }}
       {...rest}
-      className={classNames("aui-accordion", className)}
       ref={ref}
     >
       {drawers.map((item, i) => (
@@ -82,15 +87,15 @@ const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
 
   return (
     <>
-      <Box fx={{ axis: "y" }}>
+      <Box vfx={{ axis: "y", borderBottom: showDivider }}>
         <UnstyledButton onClick={() => onOpenChange(!open)}>
-          <Box fx={{ axis: "x", align: "center", gap: "s", padding: "m" }}>
+          <Box vfx={{ axis: "x", align: "center", gap: "s", padding: "m" }}>
             <Icon
+              vfx={{ color: "muted" }}
               size="xs"
               icon={open ? "chevron-down" : "chevron-right"}
-              className="aui-accordion-arrow"
             />
-            <Box className="aui-accordion-label">{item.label}</Box>
+            <Box vfx={{ fontWeight: 6 }}>{item.label}</Box>
           </Box>
         </UnstyledButton>
         <Animated
@@ -113,7 +118,6 @@ const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
           <Box ref={boxRef}>{children}</Box>
         </Animated>
       </Box>
-      {showDivider && <hr className="aui-accordion-hr" />}
     </>
   );
 };

@@ -1,7 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import classNames from "../../functions/classNames";
-import type { Style } from "../../utils/types";
+import type { Vfx, Style } from "../../utils/types";
 import Box, { type BoxProps } from "../Box/Box";
+
+type AnimationState = {
+  /**
+   * Class to apply to the component when at this state
+   */
+  className?: string;
+  /**
+   * Inline styles to apply to the component at this state
+   */
+  style?: Style;
+  /**
+   * The VFX or other organizational css to apply at this state
+   */
+  vfx?: Vfx;
+};
 
 type Props = BoxProps & {
   /**
@@ -31,28 +46,13 @@ type Props = BoxProps & {
    */
   keepMounted?: boolean;
   /**
-   * Animation configuration for the enter state
+   * Animation css for the start state
    */
-  animateTo?: {
-    /**
-     * Class name to apply to the component while animated (after state)
-     */
-    className?: string;
-    /**
-     * Inline styles to apply to the component while animated
-     */
-    style?: Style;
-  };
-  animateFrom?: {
-    /**
-     * Class name to apply to the component when not animated (before state)
-     */
-    className?: string;
-    /**
-     * Inline styles to apply to the component when not animated
-     */
-    style?: Style;
-  };
+  animateTo?: AnimationState;
+  /**
+   * animation css for the end state
+   */
+  animateFrom?: AnimationState;
   /**
    * The properties to apply a transition
    * @default ['all']
@@ -71,6 +71,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     animateTo,
     animateFrom,
     className,
+    vfx,
     style,
     ...rest
   } = props;
@@ -151,6 +152,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         ...style,
         ...currentAnimation?.style,
       }}
+      vfx={{ ...vfx, ...currentAnimation?.vfx }}
       {...rest}
       ref={ref}
     />

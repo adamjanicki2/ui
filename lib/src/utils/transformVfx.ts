@@ -1,4 +1,4 @@
-import { Fx } from "./types";
+import { Vfx } from "./types";
 import { classNames } from "../functions";
 
 // Prefix maps for padding and margin keys
@@ -22,14 +22,31 @@ const dimensionPrefixMap = {
   maxHeight: "mh",
 } as const;
 
-type Transformer = (fx: Fx) => string | null;
+type Transformer = (vfx: Vfx) => string | null;
 
-const mapLayout: Transformer = ({ axis, wrap, align, justify, gap }) => {
-  let className: string | null = axis ? `aui-flex-${axis}` : null;
+const mapLayout: Transformer = ({
+  pos,
+  axis,
+  wrap,
+  align,
+  justify,
+  gap,
+  overflow,
+  overflowX,
+  overflowY,
+  z,
+}) => {
+  let className: string | null = pos ? `aui-pos-${pos}` : null;
+  if (axis) className = classNames(className, `aui-flex-${axis}`);
   if (wrap) className = classNames(className, "aui-flex-wrap");
   if (align) className = classNames(className, `aui-align-${align}`);
   if (justify) className = classNames(className, `aui-justify-${justify}`);
   if (gap) className = classNames(className, `aui-gap-${gap}`);
+  if (overflow) className = classNames(className, `aui-of-${overflow}`);
+  if (overflowX) className = classNames(className, `aui-of-x-${overflowX}`);
+  if (overflowY) className = classNames(className, `aui-of-y-${overflowY}`);
+  if (z) className = classNames(className, `aui-z-${z}`);
+
   return className;
 };
 
@@ -76,10 +93,10 @@ const mapSpacing: Transformer = ({
 
 const dimensionProps = ["width", "height", "maxWidth", "maxHeight"] as const;
 
-const mapDimensions: Transformer = (fx) => {
+const mapDimensions: Transformer = (vfx) => {
   let className: string | null = null;
   dimensionProps.forEach((prop) => {
-    const value = fx[prop];
+    const value = vfx[prop];
     if (value)
       className = classNames(
         className,
@@ -172,10 +189,10 @@ const transformers = [
   mapMiscellaneous,
 ] as const;
 
-export default function transformFx(fx: Fx | undefined): string | null {
-  if (!fx) return null;
+export default function transformVfx(vfx: Vfx | undefined): string | null {
+  if (!vfx) return null;
   const combinedClasses = classNames(
-    ...transformers.map((transformer) => transformer(fx))
+    ...transformers.map((transformer) => transformer(vfx))
   );
   return combinedClasses || null;
 }
