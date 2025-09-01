@@ -92,7 +92,7 @@ export type Vfx = {
   borderColor?: "default" | "primary";
 
   /** Box shadow presets */
-  shadow?: "subtle" | "floating" | "sharp";
+  shadow?: "subtle" | "floating" | "none";
 
   /** Opacity presets */
   opacity?: "none" | "disabled" | "dim" | "full";

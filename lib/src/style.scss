@@ -162,6 +162,7 @@
 
 .aui-button-primary {
   background-color: var(--aui-button-primary-background);
+  border: 1px solid var(--aui-button-primary-background);
   color: var(--aui-button-primary-color);
   box-shadow: var(--aui-button-primary-box-shadow);
   transition: opacity var(--aui-default-transition);
@@ -170,9 +171,9 @@
 .aui-button-secondary {
   color: var(--aui-color-default);
   background-color: var(--aui-default-background);
-  box-shadow: 0 0 0 1px var(--aui-default-border) inset,
-    var(--aui-subtle-box-shadow);
-  transition: box-shadow var(--aui-default-transition);
+  border: 1px solid var(--aui-default-border);
+  box-shadow: var(--aui-subtle-box-shadow);
+  transition: border var(--aui-default-transition);
 }
 
 .aui-dim,
@@ -199,8 +200,7 @@
   }
 
   .aui-button-secondary:not([disabled]):hover {
-    box-shadow: 0 0 0 1px var(--aui-button-secondary-border-hover) inset,
-      var(--aui-subtle-box-shadow);
+    border-color: var(--aui-button-secondary-border-hover);
   }
 
   .aui-undim:not([disabled]):hover {
@@ -222,10 +222,11 @@
   background-color: var(--aui-focus-ring-color);
 }
 
-.aui-input {
+.aui-input,
+.aui-select-container {
   transition: box-shadow var(--aui-default-transition);
-  box-shadow: 0 0 0 1px var(--aui-default-border) inset,
-    var(--aui-subtle-box-shadow);
+  border: 1px solid var(--aui-default-border);
+  box-shadow: var(--aui-subtle-box-shadow);
   background-color: var(--aui-default-background);
 }
 
@@ -236,15 +237,8 @@
 
 .aui-input:not([disabled]):focus-within,
 .aui-select-container:not([disabled]):focus-within {
-  box-shadow: 0 0 0 1px var(--aui-default-border) inset,
-    var(--aui-subtle-box-shadow), 0 0 0 3px var(--aui-focus-ring-color);
-}
-
-.aui-select-container {
-  transition: box-shadow var(--aui-default-transition);
-  box-shadow: 0 0 0 1px var(--aui-default-border) inset,
-    var(--aui-subtle-box-shadow);
-  background-color: var(--aui-default-background);
+  box-shadow: var(--aui-subtle-box-shadow),
+    0 0 0 3px var(--aui-focus-ring-color);
 }
 
 .aui-select {
@@ -495,12 +489,8 @@ $border-sides: ba border, bt border-top, br border-right, bb border-bottom,
   }
 }
 
-$shadows: sharp (0 0 0 1px var(--aui-default-border) inset),
-  subtle
-    (0 0 0 1px var(--aui-default-border) inset, var(--aui-subtle-box-shadow)),
-  floating
-    (0 0 0 1px var(--aui-default-border) inset, var(--aui-floating-box-shadow)),
-  none none;
+$shadows: "subtle" var(--aui-subtle-box-shadow),
+  "floating" var(--aui-floating-box-shadow), "none" none;
 @each $token, $val in $shadows {
   .aui-shadow-#{$token} {
     box-shadow: $val;

@@ -53,11 +53,10 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
           </Badge>
         ) : (
           <Button
-            vfx={{ axis: "x", align: "center", gap: "xs" }}
+            vfx={{ axis: "x", align: "center", gap: "xs", paddingY: "xxs" }}
             onClick={copyCode}
             size="small"
             variant="secondary"
-            style={{ paddingTop: 3, paddingBottom: 3 }}
           >
             <Icon icon="clipboard" />
             Copy
