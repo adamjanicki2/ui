@@ -209,7 +209,7 @@ describe("transformVfx", () => {
         cursor: "pointer",
       })
     ).toBe(
-      "aui-pos-absolute aui-flex--y aui-gap-xs aui-align-start aui-justify-between aui-flex-wrap aui-pa-m aui-pl-s aui-pr-s aui-pb-l aui-pt-xl aui-ma-auto aui-mb-xxl aui-w-fit aui-h-max aui-ba aui-bs-solid aui-fw-7 aui-it aui-shadow-subtle aui-c-default aui-bg-default aui-cursor-pointer"
+      "aui-pos-absolute aui-flex--y aui-gap-xs aui-align-start aui-justify-between aui-flex-wrap aui-pa-m aui-pl-s aui-pr-s aui-pb-l aui-pt-xl aui-ma-auto aui-mb-xxl aui-w-fit aui-h-max aui-ba aui-bs-solid aui-fw-7 aui-it aui-shadow-subtle aui-c-default aui-bg-default aui-cur-pointer"
     );
   });
 });
