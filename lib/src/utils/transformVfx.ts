@@ -93,10 +93,13 @@ export default function transformVfx(vfx: Vfx | undefined): string | null {
   if (!vfx) return null;
 
   const classes: string[] = [];
-  for (const key in vfx) {
-    const transformer = transformers[key as keyof Vfx];
-    transformer(classes, vfx);
-  }
+
+  Object.entries(vfx).forEach(([key, value]) => {
+    if (value) {
+      const transformer = transformers[key as keyof Vfx];
+      transformer(classes, vfx);
+    }
+  });
 
   return classes.join(" ") || null;
 }
