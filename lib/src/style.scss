@@ -536,7 +536,7 @@ $text-align: left right center;
 $colors: "default" var(--aui-color-default), "muted" var(--aui-color-muted),
   "inherit" inherit, "transparent" transparent;
 @each $token, $color in $colors {
-  .aui-bg-#{$token} {
+  .aui-c-#{$token} {
     background-color: $color;
   }
 }
