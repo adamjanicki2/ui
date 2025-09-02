@@ -6,6 +6,12 @@ describe("transformVfx", () => {
     expect(transformVfx({})).toBeNull();
   });
 
+  it("ignores explicitly undefined keys", () => {
+    expect(
+      transformVfx({ axis: undefined, borderBottom: undefined })
+    ).toBeNull();
+  });
+
   it("transforms for simple case", () => {
     expect(
       transformVfx({ axis: "-x", align: "center", gap: "s", margin: "auto" })
