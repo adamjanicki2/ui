@@ -572,7 +572,7 @@ $z-indexes: "auto" auto, "floating" 100, "nav" 1000, "max" 10000;
 
 $cursors: auto, pointer;
 @each $cursor in $cursors {
-  .aui-cur-#{$cursor} {
+  .aui-cursor-#{$cursor} {
     cursor: $cursor;
   }
 }
