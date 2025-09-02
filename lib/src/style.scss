@@ -537,7 +537,7 @@ $colors: "default" var(--aui-color-default), "muted" var(--aui-color-muted),
   "inherit" inherit, "transparent" transparent;
 @each $token, $color in $colors {
   .aui-c-#{$token} {
-    background-color: $color;
+    color: $color;
   }
 }
 
