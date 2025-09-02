@@ -12,6 +12,10 @@ describe("transformVfx", () => {
     ).toBeNull();
   });
 
+  it("ignores falsy keys", () => {
+    expect(transformVfx({ borderBottom: false })).toBeNull();
+  });
+
   it("transforms for simple case", () => {
     expect(
       transformVfx({ axis: "-x", align: "center", gap: "s", margin: "auto" })

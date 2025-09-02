@@ -95,7 +95,7 @@ export default function transformVfx(vfx: Vfx | undefined): string | null {
   const classes: string[] = [];
 
   Object.entries(vfx).forEach(([key, value]) => {
-    if (value !== undefined) {
+    if (value) {
       const transformer = transformers[key as keyof Vfx];
       transformer(classes, vfx);
     }
