@@ -536,8 +536,8 @@ $text-align: left right center;
 $colors: "default" var(--aui-color-default), "muted" var(--aui-color-muted),
   "inherit" inherit, "transparent" transparent;
 @each $token, $color in $colors {
-  .aui-bg-#{$token} {
-    background-color: $color;
+  .aui-c-#{$token} {
+    color: $color;
   }
 }
 
@@ -572,7 +572,7 @@ $z-indexes: "auto" auto, "floating" 100, "nav" 1000, "max" 10000;
 
 $cursors: auto, pointer;
 @each $cursor in $cursors {
-  .aui-cur-#{$cursor} {
+  .aui-cursor-#{$cursor} {
     cursor: $cursor;
   }
 }
