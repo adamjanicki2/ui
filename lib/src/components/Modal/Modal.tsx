@@ -4,6 +4,11 @@ import Layer from "../Layer";
 import Button, { IconButton } from "../Button";
 import Animated from "../Animated";
 
+type ButtonProps = Omit<
+  React.ComponentProps<typeof Button>,
+  "children" | "onClick"
+>;
+
 type Props = BoxProps & {
   /**
    * Callback that fires when the user clicks the Ok button in the modal
@@ -19,6 +24,14 @@ type Props = BoxProps & {
    * @default "Cancel"
    */
   cancelLabel?: React.ReactNode;
+  /**
+   * Props to pass to the confirm button
+   */
+  confirmButtonProps?: ButtonProps;
+  /**
+   * Props to pass to the cancel button
+   */
+  cancelButtonProps?: ButtonProps;
   /**
    * Whether the modal is open or not
    */
@@ -40,6 +53,8 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
       open,
       onClose,
       onConfirm,
+      confirmButtonProps,
+      cancelButtonProps,
       confirmLabel = "Ok",
       cancelLabel = "Cancel",
       returnFocusOnEscape,
@@ -93,10 +108,15 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
                 gap: "m",
               }}
             >
-              <Button variant="secondary" onClick={onClose}>
+              <Button
+                variant="secondary"
+                {...cancelButtonProps}
+                onClick={onClose}
+              >
                 {cancelLabel}
               </Button>
               <Button
+                {...confirmButtonProps}
                 onClick={() => {
                   onConfirm();
                   onClose();

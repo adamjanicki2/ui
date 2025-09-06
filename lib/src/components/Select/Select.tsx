@@ -5,7 +5,7 @@ import Icon from "../Icon";
 import ui from "../ui";
 
 type SelectProps = React.ComponentProps<typeof ui.select>;
-type Props = Omit<BoxProps, "children"> & {
+type Props = Omit<BoxProps, "children" | "onChange"> & {
   /**
    * Array of options to display in the select
    */
@@ -18,13 +18,33 @@ type Props = Omit<BoxProps, "children"> & {
    */
   getOptionLabel?: (option: string) => string;
   /**
+   * Current value of the select
+   */
+  value?: SelectProps["value"];
+  /**
+   * Change handler for the select
+   */
+  onChange?: SelectProps["onChange"];
+  /**
    * Props to pass to the underlying select element
    */
-  selectProps?: SelectProps;
+  selectProps?: Omit<SelectProps, "value" | "onChange">;
 };
 
 const Select = React.forwardRef<HTMLSelectElement, Props>(
-  ({ className, options, vfx, getOptionLabel, selectProps, ...rest }, ref) => {
+  (
+    {
+      className,
+      options,
+      vfx,
+      getOptionLabel,
+      selectProps,
+      value,
+      onChange,
+      ...rest
+    },
+    ref
+  ) => {
     const { className: selectClassName } = selectProps || {};
     return (
       <Box
@@ -48,6 +68,8 @@ const Select = React.forwardRef<HTMLSelectElement, Props>(
       >
         <ui.select
           {...selectProps}
+          value={value}
+          onChange={onChange}
           className={classNames("aui-select", selectClassName)}
           ref={ref}
         >
