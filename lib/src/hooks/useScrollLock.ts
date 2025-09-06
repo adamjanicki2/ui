@@ -1,6 +1,15 @@
 import { useEffect } from "react";
 
+let globalLockCount = 0;
+
 const lockScroll = () => {
+  globalLockCount += 1;
+  if (globalLockCount > 1) {
+    return () => {
+      globalLockCount -= 1;
+    };
+  }
+
   const scrollPosition = window.scrollY;
   const style = document.body.style;
   const { overflow, position, top, width } = style;
@@ -11,11 +20,16 @@ const lockScroll = () => {
   style.width = "100%";
 
   return () => {
+    globalLockCount -= 1;
+    if (globalLockCount > 0) {
+      return;
+    }
+
     style.overflow = overflow;
     style.position = position;
     style.top = top;
     style.width = width;
-    // Restore scroll position without smooth behavior
+
     window.scrollTo({
       top: scrollPosition,
       left: 0,
