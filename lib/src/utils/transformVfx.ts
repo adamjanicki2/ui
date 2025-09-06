@@ -84,7 +84,7 @@ const transformers: Record<keyof Vfx, Transformer> = {
   backgroundColor: ({ backgroundColor }) => `aui-bg-${backgroundColor}`,
 
   // --- Misc ---
-  cursor: ({ cursor }) => `aui-cur-${cursor}`,
+  cursor: ({ cursor }) => `aui-cursor-${cursor}`,
 };
 
 // Main function
@@ -93,13 +93,13 @@ export default function transformVfx(vfx: Vfx | undefined): string | null {
 
   const classes: string[] = [];
 
-  for (const key in vfx) {
+  Object.entries(vfx).forEach(([key, value]) => {
     const transformer = transformers[key as keyof Vfx];
     const result = transformer(vfx);
-    if (result) {
+    if (value && result) {
       classes.push(result);
     }
-  }
+  });
 
   return classes.join(" ") || null;
 }
