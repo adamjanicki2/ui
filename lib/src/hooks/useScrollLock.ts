@@ -3,11 +3,8 @@ import { useEffect } from "react";
 const lockScroll = () => {
   const scrollPosition = window.scrollY;
   const style = document.body.style;
-  const htmlStyle = document.documentElement.style;
   const { overflow, position, top, width } = style;
-  const { scrollBehavior } = htmlStyle;
 
-  htmlStyle.scrollBehavior = "auto";
   style.overflow = "hidden";
   style.position = "fixed";
   style.top = `-${scrollPosition}px`;
@@ -24,7 +21,6 @@ const lockScroll = () => {
       left: 0,
       behavior: "instant" as ScrollBehavior,
     });
-    htmlStyle.scrollBehavior = scrollBehavior;
   };
 };
 
