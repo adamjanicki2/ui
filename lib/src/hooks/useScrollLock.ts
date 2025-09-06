@@ -19,7 +19,11 @@ const lockScroll = () => {
     style.top = top;
     style.width = width;
     // Restore scroll position without smooth behavior
-    window.scrollTo(0, scrollPosition);
+    window.scrollTo({
+      top: scrollPosition,
+      left: 0,
+      behavior: "instant" as ScrollBehavior,
+    });
     htmlStyle.scrollBehavior = scrollBehavior;
   };
 };

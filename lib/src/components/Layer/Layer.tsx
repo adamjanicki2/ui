@@ -68,7 +68,6 @@ const Layer = React.forwardRef<HTMLDivElement, Props>(
     return (
       <Box
         vfx={{
-          pos: "fixed",
           axis: "y",
           align: "center",
           justify: "center",
