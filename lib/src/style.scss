@@ -121,6 +121,34 @@
   --aui-link-color: #33bfff;
 }
 
+// Global styles
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.15;
+  tab-size: 4;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
 // Content types
 @each $type in "success", "warning", "error", "info", "static" {
   .aui-content-#{$type} {
@@ -263,6 +291,7 @@
 
 // Layer
 .aui-layer-backdrop {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;

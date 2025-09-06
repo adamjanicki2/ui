@@ -16,6 +16,8 @@ import {
   Icon,
   Avatar,
   ui,
+  ErrorBoundary,
+  Button,
 } from "@adamjanicki/ui";
 import {
   DoubleCross,
@@ -225,6 +227,40 @@ export default function Miscellaneous() {
         </Box>
         <HiddenSnippet>{avatarSnippet}</HiddenSnippet>
       </>
+
+      {/* Error boundary */}
+      <>
+        <Heading level={2}>Error Boundary</Heading>
+        <Para>
+          I still think it's crazy that even in 2025 we still have no choice but
+          to make error boundary components with old class components due to
+          lifecycle methods that don't exist in the "new" functional components.
+          Either way, I ruined the cleanliness of my library by including this
+          in here.
+        </Para>
+        <ErrorBoundary Fallback={Fallback}>
+          <Box vfx={{ axis: "x", justify: "center", padding: "xs" }}>
+            <Bomb />
+          </Box>
+        </ErrorBoundary>
+      </>
     </ui.section>
   );
 }
+
+const Fallback = ({ error, reset }: { error: Error; reset: () => void }) => {
+  return (
+    <Alert type="error" vfx={{ axis: "y", gap: "s" }}>
+      {error.toString()}{" "}
+      <Button vfx={{ width: "fit" }} variant="secondary" onClick={reset}>
+        Reset
+      </Button>
+    </Alert>
+  );
+};
+
+const Bomb = () => {
+  const [boom, setBoom] = useState(false);
+  if (boom) throw new Error("I just blew up!");
+  return <Button onClick={() => setBoom(true)}>Blow up</Button>;
+};

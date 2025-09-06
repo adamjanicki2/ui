@@ -12,4 +12,8 @@ describe("classNames", () => {
   it("ignores extraneous spaces", () => {
     expect(classNames(" more ", "spaces ", " here")).toBe("more spaces here");
   });
+
+  it("returns undefined when no classNames", () => {
+    expect(classNames(" ", null, undefined, "")).toBe(undefined);
+  });
 });

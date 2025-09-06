@@ -6,9 +6,11 @@
  */
 export default function classNames(
   ...classNames: Array<string | null | undefined>
-): string {
-  return classNames
-    .map((className) => className?.trim())
-    .filter(Boolean)
-    .join(" ");
+): string | undefined {
+  return (
+    classNames
+      .map((className) => className?.trim())
+      .filter(Boolean)
+      .join(" ") || undefined
+  );
 }
