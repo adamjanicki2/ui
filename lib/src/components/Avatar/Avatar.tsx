@@ -29,7 +29,7 @@ const Avatar = React.forwardRef<HTMLDivElement, Props>(
     const useFallback = imageError || !backgroundImage;
 
     const color = chooseColor(username);
-    let avatarClassName: string | null = null;
+    let avatarClassName: string | undefined = undefined;
 
     if (useFallback) {
       avatarClassName = classNames(avatarClassName, `aui-avatar-${color}`);
