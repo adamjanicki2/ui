@@ -1,5 +1,4 @@
 import React from "react";
-import type { Children } from "../../utils/types";
 
 type FallbackProps = { error: Error; reset: () => void };
 
@@ -11,7 +10,7 @@ type Props = {
   /**
    * Children wrapped by the error boundary
    */
-  children: Children;
+  children: React.ReactNode;
   /**
    * Called when an error is caught
    */
@@ -60,7 +59,7 @@ export default class ErrorBoundary extends React.Component<Props, State> {
     return nextDeps.some((dep, i) => !Object.is(dep, prevDeps[i]));
   }
 
-  render() {
+  render(): React.ReactNode {
     const { Fallback, children } = this.props;
     const { error } = this.state;
 
