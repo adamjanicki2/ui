@@ -1,30 +1,40 @@
 import { useEffect } from "react";
 
+let globalLockCount = 0;
+
 const lockScroll = () => {
+  globalLockCount += 1;
+  if (globalLockCount > 1) {
+    return () => {
+      globalLockCount -= 1;
+    };
+  }
+
   const scrollPosition = window.scrollY;
   const style = document.body.style;
-  const htmlStyle = document.documentElement.style;
   const { overflow, position, top, width } = style;
-  const { scrollBehavior } = htmlStyle;
 
-  htmlStyle.scrollBehavior = "auto";
   style.overflow = "hidden";
   style.position = "fixed";
   style.top = `-${scrollPosition}px`;
   style.width = "100%";
 
   return () => {
+    globalLockCount -= 1;
+    if (globalLockCount > 0) {
+      return;
+    }
+
     style.overflow = overflow;
     style.position = position;
     style.top = top;
     style.width = width;
-    // Restore scroll position without smooth behavior
+
     window.scrollTo({
       top: scrollPosition,
       left: 0,
       behavior: "instant" as ScrollBehavior,
     });
-    htmlStyle.scrollBehavior = scrollBehavior;
   };
 };
 
