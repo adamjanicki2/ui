@@ -1,5 +1,4 @@
-import { render, screen, act, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, waitFor } from "@testing-library/react";
 import { ErrorBoundary, Alert, Button } from "../../src";
 
 const Bomb = () => {
@@ -26,7 +25,7 @@ describe("ErrorBoundary", () => {
       </ErrorBoundary>
     );
 
-    const fallback = await waitFor(() => screen.getByTestId("fallback"));
+    await waitFor(() => screen.getByTestId("fallback"));
     expect(screen.getByText("💥 Boom!")).toBeInTheDocument();
   });
 
