@@ -45,6 +45,10 @@ type Props = BoxProps & {
    * @default false
    */
   returnFocusOnEscape?: boolean;
+  /**
+   * Props to pass to the outer box container
+   */
+  wrapperBoxProps?: Omit<BoxProps, "children">;
 };
 
 const Modal = React.forwardRef<HTMLDivElement, Props>(
@@ -58,10 +62,12 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
       confirmLabel = "Ok",
       cancelLabel = "Cancel",
       returnFocusOnEscape,
+      wrapperBoxProps,
       ...rest
     },
     ref
   ) => {
+    const { vfx: wrapperBoxVfx, ...wrapperBoxRest } = wrapperBoxProps || {};
     return (
       <Animated
         vfx={{ z: "max" }}
@@ -73,6 +79,7 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
           <Box
             role="dialog"
             aria-modal="true"
+            {...wrapperBoxRest}
             vfx={{
               axis: "y",
               padding: "m",
@@ -83,6 +90,7 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
               border: true,
               color: "default",
               backgroundColor: "default",
+              ...wrapperBoxVfx,
             }}
           >
             <Box
