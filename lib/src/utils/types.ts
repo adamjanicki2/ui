@@ -21,7 +21,7 @@ export type Vfx = {
   gap?: SpacingSize;
   /** Alignment orthogonal to the selected axis (Equivalent to align-items) */
   align?: "start" | "center" | "end";
-  /** How to content the children (Equivalent to justify-content) */
+  /** How to space the children (Equivalent to justify-content) */
   justify?: "start" | "center" | "between" | "around" | "end";
   /** Flex presets to determine how a node stretches within its container */
   stretch?: "even" | "grow" | "min" | "max";
@@ -72,7 +72,7 @@ export type Vfx = {
   maxWidth?: SizeDimension;
   /** Height of the content */
   height?: SizeDimension;
-  /** Maximum of the content */
+  /** Maximum height of the content */
   maxHeight?: SizeDimension;
 
   /** Border radius of the content */

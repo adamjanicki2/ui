@@ -81,7 +81,7 @@ export default function Presentation() {
           This is a simple wrapper component that allows you to perform
           animations on mount and unmount of a given element. I found it useful
           when designing a custom modal for one of my other sites that I wanted
-          to fade in an out when the user entered or exited the state.
+          to fade in and out when the user entered or exited the state.
         </Para>
         <Box vfx={{ axis: "y", align: "center", gap: "s" }}>
           <Button
@@ -175,7 +175,7 @@ export default function Presentation() {
         <Para>
           I've wanted to build some sort of site that could show off a collage
           of pictures that I've been taking on recent trips. I figured it'd be
-          cool to have the page segmeneted by trip, and each trip would have a
+          cool to have the page segmented by trip, and each trip would have a
           carousel of images, which is why I needed this component. This one
           ended up being one of the more tricky things in this library to
           implement due to all of the complex CSS involved.
