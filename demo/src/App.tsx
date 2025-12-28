@@ -8,6 +8,7 @@ import Presentation from "src/sections/Presentation";
 import Signals from "src/sections/Signals";
 import UserAction from "src/sections/UserAction";
 import Miscellaneous from "src/sections/Miscellaneous";
+import NotFound from "src/components/NotFound";
 
 export default function App() {
   useScrollToHash();
@@ -23,7 +24,7 @@ export default function App() {
           <Route path="/signals" element={<Signals />} />
           <Route path="/user-action" element={<UserAction />} />
           <Route path="/miscellaneous" element={<Miscellaneous />} />
-          <Route path="*" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Box>
       <Footer />
