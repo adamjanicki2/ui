@@ -1,3 +1,5 @@
+import type { ArrayLike } from "../utils/types";
+
 /**
  * Reduce a list of classnames into one string
  *
@@ -5,7 +7,7 @@
  * @returns single aggregated string of classnames
  */
 export default function classNames(
-  ...classNames: Array<string | null | undefined>
+  ...classNames: ArrayLike<string | null | undefined>
 ): string | undefined {
   return (
     classNames

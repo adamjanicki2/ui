@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { classNames } from "../../functions";
 import Button from "../Button";
-import type { Children, Style } from "../../utils/types";
+import type { Children, ArrayLike, Style } from "../../utils/types";
 import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
 
@@ -24,7 +24,7 @@ type Props = BoxProps & {
   /**
    * The child elements/slides of the carousel
    */
-  children: React.ReactNode[];
+  children: ArrayLike<React.ReactNode>;
   /**
    * How long the transition lasts (in seconds)
    * @default 1

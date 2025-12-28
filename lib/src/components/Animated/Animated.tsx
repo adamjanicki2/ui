@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import classNames from "../../functions/classNames";
-import type { Vfx, Style } from "../../utils/types";
+import type { ArrayLike, Style, Vfx } from "../../utils/types";
 import Box, { type BoxProps } from "../Box/Box";
 
 type AnimationState = {
@@ -57,7 +57,7 @@ type Props = BoxProps & {
    * The properties to apply a transition
    * @default ['all']
    */
-  transitionProperties?: string[];
+  transitionProperties?: ArrayLike<string>;
 };
 
 type Phase = "from" | "forward" | "reverse";
@@ -159,7 +159,10 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   );
 });
 
-const makeTransition = (transitionProperties: string[], duration: number) =>
+const makeTransition = (
+  transitionProperties: ArrayLike<string>,
+  duration: number
+) =>
   transitionProperties.length > 0
     ? transitionProperties
         .map((prop) => `${prop} ${duration}s ease-in-out`)

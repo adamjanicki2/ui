@@ -1,7 +1,7 @@
 import React from "react";
 
-export type MaybeReadonlyArray<T> = readonly T[] | T[];
-export type Children = React.ReactNode | React.ReactNode[];
+export type ArrayLike<T> = readonly T[] | T[];
+export type Children = React.ReactNode | ArrayLike<React.ReactNode>;
 export type ContentType = "success" | "warning" | "error" | "info" | "static";
 export type Style = React.CSSProperties;
 export type SizeDimension = "full" | "fit" | "min" | "max";

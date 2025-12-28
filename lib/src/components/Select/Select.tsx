@@ -3,13 +3,14 @@ import classNames from "../../functions/classNames";
 import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
 import ui from "../ui";
+import type { ArrayLike } from "../../utils/types";
 
 type SelectProps = React.ComponentProps<typeof ui.select>;
 type Props = Omit<BoxProps, "children" | "onChange"> & {
   /**
    * Array of options to display in the select
    */
-  options: string[];
+  options: ArrayLike<string>;
   /**
    * Mapper function to get the label of the option
    *

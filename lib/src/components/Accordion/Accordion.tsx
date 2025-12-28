@@ -3,12 +3,13 @@ import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
 import { UnstyledButton } from "../Button";
 import Animated from "../Animated";
+import type { ArrayLike } from "../../utils/types";
 
 type Props = Omit<BoxProps, "children"> & {
   /**
    * Drawers to render as accordion sections
    */
-  drawers: Drawer[];
+  drawers: ArrayLike<Drawer>;
   /**
    * Duration of the drawer animation (in seconds)
    */
