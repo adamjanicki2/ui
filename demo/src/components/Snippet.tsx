@@ -5,8 +5,7 @@ import {
   oneDark as dark,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "src/components/snippet.css";
-import { Badge, Button, Box, Icon, ui } from "@adamjanicki/ui";
-import { classNames } from "@adamjanicki/ui/functions";
+import { Badge, Button, Box, Icon, ui, classNames } from "@adamjanicki/ui";
 import { useTheme } from "src/hooks";
 
 export type Props = {
@@ -15,7 +14,7 @@ export type Props = {
   lang?: string;
 };
 
-const Snippet = ({ className, children, lang = "tsx" }: Props) => {
+export default function Snippet({ className, children, lang = "tsx" }: Props) {
   const { theme } = useTheme();
   children = children.trim();
   const [copied, setCopied] = useState(false);
@@ -28,8 +27,16 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
 
   return (
     <Box
-      vfx={{ marginX: "auto", maxWidth: "full", width: "min" }}
-      className={classNames("snippet-container ba br2", className)}
+      vfx={{
+        marginX: "auto",
+        maxWidth: "full",
+        width: "min",
+        radius: "rounded",
+        border: true,
+        borderColor: "primary",
+        shadow: "floating",
+      }}
+      className={classNames("snippet-container", className)}
     >
       <Box
         vfx={{
@@ -39,16 +46,13 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
           width: "full",
           paddingX: "s",
           paddingY: "xs",
+          borderBottom: true,
+          borderColor: "primary",
         }}
-        className="bb"
       >
-        <ui.p className="f6 fw5 ma0">{lang}</ui.p>
+        <ui.span vfx={{ fontSize: "s", fontWeight: 5 }}>{lang}</ui.span>
         {copied ? (
-          <Badge
-            vfx={{ axis: "x", align: "center", gap: "xs" }}
-            className="flex items-center"
-            type="success"
-          >
+          <Badge vfx={{ axis: "x", align: "center", gap: "xs" }} type="success">
             <Icon icon="check" /> Copied
           </Badge>
         ) : (
@@ -86,6 +90,4 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
       </ui.pre>
     </Box>
   );
-};
-
-export default Snippet;
+}

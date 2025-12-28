@@ -92,11 +92,15 @@ export default function UserAction() {
           }}
         >
           <Box>
-            <Box className="fw5 f6 mb1">Uncontrolled</Box>
+            <Box vfx={{ marginBottom: "xs", fontWeight: 5, fontSize: "s" }}>
+              Uncontrolled
+            </Box>
             <Input placeholder="Type something..." />
           </Box>
           <Box>
-            <Box className="fw5 f6 mb1">Controlled</Box>
+            <Box vfx={{ marginBottom: "xs", fontWeight: 5, fontSize: "s" }}>
+              Controlled
+            </Box>
             <Input
               placeholder="Type something..."
               value={inputValue}
@@ -104,14 +108,18 @@ export default function UserAction() {
             />
           </Box>
           <Box>
-            <Box className="fw5 f6 mb1">Icon Input</Box>
+            <Box vfx={{ marginBottom: "xs", fontWeight: 5, fontSize: "s" }}>
+              Icon Input
+            </Box>
             <IconInput
-              startIcon={<Icon className="ml2" icon="search" />}
+              startIcon={<Icon vfx={{ marginLeft: "s" }} icon="search" />}
               inputProps={{ placeholder: "Search..." }}
             />
           </Box>
           <Box>
-            <Box className="fw5 f6 mb1">Area</Box>
+            <Box vfx={{ marginBottom: "xs", fontWeight: 5, fontSize: "s" }}>
+              Area
+            </Box>
             <TextArea placeholder="Type something..." />
           </Box>
         </Box>
@@ -128,8 +136,7 @@ export default function UserAction() {
           is meant to be <ui.em>extremely</ui.em> customizable: you can override
           the underlying link element from an anchor element{" "}
           <ui.code>{"<a>"}</ui.code> to something more complex, maybe
-          react-router-dom's link element if you're working within a router
-          context.
+          react-router's link element if you're working within a router context.
         </Para>
         <Box
           vfx={{
@@ -140,7 +147,6 @@ export default function UserAction() {
             width: "fit",
             marginX: "auto",
           }}
-          className="w-fc m-auto"
         >
           <Link to="#link">Internal link</Link>
           <Link to="https://adamovies.com" external>
@@ -174,17 +180,20 @@ export default function UserAction() {
             width: "fit",
             marginX: "auto",
           }}
-          className="m-auto w-fc"
         >
           <Box>
-            <Box className="fw5 f6 mb1">Uncontrolled</Box>
+            <Box vfx={{ marginBottom: "xs", fontWeight: 5, fontSize: "s" }}>
+              Uncontrolled
+            </Box>
             <Select
               aria-label="select"
               options={["apple", "orange", "banana", "kiwi"]}
             />
           </Box>
           <Box>
-            <Box className="fw5 f6 mb1">Controlled</Box>
+            <Box vfx={{ marginBottom: "xs", fontWeight: 5, fontSize: "s" }}>
+              Controlled
+            </Box>
             <Select
               aria-label="select"
               options={["apple", "orange", "banana", "kiwi"]}

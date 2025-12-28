@@ -26,22 +26,12 @@ export default function Signals() {
           types are also used for the <ui.code>Badge</ui.code> and{" "}
           <ui.code>Banner</ui.code> components.
         </Para>
-        <Box vfx={{ axis: "y" }}>
-          <Alert className="mv1" type="static">
-            This is a static alert
-          </Alert>
-          <Alert className="mv1" type="info">
-            This is an info alert
-          </Alert>
-          <Alert className="mv1" type="success">
-            This is a success alert
-          </Alert>
-          <Alert className="mv1" type="warning">
-            This is a warning alert
-          </Alert>
-          <Alert className="mv1" type="error">
-            This is an error alert
-          </Alert>
+        <Box vfx={{ axis: "y", gap: "s" }}>
+          <Alert type="static">This is a static alert</Alert>
+          <Alert type="info">This is an info alert</Alert>
+          <Alert type="success">This is a success alert</Alert>
+          <Alert type="warning">This is a warning alert</Alert>
+          <Alert type="error">This is an error alert</Alert>
           <HiddenSnippet>{alertSnippet}</HiddenSnippet>
         </Box>
       </>
