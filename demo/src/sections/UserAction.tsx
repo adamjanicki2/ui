@@ -128,8 +128,7 @@ export default function UserAction() {
           is meant to be <ui.em>extremely</ui.em> customizable: you can override
           the underlying link element from an anchor element{" "}
           <ui.code>{"<a>"}</ui.code> to something more complex, maybe
-          react-router-dom's link element if you're working within a router
-          context.
+          react-router's link element if you're working within a router context.
         </Para>
         <Box
           vfx={{

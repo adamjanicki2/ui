@@ -1,15 +1,12 @@
-import { Link, Box, Icon, ui } from "@adamjanicki/ui";
 import { importCss } from "src/codeSnippets";
 import Header from "src/components/Heading";
 import Para from "src/components/Para";
 import Snippet from "src/components/Snippet";
-import Presentation from "src/sections/Presentation";
-import Signals from "src/sections/Signals";
-import UserAction from "src/sections/UserAction";
-import Miscellaneous from "src/sections/Miscellaneous";
+import Link from "src/components/Link";
+import { ui, Icon } from "@adamjanicki/ui";
 
-const Main = () => (
-  <Box className="main-container" vfx={{ width: "full" }}>
+const Home = () => (
+  <>
     <ui.h1 className="f1 tc">Welcome to my UI library.</ui.h1>
     <ui.p className="f3 fw5 tc subtitle">
       This is a collection of React components that I use across my projects.
@@ -27,10 +24,21 @@ const Main = () => (
       example.
     </Para>
     <Snippet>{importCss}</Snippet>
-    <Presentation />
-    <Signals />
-    <UserAction />
-    <Miscellaneous />
+    <Header level={1}>Categories</Header>
+    <ui.ul vfx={{ axis: "y", gap: "s" }}>
+      <ui.li>
+        <Link to="/presentation">Presentation</Link>
+      </ui.li>
+      <ui.li>
+        <Link to="/signals">Signals</Link>
+      </ui.li>
+      <ui.li>
+        <Link to="/user-action">User Action</Link>
+      </ui.li>
+      <ui.li>
+        <Link to="/miscellaneous">Miscellaneous</Link>
+      </ui.li>
+    </ui.ul>
     <Para>
       And that's it! I hope you find this fun little library useful. If you want
       to play around with any of these components, you can head over to my{" "}
@@ -45,7 +53,7 @@ const Main = () => (
       Adam
     </Para>
     <Icon icon="architect" size="xl" style={{ color: "#0070ff" }} />
-  </Box>
+  </>
 );
 
-export default Main;
+export default Home;

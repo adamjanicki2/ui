@@ -20,6 +20,7 @@ export default defineConfig({
     port: 3000,
     fs: {
       allow: [
+        path.resolve(__dirname),
         path.resolve(__dirname, "src"),
         path.resolve(__dirname, "../lib/src"),
       ],

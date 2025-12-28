@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "src/components/nav.css";
-import { Link, UnstyledLink, Hamburger, Box, ui, Icon } from "@adamjanicki/ui";
+import { Hamburger, Box, ui, Icon } from "@adamjanicki/ui";
+import Link, { UnstyledLink } from "src/components/Link";
 
 type NavlinkProps = {
   to: string;
@@ -33,7 +34,7 @@ const Nav = () => {
         vfx={{ axis: "x", align: "center", justify: "between" }}
         className="bar-container"
       >
-        <UnstyledLink className="nav-title" to="#welcome">
+        <UnstyledLink className="nav-title" to="/" onClick={closeMenu}>
           <Box className="desktop">@adamjanicki/ui</Box>
           <Icon icon="architect" size="l" className="mobile" />
         </UnstyledLink>
@@ -46,10 +47,10 @@ const Nav = () => {
         className="desktop link-container"
         style={{ display: open ? "flex" : undefined }}
       >
-        <Navlink to="#presentation">Presentation</Navlink>
-        <Navlink to="#signals">Signals</Navlink>
-        <Navlink to="#user-action">User Action</Navlink>
-        <Navlink to="#miscellaneous">Miscellaneous</Navlink>
+        <Navlink to="/presentation">Presentation</Navlink>
+        <Navlink to="/signals">Signals</Navlink>
+        <Navlink to="/user-action">User Action</Navlink>
+        <Navlink to="/miscellaneous">Miscellaneous</Navlink>
       </ui.ul>
     </ui.nav>
   );
