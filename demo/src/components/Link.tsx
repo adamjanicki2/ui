@@ -6,10 +6,12 @@ import { Link as RouterLink } from "react-router";
 
 type Props = React.ComponentProps<typeof UILink>;
 
-const Link = (props: Props) => <UILink LinkElement={RouterLink} {...props} />;
+export default function Link(props: Props) {
+  return <UILink LinkElement={RouterLink} {...props} />;
+}
 
-export const UnstyledLink = (
+export function UnstyledLink(
   props: React.ComponentProps<typeof UIUnstyledLink>
-) => <UIUnstyledLink LinkElement={RouterLink} {...props} />;
-
-export default Link;
+) {
+  return <UIUnstyledLink LinkElement={RouterLink} {...props} />;
+}

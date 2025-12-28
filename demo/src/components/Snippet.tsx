@@ -15,7 +15,7 @@ export type Props = {
   lang?: string;
 };
 
-const Snippet = ({ className, children, lang = "tsx" }: Props) => {
+export default function Snippet({ className, children, lang = "tsx" }: Props) {
   const { theme } = useTheme();
   children = children.trim();
   const [copied, setCopied] = useState(false);
@@ -86,6 +86,4 @@ const Snippet = ({ className, children, lang = "tsx" }: Props) => {
       </ui.pre>
     </Box>
   );
-};
-
-export default Snippet;
+}

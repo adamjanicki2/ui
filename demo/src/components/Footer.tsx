@@ -6,7 +6,7 @@ const labels = {
   dark: "🌙",
 };
 
-const Footer = () => {
+export default function Footer() {
   const { theme, setTheme } = useTheme();
   return (
     <ui.footer
@@ -38,6 +38,4 @@ const Footer = () => {
       </ui.p>
     </ui.footer>
   );
-};
-
-export default Footer;
+}

@@ -5,7 +5,8 @@ import Snippet from "src/components/Snippet";
 import Link from "src/components/Link";
 import { ui, Icon } from "@adamjanicki/ui";
 
-const Home = () => (
+export default function Home() {
+  return (
   <>
     <ui.h1 className="f1 tc">Welcome to my UI library.</ui.h1>
     <ui.p className="f3 fw5 tc subtitle">
@@ -55,5 +56,4 @@ const Home = () => (
     <Icon icon="architect" size="xl" style={{ color: "#0070ff" }} />
   </>
 );
-
-export default Home;
+}

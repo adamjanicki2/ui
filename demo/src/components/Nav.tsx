@@ -8,15 +8,17 @@ type NavlinkProps = {
   children: React.ReactNode;
 };
 
-const Nav = () => {
+export default function Nav() {
   const [open, setOpen] = useState(false);
   const closeMenu = () => setOpen(false);
 
-  const Navlink = (props: NavlinkProps) => (
-    <ui.li className="navlink-li">
-      <Link className="navlink" onClick={closeMenu} {...props} />
-    </ui.li>
-  );
+  function Navlink(props: NavlinkProps) {
+    return (
+      <ui.li className="navlink-li">
+        <Link className="navlink" onClick={closeMenu} {...props} />
+      </ui.li>
+    );
+  }
 
   return (
     <ui.nav
@@ -54,6 +56,4 @@ const Nav = () => {
       </ui.ul>
     </ui.nav>
   );
-};
-
-export default Nav;
+}

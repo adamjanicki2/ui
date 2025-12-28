@@ -248,7 +248,7 @@ export default function Miscellaneous() {
   );
 }
 
-const Fallback = ({ error, reset }: { error: Error; reset: () => void }) => {
+function Fallback({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <Alert type="error" vfx={{ axis: "y", gap: "s" }}>
       {error.toString()}{" "}
@@ -257,10 +257,10 @@ const Fallback = ({ error, reset }: { error: Error; reset: () => void }) => {
       </Button>
     </Alert>
   );
-};
+}
 
-const Bomb = () => {
+function Bomb() {
   const [boom, setBoom] = useState(false);
   if (boom) throw new Error("I just blew up!");
   return <Button onClick={() => setBoom(true)}>Blow up</Button>;
-};
+}
