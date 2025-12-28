@@ -50,7 +50,7 @@ export default function Presentation() {
           tricky problem.
         </Para>
         <Accordion
-          className="m-auto"
+          vfx={{ marginX: "auto" }}
           style={{ width: "calc(min(100%, 512px))" }}
           drawers={(["success", "info", "error"] as const).map((status, i) => ({
             label: status,
@@ -83,9 +83,9 @@ export default function Presentation() {
           when designing a custom modal for one of my other sites that I wanted
           to fade in an out when the user entered or exited the state.
         </Para>
-        <Box vfx={{ axis: "y", align: "center" }}>
+        <Box vfx={{ axis: "y", align: "center", gap: "s" }}>
           <Button
-            className="w-fc mb2"
+            vfx={{ width: "fit" }}
             onClick={() => setAnimatedOpen(!animatedOpen)}
           >
             {animatedOpen ? "Unanimate" : "Animate"} Alert
@@ -100,7 +100,7 @@ export default function Presentation() {
             animateFrom={{
               style: { opacity: 0, transform: "rotate(0.5turn)" },
             }}
-            className="w-100"
+            vfx={{ width: "full" }}
           >
             <Alert type="info">This is an animated alert!</Alert>
           </Animated>
@@ -125,38 +125,42 @@ export default function Presentation() {
               justify: "center",
               padding: "xs",
               gap: "xs",
+              border: true,
+              borderColor: "primary",
             }}
-            className="bordering"
           >
             <Box
-              className="bordering"
               vfx={{
                 axis: "y",
                 align: "center",
                 justify: "center",
                 padding: "m",
+                border: true,
+                borderColor: "primary",
               }}
             >
               L
             </Box>
             <Box
-              className="bordering"
               vfx={{
                 axis: "y",
                 align: "center",
                 justify: "center",
                 padding: "xl",
+                border: true,
+                borderColor: "primary",
               }}
             >
               XL
             </Box>
             <Box
-              className="bordering"
               vfx={{
                 axis: "y",
                 align: "center",
                 justify: "center",
                 padding: "xxl",
+                border: true,
+                borderColor: "primary",
               }}
             >
               XXL
@@ -176,14 +180,27 @@ export default function Presentation() {
           ended up being one of the more tricky things in this library to
           implement due to all of the complex CSS involved.
         </Para>
-        <Carousel className="m-auto br3 white" autoplayInterval={5}>
-          <Box className="pv6 bg-red f2 i tc">
+        <Carousel
+          vfx={{ marginX: "auto", radius: "rounded" }}
+          className="white"
+          autoplayInterval={5}
+        >
+          <Box
+            vfx={{ paddingY: "xxl", textAlign: "center", fontSize: "xl" }}
+            className="bg-red"
+          >
             "We live in a twilight world"
           </Box>
-          <Box className="pv6 bg-purple f2 i tc">
+          <Box
+            vfx={{ paddingY: "xxl", textAlign: "center", fontSize: "xl" }}
+            className="bg-purple"
+          >
             "We live in a twilight world"
           </Box>
-          <Box className="pv6 bg-blue f2 i tc">
+          <Box
+            vfx={{ paddingY: "xxl", textAlign: "center", fontSize: "xl" }}
+            className="bg-blue"
+          >
             "We live in a twilight world"
           </Box>
         </Carousel>
@@ -199,13 +216,16 @@ export default function Presentation() {
           want to create a modal or a dropdown menu that should cover the entire
           screen.
         </Para>
-        <Box vfx={{ axis: "y", align: "center" }}>
-          <Button className="w-fc mb2" onClick={() => setLayerOpen(true)}>
+        <Box vfx={{ axis: "y", align: "center", gap: "s" }}>
+          <Button vfx={{ width: "fit" }} onClick={() => setLayerOpen(true)}>
             Open layer
           </Button>
           {layerOpen && (
             <Layer onClose={() => setLayerOpen(false)}>
-              <Box className="pa5 br3 bg-green fade">
+              <Box
+                vfx={{ padding: "xl", radius: "rounded", shadow: "floating" }}
+                className="bg-green"
+              >
                 <h1>Hello!</h1>
               </Box>
             </Layer>
@@ -223,8 +243,8 @@ export default function Presentation() {
           used modal design patterns, providing props for doing something on
           confirm and close.
         </Para>
-        <Box vfx={{ axis: "y", align: "center" }}>
-          <Button className="w-fc mb2" onClick={() => setModalOpen(true)}>
+        <Box vfx={{ axis: "y", align: "center", gap: "s" }}>
+          <Button vfx={{ width: "fit" }} onClick={() => setModalOpen(true)}>
             Open Modal
           </Button>
           <Modal

@@ -106,9 +106,9 @@ export const buttonSnippet = `
 
 export const carouselSnippet = `
 <Carousel autoplayInterval={5}>
-  <Box className="bg-red">"We live in a twilight world"</Box>
-  <Box className="bg-green">"We live in a twilight world"</Box>
-  <Box className="bg-blue">"We live in a twilight world"</Box>
+  <Box>"We live in a twilight world"</Box>
+  <Box>"We live in a twilight world"</Box>
+  <Box>"We live in a twilight world"</Box>
 </Carousel>
 `;
 
@@ -141,7 +141,7 @@ export const burgerSnippet = `
 
 export const layerSnippet = `
 <Layer onClose={() => setLayerOpen(false)}>
-  <Box className="bg-green">
+  <Box>
     <h1>Hello!</h1>
   </Box>
 </Layer>

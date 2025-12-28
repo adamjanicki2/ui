@@ -6,11 +6,6 @@ type Props = {
 
 export default function Para({ children }: Props) {
   return (
-    <ui.p
-      className="f5 fw4"
-      style={{ lineHeight: 1.5, whiteSpace: "pre-wrap" }}
-    >
-      {children}
-    </ui.p>
+    <ui.p style={{ lineHeight: 1.5, whiteSpace: "pre-wrap" }}>{children}</ui.p>
   );
 }

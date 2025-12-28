@@ -25,14 +25,9 @@ export default function Footer() {
         onChange={(e) => setTheme(e.target.value as Theme)}
         getOptionLabel={(option) => labels[option as Theme]}
       />
-      <ui.p className="fw5 f5">
+      <ui.p vfx={{ fontWeight: 5 }}>
         Est. 2024 Built from scratch by{" "}
-        <Link
-          target="_blank"
-          rel="noreferrer"
-          className="link"
-          to="https://adamjanicki.xyz"
-        >
+        <Link target="_blank" rel="noreferrer" to="https://adamjanicki.xyz">
           Adam
         </Link>
       </ui.p>

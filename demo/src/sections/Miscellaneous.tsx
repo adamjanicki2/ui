@@ -11,7 +11,6 @@ import {
   Alert,
   Box,
   ClickOutside,
-  Link,
   Spinner,
   Icon,
   Avatar,
@@ -31,6 +30,7 @@ import {
 import { useState } from "react";
 import { iconTypes } from "@adamjanicki/ui/components/Icon/icons";
 import { Tooltip } from "@adamjanicki/ui-extended";
+import Link from "src/components/Link";
 
 export default function Miscellaneous() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
@@ -42,12 +42,12 @@ export default function Miscellaneous() {
       <Heading level={1}>Miscellaneous</Heading>
       <Para>
         Probably the most fun set of components, although{" "}
-        <Link to="#animated">Animated</Link> and{" "}
-        <Link to="#carousel">Carousel</Link> give this a run for its money, this
-        set of miscellaneous components covers a few additional things I always
-        found myself repeating in many different website builds. My OCD kicked
-        in and I decided to spent a full weekend getting CSS transitions down
-        for a handful of Hamburger animations.
+        <Link to="/presentation#animated">Animated</Link> and{" "}
+        <Link to="/presentation#carousel">Carousel</Link> give this a run for
+        its money, this set of miscellaneous components covers a few additional
+        things I always found myself repeating in many different website builds.
+        My OCD kicked in and I decided to spent a full weekend getting CSS
+        transitions down for a handful of Hamburger animations.
       </Para>
 
       {/* ClickOutside */}
@@ -159,13 +159,18 @@ export default function Miscellaneous() {
             <Tooltip
               offset={4}
               tooltipContent={
-                <Box className="tooltip f7 fw6 br3" vfx={{ padding: "xs" }}>
+                <Box
+                  vfx={{
+                    fontSize: "xs",
+                    fontWeight: 6,
+                  }}
+                >
                   {i + 1}: {icon}
                 </Box>
               }
               key={i}
             >
-              <Icon icon={icon} size="m" className="subtitle" />
+              <Icon icon={icon} size="m" vfx={{ color: "muted" }} />
             </Tooltip>
           ))}
         </Box>
