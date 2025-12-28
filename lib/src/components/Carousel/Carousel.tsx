@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { classNames } from "../../functions";
 import Button from "../Button";
-import type { Children, Style } from "../../utils/types";
+import type { Children, ArrayLike, Style } from "../../utils/types";
 import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
 
@@ -24,7 +24,7 @@ type Props = BoxProps & {
   /**
    * The child elements/slides of the carousel
    */
-  children: React.ReactNode[];
+  children: ArrayLike<React.ReactNode>;
   /**
    * How long the transition lasts (in seconds)
    * @default 1
@@ -67,7 +67,7 @@ type State = {
 
 const DEFAULT_DURATION_S = 1;
 
-const itemVfx = { width: "full", height: "full" } as const;
+const itemVfx = { width: "full", height: "full", stretch: "max" } as const;
 
 const Carousel = React.forwardRef<HTMLDivElement, Props>(
   (
@@ -167,10 +167,8 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
           style={animatingStyles}
           onTransitionEnd={onTransitionEnd}
         >
-          <Box vfx={itemVfx} className="aui-carousel-item">
-            {children[cur]}
-          </Box>
-          <Box vfx={itemVfx} className="aui-carousel-item" aria-hidden>
+          <Box vfx={itemVfx}>{children[cur]}</Box>
+          <Box vfx={itemVfx} aria-hidden>
             {children[next]}
           </Box>
         </Box>

@@ -1,6 +1,7 @@
 import React from "react";
 
-export type Children = React.ReactNode | React.ReactNode[];
+export type ArrayLike<T> = readonly T[] | T[];
+export type Children = React.ReactNode | ArrayLike<React.ReactNode>;
 export type ContentType = "success" | "warning" | "error" | "info" | "static";
 export type Style = React.CSSProperties;
 export type SizeDimension = "full" | "fit" | "min" | "max";
@@ -22,6 +23,8 @@ export type Vfx = {
   align?: "start" | "center" | "end";
   /** How to content the children (Equivalent to justify-content) */
   justify?: "start" | "center" | "between" | "around" | "end";
+  /** Flex presets to determine how a node stretches within its container */
+  stretch?: "even" | "grow" | "min" | "max";
   /** Whether to allow wrapping of children */
   wrap?: boolean;
   /** How to handle overflow in the container */

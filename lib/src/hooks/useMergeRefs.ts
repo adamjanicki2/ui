@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import type { ArrayLike } from "../utils/types";
 
 /**
  * Simple hook that merges N refs into one callback
@@ -7,7 +8,7 @@ import React, { useCallback } from "react";
  * @returns one combined ref
  */
 const useMergeRefs = <T>(
-  ...refs: (React.Ref<T> | null | undefined)[]
+  ...refs: ArrayLike<React.Ref<T> | null | undefined>
 ): React.Ref<T> => {
   return useCallback(
     (node: T) => {
