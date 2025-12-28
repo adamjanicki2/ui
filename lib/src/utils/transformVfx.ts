@@ -9,6 +9,7 @@ const transformers: Record<keyof Vfx, Transformer> = {
   gap: ({ gap }) => `aui-gap-${gap}`,
   align: ({ align }) => `aui-align-${align}`,
   justify: ({ justify }) => `aui-justify-${justify}`,
+  stretch: ({ stretch }) => `aui-stretch-${stretch}`,
   wrap: () => "aui-flex-wrap",
   overflow: ({ overflow }) => `aui-ov-${overflow}`,
   overflowX: ({ overflowX }) => `aui-ov-x-${overflowX}`,

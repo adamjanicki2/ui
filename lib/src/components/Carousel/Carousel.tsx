@@ -67,7 +67,7 @@ type State = {
 
 const DEFAULT_DURATION_S = 1;
 
-const itemVfx = { width: "full", height: "full" } as const;
+const itemVfx = { width: "full", height: "full", stretch: "max" } as const;
 
 const Carousel = React.forwardRef<HTMLDivElement, Props>(
   (
@@ -167,10 +167,8 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
           style={animatingStyles}
           onTransitionEnd={onTransitionEnd}
         >
-          <Box vfx={itemVfx} className="aui-carousel-item">
-            {children[cur]}
-          </Box>
-          <Box vfx={itemVfx} className="aui-carousel-item" aria-hidden>
+          <Box vfx={itemVfx}>{children[cur]}</Box>
+          <Box vfx={itemVfx} aria-hidden>
             {children[next]}
           </Box>
         </Box>

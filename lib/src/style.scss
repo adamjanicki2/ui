@@ -321,10 +321,6 @@ textarea {
 }
 
 // Carousel
-.aui-carousel-item {
-  flex: 0 0 100%;
-}
-
 .aui-carousel-arrow {
   position: absolute;
   top: 50%;
@@ -379,6 +375,23 @@ $justify-items: start flex-start, center center, end flex-end,
   .aui-justify-#{$class} {
     justify-content: $val;
   }
+}
+
+// Flex presets
+.aui-stretch-even {
+  flex: 1 1 0;
+}
+
+.aui-stretch-grow {
+  flex-grow: 1;
+}
+
+.aui-stretch-min {
+  flex-shrink: 1;
+}
+
+.aui-stretch-max {
+  flex: 0 0 100%;
 }
 
 // Avatar and Icon Utilities
