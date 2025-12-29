@@ -115,7 +115,7 @@ describe("useNavigate", () => {
     }
 
     expect(() => render(<Bad />)).toThrow(
-      "This hook must be used within a <Router>"
+      "useNavigate() must be used inside of a <Router> component"
     );
 
     consoleError.mockRestore();

@@ -10,6 +10,6 @@ type RouterContextValue = {
   basename: string;
 };
 
-export const RouterContext = React.createContext<RouterContextValue | null>(
-  null
-);
+const RouterContext = React.createContext<RouterContextValue | null>(null);
+
+export default RouterContext;

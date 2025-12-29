@@ -14,3 +14,11 @@ export type Location = {
  * A function to handle page navigation
  */
 export type Navigate = (to: string) => void;
+
+/**
+ * Object containing params from the pathname
+ * e.g. `{id: "1"}` for `/movie/:id <=> /movie/1`
+ */
+export type PathParams = {
+  [paramKey: string]: string | undefined;
+};

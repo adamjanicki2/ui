@@ -1,4 +1,4 @@
-import type { ArrayLike } from "../utils/types";
+import type { ReadonlyableArray } from "../utils/types";
 
 /**
  * Reduce a list of classnames into one string
@@ -7,7 +7,7 @@ import type { ArrayLike } from "../utils/types";
  * @returns single aggregated string of classnames
  */
 export default function classNames(
-  ...classNames: ArrayLike<string | null | undefined>
+  ...classNames: ReadonlyableArray<string | null | undefined>
 ): string | undefined {
   return (
     classNames

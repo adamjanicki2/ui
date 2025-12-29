@@ -1,5 +1,5 @@
 import React from "react";
-import type { ArrayLike } from "../../utils/types";
+import type { ReadonlyableArray } from "../../utils/types";
 
 type FallbackProps = { error: Error; reset: () => void };
 
@@ -23,7 +23,7 @@ type Props = {
   /**
    * Dependencies to trigger a reset on change
    */
-  deps?: ArrayLike<unknown>;
+  deps?: ReadonlyableArray<unknown>;
 };
 
 type State = {
@@ -55,8 +55,8 @@ export default class ErrorBoundary extends React.Component<Props, State> {
   };
 
   private depsUpdated(
-    nextDeps?: ArrayLike<unknown>,
-    prevDeps?: ArrayLike<unknown>
+    nextDeps?: ReadonlyableArray<unknown>,
+    prevDeps?: ReadonlyableArray<unknown>
   ) {
     if (!nextDeps || !prevDeps) return false;
     if (nextDeps.length !== prevDeps.length) return true;

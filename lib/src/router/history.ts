@@ -13,7 +13,7 @@ type LocationListener = (location: Location) => void;
 /**
  * A very small browser history wrapper around the History API.
  */
-export function createBrowserHistory() {
+export function createHistory() {
   let listeners: LocationListener[] = [];
 
   const notifyListeners = () => {
@@ -42,7 +42,7 @@ export function createBrowserHistory() {
       window.removeEventListener("popstate", notifyListeners);
       listeners = [];
     },
-  };
+  } as const;
 }
 
-export type BrowserHistory = ReturnType<typeof createBrowserHistory>;
+export type History = ReturnType<typeof createHistory>;

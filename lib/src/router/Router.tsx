@@ -1,12 +1,8 @@
 import React from "react";
-import { RouterContext } from "./context";
-import {
-  createBrowserHistory,
-  getCurrentLocation,
-  type BrowserHistory,
-} from "./history";
+import RouterContext from "./RouterContext";
+import { createHistory, getCurrentLocation, type History } from "./history";
 import type { Location, Navigate } from "./types";
-import { getHref } from "./href";
+import { getHref, normalizeBasename } from "./href";
 
 export type Props = {
   /** Children to render inside the router provider */
@@ -16,8 +12,9 @@ export type Props = {
 };
 
 export default function Router({ children, basename = "" }: Props) {
-  const historyRef = React.useRef<BrowserHistory | null>(null);
-  if (!historyRef.current) historyRef.current = createBrowserHistory();
+  basename = normalizeBasename(basename);
+  const historyRef = React.useRef<History | null>(null);
+  if (!historyRef.current) historyRef.current = createHistory();
   const history = historyRef.current;
 
   const [location, setLocation] = React.useState<Location>(getCurrentLocation);

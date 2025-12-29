@@ -28,12 +28,12 @@ describe("href", () => {
         url: "/app/a",
       });
 
-      expect(getHref("/a/b/", "/base", "app")).toEqual({
+      expect(getHref("/a/b/", "/base", "/app")).toEqual({
         type: "internal",
         url: "/app/a/b/",
       });
 
-      expect(getHref("/a/b/c", "/base", "/app/")).toEqual({
+      expect(getHref("/a/b/c", "/base", "/app")).toEqual({
         type: "internal",
         url: "/app/a/b/c",
       });
@@ -103,16 +103,6 @@ describe("href", () => {
       expect(getHref("rel", "/app/", "/app")).toEqual({
         type: "internal",
         url: "/app/rel",
-      });
-
-      expect(getHref("rel", "/app/base", "app")).toEqual({
-        type: "internal",
-        url: "/app/base/rel",
-      });
-
-      expect(getHref("rel", "/app/base", "/app/")).toEqual({
-        type: "internal",
-        url: "/app/base/rel",
       });
 
       expect(getHref("rel", "/base", "/app")).toEqual({

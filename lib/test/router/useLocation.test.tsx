@@ -58,7 +58,7 @@ describe("useLocation", () => {
       .mockImplementation(() => {});
 
     expect(() => render(<Wrapper />)).toThrow(
-      "This hook must be used within a <Router>"
+      "useLocation() must be used inside of a <Router> component"
     );
 
     consoleError.mockRestore();
