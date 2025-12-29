@@ -24,7 +24,6 @@ function findRouteElements(children: ReadonlyableArray<React.ReactNode>) {
 export default function Routes({ children: rawChildren }: Props) {
   const router = useRouterContext("<Routes>");
   const { location, basename } = router;
-  console.log({ locationPath: location.pathname, basename });
   const pathname = stripBasename(location.pathname, basename);
 
   const children = Array.isArray(rawChildren) ? rawChildren : [rawChildren];
@@ -33,7 +32,6 @@ export default function Routes({ children: rawChildren }: Props) {
 
   for (const routeElement of routes) {
     const { path, element } = routeElement.props;
-    console.log({ path, pathname });
     const pathParams = matchPath(path, pathname);
     if (pathParams) {
       return (

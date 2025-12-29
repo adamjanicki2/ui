@@ -1,8 +1,7 @@
-import { BrowserRouter, Routes, Route } from "react-router";
 import Home from "src/components/Home";
 import Nav from "src/components/Nav";
 import Footer from "src/components/Footer";
-import { Box, useScrollToHash, Router } from "@adamjanicki/ui";
+import { Box, useScrollToHash, Router, Routes, Route } from "@adamjanicki/ui";
 import { useSetDocumentTheme } from "src/hooks";
 import Presentation from "src/sections/Presentation";
 import Signals from "src/sections/Signals";
@@ -16,20 +15,18 @@ export default function App() {
 
   return (
     <Router basename="/ui">
-      <BrowserRouter basename="/ui">
-        <Nav />
-        <Box className="main-container" vfx={{ width: "full" }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/presentation" element={<Presentation />} />
-            <Route path="/signals" element={<Signals />} />
-            <Route path="/user-action" element={<UserAction />} />
-            <Route path="/miscellaneous" element={<Miscellaneous />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Box>
-        <Footer />
-      </BrowserRouter>
+      <Nav />
+      <Box className="main-container" vfx={{ width: "full" }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/presentation" element={<Presentation />} />
+          <Route path="/signals" element={<Signals />} />
+          <Route path="/user-action" element={<UserAction />} />
+          <Route path="/miscellaneous" element={<Miscellaneous />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Box>
+      <Footer />
     </Router>
   );
 }
