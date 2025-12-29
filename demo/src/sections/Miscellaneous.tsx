@@ -17,6 +17,7 @@ import {
   ui,
   ErrorBoundary,
   Button,
+  Link,
 } from "@adamjanicki/ui";
 import {
   DoubleCross,
@@ -30,7 +31,6 @@ import {
 import { useState } from "react";
 import { iconTypes } from "@adamjanicki/ui/components/Icon/icons";
 import { Tooltip } from "@adamjanicki/ui-extended";
-import Link from "src/components/Link";
 
 export default function Miscellaneous() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);

@@ -19,7 +19,7 @@ function createVfxElement<T extends HtmlTag>(tag: T) {
       React.createElement(tag, {
         ...props,
         ref,
-        className: classNames(transformVfx(vfx), className),
+        className: classNames(className, transformVfx(vfx)),
       })
   );
 

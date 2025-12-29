@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ui from "../ui";
 import type { SizeToken, Style } from "../../utils/types";
 import Box, { type BoxProps } from "../Box/Box";
 import { classNames } from "../../functions";
@@ -62,7 +63,7 @@ const Avatar = React.forwardRef<HTMLDivElement, Props>(
         ref={ref}
       >
         {!useFallback ? (
-          <img
+          <ui.img
             src={backgroundImage}
             alt=""
             className={imageClassName}

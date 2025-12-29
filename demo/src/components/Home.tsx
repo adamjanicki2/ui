@@ -2,8 +2,7 @@ import { importCss } from "src/codeSnippets";
 import Header from "src/components/Heading";
 import Para from "src/components/Para";
 import Snippet from "src/components/Snippet";
-import Link from "src/components/Link";
-import { ui, Icon } from "@adamjanicki/ui";
+import { ui, Icon, Link } from "@adamjanicki/ui";
 
 export default function Home() {
   return (

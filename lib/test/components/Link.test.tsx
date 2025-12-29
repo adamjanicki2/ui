@@ -1,53 +1,137 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { Link, UnstyledLink, ButtonLink } from "../../src";
-
-const CustomLinkElement = React.forwardRef<HTMLAnchorElement, any>(
-  (props, ref) => {
-    return <a {...props} className="cool" ref={ref} />;
-  }
-);
+import { render, screen, fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { Router, Link } from "../../src";
 
 describe("Link", () => {
-  it("renders a link", () => {
-    render(
-      <>
-        <Link to="#" data-testid="regular">
-          Regular
-        </Link>
-        <UnstyledLink to="#" data-testid="unstyled">
-          Unstyled
-        </UnstyledLink>
-        <ButtonLink to="#" data-testid="button">
-          Button
-        </ButtonLink>
-      </>
-    );
-    expect(screen.getByTestId("regular")).toBeInTheDocument();
-    expect(screen.getByTestId("unstyled")).toBeInTheDocument();
-    expect(screen.getByTestId("button")).toBeInTheDocument();
+  beforeEach(() => {
+    window.history.replaceState(null, "", "/");
   });
 
-  it("renders a link element with custom LinkElement", () => {
-    render(
-      <>
-        <Link to="#" data-testid="regular" LinkElement={CustomLinkElement}>
-          Regular
+  describe("without Router", () => {
+    it("renders", async () => {
+      const user = userEvent.setup();
+
+      render(<Link to="/about">About</Link>);
+
+      const link = screen.getByRole("link", { name: "About" });
+      expect(link).toHaveAttribute("href", "/about");
+
+      // just tests that no assertions thrown
+      await user.click(link);
+    });
+
+    it("sets target and rel for newTab", () => {
+      render(
+        <Link to="/about" newTab>
+          About
         </Link>
-        <UnstyledLink
-          to="#"
-          data-testid="unstyled"
-          LinkElement={CustomLinkElement}
-        >
-          Unstyled
-        </UnstyledLink>
-        <ButtonLink to="#" data-testid="button" LinkElement={CustomLinkElement}>
-          Button
-        </ButtonLink>
-      </>
-    );
-    expect(screen.getByTestId("regular")).toHaveClass("cool");
-    expect(screen.getByTestId("unstyled")).toHaveClass("cool");
-    expect(screen.getByTestId("button")).toHaveClass("cool");
+      );
+
+      const link = screen.getByRole("link", { name: "About" });
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noreferrer noopener");
+    });
+  });
+
+  describe("with Router context", () => {
+    it("prevents default for internal nav", async () => {
+      const user = userEvent.setup();
+
+      render(
+        <Router basename="/app">
+          <Link to="/a">Go</Link>
+        </Router>
+      );
+
+      const link = screen.getByRole("link", { name: "Go" });
+      await user.click(link);
+
+      expect(window.location.pathname).toBe("/app/a");
+    });
+
+    it("does not prevent default for special keys", async () => {
+      render(
+        <Router basename="/app">
+          <Link to="/a">Go</Link>
+        </Router>
+      );
+
+      const link = screen.getByRole("link", { name: "Go" });
+
+      fireEvent.click(link, { metaKey: true, button: 0 });
+
+      expect(window.location.pathname).toBe("/");
+    });
+
+    it("does not prevent default if newTab is true", async () => {
+      const user = userEvent.setup();
+
+      render(
+        <Router basename="/app">
+          <Link to="/a" newTab>
+            Go
+          </Link>
+        </Router>
+      );
+
+      const link = screen.getByRole("link", { name: "Go" });
+      await user.click(link);
+
+      expect(window.location.pathname).toBe("/");
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noreferrer noopener");
+    });
+
+    it("does not prevent default for external URLs", async () => {
+      const user = userEvent.setup();
+
+      render(
+        <Router basename="/app">
+          <Link to="https://example.com">External</Link>
+        </Router>
+      );
+
+      const link = screen.getByRole("link", { name: "External" });
+      expect(link).toHaveAttribute("href", "https://example.com");
+      await user.click(link);
+      expect(window.location.pathname).toBe("/");
+    });
+
+    it("onClick prop and respects downstream preventDefault", async () => {
+      const user = userEvent.setup();
+      const onClick = jest.fn((event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+      });
+
+      render(
+        <Router basename="/app">
+          <Link to="/a" onClick={onClick}>
+            Go
+          </Link>
+        </Router>
+      );
+
+      const link = screen.getByRole("link", { name: "Go" });
+      await user.click(link);
+      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(window.location.pathname).toBe("/");
+    });
+
+    it("supports keyboard activation", async () => {
+      const user = userEvent.setup();
+
+      render(
+        <Router basename="/app/slug">
+          <Link to="a">Go</Link>
+        </Router>
+      );
+
+      const link = screen.getByRole("link", { name: "Go" });
+      link.focus();
+      expect(link).toHaveFocus();
+      await user.keyboard("{Enter}");
+      expect(window.location.pathname).toBe("/app/slug/a");
+    });
   });
 });

@@ -1,8 +1,7 @@
-import { BrowserRouter, Routes, Route } from "react-router";
 import Home from "src/components/Home";
 import Nav from "src/components/Nav";
 import Footer from "src/components/Footer";
-import { Box, useScrollToHash } from "@adamjanicki/ui";
+import { Box, useScrollToHash, Router, Routes, Route } from "@adamjanicki/ui";
 import { useSetDocumentTheme } from "src/hooks";
 import Presentation from "src/sections/Presentation";
 import Signals from "src/sections/Signals";
@@ -15,7 +14,7 @@ export default function App() {
   useSetDocumentTheme();
 
   return (
-    <BrowserRouter basename="/ui">
+    <Router basename="/ui">
       <Nav />
       <Box className="main-container" vfx={{ width: "full" }}>
         <Routes>
@@ -28,6 +27,6 @@ export default function App() {
         </Routes>
       </Box>
       <Footer />
-    </BrowserRouter>
+    </Router>
   );
 }
