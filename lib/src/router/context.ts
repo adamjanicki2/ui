@@ -7,7 +7,7 @@ type RouterContextValue = {
   /** Push-style navigation */
   navigate: Navigate;
   /** Optional basename prefix for all internal navigation */
-  basename?: string;
+  basename: string;
 };
 
 export const RouterContext = React.createContext<RouterContextValue | null>(

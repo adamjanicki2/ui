@@ -1,37 +1,21 @@
 import React from "react";
+import ui from "../ui";
 import { getButtonProps, type VisualButtonProps } from "../Button/Button";
 import classNames from "../../functions/classNames";
 import { Vfx } from "../../utils/types";
-import transformVfx from "../../utils/transformVfx";
+import { RouterContext } from "../../router/context";
+import { getHref, type Href } from "../../router/href";
 
-export type BaseLinkProps = Omit<
-  React.DetailedHTMLProps<
-    React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    HTMLAnchorElement
-  >,
-  "href"
-> & {
+export type LinkProps = Omit<React.ComponentProps<typeof ui.a>, "href"> & {
   /**
    * URL to navigate to
    */
   to: string;
-};
-
-type CustomLinkElement = React.ForwardRefExoticComponent<
-  BaseLinkProps & React.RefAttributes<HTMLAnchorElement>
->;
-
-type LinkProps = BaseLinkProps & {
   /**
-   * Whether the link should open in a new tab
+   * Whether to open the link in a new tab.
+   * @default false
    */
-  external?: boolean;
-  /**
-   * [Optional] Custom link element to use
-   * This is useful for using a different link element, like a React Router Link
-   * If this is not provided, a normal anchor tag will be used
-   */
-  LinkElement?: CustomLinkElement;
+  newTab?: boolean;
   /**
    * The VFX or other organizational css to apply to this element.
    * Properties are translated to class names before being applied.
@@ -39,19 +23,58 @@ type LinkProps = BaseLinkProps & {
   vfx?: Vfx;
 };
 
-export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ LinkElement, to, className, vfx, external, ...rest }, ref) => {
-    const props = {
-      ...(external ? { target: "_blank", rel: "noreferrer noopener" } : {}),
-      ...rest,
-      className: classNames("aui-action", transformVfx(vfx), className),
-    };
+function routeInternally(event: React.MouseEvent<HTMLAnchorElement>) {
+  // only route internally if it's a left click and no modifier keys are held down
+  return (
+    event.button === 0 &&
+    !event.defaultPrevented &&
+    !event.metaKey &&
+    !event.altKey &&
+    !event.ctrlKey &&
+    !event.shiftKey
+  );
+}
 
-    if (LinkElement) {
-      return <LinkElement {...props} to={to} ref={ref} />;
+export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
+  ({ to, className, newTab, onClick, target, rel, ...rest }, ref) => {
+    const router = React.useContext(RouterContext);
+
+    const href: Href = router
+      ? getHref(to, router.location.pathname, router.basename)
+      : { type: "unknown", url: to };
+
+    if (newTab) {
+      target = "_blank";
+      rel = "noreferrer noopener";
     }
 
-    return <a {...props} href={to} ref={ref} />;
+    const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+      onClick?.(event);
+
+      if (
+        !router ||
+        newTab ||
+        href.type === "external" ||
+        !routeInternally(event)
+      )
+        return;
+
+      // Client-side navigation
+      event.preventDefault();
+      router.navigate(to);
+    };
+
+    return (
+      <ui.a
+        {...rest}
+        href={href.url}
+        target={target}
+        rel={rel}
+        className={classNames("aui-action", className)}
+        onClick={handleClick}
+        ref={ref}
+      />
+    );
   }
 );
 

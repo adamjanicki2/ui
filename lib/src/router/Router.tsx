@@ -6,6 +6,7 @@ import {
   type BrowserHistory,
 } from "./history";
 import type { Location, Navigate } from "./types";
+import { getHref } from "./href";
 
 export type Props = {
   /** Children to render inside the router provider */
@@ -14,29 +15,7 @@ export type Props = {
   basename?: string;
 };
 
-// formats with a starting slash and removes trailing slash
-function normalizeBasename(basename?: string) {
-  if (!basename) return undefined;
-  basename = basename.endsWith("/") ? basename.slice(0, -1) : basename;
-  basename = basename.startsWith("/") ? basename : `/${basename}`;
-  return basename;
-}
-
-function getTo(to: string, pathname: string, basename?: string) {
-  basename ||= "";
-  // Absolute
-  if (to.startsWith("/")) {
-    return basename + to;
-  }
-
-  // Relative (we assume the invariant that pathname already contains basename)
-  pathname = pathname.endsWith("/") ? pathname : pathname + "/";
-  return pathname + to;
-}
-
-export default function Router({ children, basename }: Props) {
-  basename = normalizeBasename(basename);
-
+export default function Router({ children, basename = "" }: Props) {
   const historyRef = React.useRef<BrowserHistory | null>(null);
   if (!historyRef.current) historyRef.current = createBrowserHistory();
   const history = historyRef.current;
@@ -56,12 +35,12 @@ export default function Router({ children, basename }: Props) {
       removeListener();
       history.cleanup();
     };
-  }, []);
+  }, [history]);
 
   const navigate = React.useCallback<Navigate>(
     (to) => {
       const currentPathname = locationRef.current.pathname;
-      history.push(getTo(to, currentPathname, basename));
+      history.push(getHref(to, currentPathname, basename).url);
     },
     [history, basename]
   );
