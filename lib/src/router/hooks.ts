@@ -5,7 +5,7 @@ import type { Location, Navigate } from "./types";
 function useRouterContext() {
   const routerContext = React.useContext(RouterContext);
   if (!routerContext) {
-    throw new Error("This must be used within a <Router>");
+    throw new Error("This hook must be used within a <Router>");
   }
 
   return routerContext;

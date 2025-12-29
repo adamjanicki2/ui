@@ -22,43 +22,57 @@ function normalizeBasename(basename?: string) {
   return basename;
 }
 
-function applyBasename(to: string, basename?: string) {
-  if (!basename) return to;
+function getTo(to: string, pathname: string, basename?: string) {
+  basename ||= "";
+  // Absolute
+  if (to.startsWith("/")) {
+    return basename + to;
+  }
 
-  // Support "settings" or "/settings".
-  if (to.startsWith("/")) return `${basename}${to}`;
-  return `${basename}/${to}`;
+  // Relative (we assume the invariant that pathname already contains basename)
+  pathname = pathname.endsWith("/") ? pathname : pathname + "/";
+  return pathname + to;
 }
 
 export default function Router({ children, basename }: Props) {
+  basename = normalizeBasename(basename);
+
   const historyRef = React.useRef<BrowserHistory | null>(null);
   if (!historyRef.current) historyRef.current = createBrowserHistory();
   const history = historyRef.current;
 
-  const normalizedBasename = normalizeBasename(basename);
-
   const [location, setLocation] = React.useState<Location>(getCurrentLocation);
 
-  React.useEffect(() => {
-    const remove = history.addListener(setLocation);
+  // to avoid infinite rerenders
+  const locationRef = React.useRef<Location>(location);
+
+  React.useLayoutEffect(() => {
+    const removeListener = history.addListener((nextLocation) => {
+      locationRef.current = nextLocation;
+      setLocation(nextLocation);
+    });
+
     return () => {
-      remove();
+      removeListener();
       history.cleanup();
     };
   }, []);
 
   const navigate = React.useCallback<Navigate>(
-    (to) => history.push(applyBasename(to, normalizedBasename)),
-    [history, normalizedBasename]
+    (to) => {
+      const currentPathname = locationRef.current.pathname;
+      history.push(getTo(to, currentPathname, basename));
+    },
+    [history, basename]
   );
 
   const contextValue = React.useMemo(
     () => ({
       location,
       navigate,
-      basename: normalizedBasename,
+      basename,
     }),
-    [location, navigate, normalizedBasename]
+    [location, navigate, basename]
   );
 
   return (
