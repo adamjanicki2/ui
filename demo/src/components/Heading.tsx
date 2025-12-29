@@ -26,7 +26,11 @@ export default function Heading({ level, children }: Props) {
   const id = headingToId(children);
   const Element = ui[`h${level}`];
   return (
-    <Element className="has-octo-within" vfx={{ axis: "x", align: "center" }}>
+    <Element
+      id={id}
+      className="has-octo-within"
+      vfx={{ axis: "x", align: "center" }}
+    >
       <>
         <HashLink id={id} />
         {children}
