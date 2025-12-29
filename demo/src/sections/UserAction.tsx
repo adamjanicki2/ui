@@ -149,7 +149,7 @@ export default function UserAction() {
           }}
         >
           <Link to="#link">Internal link</Link>
-          <Link to="https://adamovies.com" external>
+          <Link to="https://adamovies.com" newTab>
             External link
           </Link>
           <UnstyledLink to="#link">Unstyled link</UnstyledLink>

@@ -1,5 +1,5 @@
 export type Href = {
-  type: "internal" | "external" | "unknown";
+  type: "internal" | "external" | "octo" | "unknown";
   url: string;
 };
 
@@ -7,6 +7,9 @@ export type Href = {
 export function getHref(to: string, pathname: string, basename: string): Href {
   // external
   if (isExternal(to)) return { type: "external", url: to };
+
+  // hash only
+  if (to.startsWith("#")) return { type: "octo", url: to };
 
   basename = normalizeBasename(basename);
   const type = "internal";
@@ -18,7 +21,7 @@ export function getHref(to: string, pathname: string, basename: string): Href {
 
   // relative
   pathname = stripBasename(prependSlash(pathname), basename);
-  if (!to) return { type, url: basename + pathname };
+  if (!to || to.startsWith("#")) return { type, url: basename + pathname + to };
 
   return { type, url: basename + popSlash(pathname) + prependSlash(to) };
 }

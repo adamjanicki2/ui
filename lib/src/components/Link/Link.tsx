@@ -55,6 +55,7 @@ export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
         !router ||
         newTab ||
         href.type === "external" ||
+        href.type === "octo" ||
         !routeInternally(event)
       )
         return;

@@ -1,9 +1,9 @@
-import { Link } from "@adamjanicki/ui";
+import { Link, ui } from "@adamjanicki/ui";
 import React from "react";
 import "src/components/heading.css";
 
 type Props = {
-  level: number;
+  level: 1 | 2 | 3;
   children: string;
 };
 
@@ -24,10 +24,13 @@ function headingToId(heading: string) {
 
 export default function Heading({ level, children }: Props) {
   const id = headingToId(children);
-  return React.createElement(
-    `h${level}`,
-    { id, className: "has-octo-within flex items-center" },
-    <HashLink id={id} />,
-    children
+  const Element = ui[`h${level}`];
+  return (
+    <Element className="has-octo-within" vfx={{ axis: "x", align: "center" }}>
+      <>
+        <HashLink id={id} />
+        {children}
+      </>
+    </Element>
   );
 }
