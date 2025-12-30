@@ -1,4 +1,4 @@
-import { getHref, isExternal } from "../../src/router/href";
+import { getHref, isExternal } from "../../src/navigation/href";
 
 describe("href", () => {
   describe("getHref", () => {

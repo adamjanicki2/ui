@@ -1,4 +1,4 @@
-import { matchPath } from "../../src/router/path";
+import { matchPath } from "../../src/navigation/path";
 
 describe("path", () => {
   describe("matchPath", () => {

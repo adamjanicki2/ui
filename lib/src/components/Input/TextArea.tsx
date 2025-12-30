@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import classNames from "../../functions/classNames";
-import ui from "../ui";
+import ui from "../../ui";
 
 type Props = React.ComponentProps<typeof ui.textarea>;
 

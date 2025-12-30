@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import { Props as InputProps } from "./Input";
 import classNames from "../../functions/classNames";
 import Box, { type BoxProps } from "../Box/Box";
-import ui from "../ui";
+import ui from "../../ui";
 
 type IconInputProps = Omit<BoxProps, "children"> & {
   /**
