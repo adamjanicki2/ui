@@ -1,5 +1,4 @@
-import classNames from "./classNames";
-import scrollToId from "./scrollToId";
-import assertDefined from "./assertDefined";
-import getDeviceType from "./getDeviceType";
-export { classNames, scrollToId, assertDefined, getDeviceType };
+export { default as classNames } from "./classNames";
+export { default as scrollToId } from "./scrollToId";
+export { default as assertDefined } from "./assertDefined";
+export { default as getDeviceType } from "./getDeviceType";

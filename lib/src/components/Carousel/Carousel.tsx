@@ -68,6 +68,13 @@ type State = {
 const DEFAULT_DURATION_S = 1;
 
 const itemVfx = { width: "full", height: "full", stretch: "max" } as const;
+const arrowVfx = {
+  axis: "x",
+  align: "center",
+  justify: "center",
+  radius: "max",
+  padding: "none",
+} as const;
 
 const Carousel = React.forwardRef<HTMLDivElement, Props>(
   (
@@ -177,13 +184,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
             {!hideArrows && (
               <>
                 <Button
-                  vfx={{
-                    axis: "x",
-                    align: "center",
-                    justify: "center",
-                    radius: "max",
-                    padding: "none",
-                  }}
+                  vfx={arrowVfx}
                   className={classNames(
                     "aui-carousel-arrow",
                     leftArrowProps?.className
@@ -201,13 +202,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                   )}
                 </Button>
                 <Button
-                  vfx={{
-                    axis: "x",
-                    align: "center",
-                    justify: "center",
-                    radius: "max",
-                    padding: "none",
-                  }}
+                  vfx={arrowVfx}
                   className={classNames(
                     "aui-carousel-arrow",
                     rightArrowProps?.className

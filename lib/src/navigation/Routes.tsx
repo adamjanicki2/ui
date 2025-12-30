@@ -2,7 +2,7 @@ import React from "react";
 import { matchPath } from "./path";
 import PathParamsContext from "./PathParamsContext";
 import Route, { type Props as RouteProps } from "./Route";
-import { Children, ReadonlyableArray } from "../utils/types";
+import type { Children, ReadonlyableArray } from "../utils/types";
 import useRouterContext from "./hooks/useRouterContext";
 import { stripBasename } from "./href";
 

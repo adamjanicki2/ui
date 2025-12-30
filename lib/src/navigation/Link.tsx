@@ -1,12 +1,15 @@
 import React from "react";
 import ui from "../ui";
-import { getButtonProps, type VisualButtonProps } from "../Button/Button";
-import classNames from "../../functions/classNames";
-import { Vfx } from "../../utils/types";
-import RouterContext from "../../router/RouterContext";
-import { getHref, type Href } from "../../router/href";
+import {
+  getButtonProps,
+  type VisualButtonProps,
+} from "../components/Button/Button";
+import classNames from "../functions/classNames";
+import type { Vfx } from "../utils/types";
+import RouterContext from "./RouterContext";
+import { getHref, type Href } from "./href";
 
-export type LinkProps = Omit<React.ComponentProps<typeof ui.a>, "href"> & {
+type LinkProps = Omit<React.ComponentProps<typeof ui.a>, "href"> & {
   /**
    * URL to navigate to
    */
