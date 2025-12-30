@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Router, Link } from "../../src";
+import { Router, Link, UnstyledLink, ButtonLink } from "../../src";
 
 describe("Link", () => {
   beforeEach(() => {
@@ -12,9 +12,17 @@ describe("Link", () => {
     it("renders", async () => {
       const user = userEvent.setup();
 
-      render(<Link to="/about">About</Link>);
+      render(
+        <div>
+          <Link data-testid="main" to="/about">
+            About
+          </Link>
+          <UnstyledLink to="/about">About</UnstyledLink>
+          <ButtonLink to="/about">About</ButtonLink>
+        </div>
+      );
 
-      const link = screen.getByRole("link", { name: "About" });
+      const link = screen.getByTestId("main");
       expect(link).toHaveAttribute("href", "/about");
 
       // just tests that no assertions thrown
