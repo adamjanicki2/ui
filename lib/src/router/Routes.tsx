@@ -3,7 +3,7 @@ import { matchPath } from "./path";
 import PathParamsContext from "./PathParamsContext";
 import Route, { type Props as RouteProps } from "./Route";
 import { Children, ReadonlyableArray } from "../utils/types";
-import { useRouterContext } from "./hooks";
+import useRouterContext from "./hooks/useRouterContext";
 import { stripBasename } from "./href";
 
 export type Props = {
