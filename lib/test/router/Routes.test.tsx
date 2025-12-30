@@ -26,7 +26,7 @@ describe("Routes", () => {
     expect(screen.getByTestId("page")).toHaveTextContent("about");
   });
 
-  it("renders null when no route matches", () => {
+  it("renders nothing when no route matches and no fallback used", () => {
     window.history.replaceState(null, "", "/404");
 
     const { container } = render(
@@ -39,6 +39,21 @@ describe("Routes", () => {
     );
 
     expect(container).toBeEmptyDOMElement();
+  });
+
+  it("renders fallback when no route matches", () => {
+    window.history.replaceState(null, "", "/404");
+
+    render(
+      <Router>
+        <Routes fallback={<Page name="missing" />}>
+          <Route path="/" element={<Page name="home" />} />
+          <Route path="/about" element={<Page name="about" />} />
+        </Routes>
+      </Router>
+    );
+
+    expect(screen.getByTestId("page")).toHaveTextContent("missing");
   });
 
   it("throws error without Router context", () => {

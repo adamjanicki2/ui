@@ -7,8 +7,15 @@ import { useRouterContext } from "./hooks";
 import { stripBasename } from "./href";
 
 export type Props = {
-  /** Only <Route /> children are supported */
+  /**
+   * Child <Route> elements to switch between.
+   * Note: non <Route> children will be silently ignored
+   */
   children: Children;
+  /**
+   * What to render when no routes match, like a 404 page.
+   */
+  fallback?: React.ReactNode;
 };
 
 function findRouteElements(children: ReadonlyableArray<React.ReactNode>) {
@@ -21,7 +28,7 @@ function findRouteElements(children: ReadonlyableArray<React.ReactNode>) {
  * Nested within a router component, this component handles rendering the proper route.
  * Note: sticking any other components besides routes in here will not be rendered
  */
-export default function Routes({ children: rawChildren }: Props) {
+export default function Routes({ children: rawChildren, fallback }: Props) {
   const router = useRouterContext("<Routes>");
   const { location, basename } = router;
   const pathname = stripBasename(location.pathname, basename);
@@ -42,5 +49,5 @@ export default function Routes({ children: rawChildren }: Props) {
     }
   }
 
-  return null;
+  return fallback;
 }
