@@ -2,7 +2,7 @@ import React from "react";
 import ui from "../ui";
 import { getButtonProps, type VisualButtonProps } from "../Button/Button";
 import classNames from "../../functions/classNames";
-import { Vfx } from "../../utils/types";
+import type { Vfx } from "../../utils/types";
 import RouterContext from "../../router/RouterContext";
 import { getHref, type Href } from "../../router/href";
 
