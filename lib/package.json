@@ -3,22 +3,31 @@
   "version": "1.8.3",
   "description": "Basic UI components and hooks for React in TypeScript",
   "type": "module",
-  "sideEffects": [
-    "*.css"
+  "main": "./build/index.js",
+  "module": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "build"
   ],
-  "main": "./index.js",
-  "types": "./index.d.ts",
   "author": "Adam Janicki",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/adamjanicki2/ui.git"
   },
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js"
+    },
+    "./style.css": "./build/style.css"
+  },
   "scripts": {
     "clean": "python clean.py",
     "lint": "eslint src test --max-warnings=0",
-    "test": "jest",
-    "scss": "sass --no-source-map --style=compressed src/style.scss style.css",
+    "test": "jest --silent",
+    "scss": "sass --no-source-map --style=compressed src/style.scss build/style.css",
     "build": "npm run clean && npm run lint && npm test && tsc && npm run scss",
     "prepare": "npm run build",
     "dryrun": "npm publish --dry-run"

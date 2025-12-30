@@ -1,7 +1,0 @@
-node_modules
-src
-test
-clean.py
-jest.config.js
-package-lock.json
-tsconfig.json
