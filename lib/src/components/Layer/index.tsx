@@ -1,2 +1,1 @@
-import Layer from "./Layer";
-export default Layer;
+export { default } from "./Layer";
