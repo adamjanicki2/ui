@@ -1,5 +1,5 @@
 import React from "react";
-import ui from "../ui";
+import ui from "../components/ui";
 import {
   getButtonProps,
   type VisualButtonProps,

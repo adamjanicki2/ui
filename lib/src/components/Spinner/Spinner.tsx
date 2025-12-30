@@ -1,5 +1,5 @@
 import classNames from "../../functions/classNames";
-import ui from "../../ui";
+import ui from "../ui";
 
 type Props = Omit<React.ComponentProps<typeof ui.svg>, "children" | "viewBox">;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "../../functions/classNames";
 import Icon, { Props as IconProps } from "../Icon/Icon";
-import ui from "../../ui";
+import ui from "../ui";
 
 type DefaultButtonProps = React.ComponentProps<typeof ui.button>;
 

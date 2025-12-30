@@ -2,7 +2,7 @@ import React from "react";
 import icons, { type IconType } from "./icons";
 import { classNames } from "../../functions";
 import type { SizeToken } from "../../utils/types";
-import ui from "../../ui";
+import ui from "../ui";
 
 export type Props = Omit<
   React.ComponentProps<typeof ui.svg>,
