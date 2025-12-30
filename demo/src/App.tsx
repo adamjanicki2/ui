@@ -17,13 +17,12 @@ export default function App() {
     <Router basename="/ui">
       <Nav />
       <Box className="main-container" vfx={{ width: "full" }}>
-        <Routes>
+        <Routes fallback={<NotFound />}>
           <Route path="/" element={<Home />} />
           <Route path="/presentation" element={<Presentation />} />
           <Route path="/signals" element={<Signals />} />
           <Route path="/user-action" element={<UserAction />} />
           <Route path="/miscellaneous" element={<Miscellaneous />} />
-          <Route path="*" element={<NotFound />} />
         </Routes>
       </Box>
       <Footer />

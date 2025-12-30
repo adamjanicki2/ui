@@ -10,18 +10,27 @@ export function getCurrentLocation(): Location {
 
 type LocationListener = (location: Location) => void;
 
-/**
- * A very small browser history wrapper around the History API.
- */
 export function createHistory() {
-  let listeners: LocationListener[] = [];
+  const listeners = new Set<LocationListener>();
 
   const notifyListeners = () => {
     const location = getCurrentLocation();
     listeners.forEach((listener) => listener(location));
   };
 
-  window.addEventListener("popstate", notifyListeners);
+  let listening = false;
+
+  const startListening = () => {
+    if (listening) return;
+    window.addEventListener("popstate", notifyListeners);
+    listening = true;
+  };
+
+  const stopListening = () => {
+    if (!listening) return;
+    window.removeEventListener("popstate", notifyListeners);
+    listening = false;
+  };
 
   return {
     push(to: string) {
@@ -30,17 +39,18 @@ export function createHistory() {
     },
 
     addListener(listener: LocationListener) {
-      listeners.push(listener);
+      startListening();
+      listeners.add(listener);
+
       return () => {
-        listeners = listeners.filter(
-          (existingListener) => existingListener !== listener
-        );
+        listeners.delete(listener);
+        if (listeners.size === 0) stopListening();
       };
     },
 
     cleanup() {
-      window.removeEventListener("popstate", notifyListeners);
-      listeners = [];
+      stopListening();
+      listeners.clear();
     },
   } as const;
 }
