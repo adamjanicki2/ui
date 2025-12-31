@@ -11,9 +11,20 @@ export type Location = {
 };
 
 /**
+ * Additional params to feed the navigate() function
+ */
+type NavigateOptions = {
+  /**
+   * Whether to overwrite the current browser url in history
+   * @default false
+   */
+  replace?: boolean;
+};
+
+/**
  * A function to handle page navigation
  */
-export type Navigate = (to: string) => void;
+export type Navigate = (to: string, options?: NavigateOptions) => void;
 
 /**
  * Object containing params from the pathname

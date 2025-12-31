@@ -38,6 +38,11 @@ export function createHistory() {
       notifyListeners();
     },
 
+    replace(to: string) {
+      window.history.replaceState(null, "", to);
+      notifyListeners();
+    },
+
     addListener(listener: LocationListener) {
       startListening();
       listeners.add(listener);

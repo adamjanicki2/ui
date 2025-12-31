@@ -13,12 +13,18 @@ function LocationRenderer() {
   );
 }
 
-function NavigateOnMount({ to }: { to: string }) {
+function NavigateOnMount({
+  to,
+  options,
+}: {
+  to: string;
+  options?: { replace?: boolean };
+}) {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    navigate(to);
-  }, [navigate, to]);
+    navigate(to, options);
+  }, [navigate, options, to]);
 
   return null;
 }
@@ -143,6 +149,29 @@ describe("Router", () => {
     });
 
     expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+  });
+
+  it("supports replace navigation (overwrites current history entry)", async () => {
+    const pushStateSpy = jest.spyOn(window.history, "pushState");
+    const replaceStateSpy = jest.spyOn(window.history, "replaceState");
+
+    render(
+      <Router>
+        <LocationRenderer />
+        <NavigateOnMount to="/replaced" options={{ replace: true }} />
+      </Router>
+    );
+
+    await waitFor(() => {
+      expect(window.location.pathname).toBe("/replaced");
+      expect(screen.getByTestId("pathname")).toHaveTextContent("/replaced");
+    });
+
+    expect(replaceStateSpy).toHaveBeenCalledTimes(1);
+    expect(pushStateSpy).not.toHaveBeenCalled();
+
+    pushStateSpy.mockRestore();
+    replaceStateSpy.mockRestore();
   });
 
   it("normalizes basename (trailing slash) and applies it exactly once", () => {
