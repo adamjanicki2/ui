@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import type { ReadonlyableArray } from "../utils/types";
+import type { ReadonlyableArray } from "../types/common";
 
 /**
  * Simple hook that merges N refs into one callback

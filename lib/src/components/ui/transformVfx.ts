@@ -1,4 +1,4 @@
-import { Vfx } from "./types";
+import { Vfx } from "../../types/common";
 
 type Transformer = (vfx: Vfx) => string;
 

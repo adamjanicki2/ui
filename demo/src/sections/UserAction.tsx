@@ -23,6 +23,7 @@ import {
   Icon,
   ui,
 } from "@adamjanicki/ui";
+import { download, search } from "@adamjanicki/ui/icons";
 
 export default function UserAction() {
   const [inputValue, setInputValue] = useState("Here's looking at you, kid.");
@@ -65,7 +66,7 @@ export default function UserAction() {
             Secondary
           </Button>
           <UnstyledButton onClick={buttonAction}>Unstyled</UnstyledButton>
-          <IconButton icon="download" size="m" onClick={buttonAction} />
+          <IconButton icon={download} size="m" onClick={buttonAction} />
         </Box>
         <HiddenSnippet>{buttonSnippet}</HiddenSnippet>
       </>
@@ -112,7 +113,7 @@ export default function UserAction() {
               Icon Input
             </Box>
             <IconInput
-              startIcon={<Icon vfx={{ marginLeft: "s" }} icon="search" />}
+              startIcon={<Icon vfx={{ marginLeft: "s" }} icon={search} />}
               inputProps={{ placeholder: "Search..." }}
             />
           </Box>

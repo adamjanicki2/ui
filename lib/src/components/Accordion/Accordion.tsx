@@ -3,7 +3,8 @@ import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
 import { UnstyledButton } from "../Button";
 import Animated from "../Animated";
-import type { ReadonlyableArray } from "../../utils/types";
+import type { ReadonlyableArray } from "../../types/common";
+import { chevronDown, chevronRight } from "../../icons";
 
 type Props = Omit<BoxProps, "children"> & {
   /**
@@ -95,7 +96,7 @@ const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
             <Icon
               vfx={{ color: "muted" }}
               size="xs"
-              icon={open ? "chevron-down" : "chevron-right"}
+              icon={open ? chevronDown : chevronRight}
             />
             <Box vfx={{ fontWeight: 6 }}>{item.label}</Box>
           </Box>

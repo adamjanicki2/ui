@@ -1,5 +1,5 @@
 import React from "react";
-import type { ContentType } from "../../utils/types";
+import type { ContentType } from "../../types/common";
 import classNames from "../../functions/classNames";
 import Box, { type BoxProps } from "../Box/Box";
 

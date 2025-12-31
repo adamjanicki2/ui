@@ -1,5 +1,5 @@
 import React from "react";
-import RouterContext from "../RouterContext";
+import RouterContext from "./RouterContext";
 
 export default function useRouterContext(name: string) {
   const routerContext = React.useContext(RouterContext);

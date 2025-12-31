@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { classNames } from "../../functions";
 import Button from "../Button";
-import type { Children, ReadonlyableArray, Style } from "../../utils/types";
+import type { Children, ReadonlyableArray, Style } from "../../types/common";
 import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
+import { chevronLeft, chevronRight } from "../../icons";
 
 type ButtonProps = {
   /**
@@ -195,7 +196,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                 >
                   {leftArrowProps?.children ?? (
                     <Icon
-                      icon="chevron-left"
+                      icon={chevronLeft}
                       size="xs"
                       style={{ marginRight: 2 }}
                     />
@@ -213,7 +214,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
                 >
                   {rightArrowProps?.children ?? (
                     <Icon
-                      icon="chevron-right"
+                      icon={chevronRight}
                       size="xs"
                       style={{ marginLeft: 2 }}
                     />

@@ -1,4 +1,4 @@
-import transformVfx from "../../src/utils/transformVfx";
+import transformVfx from "../../src/components/ui/transformVfx";
 
 describe("transformVfx", () => {
   it("returns null when vfx is undefined or empty", () => {

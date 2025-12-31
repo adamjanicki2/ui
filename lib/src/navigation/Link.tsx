@@ -5,7 +5,7 @@ import {
   type VisualButtonProps,
 } from "../components/Button/Button";
 import classNames from "../functions/classNames";
-import type { Vfx } from "../utils/types";
+import type { Vfx } from "../types/common";
 import RouterContext from "./RouterContext";
 import { getHref, type Href } from "./href";
 

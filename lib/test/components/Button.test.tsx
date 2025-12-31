@@ -1,5 +1,6 @@
 import { render, fireEvent } from "@testing-library/react";
 import { Button, UnstyledButton, IconButton } from "../../src";
+import { notAMoon } from "../../src/icons";
 
 describe("Button", () => {
   it("renders a button and fires onClick", async () => {
@@ -8,7 +9,7 @@ describe("Button", () => {
       <>
         <Button onClick={callback}>Regular</Button>
         <UnstyledButton onClick={callback}>Unstyled</UnstyledButton>
-        <IconButton icon="not-a-moon" onClick={callback} />
+        <IconButton icon={notAMoon} onClick={callback} />
       </>
     );
     const buttons = container.querySelectorAll("button");

@@ -50,7 +50,7 @@ def clean():
     ]:
         path = ROOT / filename
         if path.exists():
-            print(f"Deleting: {path.relative_to(ROOT)}")
+            print(f"Deleting {path.relative_to(ROOT)}")
             remove_path(path)
 
     green("Deleted all build artifacts!")
