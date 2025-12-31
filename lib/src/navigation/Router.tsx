@@ -9,10 +9,16 @@ export type Props = {
   children: React.ReactNode;
   /** Optional basename prefix for all internal navigation (e.g. "/app") */
   basename?: string;
+  /** Whether to maintain current page scroll height on navigate */
+  maintainScrollHeight?: boolean;
 };
 
-export default function Router({ children, basename = "" }: Props) {
-  basename = normalizeBasename(basename);
+export default function Router({
+  children,
+  basename,
+  maintainScrollHeight,
+}: Props) {
+  basename = normalizeBasename(basename ?? "");
   const historyRef = React.useRef<History | null>(null);
   if (!historyRef.current) historyRef.current = createHistory();
   const history = historyRef.current;
@@ -35,11 +41,15 @@ export default function Router({ children, basename = "" }: Props) {
   }, [history]);
 
   const navigate = React.useCallback<Navigate>(
-    (to) => {
-      const currentPathname = locationRef.current.pathname;
-      history.push(getHref(to, currentPathname, basename).url);
+    (to, options) => {
+      const { url } = getHref(to, locationRef.current.pathname, basename);
+      history.update(url, options?.historyMode);
+
+      if (!maintainScrollHeight) {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      }
     },
-    [history, basename]
+    [history, basename, maintainScrollHeight]
   );
 
   const contextValue = React.useMemo(

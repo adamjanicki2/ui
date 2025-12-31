@@ -10,10 +10,23 @@ export type Location = {
   hash: string;
 };
 
+export type HistoryMode = "push" | "replace";
+
+/**
+ * Additional params to feed the navigate() function
+ */
+export type NavigateOptions = {
+  /**
+   * Whether to append a new entry or overwrite the current browser url in history
+   * @default "push"
+   */
+  historyMode?: HistoryMode;
+};
+
 /**
  * A function to handle page navigation
  */
-export type Navigate = (to: string) => void;
+export type Navigate = (to: string, options?: NavigateOptions) => void;
 
 /**
  * Object containing params from the pathname

@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, act, waitFor } from "@testing-library/react";
 import { Router, useLocation, useNavigate } from "../../src";
+import type { NavigateOptions } from "../../src/types/navigation";
 
 function LocationRenderer() {
   const location = useLocation();
@@ -13,12 +14,18 @@ function LocationRenderer() {
   );
 }
 
-function NavigateOnMount({ to }: { to: string }) {
+function NavigateOnMount({
+  to,
+  options,
+}: {
+  to: string;
+  options?: NavigateOptions;
+}) {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    navigate(to);
-  }, [navigate, to]);
+    navigate(to, options);
+  }, [navigate, options, to]);
 
   return null;
 }
@@ -26,6 +33,9 @@ function NavigateOnMount({ to }: { to: string }) {
 describe("Router", () => {
   beforeEach(() => {
     window.history.replaceState(null, "", "/");
+    (
+      window.scrollTo as jest.MockedFunction<typeof window.scrollTo>
+    ).mockClear?.();
   });
 
   it("renders children", () => {
@@ -96,7 +106,7 @@ describe("Router", () => {
     expect(navigateIdentities[0]).toBe(navigateIdentities[1]);
   });
 
-  it("cleans up popstate listeners on unmount (no updates after unmount)", () => {
+  it("cleans up listeners on unmount", () => {
     const effectCallback = jest.fn();
 
     function EffectProbe() {
@@ -140,22 +150,49 @@ describe("Router", () => {
       expect(window.location.pathname).toBe("/app/a");
       expect(screen.getByTestId("pathname")).toHaveTextContent("/app/a");
     });
+
+    expect(window.scrollTo).toHaveBeenCalledTimes(1);
   });
 
-  it("normalizes basename (trailing slash) and applies it exactly once", () => {
+  it("supports replace navigation", async () => {
+    const pushStateSpy = jest.spyOn(window.history, "pushState");
+    const replaceStateSpy = jest.spyOn(window.history, "replaceState");
+
+    render(
+      <Router>
+        <LocationRenderer />
+        <NavigateOnMount to="/replaced" options={{ historyMode: "replace" }} />
+      </Router>
+    );
+
+    await waitFor(() => {
+      expect(window.location.pathname).toBe("/replaced");
+      expect(screen.getByTestId("pathname")).toHaveTextContent("/replaced");
+    });
+
+    expect(window.scrollTo).toHaveBeenCalledTimes(1);
+
+    expect(replaceStateSpy).toHaveBeenCalledTimes(1);
+    expect(pushStateSpy).not.toHaveBeenCalled();
+
+    pushStateSpy.mockRestore();
+    replaceStateSpy.mockRestore();
+  });
+
+  it("normalizes basename", () => {
     window.history.replaceState(null, "", "/app/base");
 
     render(
-      <Router basename="/app/">
+      <Router basename="/app/" maintainScrollHeight>
         <LocationRenderer />
         <NavigateOnMount to="relative" />
       </Router>
     );
 
-    // Relative navigation should not duplicate basename.
     expect(window.location.pathname).toBe("/app/base/relative");
     expect(screen.getByTestId("pathname")).toHaveTextContent(
       "/app/base/relative"
     );
+    expect(window.scrollTo).not.toHaveBeenCalled();
   });
 });
