@@ -3,6 +3,7 @@ import Box, { type BoxProps } from "../Box/Box";
 import Layer from "../Layer";
 import Button, { IconButton } from "../Button";
 import Animated from "../Animated";
+import { x } from "../../icons";
 
 type ButtonProps = Omit<
   React.ComponentProps<typeof Button>,
@@ -101,7 +102,7 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
                 width: "full",
               }}
             >
-              <IconButton icon="x" onClick={onClose} />
+              <IconButton icon={x} onClick={onClose} />
             </Box>
 
             {/* children here */}

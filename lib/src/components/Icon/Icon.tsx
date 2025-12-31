@@ -1,15 +1,15 @@
 import React from "react";
-import icons, { type IconType } from "./icons";
 import { classNames } from "../../functions";
 import type { SizeToken } from "../../utils/types";
 import ui from "../ui";
+import type { IconType } from "../../icons/IconType";
 
 export type Props = Omit<
   React.ComponentProps<typeof ui.svg>,
   "children" | "viewBox"
 > & {
   /**
-   * The version of icon to render
+   * Icon path to render (import from `components/Icon/icons`)
    */
   icon: IconType;
   /**
@@ -28,7 +28,7 @@ const Icon = React.forwardRef<SVGSVGElement, Props>(
       {...rest}
       ref={ref}
     >
-      <path d={icons[icon]} />
+      <ui.path d={icon} />
     </ui.svg>
   )
 );
