@@ -11,6 +11,7 @@
 html {
   scroll-padding-top: 5rem;
   overscroll-behavior: none;
+  scroll-behavior: smooth;
 }
 
 body {

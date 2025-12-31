@@ -14,7 +14,7 @@ export default function App() {
   useSetDocumentTheme();
 
   return (
-    <Router basename="/ui" maintainScrollHeight>
+    <Router basename="/ui">
       <Nav />
       <Box className="main-container" vfx={{ width: "full" }}>
         <Routes fallback={<NotFound />}>
