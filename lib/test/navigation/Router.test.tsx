@@ -106,7 +106,7 @@ describe("Router", () => {
     expect(navigateIdentities[0]).toBe(navigateIdentities[1]);
   });
 
-  it("cleans up popstate listeners on unmount (no updates after unmount)", () => {
+  it("cleans up listeners on unmount", () => {
     const effectCallback = jest.fn();
 
     function EffectProbe() {
@@ -170,6 +170,8 @@ describe("Router", () => {
       expect(screen.getByTestId("pathname")).toHaveTextContent("/replaced");
     });
 
+    expect(window.scrollTo).toHaveBeenCalledTimes(1);
+
     expect(replaceStateSpy).toHaveBeenCalledTimes(1);
     expect(pushStateSpy).not.toHaveBeenCalled();
 
@@ -177,20 +179,20 @@ describe("Router", () => {
     replaceStateSpy.mockRestore();
   });
 
-  it("normalizes basename (trailing slash) and applies it exactly once", () => {
+  it("normalizes basename", () => {
     window.history.replaceState(null, "", "/app/base");
 
     render(
-      <Router basename="/app/">
+      <Router basename="/app/" maintainScrollHeight>
         <LocationRenderer />
         <NavigateOnMount to="relative" />
       </Router>
     );
 
-    // Relative navigation should not duplicate basename.
     expect(window.location.pathname).toBe("/app/base/relative");
     expect(screen.getByTestId("pathname")).toHaveTextContent(
       "/app/base/relative"
     );
+    expect(window.scrollTo).not.toHaveBeenCalled();
   });
 });
