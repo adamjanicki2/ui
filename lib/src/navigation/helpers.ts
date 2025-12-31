@@ -38,3 +38,11 @@ export type SetSearchParamsArg =
 
 /** Callback to update search params and reload relevant hooks */
 export type SetSearchParams = (next: SetSearchParamsArg) => void;
+
+export function prependSlash(str: string) {
+  return str.startsWith("/") ? str : `/${str}`;
+}
+
+export function popSlash(str: string) {
+  return str.replace(/\/$/, "");
+}

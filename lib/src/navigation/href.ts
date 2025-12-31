@@ -1,4 +1,4 @@
-import { popSlash, prependSlash } from "./string";
+import { popSlash, prependSlash } from "./helpers";
 
 export type Href = {
   type: "internal" | "external" | "octo" | "unknown";

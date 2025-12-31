@@ -1,4 +1,4 @@
-import type { Location } from "../types";
+import type { Location } from "../helpers";
 import useRouterContext from "./useRouterContext";
 
 /**

@@ -1,6 +1,6 @@
+import os
 import shutil
 from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parent
 BUILD_DIR = ROOT / "build"
@@ -20,39 +20,38 @@ def green(msg):
 
 
 def remove_build_dir():
-    try:
-        shutil.rmtree(BUILD_DIR)
-    except:
-        pass
+    shutil.rmtree(BUILD_DIR, ignore_errors=True)
+
+
+def remove_path(path):
+    if path.is_dir():
+        shutil.rmtree(path, ignore_errors=True)
+    elif path.is_file():
+        try:
+            path.unlink()
+        except:
+            pass
 
 
 def clean():
-    remove_build_dir()
-    entries = [entry for entry in os.listdir(SRC_DIR) if entry != "src"]
-
     cyan("Cleaning build files...")
+    remove_build_dir()
 
-    # Delete corresponding entries in the root directory
-    for target in entries:
-        if os.path.isdir(target):
-            print(f"Deleting directory: {target}")
-            # Walk directory and remove all files/subdirectories
-            for root, dirs, files in os.walk(target, topdown=False):
-                for name in files:
-                    os.remove(os.path.join(root, name))
-                for name in dirs:
-                    os.rmdir(os.path.join(root, name))
-            os.rmdir(target)
-        elif os.path.isfile(target):
-            print(f"Deleting file: {target}")
-            os.remove(target)
+    for entry in SRC_DIR.iterdir():
+        path = ROOT / entry.name
+        if path.exists():
+            print(f"Deleting {path.relative_to(ROOT)}")
+            remove_path(path)
 
-    # Additional files to delete
-    additional_entries = ["index.js", "index.d.ts", "style.css"]
-    for name in additional_entries:
-        if os.path.isfile(name):
-            print(f"Deleting file: {name}")
-            os.remove(file_name)
+    for filename in [
+        "index.js",
+        "index.d.ts",
+        "style.css",
+    ]:
+        path = ROOT / filename
+        if path.exists():
+            print(f"Deleting: {path.relative_to(ROOT)}")
+            remove_path(path)
 
     green("Deleted all build artifacts!")
 

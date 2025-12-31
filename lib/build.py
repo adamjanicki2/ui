@@ -1,45 +1,37 @@
 import subprocess
+from pathlib import Path
+
 from clean import cyan, green, clean, ROOT, BUILD_DIR, remove_build_dir
 
 
 def run(cmd):
-    result = subprocess.run(cmd.split(), cwd=str(ROOT), stdout=subprocess.PIPE)
+    result = subprocess.run(cmd.split(), cwd=str(ROOT))
     if result.returncode != 0:
         raise SystemExit(result.returncode)
 
 
 def get_total_size(paths):
-    total = 0
-    for path in paths:
-        if path.is_file():
-            total += path.stat().st_size
-    return total
-
-
-units = ["B", "KB", "MB", "GB", "TB"]
+    return sum(p.stat().st_size for p in paths if p.is_file())
 
 
 def format_bytes(byte_size):
     value = float(byte_size)
-    for unit in units:
-        if value < 1024 or unit == units[-1]:
-            if unit == "B":
-                return f"{int(value)} {unit}"
+    for unit in ["B", "KB", "MB"]:
+        if value < 1024:
             return f"{value:.2f} {unit}"
         value /= 1024
     return f"{byte_size} B"
 
 
 def get_saved_percent(before, after):
-    saved = before - after
-    return (saved / before) * 100.0
+    return ((before - after) / before) * 100.0
 
 
 def main():
     # clean up mess
     clean()
-    cyan("\nCompiling TypeScript...")
-    # TS compiles into build/
+
+    cyan("Compiling TypeScript...")
     run("npx tsc")
     green("TypeScript compiled!\n")
 
@@ -49,22 +41,20 @@ def main():
 
     cyan("Minifying JavaScript...")
 
-    files_before = list(BUILD_DIR.rglob("*.js"))
+    files_before = list(BUILD_DIR.rglob("*"))
     size_before = get_total_size(files_before)
 
     run(
         "npx esbuild build/**/*.js --minify --format=esm --tree-shaking=true --target=es2018 --outdir=build --allow-overwrite --log-level=silent"
     )
 
-    files_after = list(BUILD_DIR.rglob("*.js"))
-    size_after = get_total_size(files_after)
-
-    percent = get_saved_percent(size_before, size_after)
-
+    files_after = list(BUILD_DIR.rglob("*"))
     assert files_after == files_before
 
-    # move out of build & delete build folder
-    run("rsync -a --remove-source-files build .")
+    size_after = get_total_size(files_after)
+    percent = get_saved_percent(size_before, size_after)
+
+    run("rsync -a --remove-source-files build/ ./")
     remove_build_dir()
 
     green("Build complete!\n")

@@ -1,7 +1,7 @@
 import React from "react";
 import RouterContext from "./RouterContext";
 import { createHistory, getCurrentLocation, type History } from "./history";
-import type { Location, Navigate } from "./types";
+import type { Location, Navigate } from "./helpers";
 import { getHref, normalizeBasename } from "./href";
 
 export type Props = {
