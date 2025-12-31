@@ -3,7 +3,6 @@ import RouterContext from "./RouterContext";
 import { createHistory, getCurrentLocation, type History } from "./history";
 import type { Location, Navigate } from "../types/navigation";
 import { getHref, normalizeBasename } from "./href";
-import { instantScrollTo } from "../functions";
 
 export type Props = {
   /** Children to render inside the router provider */
@@ -47,7 +46,7 @@ export default function Router({
       history.update(url, options?.historyMode);
 
       if (!maintainScrollHeight) {
-        instantScrollTo({ top: 0, left: 0 });
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       }
     },
     [history, basename, maintainScrollHeight]
