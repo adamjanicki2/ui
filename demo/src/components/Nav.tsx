@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "src/components/nav.css";
 import { Hamburger, Box, ui, Icon, Link, UnstyledLink } from "@adamjanicki/ui";
+import { architect } from "@adamjanicki/ui/icons";
 
 type NavlinkProps = {
   to: string;
@@ -37,7 +38,7 @@ export default function Nav() {
       >
         <UnstyledLink className="nav-title" to="/" onClick={closeMenu}>
           <Box className="desktop">@adamjanicki/ui</Box>
-          <Icon icon="architect" size="l" className="mobile" />
+          <Icon icon={architect} size="l" className="mobile" />
         </UnstyledLink>
         <Box className="mobile">
           <Hamburger open={open} onClick={() => setOpen(!open)} />

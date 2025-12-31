@@ -29,7 +29,7 @@ import {
   TriplePrestige,
 } from "@adamjanicki/ui/components/Hamburger";
 import { useState } from "react";
-import { iconTypes } from "@adamjanicki/ui/components/Icon/icons";
+import * as icons from "@adamjanicki/ui/icons";
 import { Tooltip } from "@adamjanicki/ui-extended";
 
 export default function Miscellaneous() {
@@ -155,7 +155,7 @@ export default function Miscellaneous() {
             gap: "s",
           }}
         >
-          {iconTypes.map((icon, i) => (
+          {Object.entries(icons).map(([iconName, icon], i) => (
             <Tooltip
               offset={4}
               tooltipContent={
@@ -165,7 +165,7 @@ export default function Miscellaneous() {
                     fontWeight: 6,
                   }}
                 >
-                  {i + 1}: {icon}
+                  {i + 1}: {iconName}
                 </Box>
               }
               key={i}

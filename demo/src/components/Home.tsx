@@ -3,6 +3,7 @@ import Header from "src/components/Heading";
 import Para from "src/components/Para";
 import Snippet from "src/components/Snippet";
 import { ui, Icon, Link } from "@adamjanicki/ui";
+import { architect } from "@adamjanicki/ui/icons";
 
 export default function Home() {
   return (
@@ -62,7 +63,7 @@ export default function Home() {
         <ui.br />
         Adam
       </Para>
-      <Icon icon="architect" size="xl" style={{ color: "#0070ff" }} />
+      <Icon icon={architect} size="xl" style={{ color: "#0070ff" }} />
     </>
   );
 }

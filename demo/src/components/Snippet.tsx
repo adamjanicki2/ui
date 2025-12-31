@@ -7,6 +7,7 @@ import {
 import "src/components/snippet.css";
 import { Badge, Button, Box, Icon, ui, classNames } from "@adamjanicki/ui";
 import { useTheme } from "src/hooks";
+import { check, clipboard } from "@adamjanicki/ui/icons";
 
 export type Props = {
   className?: string;
@@ -53,7 +54,7 @@ export default function Snippet({ className, children, lang = "tsx" }: Props) {
         <ui.span vfx={{ fontSize: "s", fontWeight: 5 }}>{lang}</ui.span>
         {copied ? (
           <Badge vfx={{ axis: "x", align: "center", gap: "xs" }} type="success">
-            <Icon icon="check" /> Copied
+            <Icon icon={check} /> Copied
           </Badge>
         ) : (
           <Button
@@ -62,7 +63,7 @@ export default function Snippet({ className, children, lang = "tsx" }: Props) {
             size="small"
             variant="secondary"
           >
-            <Icon icon="clipboard" />
+            <Icon icon={clipboard} />
             Copy
           </Button>
         )}

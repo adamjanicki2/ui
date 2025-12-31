@@ -101,7 +101,7 @@ export const buttonSnippet = `
 <Button variant="primary">Primary</Button>
 <Button variant="secondary">Secondary</Button>
 <UnstyledButton>Unstyled</UnstyledButton>
-<IconButton icon="download" />
+<IconButton icon={download} />
 `;
 
 export const carouselSnippet = `
