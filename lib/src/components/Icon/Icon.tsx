@@ -1,8 +1,8 @@
 import React from "react";
 import { classNames } from "../../functions";
-import type { SizeToken } from "../../utils/types";
+import type { SizeToken } from "../../types/common";
 import ui from "../ui";
-import type { IconType } from "../../icons/IconType";
+import type { IconType } from "../../types/icon";
 
 export type Props = Omit<
   React.ComponentProps<typeof ui.svg>,

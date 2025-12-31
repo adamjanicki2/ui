@@ -1,5 +1,5 @@
 import { popSlash, prependSlash } from "./slash";
-import type { PathParams } from "./types";
+import type { PathParams } from "../types/navigation";
 
 function normalizePath(path: string) {
   path = prependSlash(path);

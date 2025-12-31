@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import classNames from "../../functions/classNames";
-import type { ReadonlyableArray, Style, Vfx } from "../../utils/types";
+import type { ReadonlyableArray, Style, Vfx } from "../../types/common";
 import Box, { type BoxProps } from "../Box/Box";
 
 type AnimationState = {

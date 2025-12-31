@@ -4,7 +4,7 @@ import type {
   SearchParams,
   SetSearchParams,
   SetSearchParamsArg,
-} from "../types";
+} from "../types/navigation";
 
 function deserialize(search: string): SearchParams {
   const urlSearchParams = new URLSearchParams(search);

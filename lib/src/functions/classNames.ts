@@ -1,4 +1,4 @@
-import type { ReadonlyableArray } from "../utils/types";
+import type { ReadonlyableArray } from "../types/common";
 
 /**
  * Reduce a list of classnames into one string

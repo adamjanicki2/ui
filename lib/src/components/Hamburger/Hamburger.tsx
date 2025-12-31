@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { UnstyledButton } from "../Button";
-import type { Style } from "../../utils/types";
+import type { Style } from "../../types/common";
 
 export type Props = {
   /**

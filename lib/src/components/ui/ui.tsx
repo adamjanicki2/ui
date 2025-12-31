@@ -1,7 +1,7 @@
 import React from "react";
-import type { Vfx } from "../utils/types";
-import { classNames } from "../functions";
-import transformVfx from "../utils/transformVfx";
+import type { Vfx } from "../../types/common";
+import { classNames } from "../../functions";
+import transformVfx from "./transformVfx";
 
 type HtmlTag = keyof React.JSX.IntrinsicElements;
 

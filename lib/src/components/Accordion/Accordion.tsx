@@ -3,7 +3,7 @@ import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
 import { UnstyledButton } from "../Button";
 import Animated from "../Animated";
-import type { ReadonlyableArray } from "../../utils/types";
+import type { ReadonlyableArray } from "../../types/common";
 import { chevronDown, chevronRight } from "../../icons";
 
 type Props = Omit<BoxProps, "children"> & {
