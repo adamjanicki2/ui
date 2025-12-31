@@ -1,0 +1,9 @@
+node_modules
+src
+test
+build.py
+clean.py
+jest.config.js
+package-lock.json
+tsconfig.json
+__pycache__

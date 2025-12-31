@@ -1,5 +1,5 @@
 import subprocess
-from clean import cyan, green, clean, ROOT, BUILD_DIR
+from clean import cyan, green, clean, ROOT, BUILD_DIR, remove_build_dir
 
 
 def run(cmd):
@@ -36,13 +36,15 @@ def get_saved_percent(before, after):
 
 
 def main():
+    # clean up mess
     clean()
     cyan("\nCompiling TypeScript...")
+    # TS compiles into build/
     run("npx tsc")
     green("TypeScript compiled!\n")
 
     cyan("Converting scss...")
-    run("npx sass --no-source-map --style=compressed src/style.scss build/style.css")
+    run("npx sass --no-source-map --style=compressed src/style.scss style.css")
     green("scss converted!\n")
 
     cyan("Minifying JavaScript...")
@@ -60,6 +62,10 @@ def main():
     percent = get_saved_percent(size_before, size_after)
 
     assert files_after == files_before
+
+    # move out of build & delete build folder
+    run("rsync -a --remove-source-files build .")
+    remove_build_dir()
 
     green("Build complete!\n")
     print(f"Emitted files: {len(files_after)}")
