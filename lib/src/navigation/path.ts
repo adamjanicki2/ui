@@ -1,4 +1,4 @@
-import { popSlash, prependSlash } from "./string";
+import { popSlash, prependSlash } from "./slash";
 import type { PathParams } from "./types";
 
 function normalizePath(path: string) {

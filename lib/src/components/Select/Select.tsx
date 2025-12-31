@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "../../functions/classNames";
 import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
-import ui from "../../ui";
+import ui from "../ui";
 import type { ReadonlyableArray } from "../../utils/types";
 
 type SelectProps = React.ComponentProps<typeof ui.select>;

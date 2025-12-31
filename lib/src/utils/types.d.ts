@@ -1,4 +1,4 @@
-import React from "react";
+import type * as React from "react";
 
 export type ReadonlyableArray<T> = readonly T[] | T[];
 export type Children = React.ReactNode | ReadonlyableArray<React.ReactNode>;

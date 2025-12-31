@@ -1,6 +1,5 @@
-import TriplePrestige from "./TriplePrestige";
-export { TriplePrestige };
-export default TriplePrestige;
+export { default } from "./TriplePrestige";
+export { default as TriplePrestige } from "./TriplePrestige";
 export { default as DoubleCross } from "./DoubleCross";
 export { default as DoubleFlip } from "./DoubleFlip";
 export { default as DoubleSpin } from "./DoubleSpin";

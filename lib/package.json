@@ -1,10 +1,12 @@
 {
   "name": "@adamjanicki/ui",
-  "version": "1.8.3",
+  "version": "1.8.5",
   "description": "Basic UI components and hooks for React in TypeScript",
   "type": "module",
   "main": "./index.js",
+  "module": "./index.js",
   "types": "./index.d.ts",
+  "sideEffects": false,
   "author": "Adam Janicki",
   "license": "MIT",
   "repository": {
@@ -14,11 +16,9 @@
   "scripts": {
     "clean": "python clean.py",
     "lint": "eslint src test --max-warnings=0",
-    "test": "jest",
-    "scss": "sass --no-source-map --style=compressed src/style.scss style.css",
-    "build": "npm run clean && npm run lint && npm test && tsc && npm run scss",
-    "prepare": "npm run build",
-    "dryrun": "npm publish --dry-run"
+    "test": "jest --silent",
+    "build": "npm test && npm run lint && python build.py",
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -31,6 +31,7 @@
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "esbuild": "^0.27.2",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "sass": "^1.90.0",

@@ -1,2 +1,1 @@
-import ClickOutside from "./ClickOutside";
-export default ClickOutside;
+export { default } from "./ClickOutside";
