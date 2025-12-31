@@ -1,4 +1,4 @@
-import type { Location } from "../types/navigation";
+import type { Location, HistoryMode } from "../types/navigation";
 
 export function getCurrentLocation(): Location {
   return {
@@ -33,13 +33,8 @@ export function createHistory() {
   };
 
   return {
-    push(to: string) {
-      window.history.pushState(null, "", to);
-      notifyListeners();
-    },
-
-    replace(to: string) {
-      window.history.replaceState(null, "", to);
+    update(to: string, mode: HistoryMode = "push") {
+      window.history[`${mode}State`](null, "", to);
       notifyListeners();
     },
 

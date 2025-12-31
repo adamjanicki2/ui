@@ -10,15 +10,17 @@ export type Location = {
   hash: string;
 };
 
+export type HistoryMode = "push" | "replace";
+
 /**
  * Additional params to feed the navigate() function
  */
-type NavigateOptions = {
+export type NavigateOptions = {
   /**
-   * Whether to overwrite the current browser url in history
-   * @default false
+   * Whether to append a new entry or overwrite the current browser url in history
+   * @default "push"
    */
-  replace?: boolean;
+  historyMode?: HistoryMode;
 };
 
 /**

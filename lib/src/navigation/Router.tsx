@@ -41,14 +41,9 @@ export default function Router({
   }, [history]);
 
   const navigate = React.useCallback<Navigate>(
-    (to, options = {}) => {
-      const currentPathname = locationRef.current.pathname;
-      const { url } = getHref(to, currentPathname, basename);
-      if (options.replace) {
-        history.replace(url);
-      } else {
-        history.push(url);
-      }
+    (to, options) => {
+      const { url } = getHref(to, locationRef.current.pathname, basename);
+      history.update(url, options?.historyMode);
 
       if (!maintainScrollHeight) {
         window.scrollTo({ top: 0, left: 0, behavior: "instant" });

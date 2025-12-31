@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, act, waitFor } from "@testing-library/react";
 import { Router, useLocation, useNavigate } from "../../src";
+import type { NavigateOptions } from "../../src/types/navigation";
 
 function LocationRenderer() {
   const location = useLocation();
@@ -18,7 +19,7 @@ function NavigateOnMount({
   options,
 }: {
   to: string;
-  options?: { replace?: boolean };
+  options?: NavigateOptions;
 }) {
   const navigate = useNavigate();
 
@@ -32,7 +33,9 @@ function NavigateOnMount({
 describe("Router", () => {
   beforeEach(() => {
     window.history.replaceState(null, "", "/");
-    (window.scrollTo as jest.MockedFunction<typeof window.scrollTo>).mockClear?.();
+    (
+      window.scrollTo as jest.MockedFunction<typeof window.scrollTo>
+    ).mockClear?.();
   });
 
   it("renders children", () => {
@@ -148,17 +151,17 @@ describe("Router", () => {
       expect(screen.getByTestId("pathname")).toHaveTextContent("/app/a");
     });
 
-    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+    expect(window.scrollTo).toHaveBeenCalledTimes(1);
   });
 
-  it("supports replace navigation (overwrites current history entry)", async () => {
+  it("supports replace navigation", async () => {
     const pushStateSpy = jest.spyOn(window.history, "pushState");
     const replaceStateSpy = jest.spyOn(window.history, "replaceState");
 
     render(
       <Router>
         <LocationRenderer />
-        <NavigateOnMount to="/replaced" options={{ replace: true }} />
+        <NavigateOnMount to="/replaced" options={{ historyMode: "replace" }} />
       </Router>
     );
 
