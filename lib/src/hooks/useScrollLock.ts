@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { instantScrollTo } from "../functions";
 
 let globalLockCount = 0;
 
@@ -30,7 +31,7 @@ const lockScroll = () => {
     style.top = top;
     style.width = width;
 
-    window.scrollTo({ top: scrollPosition, left: 0, behavior: "instant" });
+    instantScrollTo({ top: scrollPosition, left: 0 });
   };
 };
 
