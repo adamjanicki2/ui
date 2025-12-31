@@ -1,4 +1,3 @@
-import os
 import shutil
 from pathlib import Path
 
@@ -43,11 +42,7 @@ def clean():
             print(f"Deleting {path.relative_to(ROOT)}")
             remove_path(path)
 
-    for filename in [
-        "index.js",
-        "index.d.ts",
-        "style.css",
-    ]:
+    for filename in ["index.js", "index.d.ts", "style.css", "__pycache__/"]:
         path = ROOT / filename
         if path.exists():
             print(f"Deleting {path.relative_to(ROOT)}")
