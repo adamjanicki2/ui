@@ -11,10 +11,10 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  overscroll-behavior: none;
 }
 
 body {
-  overscroll-behavior: none;
   background-color: var(--background-color);
   overflow-x: hidden;
 }
