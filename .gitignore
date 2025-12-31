@@ -11,6 +11,7 @@ lib/*
 # un-ignore src and specific files
 !lib/src/
 !lib/.npmignore
+!lib/build.py
 !lib/clean.py
 !lib/eslint.config.js
 !lib/package.json
