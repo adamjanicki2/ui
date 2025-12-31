@@ -1,5 +1,5 @@
 import React from "react";
-import type { PathParams } from "../helpers";
+import type { PathParams } from "../types";
 import PathParamsContext from "../PathParamsContext";
 
 /**

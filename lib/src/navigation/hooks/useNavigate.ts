@@ -1,4 +1,4 @@
-import type { Navigate } from "../helpers";
+import type { Navigate } from "../types";
 import useRouterContext from "./useRouterContext";
 
 /**

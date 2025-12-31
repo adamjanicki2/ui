@@ -1,5 +1,5 @@
 import React from "react";
-import type { Location, Navigate } from "./helpers";
+import type { Location, Navigate } from "./types";
 
 type RouterContextValue = {
   /** Current location */

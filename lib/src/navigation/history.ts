@@ -1,4 +1,4 @@
-import type { Location } from "./helpers";
+import type { Location } from "./types";
 
 export function getCurrentLocation(): Location {
   return {
