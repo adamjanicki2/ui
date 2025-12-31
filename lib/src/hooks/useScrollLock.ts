@@ -30,11 +30,7 @@ const lockScroll = () => {
     style.top = top;
     style.width = width;
 
-    window.scrollTo({
-      top: scrollPosition,
-      left: 0,
-      behavior: "instant" as ScrollBehavior,
-    });
+    window.scrollTo({ top: scrollPosition, left: 0, behavior: "instant" });
   };
 };
 

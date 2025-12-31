@@ -38,6 +38,7 @@ export default function Router({ children, basename = "" }: Props) {
     (to) => {
       const currentPathname = locationRef.current.pathname;
       history.push(getHref(to, currentPathname, basename).url);
+      window.scrollTo({ left: 0, top: 0, behavior: "instant" });
     },
     [history, basename]
   );

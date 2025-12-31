@@ -26,6 +26,7 @@ function NavigateOnMount({ to }: { to: string }) {
 describe("Router", () => {
   beforeEach(() => {
     window.history.replaceState(null, "", "/");
+    (window.scrollTo as jest.MockedFunction<typeof window.scrollTo>).mockClear?.();
   });
 
   it("renders children", () => {
@@ -140,6 +141,8 @@ describe("Router", () => {
       expect(window.location.pathname).toBe("/app/a");
       expect(screen.getByTestId("pathname")).toHaveTextContent("/app/a");
     });
+
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 
   it("normalizes basename (trailing slash) and applies it exactly once", () => {
