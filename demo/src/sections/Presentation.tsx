@@ -275,6 +275,13 @@ export default function Presentation() {
             items={tableItems}
             columns={tableColumns}
             vfx={{ width: "full" }}
+            routeTo={(item) => ({
+              to: `https://adamovies.com/review/${item.title
+                .toLowerCase()
+                .split(/\s+/)
+                .join("-")}`,
+              newTab: true,
+            })}
           />
         </Box>
       </>
