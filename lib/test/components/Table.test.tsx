@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Table } from "../../src";
 import { arrowDown, arrowUp, select } from "../../src/icons";
 
@@ -157,11 +157,13 @@ describe("Table", () => {
             { key: "title", header: "Title", sortable: true },
             { key: "year", header: "Year", sortable: true },
           ]}
-          sortKey={sortKey}
-          sortDirection={sortDirection}
-          onSort={(key, direction) => {
-            setSortDirection(direction);
-            setSortKey(direction === "none" ? undefined : (key as SortKey));
+          sort={{
+            key: sortKey,
+            direction: sortDirection,
+            onSort: (key, direction) => {
+              setSortDirection(direction);
+              setSortKey(direction === "none" ? undefined : (key as SortKey));
+            },
           }}
         />
       );
@@ -174,7 +176,6 @@ describe("Table", () => {
     const getYearIconPath = () =>
       yearHeaderButton.querySelector("path")?.getAttribute("d");
 
-    // No sort => original order + "select" icon.
     expect(
       screen
         .getByText("Interstellar")
@@ -183,7 +184,6 @@ describe("Table", () => {
     ).toBeTruthy();
     expect(getYearIconPath()).toBe(select);
 
-    // none -> asc
     await user.click(yearHeaderButton);
     expect(
       screen
@@ -193,7 +193,6 @@ describe("Table", () => {
     ).toBeTruthy();
     expect(getYearIconPath()).toBe(arrowUp);
 
-    // asc -> desc
     await user.click(yearHeaderButton);
     expect(
       screen
@@ -203,7 +202,6 @@ describe("Table", () => {
     ).toBeTruthy();
     expect(getYearIconPath()).toBe(arrowDown);
 
-    // desc -> none
     await user.click(yearHeaderButton);
     expect(
       screen

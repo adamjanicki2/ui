@@ -304,11 +304,13 @@ export default function Presentation() {
             items={sortedTableItems}
             columns={tableColumns}
             vfx={{ width: "full" }}
-            sortKey={sortKey}
-            sortDirection={sortDirection}
-            onSort={(key, direction) => {
-              setSortDirection(direction);
-              setSortKey(direction === "none" ? undefined : key);
+            sort={{
+              key: sortKey,
+              direction: sortDirection,
+              onSort: (key, direction) => {
+                setSortDirection(direction);
+                setSortKey(direction === "none" ? undefined : key);
+              },
             }}
             routeTo={(item) => ({
               to: `https://adamovies.com/review/${item.title

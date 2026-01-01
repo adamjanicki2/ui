@@ -234,6 +234,10 @@ textarea {
   .aui-undim:not([disabled]):hover {
     opacity: 1;
   }
+
+  .aui-table-row:not([disabled]):hover {
+    background-color: var(--aui-static-background);
+  }
 }
 
 // Input and Select
