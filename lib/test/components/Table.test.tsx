@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Table } from "../../src";
+import RouterContext from "../../src/navigation/RouterContext";
 
 type Movie = {
   id: string;
@@ -28,6 +29,24 @@ describe("Table", () => {
     expect(screen.getByText("Year")).toBeInTheDocument();
     expect(screen.getByText("Interstellar")).toBeInTheDocument();
     expect(screen.getByText("Alien")).toBeInTheDocument();
+  });
+
+  it("wraps rows with links", () => {
+    render(
+      <Table
+        items={movies}
+        columns={[
+          { key: "title", header: "Title" },
+          { key: "year", header: "Year" },
+        ]}
+        routeTo={(movie) => ({ to: `/movies/${movie.id}` })}
+      />
+    );
+
+    const link = screen
+      .getByText("Interstellar")
+      .closest("a") as HTMLAnchorElement;
+    expect(link.getAttribute("href")).toBe("/movies/1");
   });
 
   it("uses custom render when provided", () => {
