@@ -618,16 +618,3 @@ $cursors: auto, pointer;
     cursor: $cursor;
   }
 }
-
-// Requires more specificity than the utils
-.aui-select-icon {
-  --size: 10px;
-  color: var(--aui-color-muted);
-  width: var(--size);
-  height: var(--size);
-  position: absolute;
-  top: calc(50% + 1px);
-  transform: translateY(-50%);
-  right: var(--size);
-  pointer-events: none;
-}
