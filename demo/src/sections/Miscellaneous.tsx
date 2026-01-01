@@ -170,7 +170,7 @@ export default function Miscellaneous() {
               }
               key={i}
             >
-              <Icon icon={icon} size="m" vfx={{ color: "muted" }} />
+              <Icon icon={icon} size="l" vfx={{ color: "muted" }} />
             </Tooltip>
           ))}
         </Box>
