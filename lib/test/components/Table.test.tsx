@@ -30,6 +30,24 @@ describe("Table", () => {
     expect(screen.getByText("Alien")).toBeInTheDocument();
   });
 
+  it("wraps rows with links", () => {
+    render(
+      <Table
+        items={movies}
+        columns={[
+          { key: "title", header: "Title" },
+          { key: "year", header: "Year" },
+        ]}
+        routeTo={(movie) => ({ to: `/movies/${movie.id}` })}
+      />
+    );
+
+    const link = screen
+      .getByText("Interstellar")
+      .closest("a") as HTMLAnchorElement;
+    expect(link.getAttribute("href")).toBe("/movies/1");
+  });
+
   it("uses custom render when provided", () => {
     const renderYear = jest.fn((item: Movie) => (
       <span data-testid={`year-${item.id}`}>{item.year}</span>
