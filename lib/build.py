@@ -27,11 +27,26 @@ def get_saved_percent(before, after):
     return ((before - after) / before) * 100.0
 
 
+def remove_empty_files():
+    removed = []
+    for path in BUILD_DIR.rglob("*"):
+        if path.is_file():
+            name = path.name
+            content = path.read_text(encoding="utf-8").strip()
+            if not content:
+                path.unlink()
+                removed.append(name)
+
+    if removed:
+        print(f"Removed empty files:")
+        print(f"{', '.join(removed)}")
+
+
 def main():
     # clean up mess
     clean()
 
-    cyan("Compiling TypeScript...")
+    cyan("\nCompiling TypeScript...")
     run("npx tsc")
     green("TypeScript compiled!\n")
 
@@ -47,9 +62,9 @@ def main():
     run(
         "npx esbuild build/**/*.js --minify --format=esm --tree-shaking=true --target=es2018 --outdir=build --allow-overwrite --log-level=silent"
     )
+    remove_empty_files()
 
     files_after = list(BUILD_DIR.rglob("*"))
-    assert files_after == files_before
 
     size_after = get_total_size(files_after)
     percent = get_saved_percent(size_before, size_after)

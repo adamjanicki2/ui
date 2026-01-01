@@ -19,6 +19,7 @@ import {
   Carousel,
   Layer,
   Modal,
+  Table,
   ui,
 } from "@adamjanicki/ui";
 
@@ -260,6 +261,98 @@ export default function Presentation() {
           <HiddenSnippet>{modalSnippet}</HiddenSnippet>
         </Box>
       </>
+
+      {/* Table */}
+      <>
+        <Heading level={2}>Table</Heading>
+        <Para>
+          This quite possibly could contain the most complex TypeScripting I've
+          done in my life to get the types for the table rows good. It also
+          contains some of the most annoying styling I've had to do to date.
+        </Para>
+        <Box vfx={{ axis: "y", align: "center" }}>
+          <Table
+            items={tableItems}
+            columns={tableColumns}
+            vfx={{ width: "full" }}
+          />
+        </Box>
+      </>
     </ui.section>
   );
 }
+
+const tableItems = [
+  {
+    id: "1",
+    title: "Interstellar",
+    director: "Christopher Nolan",
+    year: 2014,
+    genre: "Sci-Fi",
+    rating: 99,
+    logline: "Humanity was born on Earth; it was never meant to die here.",
+  },
+  {
+    id: "2",
+    title: "Alien",
+    director: "Ridley Scott",
+    year: 1979,
+    genre: "Sci-Fi Horror",
+    rating: 96,
+    logline: "In space, no one can hear you scream.",
+  },
+  {
+    id: "3",
+    title: "Raiders of the Lost Ark",
+    director: "Steven Spielberg",
+    year: 1981,
+    genre: "Adventure",
+    rating: 94,
+    logline: "A globe-trotting race to keep the Ark out of Nazi hands.",
+  },
+  {
+    id: "4",
+    title: "The Shawshank Redemption",
+    director: "Frank Darabont",
+    year: 1994,
+    genre: "Drama",
+    rating: 94,
+    logline: "Fear can hold you prisoner; hope can set you free.",
+  },
+  {
+    id: "5",
+    title: "The Dark Knight",
+    director: "Christopher Nolan",
+    year: 2008,
+    genre: "Action",
+    rating: 93,
+    logline: "Batman",
+  },
+  {
+    id: "6",
+    title: "Jurassic Park",
+    director: "Steven Spielberg",
+    year: 1993,
+    genre: "Adventure",
+    rating: 92,
+    logline: "An adventure 65 million years in the making.",
+  },
+  {
+    id: "7",
+    title: "Whiplash",
+    director: "Damien Chazelle",
+    year: 2014,
+    genre: "Drama",
+    rating: 92,
+    logline: "The line between greatness and obsession snaps at 300 BPM.",
+  },
+] as const;
+
+const tableColumns = [
+  { key: "title", header: "Title" },
+  { key: "director", header: "Director" },
+  { key: "year", header: "Year" },
+  { key: "genre", header: "Genre" },
+  { key: "rating", header: "IMDb" },
+  { key: "logline", header: "Logline" },
+] as const;
