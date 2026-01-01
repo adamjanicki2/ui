@@ -170,45 +170,30 @@ describe("Table", () => {
     };
 
     const user = userEvent.setup();
-    render(<SortableTable />);
+    const { container } = render(<SortableTable />);
 
     const yearHeaderButton = screen.getByRole("button", { name: "Year" });
     const getYearIconPath = () =>
       yearHeaderButton.querySelector("path")?.getAttribute("d");
 
-    expect(
-      screen
-        .getByText("Interstellar")
-        .compareDocumentPosition(screen.getByText("Alien")) &
-        Node.DOCUMENT_POSITION_FOLLOWING
-    ).toBeTruthy();
+    const expectTextOrder = (first: string, second: string) => {
+      const content = container.textContent;
+      expect(content.indexOf(first)).toBeLessThan(content.indexOf(second));
+    };
+
+    expectTextOrder("Interstellar", "Alien");
     expect(getYearIconPath()).toBe(select);
 
     await user.click(yearHeaderButton);
-    expect(
-      screen
-        .getByText("Alien")
-        .compareDocumentPosition(screen.getByText("Interstellar")) &
-        Node.DOCUMENT_POSITION_FOLLOWING
-    ).toBeTruthy();
+    expectTextOrder("Alien", "Interstellar");
     expect(getYearIconPath()).toBe(arrowUp);
 
     await user.click(yearHeaderButton);
-    expect(
-      screen
-        .getByText("Interstellar")
-        .compareDocumentPosition(screen.getByText("Alien")) &
-        Node.DOCUMENT_POSITION_FOLLOWING
-    ).toBeTruthy();
+    expectTextOrder("Interstellar", "Alien");
     expect(getYearIconPath()).toBe(arrowDown);
 
     await user.click(yearHeaderButton);
-    expect(
-      screen
-        .getByText("Interstellar")
-        .compareDocumentPosition(screen.getByText("Alien")) &
-        Node.DOCUMENT_POSITION_FOLLOWING
-    ).toBeTruthy();
+    expectTextOrder("Interstellar", "Alien");
     expect(getYearIconPath()).toBe(select);
   });
 });
