@@ -1,6 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Table } from "../../src";
-import RouterContext from "../../src/navigation/RouterContext";
 
 type Movie = {
   id: string;
