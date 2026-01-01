@@ -4,7 +4,7 @@ import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
 import ui from "../ui";
 import type { ReadonlyableArray } from "../../types/common";
-import { chevronDown } from "../../icons";
+import { select } from "../../icons";
 
 type SelectProps = React.ComponentProps<typeof ui.select>;
 type Props = Omit<BoxProps, "children" | "onChange"> & {
@@ -81,7 +81,18 @@ const Select = React.forwardRef<HTMLSelectElement, Props>(
             </option>
           ))}
         </ui.select>
-        <Icon icon={chevronDown} className="aui-select-icon" aria-hidden />
+        <Icon
+          icon={select}
+          vfx={{ color: "muted", pos: "absolute" }}
+          style={{
+            top: "50%",
+            right: 10,
+            transform: "translateY(-50%)",
+            pointerEvents: "none",
+          }}
+          size="xs"
+          aria-hidden
+        />
       </Box>
     );
   }
