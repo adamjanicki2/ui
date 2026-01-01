@@ -3,6 +3,9 @@ import type { ReadonlyableArray } from "../../types/common";
 import type { BoxProps } from "../Box/Box";
 import Box from "../Box/Box";
 import { UnstyledLink } from "../../navigation/Link";
+import Icon from "../Icon";
+import { arrowDown, arrowUp, select } from "../../icons";
+import { UnstyledButton } from "../Button";
 
 type LinkProps = React.ComponentProps<typeof UnstyledLink>;
 type RouteLinkProps = Pick<LinkProps, "to" | "newTab">;
@@ -13,6 +16,8 @@ type MinimalItem = {
 
 type ContainerProps = Omit<BoxProps, "children">;
 
+export type SortDirection = "none" | "asc" | "desc";
+
 type ColumnConfig<
   Item extends MinimalItem,
   Key extends keyof Item = keyof Item
@@ -20,6 +25,7 @@ type ColumnConfig<
   key: Key;
   header: React.ReactNode;
   render?: (item: Item) => React.ReactNode;
+  sortable?: boolean;
   cellProps?: ContainerProps;
 };
 
@@ -28,6 +34,12 @@ type Props<Item extends MinimalItem> = {
   items: ReadonlyableArray<Item>;
   /** Columns to render for each data item */
   columns: ReadonlyableArray<ColumnConfig<Item>>;
+  /** Currently-sorted column key (controlled) */
+  sortKey?: keyof Item;
+  /** Current sort direction (controlled) */
+  sortDirection?: SortDirection;
+  /** Callback fired when a sortable header is clicked (controlled) */
+  onSort?: (key: keyof Item, direction: SortDirection) => void;
   /** Compute a URL that clicking on this row should navigate to */
   routeTo?: (item: Item) => RouteLinkProps;
 } & ContainerProps;
@@ -66,9 +78,24 @@ const TableRow = ({ children, linkProps }: TableRowProps) => {
   return <Box {...rowProps} />;
 };
 
+const nextSortDirection = {
+  none: "asc",
+  asc: "desc",
+  desc: "none",
+} as const;
+
+const directionToIcon = {
+  asc: arrowUp,
+  desc: arrowDown,
+  none: select,
+} as const;
+
 const Table = <Item extends MinimalItem>({
   items,
   columns,
+  sortKey,
+  sortDirection = "none",
+  onSort,
   routeTo,
   vfx,
   ...boxProps
@@ -82,7 +109,6 @@ const Table = <Item extends MinimalItem>({
       border: true,
       radius: "rounded",
       shadow: "subtle",
-      fontSize: "s",
       ...vfx,
     }}
   >
@@ -98,15 +124,38 @@ const Table = <Item extends MinimalItem>({
         borderBottom: true,
       }}
     >
-      {columns.map(({ key, header, cellProps = {} }) => {
+      {columns.map(({ key, header, sortable = false, cellProps = {} }) => {
         const { vfx, ...restCellProps } = cellProps;
+        const columnSorted = sortable && sortKey === key;
+        const direction = columnSorted ? sortDirection : "none";
+        const icon = sortable ? directionToIcon[direction] : null;
+
         return (
           <TableCell
             {...restCellProps}
             key={String(key)}
-            vfx={{ fontWeight: 7, ...vfx }}
+            vfx={{ fontWeight: 7, fontSize: "s", ...vfx }}
           >
-            {header}
+            {sortable ? (
+              <UnstyledButton
+                type="button"
+                disabled={!onSort}
+                onClick={() => onSort?.(key, nextSortDirection[direction])}
+                vfx={{ fontWeight: 7, axis: "x", align: "center", gap: "s" }}
+              >
+                {header}
+                {icon ? (
+                  <Icon
+                    icon={icon}
+                    vfx={{ color: "muted" }}
+                    size="xs"
+                    aria-hidden
+                  />
+                ) : null}
+              </UnstyledButton>
+            ) : (
+              header
+            )}
           </TableCell>
         );
       })}

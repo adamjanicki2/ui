@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Heading from "src/components/Heading";
 import Para from "src/components/Para";
 import HiddenSnippet from "src/components/HiddenSnippet";
@@ -28,6 +28,35 @@ export default function Presentation() {
   const [layerOpen, setLayerOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [openDrawers, setOpenDrawers] = useState<Set<number>>(new Set());
+  const [sortKey, setSortKey] = useState<keyof (typeof tableItems)[number]>();
+  const [sortDirection, setSortDirection] = useState<
+    "none" | "asc" | "desc"
+  >("none");
+
+  const sortedTableItems = useMemo(() => {
+    if (!sortKey || sortDirection === "none") return tableItems;
+
+    const compareValues = (a: unknown, b: unknown) => {
+      if (a == null && b == null) return 0;
+      if (a == null) return 1;
+      if (b == null) return -1;
+      if (typeof a === "number" && typeof b === "number") return a - b;
+      return String(a).localeCompare(String(b), undefined, {
+        numeric: true,
+        sensitivity: "base",
+      });
+    };
+
+    const sorted = [...tableItems]
+      .map((item, index) => ({ item, index }))
+      .sort((a, b) => {
+        const cmp = compareValues(a.item[sortKey], b.item[sortKey]);
+        return cmp !== 0 ? cmp : a.index - b.index;
+      })
+      .map(({ item }) => item);
+
+    return sortDirection === "asc" ? sorted : sorted.reverse();
+  }, [sortDirection, sortKey]);
 
   return (
     <ui.section id="layout-section">
@@ -272,9 +301,15 @@ export default function Presentation() {
         </Para>
         <Box vfx={{ axis: "y", align: "center" }}>
           <Table
-            items={tableItems}
+            items={sortedTableItems}
             columns={tableColumns}
             vfx={{ width: "full" }}
+            sortKey={sortKey}
+            sortDirection={sortDirection}
+            onSort={(key, direction) => {
+              setSortDirection(direction);
+              setSortKey(direction === "none" ? undefined : key);
+            }}
             routeTo={(item) => ({
               to: `https://adamovies.com/review/${item.title
                 .toLowerCase()
@@ -356,10 +391,10 @@ const tableItems = [
 ] as const;
 
 const tableColumns = [
-  { key: "title", header: "Title" },
-  { key: "director", header: "Director" },
-  { key: "year", header: "Year" },
-  { key: "genre", header: "Genre" },
-  { key: "rating", header: "IMDb" },
-  { key: "logline", header: "Logline" },
+  { key: "title", header: "Title", sortable: true },
+  { key: "director", header: "Director", sortable: true },
+  { key: "year", header: "Year", sortable: true },
+  { key: "genre", header: "Genre", sortable: true },
+  { key: "rating", header: "IMDb", sortable: true },
+  { key: "logline", header: "Logline", sortable: true },
 ] as const;

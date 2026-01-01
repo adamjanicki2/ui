@@ -1,5 +1,8 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import React, { useMemo, useState } from "react";
 import { Table } from "../../src";
+import { arrowDown, arrowUp, select } from "../../src/icons";
 
 type Movie = {
   id: string;
@@ -125,5 +128,89 @@ describe("Table", () => {
     yearCells.forEach((cell) => expect(cell).toHaveClass(customClass));
 
     expect(renderTitle).toHaveBeenCalledTimes(movies.length);
+  });
+
+  it("sorts rows when clicking a sortable header", async () => {
+    type SortKey = "title" | "year";
+
+    const SortableTable = () => {
+      const [sortKey, setSortKey] = useState<SortKey>();
+      const [sortDirection, setSortDirection] = useState<
+        "none" | "asc" | "desc"
+      >("none");
+
+      const sortedItems = useMemo(() => {
+        if (!sortKey || sortDirection === "none") return movies;
+        const sorted = [...movies].sort((a, b) => {
+          const aValue = a[sortKey];
+          const bValue = b[sortKey];
+          if (aValue === bValue) return 0;
+          return aValue > bValue ? 1 : -1;
+        });
+        return sortDirection === "asc" ? sorted : sorted.reverse();
+      }, [sortDirection, sortKey]);
+
+      return (
+        <Table
+          items={sortedItems}
+          columns={[
+            { key: "title", header: "Title", sortable: true },
+            { key: "year", header: "Year", sortable: true },
+          ]}
+          sortKey={sortKey}
+          sortDirection={sortDirection}
+          onSort={(key, direction) => {
+            setSortDirection(direction);
+            setSortKey(direction === "none" ? undefined : (key as SortKey));
+          }}
+        />
+      );
+    };
+
+    const user = userEvent.setup();
+    render(<SortableTable />);
+
+    const yearHeaderButton = screen.getByRole("button", { name: "Year" });
+    const getYearIconPath = () =>
+      yearHeaderButton.querySelector("path")?.getAttribute("d");
+
+    // No sort => original order + "select" icon.
+    expect(
+      screen
+        .getByText("Interstellar")
+        .compareDocumentPosition(screen.getByText("Alien")) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(getYearIconPath()).toBe(select);
+
+    // none -> asc
+    await user.click(yearHeaderButton);
+    expect(
+      screen
+        .getByText("Alien")
+        .compareDocumentPosition(screen.getByText("Interstellar")) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(getYearIconPath()).toBe(arrowUp);
+
+    // asc -> desc
+    await user.click(yearHeaderButton);
+    expect(
+      screen
+        .getByText("Interstellar")
+        .compareDocumentPosition(screen.getByText("Alien")) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(getYearIconPath()).toBe(arrowDown);
+
+    // desc -> none
+    await user.click(yearHeaderButton);
+    expect(
+      screen
+        .getByText("Interstellar")
+        .compareDocumentPosition(screen.getByText("Alien")) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(getYearIconPath()).toBe(select);
   });
 });
