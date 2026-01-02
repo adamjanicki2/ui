@@ -28,14 +28,14 @@ function findRouteElements(children: ReadonlyableArray<React.ReactNode>) {
  * Nested within a router component, this component handles rendering the proper route.
  * Note: sticking any other components besides routes in here will not be rendered
  */
-export default function Routes({ children: rawChildren, fallback }: Props) {
+export default function Routes({ children, fallback }: Props): React.ReactNode {
   const router = useRouterContext("<Routes>");
   const { location, basename } = router;
   const pathname = stripBasename(location.pathname, basename);
 
-  const children = Array.isArray(rawChildren) ? rawChildren : [rawChildren];
-
-  const routes = findRouteElements(children);
+  const routes = findRouteElements(
+    Array.isArray(children) ? children : [children]
+  );
 
   for (const routeElement of routes) {
     const { path, element } = routeElement.props;
@@ -49,5 +49,5 @@ export default function Routes({ children: rawChildren, fallback }: Props) {
     }
   }
 
-  return fallback;
+  return fallback ?? null;
 }

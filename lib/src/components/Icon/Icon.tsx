@@ -9,7 +9,7 @@ export type Props = Omit<
   "children" | "viewBox"
 > & {
   /**
-   * Icon type to render (import from `components/Icon/icons`)
+   * Icon type to render (import from `/icons`)
    */
   icon: IconType;
   /**
