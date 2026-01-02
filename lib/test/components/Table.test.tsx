@@ -41,7 +41,7 @@ describe("Table", () => {
           { key: "title", header: "Title" },
           { key: "year", header: "Year" },
         ]}
-        routeTo={(movie) => ({ to: `/movies/${movie.id}` })}
+        getAction={(movie) => ({ to: `/movies/${movie.id}` })}
       />
     );
 
@@ -49,6 +49,27 @@ describe("Table", () => {
       .getByText("Interstellar")
       .closest("a") as HTMLAnchorElement;
     expect(link.getAttribute("href")).toBe("/movies/1");
+  });
+
+  it("wraps rows with buttons when using action", async () => {
+    const user = userEvent.setup();
+    const onClick = jest.fn();
+
+    render(
+      <Table
+        items={movies}
+        columns={[
+          { key: "title", header: "Title" },
+          { key: "year", header: "Year" },
+        ]}
+        getAction={() => ({ onClick })}
+      />
+    );
+
+    const rowButton = screen.getByText("Interstellar").closest("button");
+    expect(rowButton).toBeInTheDocument();
+    await user.click(screen.getByText("Interstellar"));
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 
   it("uses custom render when provided", () => {

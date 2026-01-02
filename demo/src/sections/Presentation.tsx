@@ -312,7 +312,7 @@ export default function Presentation() {
                 setSortKey(direction === "none" ? undefined : key);
               },
             }}
-            routeTo={(item) => ({
+            getAction={(item) => ({
               to: `https://adamovies.com/review/${item.title
                 .toLowerCase()
                 .split(/\s+/)

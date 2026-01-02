@@ -9,6 +9,7 @@ import { UnstyledButton } from "../Button";
 
 type LinkProps = React.ComponentProps<typeof UnstyledLink>;
 type RouteLinkProps = Pick<LinkProps, "to" | "newTab">;
+type Action = RouteLinkProps | { onClick: () => void };
 
 type MinimalItem = {
   id: string;
@@ -50,8 +51,8 @@ type Props<Item extends MinimalItem> = {
     /** Callback to fire when the sort column/direction change */
     onSort: (key: keyof Item, direction: SortDirection) => void;
   };
-  /** Compute a URL that clicking on this row should navigate to */
-  routeTo?: (item: Item) => RouteLinkProps;
+  /** A row's action can either be a URL or an onClick callback */
+  getAction?: (item: Item) => Action;
 } & ContainerProps;
 
 type TableCellProps = {
@@ -66,10 +67,10 @@ const TableCell = ({ vfx, children, ...rest }: TableCellProps) => (
 
 type TableRowProps = {
   children: React.ReactNode;
-  linkProps?: RouteLinkProps;
+  action?: Action;
 };
 
-const TableRow = ({ children, linkProps }: TableRowProps) => {
+const TableRow = ({ children, action }: TableRowProps) => {
   const rowProps = {
     children,
     vfx: {
@@ -82,12 +83,20 @@ const TableRow = ({ children, linkProps }: TableRowProps) => {
     },
   } as const;
 
-  if (linkProps) {
-    return (
-      <UnstyledLink {...linkProps} {...rowProps} className="aui-table-row" />
-    );
+  if (!action) {
+    return <Box {...rowProps} />;
   }
-  return <Box {...rowProps} />;
+
+  const combinedProps = {
+    ...rowProps,
+    className: "aui-table-row",
+    ...action,
+  } as const;
+
+  if ("to" in combinedProps) {
+    return <UnstyledLink {...combinedProps} />;
+  }
+  return <UnstyledButton {...combinedProps} />;
 };
 
 const nextSortDirection = {
@@ -106,7 +115,7 @@ const Table = <Item extends MinimalItem>({
   items,
   columns,
   sort,
-  routeTo,
+  getAction,
   vfx,
   ...boxProps
 }: Props<Item>) => (
@@ -171,7 +180,7 @@ const Table = <Item extends MinimalItem>({
     {/* Table body container */}
     <Box vfx={{ axis: "y" }}>
       {items.map((item) => (
-        <TableRow key={item.id} linkProps={routeTo?.(item)}>
+        <TableRow key={item.id} action={getAction?.(item)}>
           {columns.map(({ key, cellProps, render }) => (
             <TableCell {...cellProps} key={String(key)}>
               {render ? render(item) : <>{item[key]}</>}
