@@ -115,61 +115,66 @@ const Table = <Item extends MinimalItem>({
       role="table"
       vfx={{ minWidth: "max", width: "full" }}
     >
-      {/* Table Header */}
-      <Box className="aui-table-row" role="row" vfx={{ fontSize: "s" }}>
-        {columns.map(({ key, header, sortable = false }, colIndex) => {
-          const columnSorted = sortable && sort && sort.key === key;
-          const direction = columnSorted ? sort.direction : "none";
-          const icon = sortable ? directionToIcon[direction] : null;
-          const { vfx, ...restHeaderCellProps } = headerCellProps;
+      <Box className="aui-table-header-group" role="rowgroup">
+        <Box className="aui-table-row" role="row">
+          {columns.map(({ key, header, sortable = false }, colIndex) => {
+            const columnSorted = sortable && sort && sort.key === key;
+            const direction = columnSorted ? sort.direction : "none";
+            const icon = sortable ? directionToIcon[direction] : null;
+            const { vfx, ...restHeaderCellProps } = headerCellProps;
 
-          return (
-            <TableCell
-              {...restHeaderCellProps}
-              key={String(key)}
-              vfx={{
-                borderRight: gutters && colIndex < columns.length - 1,
-                borderBottom: true,
-                fontWeight: 7,
-                ...vfx,
-              }}
-            >
-              {sort && icon ? (
-                <UnstyledButton
-                  onClick={() => sort.onSort(key, nextSortDirection[direction])}
-                  vfx={{
-                    fontWeight: 7,
-                    axis: "x",
-                    align: "center",
-                    gap: "s",
-                  }}
-                >
-                  {header}
-                  {
-                    <Icon
-                      icon={icon}
-                      vfx={{ color: "muted" }}
-                      size="xs"
-                      aria-hidden
-                    />
-                  }
-                </UnstyledButton>
-              ) : (
-                header
-              )}
-            </TableCell>
-          );
-        })}
+            return (
+              <TableCell
+                {...restHeaderCellProps}
+                key={String(key)}
+                vfx={{
+                  borderRight: gutters && colIndex < columns.length - 1,
+                  borderBottom: true,
+                  ...vfx,
+                }}
+              >
+                {sort && icon ? (
+                  <UnstyledButton
+                    onClick={() =>
+                      sort.onSort(key, nextSortDirection[direction])
+                    }
+                    vfx={{
+                      fontWeight: 7,
+                      axis: "x",
+                      align: "center",
+                      gap: "s",
+                    }}
+                  >
+                    {header}
+                    {
+                      <Icon
+                        icon={icon}
+                        vfx={{ color: "muted" }}
+                        size="xs"
+                        aria-hidden
+                      />
+                    }
+                  </UnstyledButton>
+                ) : (
+                  header
+                )}
+              </TableCell>
+            );
+          })}
+        </Box>
       </Box>
-      {items.map((item) => (
-        <TableBodyRow
-          key={item.id}
-          item={item}
-          columns={columns}
-          getAction={getAction}
-          gutters={gutters}
-        />
-      ))}
+
+      <Box className="aui-table-body-group" role="rowgroup">
+        {items.map((item) => (
+          <TableBodyRow
+            key={item.id}
+            item={item}
+            columns={columns}
+            getAction={getAction}
+            gutters={gutters}
+          />
+        ))}
+      </Box>
     </Box>
   </Box>
 );
