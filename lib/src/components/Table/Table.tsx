@@ -6,10 +6,10 @@ import { UnstyledLink } from "../../navigation/Link";
 import Icon from "../Icon";
 import { arrowDown, arrowUp, select } from "../../icons";
 import { UnstyledButton } from "../Button";
+import classNames from "../../functions/classNames";
 
 type LinkProps = React.ComponentProps<typeof UnstyledLink>;
 type RouteLinkProps = Pick<LinkProps, "to" | "newTab">;
-type Action = RouteLinkProps | { onClick: () => void };
 
 type MinimalItem = {
   id: string;
@@ -35,7 +35,7 @@ type ColumnConfig<
   cellProps?: ContainerProps;
 };
 
-type Props<Item extends MinimalItem> = {
+type Props<Item extends MinimalItem> = ContainerProps & {
   /** Items to render in the rows of the table */
   items: ReadonlyableArray<Item>;
   /** Columns to render for each data item */
@@ -53,52 +53,10 @@ type Props<Item extends MinimalItem> = {
     /** Callback to fire when the sort column/direction change */
     onSort: (key: keyof Item, direction: SortDirection) => void;
   };
-  /** A row's action can either be a URL or an onClick callback */
-  getAction?: (item: Item) => Action;
-} & ContainerProps;
-
-type TableCellProps = {
-  children: React.ReactNode;
-} & ContainerProps;
-
-const TableCell = ({ vfx, children, ...rest }: TableCellProps) => (
-  <Box {...rest} vfx={{ stretch: "even", ...vfx }}>
-    {children}
-  </Box>
-);
-
-type TableRowProps = {
-  children: React.ReactNode;
-  action?: Action;
-};
-
-const TableRow = ({ children, action }: TableRowProps) => {
-  const rowProps = {
-    children,
-    vfx: {
-      axis: "x",
-      gap: "m",
-      paddingX: "m",
-      paddingY: "s",
-      justify: "start",
-      align: "center",
-    },
-  } as const;
-
-  if (!action) {
-    return <Box {...rowProps} />;
-  }
-
-  const combinedProps = {
-    ...rowProps,
-    className: "aui-table-row",
-    ...action,
-  } as const;
-
-  if ("to" in combinedProps) {
-    return <UnstyledLink {...combinedProps} />;
-  }
-  return <UnstyledButton {...combinedProps} />;
+  /** A row can either be a link to somewhere */
+  routeTo?: (item: Item) => RouteLinkProps;
+  /** Whether to render a small before between columns */
+  gutters?: boolean;
 };
 
 const nextSortDirection = {
@@ -118,8 +76,9 @@ const Table = <Item extends MinimalItem>({
   columns,
   headerCellProps = {},
   sort,
-  getAction,
+  routeTo,
   vfx,
+  gutters,
   ...boxProps
 }: Props<Item>) => (
   // Table container
@@ -135,40 +94,37 @@ const Table = <Item extends MinimalItem>({
       ...vfx,
     }}
   >
-    {/* Extra box layer for overflow scrolling in main table box */}
-    <Box vfx={{ axis: "y", minWidth: "max" }}>
-      {/* header row container */}
-      <Box
-        vfx={{
-          axis: "x",
-          gap: "m",
-          paddingX: "m",
-          align: "center",
-          borderBottom: true,
-        }}
-      >
+    {/* Inner container (scrollable within parent) */}
+    <Box className="aui-table" role="table" vfx={{ width: "full" }}>
+      {/* Header row */}
+      <Box className="aui-table-row" role="row">
         {columns.map(({ key, header, sortable = false }, colIndex) => {
-          const { vfx, ...restCellProps } = headerCellProps;
           const columnSorted = sortable && sort && sort.key === key;
           const direction = columnSorted ? sort.direction : "none";
           const icon = sortable ? directionToIcon[direction] : null;
+          const { vfx, ...restHeaderCellProps } = headerCellProps;
 
           return (
             <TableCell
-              {...restCellProps}
+              {...restHeaderCellProps}
               key={String(key)}
               vfx={{
-                fontWeight: 7,
+                borderRight: gutters && colIndex < columns.length - 1,
+                borderBottom: true,
                 fontSize: "s",
-                paddingY: "s",
-                borderRight: colIndex < columns.length - 1,
+                fontWeight: 7,
                 ...vfx,
               }}
             >
               {sort && icon ? (
                 <UnstyledButton
                   onClick={() => sort.onSort(key, nextSortDirection[direction])}
-                  vfx={{ fontWeight: 7, axis: "x", align: "center", gap: "s" }}
+                  vfx={{
+                    fontWeight: 7,
+                    axis: "x",
+                    align: "center",
+                    gap: "s",
+                  }}
                 >
                   {header}
                   {
@@ -187,19 +143,74 @@ const Table = <Item extends MinimalItem>({
           );
         })}
       </Box>
-      {/* Table body container */}
-      <Box vfx={{ axis: "y" }}>
-        {items.map((item) => (
-          <TableRow key={item.id} action={getAction?.(item)}>
-            {columns.map(({ key, cellProps, render }) => (
-              <TableCell {...cellProps} key={String(key)}>
-                {render ? render(item) : <>{item[key]}</>}
-              </TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </Box>
+      {/* Rows */}
+      {items.map((item) => (
+        <TableBodyRow
+          key={item.id}
+          item={item}
+          columns={columns}
+          routeTo={routeTo}
+          gutters={gutters}
+        />
+      ))}
     </Box>
+  </Box>
+);
+
+type TableBodyRowProps<Item extends MinimalItem> = Pick<
+  Props<Item>,
+  "columns" | "gutters" | "routeTo"
+> & {
+  item: Item;
+};
+
+const TableBodyRow = <Item extends MinimalItem>({
+  item,
+  columns,
+  routeTo,
+  gutters,
+}: TableBodyRowProps<Item>) => {
+  const children = columns.map(({ key, cellProps = {}, render }, colIndex) => {
+    const { vfx, ...rest } = cellProps;
+    return (
+      <TableCell
+        {...rest}
+        key={String(key)}
+        vfx={{
+          borderRight: gutters && colIndex < columns.length - 1,
+          ...vfx,
+        }}
+      >
+        {render ? render(item) : <>{item[key]}</>}
+      </TableCell>
+    );
+  });
+
+  const rowProps = {
+    role: "row",
+    children,
+  } as const;
+
+  if (!routeTo) {
+    return <Box {...rowProps} className="aui-table-row" />;
+  }
+
+  return (
+    <UnstyledLink
+      {...rowProps}
+      {...routeTo(item)}
+      className="aui-table-row-link"
+    />
+  );
+};
+
+const TableCell = ({ vfx, children, className, ...rest }: BoxProps) => (
+  <Box
+    {...rest}
+    className={classNames("aui-table-cell", className)}
+    vfx={{ paddingX: "m", paddingY: "s", ...vfx }}
+  >
+    {children}
   </Box>
 );
 

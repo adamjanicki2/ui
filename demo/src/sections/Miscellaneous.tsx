@@ -1,6 +1,5 @@
 import Heading from "src/components/Heading";
 import Para from "src/components/Para";
-import HiddenSnippet from "src/components/HiddenSnippet";
 import {
   avatarSnippet,
   burgerSnippet,
@@ -19,6 +18,7 @@ import {
   Button,
   Link,
 } from "@adamjanicki/ui";
+import { ShowcaseBlock, ShowcaseRow } from "src/components/Showcase";
 import {
   DoubleCross,
   DoubleFlip,
@@ -50,16 +50,19 @@ export default function Miscellaneous() {
         transitions down for a handful of Hamburger animations.
       </Para>
 
-      {/* ClickOutside */}
-      <>
-        <Heading level={2}>ClickOutside</Heading>
-        <Para>
-          One of my very favorite elements in the entire UI library is the click
-          outside listener. Due to the non-trivial implementation, I had the
-          most fun working on building one that works correct, <em>and</em>{" "}
-          doesn't add an extra element to the DOM, just instead wraps your
-          component with some extra hook magic and click listeners.
-        </Para>
+      <ShowcaseBlock
+        title="ClickOutside"
+        snippet={clickOutsideSnippet}
+        description={
+          <>
+            One of my very favorite elements in the entire UI library is the
+            click outside listener. Due to the non-trivial implementation, I had
+            the most fun working on building one that works correct,{" "}
+            <em>and</em> doesn't add an extra element to the DOM, just instead
+            wraps your component with some extra hook magic and click listeners.
+          </>
+        }
+      >
         <Box vfx={{ width: "fit", marginX: "auto" }}>
           <ClickOutside
             onClickOutside={() => {
@@ -72,30 +75,23 @@ export default function Miscellaneous() {
           >
             <Alert type="info">{clickOutsideText}</Alert>
           </ClickOutside>
-        </Box>{" "}
-        <HiddenSnippet>{clickOutsideSnippet}</HiddenSnippet>
-      </>
+        </Box>
+      </ShowcaseBlock>
 
-      {/* Hamburger */}
-      <>
-        <Heading level={2}>Hamburger</Heading>
-        <Para>
-          I've had a recent fascination with making a custom hamburger button
-          after I realized how fun it is to mess around with the{" "}
-          <ui.code>transform</ui.code> css property to create all sorts of
-          different variants of buttons. I've started simple with just 7
-          different variants, which you can checkout below!
-        </Para>
-        <Box
-          vfx={{
-            axis: "x",
-            align: "center",
-            justify: "center",
-            gap: "s",
-            padding: "xs",
-            wrap: true,
-          }}
-        >
+      <ShowcaseBlock
+        title="Hamburger"
+        snippet={burgerSnippet}
+        description={
+          <>
+            I've had a recent fascination with making a custom hamburger button
+            after I realized how fun it is to mess around with the{" "}
+            <ui.code>transform</ui.code> css property to create all sorts of
+            different variants of buttons. I've started simple with just 7
+            different variants, which you can checkout below!
+          </>
+        }
+      >
+        <ShowcaseRow>
           <DoubleSpin
             open={hamburgerOpen}
             onClick={toggleHamburger}
@@ -131,21 +127,22 @@ export default function Miscellaneous() {
             onClick={toggleHamburger}
             style={{ color: "#7F00FF" }}
           />
-        </Box>
-        <HiddenSnippet>{burgerSnippet}</HiddenSnippet>
-      </>
+        </ShowcaseRow>
+      </ShowcaseBlock>
 
-      {/* Icon */}
-      <>
-        <Heading level={2}>Icon</Heading>
-        <Para>
-          I mainly needed to make this component to support using icons in the{" "}
-          <Link to="#carousel">carousel</Link> component. But then I decided to
-          make this a generically useable component, even if I currently have
-          hardly any icons available for use. Rest assured that I'm going to be
-          getting a free trial of Adobe Illustrator to try and make as many
-          icons as I possibly can!
-        </Para>
+      <ShowcaseBlock
+        title="Icon"
+        description={
+          <>
+            I mainly needed to make this component to support using icons in the{" "}
+            <Link to="#carousel">carousel</Link> component. But then I decided
+            to make this a generically useable component, even if I currently
+            have hardly any icons available for use. Rest assured that I'm going
+            to be getting a free trial of Adobe Illustrator to try and make as
+            many icons as I possibly can!
+          </>
+        }
+      >
         <Box
           vfx={{
             axis: "x",
@@ -174,51 +171,38 @@ export default function Miscellaneous() {
             </Tooltip>
           ))}
         </Box>
-      </>
+      </ShowcaseBlock>
 
-      {/* Spinner */}
-      <>
-        <Heading level={2}>Spinner</Heading>
-        <Para>
-          The spinner was such a fun one to design: I had to go into Illustrator
-          to first make a suitable svg for the spinner icon, and then from there
-          it was some fun css animations!
-        </Para>
-        <Box
-          vfx={{
-            axis: "x",
-            align: "center",
-            gap: "s",
-            padding: "xs",
-            width: "fit",
-            marginX: "auto",
-          }}
-        >
+      <ShowcaseBlock
+        title="Spinner"
+        snippet={spinnerSnippet}
+        description={
+          <>
+            The spinner was such a fun one to design: I had to go into
+            Illustrator to first make a suitable svg for the spinner icon, and
+            then from there it was some fun css animations!
+          </>
+        }
+      >
+        <ShowcaseRow vfx={{ width: "fit", marginX: "auto", wrap: false }}>
           <Spinner />
           <Spinner style={{ height: 36, color: "red" }} />
           <Spinner style={{ height: 48, color: "blue" }} />
-        </Box>
-        <HiddenSnippet>{spinnerSnippet}</HiddenSnippet>
-      </>
+        </ShowcaseRow>
+      </ShowcaseBlock>
 
-      {/* Avatar */}
-      <>
-        <Heading level={2}>Avatar</Heading>
-        <Para>
-          I often find myself remaking a component to render a user's profile
-          picture or icon in many of my sites. This flexible component allows
-          you to configure either a background image, or a letter icon.
-        </Para>
-        <Box
-          vfx={{
-            axis: "x",
-            align: "center",
-            gap: "s",
-            padding: "xs",
-            width: "fit",
-            marginX: "auto",
-          }}
-        >
+      <ShowcaseBlock
+        title="Avatar"
+        snippet={avatarSnippet}
+        description={
+          <>
+            I often find myself remaking a component to render a user's profile
+            picture or icon in many of my sites. This flexible component allows
+            you to configure either a background image, or a letter icon.
+          </>
+        }
+      >
+        <ShowcaseRow vfx={{ width: "fit", marginX: "auto" }}>
           <Avatar username="A" size="m" />
           <Avatar username="B" size="m" />
           <Avatar username="C" size="m" />
@@ -229,26 +213,27 @@ export default function Miscellaneous() {
             username="A"
             size="m"
           />
-        </Box>
-        <HiddenSnippet>{avatarSnippet}</HiddenSnippet>
-      </>
+        </ShowcaseRow>
+      </ShowcaseBlock>
 
-      {/* Error boundary */}
-      <>
-        <Heading level={2}>Error Boundary</Heading>
-        <Para>
-          I still think it's crazy that even in 2025 we still have no choice but
-          to make error boundary components with old class components due to
-          lifecycle methods that don't exist in the "new" functional components.
-          Either way, I ruined the cleanliness of my library by including this
-          in here.
-        </Para>
+      <ShowcaseBlock
+        title="Error Boundary"
+        description={
+          <>
+            I still think it's crazy that even in 2025 we still have no choice
+            but to make error boundary components with old class components due
+            to lifecycle methods that don't exist in the "new" functional
+            components. Either way, I ruined the cleanliness of my library by
+            including this in here.
+          </>
+        }
+      >
         <ErrorBoundary Fallback={Fallback}>
           <Box vfx={{ axis: "x", justify: "center", padding: "xs" }}>
             <Bomb />
           </Box>
         </ErrorBoundary>
-      </>
+      </ShowcaseBlock>
     </ui.section>
   );
 }

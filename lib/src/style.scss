@@ -220,11 +220,28 @@ textarea {
   transition: opacity var(--aui-default-transition);
 }
 
-.aui-table-row {
+// Table
+.aui-table {
+  display: table;
+  border-spacing: 0;
+}
+
+.aui-table-row,
+.aui-table-row-link {
+  display: table-row;
+}
+
+.aui-table-row-link {
   background-color: transparent;
   transition: background-color var(--aui-default-transition);
 }
 
+.aui-table-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+// Hover effects
 @media (hover: hover) {
   .aui-button-primary:not([disabled]):hover,
   .aui-dim:not([disabled]):hover,
@@ -240,7 +257,7 @@ textarea {
     opacity: 1;
   }
 
-  .aui-table-row:not([disabled]):hover {
+  .aui-table-row-link:not([disabled]):hover {
     background-color: var(--aui-static-background);
   }
 }
