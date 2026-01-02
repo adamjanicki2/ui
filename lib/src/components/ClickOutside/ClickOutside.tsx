@@ -30,7 +30,7 @@ const ClickOutside = ({
   children,
   onClickOutside,
   mouseEvent = "click",
-}: Props): React.JSX.Element => {
+}: Props): JSX.Element => {
   const ref = useRef<Element | null>(null);
   const clickWithinChildRef = useRef(false);
   const startedRef = useRef(false);

@@ -15,7 +15,7 @@ export type Props = {
   /**
    * What to render when no routes match, like a 404 page.
    */
-  fallback?: React.ReactNode;
+  fallback?: React.ReactElement;
 };
 
 function findRouteElements(children: ReadonlyableArray<React.ReactNode>) {
@@ -28,7 +28,10 @@ function findRouteElements(children: ReadonlyableArray<React.ReactNode>) {
  * Nested within a router component, this component handles rendering the proper route.
  * Note: sticking any other components besides routes in here will not be rendered
  */
-export default function Routes({ children, fallback }: Props): React.ReactNode {
+export default function Routes({
+  children,
+  fallback,
+}: Props): React.ReactElement | null {
   const router = useRouterContext("<Routes>");
   const { location, basename } = router;
   const pathname = stripBasename(location.pathname, basename);
