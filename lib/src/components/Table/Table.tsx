@@ -36,7 +36,7 @@ type ColumnConfig<
   cellProps?: ContainerProps;
 };
 
-type Props<Item extends MinimalItem> = {
+type Props<Item extends MinimalItem> = ContainerProps & {
   /** Items to render in the rows of the table */
   items: ReadonlyableArray<Item>;
   /** Columns to render for each data item */
@@ -58,21 +58,7 @@ type Props<Item extends MinimalItem> = {
   getAction?: (item: Item) => Action;
   /** Whether to render a small before between columns */
   gutters?: boolean;
-} & ContainerProps;
-
-type TableCellProps = {
-  children: React.ReactNode;
-} & ContainerProps;
-
-const TableCell = ({ vfx, children, className, ...rest }: TableCellProps) => (
-  <Box
-    {...rest}
-    className={classNames("aui-table-cell", className)}
-    vfx={{ paddingX: "m", paddingY: "s", ...vfx }}
-  >
-    {children}
-  </Box>
-);
+};
 
 const nextSortDirection = {
   none: "asc",
@@ -110,18 +96,14 @@ const Table = <Item extends MinimalItem>({
     }}
   >
     {/* Inner container (scrollable within parent) */}
-    <Box
-      className="aui-table"
-      role="table"
-      vfx={{ minWidth: "max", width: "full" }}
-    >
+    <Box className="aui-table" role="table" vfx={{ width: "full" }}>
       <Box className="aui-table-header-group" role="rowgroup">
         <Box className="aui-table-row" role="row">
           {columns.map(({ key, header, sortable = false }, colIndex) => {
             const columnSorted = sortable && sort && sort.key === key;
             const direction = columnSorted ? sort.direction : "none";
             const icon = sortable ? directionToIcon[direction] : null;
-            const { vfx, ...restHeaderCellProps } = headerCellProps;
+            const { vfx, style, ...restHeaderCellProps } = headerCellProps;
 
             return (
               <TableCell
@@ -130,6 +112,8 @@ const Table = <Item extends MinimalItem>({
                 vfx={{
                   borderRight: gutters && colIndex < columns.length - 1,
                   borderBottom: true,
+                  fontSize: "s",
+                  fontWeight: 7,
                   ...vfx,
                 }}
               >
@@ -230,5 +214,15 @@ const TableBodyRow = <Item extends MinimalItem>({
 
   return <UnstyledButton {...actionProps} />;
 };
+
+const TableCell = ({ vfx, children, className, ...rest }: BoxProps) => (
+  <Box
+    {...rest}
+    className={classNames("aui-table-cell", className)}
+    vfx={{ paddingX: "m", paddingY: "s", ...vfx }}
+  >
+    {children}
+  </Box>
+);
 
 export default Table;
