@@ -1,5 +1,8 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { useMemo, useState } from "react";
 import { Table } from "../../src";
+import { arrowDown, arrowUp, select } from "../../src/icons";
 
 type Movie = {
   id: string;
@@ -38,7 +41,7 @@ describe("Table", () => {
           { key: "title", header: "Title" },
           { key: "year", header: "Year" },
         ]}
-        routeTo={(movie) => ({ to: `/movies/${movie.id}` })}
+        getAction={(movie) => ({ to: `/movies/${movie.id}` })}
       />
     );
 
@@ -46,6 +49,27 @@ describe("Table", () => {
       .getByText("Interstellar")
       .closest("a") as HTMLAnchorElement;
     expect(link.getAttribute("href")).toBe("/movies/1");
+  });
+
+  it("wraps rows with buttons when using action", async () => {
+    const user = userEvent.setup();
+    const onClick = jest.fn();
+
+    render(
+      <Table
+        items={movies}
+        columns={[
+          { key: "title", header: "Title" },
+          { key: "year", header: "Year" },
+        ]}
+        getAction={() => ({ onClick })}
+      />
+    );
+
+    const rowButton = screen.getByText("Interstellar").closest("button");
+    expect(rowButton).toBeInTheDocument();
+    await user.click(screen.getByText("Interstellar"));
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 
   it("uses custom render when provided", () => {
@@ -125,5 +149,72 @@ describe("Table", () => {
     yearCells.forEach((cell) => expect(cell).toHaveClass(customClass));
 
     expect(renderTitle).toHaveBeenCalledTimes(movies.length);
+  });
+
+  it("sorts rows when clicking a sortable header", async () => {
+    type SortKey = "title" | "year";
+
+    const SortableTable = () => {
+      const [sortKey, setSortKey] = useState<SortKey>();
+      const [sortDirection, setSortDirection] = useState<
+        "none" | "asc" | "desc"
+      >("none");
+
+      const sortedItems = useMemo(() => {
+        if (!sortKey || sortDirection === "none") return movies;
+        const sorted = [...movies].sort((a, b) => {
+          const aValue = a[sortKey];
+          const bValue = b[sortKey];
+          if (aValue === bValue) return 0;
+          return aValue > bValue ? 1 : -1;
+        });
+        return sortDirection === "asc" ? sorted : sorted.reverse();
+      }, [sortDirection, sortKey]);
+
+      return (
+        <Table
+          items={sortedItems}
+          columns={[
+            { key: "title", header: "Title", sortable: true },
+            { key: "year", header: "Year", sortable: true },
+          ]}
+          sort={{
+            key: sortKey,
+            direction: sortDirection,
+            onSort: (key, direction) => {
+              setSortDirection(direction);
+              setSortKey(direction === "none" ? undefined : (key as SortKey));
+            },
+          }}
+        />
+      );
+    };
+
+    const user = userEvent.setup();
+    const { container } = render(<SortableTable />);
+
+    const yearHeaderButton = screen.getByRole("button", { name: "Year" });
+    const getYearIconPath = () =>
+      yearHeaderButton.querySelector("path")?.getAttribute("d");
+
+    const expectTextOrder = (first: string, second: string) => {
+      const content = container.textContent;
+      expect(content.indexOf(first)).toBeLessThan(content.indexOf(second));
+    };
+
+    expectTextOrder("Interstellar", "Alien");
+    expect(getYearIconPath()).toBe(select);
+
+    await user.click(yearHeaderButton);
+    expectTextOrder("Alien", "Interstellar");
+    expect(getYearIconPath()).toBe(arrowUp);
+
+    await user.click(yearHeaderButton);
+    expectTextOrder("Interstellar", "Alien");
+    expect(getYearIconPath()).toBe(arrowDown);
+
+    await user.click(yearHeaderButton);
+    expectTextOrder("Interstellar", "Alien");
+    expect(getYearIconPath()).toBe(select);
   });
 });

@@ -57,6 +57,7 @@ const Avatar = React.forwardRef<HTMLDivElement, Props>(
           overflow: "hidden",
           fontWeight: 6,
           textAlign: "center",
+          color: "default",
           ...vfx,
         }}
         {...rest}
