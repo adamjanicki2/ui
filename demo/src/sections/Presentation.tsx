@@ -149,11 +149,11 @@ export default function Presentation() {
         snippet={boxSnippet}
         description={
           <>
-            I wanted something to standardize the layouts of my pages instead
-            of having a ton of random <ui.code>div</ui.code>s strewn across the
-            page. But more than that, it makes my code more readable by
-            exposing easier-to-understand props like <ui.code>axis</ui.code> to
-            control the flex direction.
+            I wanted something to standardize the layouts of my pages instead of
+            having a ton of random <ui.code>div</ui.code>s strewn across the
+            page. But more than that, it makes my code more readable by exposing
+            easier-to-understand props like <ui.code>axis</ui.code> to control
+            the flex direction.
           </>
         }
       >
@@ -213,11 +213,11 @@ export default function Presentation() {
         description={
           <>
             I've wanted to build some sort of site that could show off a collage
-            of pictures that I've been taking on recent trips. I figured it'd
-            be cool to have the page segmented by trip, and each trip would
-            have a carousel of images, which is why I needed this component.
-            This one ended up being one of the more tricky things in this
-            library to implement due to all of the complex CSS involved.
+            of pictures that I've been taking on recent trips. I figured it'd be
+            cool to have the page segmented by trip, and each trip would have a
+            carousel of images, which is why I needed this component. This one
+            ended up being one of the more tricky things in this library to
+            implement due to all of the complex CSS involved.
           </>
         }
       >
@@ -281,10 +281,10 @@ export default function Presentation() {
         snippet={modalSnippet}
         description={
           <>
-            Built as a simple wrapper on top of the lower-level Layer
-            component, the Modal component seeks to provide an easy interface
-            for commonly used modal design patterns, providing props for doing
-            something on confirm and close.
+            Built as a simple wrapper on top of the lower-level Layer component,
+            the Modal component seeks to provide an easy interface for commonly
+            used modal design patterns, providing props for doing something on
+            confirm and close.
           </>
         }
       >

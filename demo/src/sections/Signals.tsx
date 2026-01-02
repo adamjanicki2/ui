@@ -63,10 +63,10 @@ export default function Signals() {
         snippet={bannerSnippet}
         description={
           <>
-            Banners are virtually the same as alerts, but are meant for the
-            tops of pages and contain more important information. Therefore,
-            they have a default style of <ui.code>width: 100%</ui.code> applied
-            to them.{" "}
+            Banners are virtually the same as alerts, but are meant for the tops
+            of pages and contain more important information. Therefore, they
+            have a default style of <ui.code>width: 100%</ui.code> applied to
+            them.{" "}
             <ui.em>
               I've taken the liberty of hiding the overflow here, but you get
               the point.

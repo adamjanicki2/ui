@@ -56,8 +56,8 @@ export default function Miscellaneous() {
         description={
           <>
             One of my very favorite elements in the entire UI library is the
-            click outside listener. Due to the non-trivial implementation, I
-            had the most fun working on building one that works correct,{" "}
+            click outside listener. Due to the non-trivial implementation, I had
+            the most fun working on building one that works correct,{" "}
             <em>and</em> doesn't add an extra element to the DOM, just instead
             wraps your component with some extra hook magic and click listeners.
           </>
@@ -134,12 +134,12 @@ export default function Miscellaneous() {
         title="Icon"
         description={
           <>
-            I mainly needed to make this component to support using icons in
-            the <Link to="#carousel">carousel</Link> component. But then I
-            decided to make this a generically useable component, even if I
-            currently have hardly any icons available for use. Rest assured
-            that I'm going to be getting a free trial of Adobe Illustrator to
-            try and make as many icons as I possibly can!
+            I mainly needed to make this component to support using icons in the{" "}
+            <Link to="#carousel">carousel</Link> component. But then I decided
+            to make this a generically useable component, even if I currently
+            have hardly any icons available for use. Rest assured that I'm going
+            to be getting a free trial of Adobe Illustrator to try and make as
+            many icons as I possibly can!
           </>
         }
       >
