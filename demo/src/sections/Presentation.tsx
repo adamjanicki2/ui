@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import Heading from "src/components/Heading";
 import Para from "src/components/Para";
-import HiddenSnippet from "src/components/HiddenSnippet";
 import {
   accordionSnippet,
   animatedSnippet,
@@ -10,6 +9,7 @@ import {
   layerSnippet,
   modalSnippet,
 } from "src/codeSnippets";
+import { ShowcaseBlock, ShowcaseRow } from "src/components/Showcase";
 import {
   Accordion,
   Alert,
@@ -69,16 +69,19 @@ export default function Presentation() {
         technically should be split into two different sections; this combines
         layout and presentational parts.
       </Para>
-      {/* Accordion */}
-      <>
-        <Heading level={2}>Accordion</Heading>
-        <Para>
-          Any webdev is going to know how insanely tricky it is to animate an
-          accordion due to it being <em>(for the moment)</em> difficult to
-          animate from 0 height to auto height. So this solution is inefficient
-          performance wise, but it was still fun to work on solving since it's a
-          tricky problem.
-        </Para>
+      <ShowcaseBlock
+        title="Accordion"
+        snippet={accordionSnippet}
+        description={
+          <>
+            Any webdev is going to know how insanely tricky it is to animate an
+            accordion due to it being <em>(for the moment)</em> difficult to
+            animate from 0 height to auto height. So this solution is
+            inefficient performance wise, but it was still fun to work on
+            solving since it's a tricky problem.
+          </>
+        }
+      >
         <Accordion
           vfx={{ marginX: "auto" }}
           style={{ width: "calc(min(100%, 512px))" }}
@@ -102,18 +105,22 @@ export default function Presentation() {
               }),
           }))}
         />
-        <HiddenSnippet>{accordionSnippet}</HiddenSnippet>
-      </>
-      {/* Animated */}
-      <>
-        <Heading level={2}>Animated</Heading>
-        <Para>
-          This is a simple wrapper component that allows you to perform
-          animations on mount and unmount of a given element. I found it useful
-          when designing a custom modal for one of my other sites that I wanted
-          to fade in and out when the user entered or exited the state.
-        </Para>
-        <Box vfx={{ axis: "y", align: "center", gap: "s" }}>
+      </ShowcaseBlock>
+
+      <ShowcaseBlock
+        title="Animated"
+        snippet={animatedSnippet}
+        description={
+          <>
+            This is a simple wrapper component that allows you to perform
+            animations on mount and unmount of a given element. I found it
+            useful when designing a custom modal for one of my other sites that
+            I wanted to fade in and out when the user entered or exited the
+            state.
+          </>
+        }
+      >
+        <ShowcaseRow vfx={{ axis: "y", gap: "s", padding: "none" }}>
           <Button
             vfx={{ width: "fit" }}
             onClick={() => setAnimatedOpen(!animatedOpen)}
@@ -134,82 +141,86 @@ export default function Presentation() {
           >
             <Alert type="info">This is an animated alert!</Alert>
           </Animated>
-          <HiddenSnippet>{animatedSnippet}</HiddenSnippet>
-        </Box>
-      </>
-      {/* Box */}
-      <>
-        <Heading level={2}>Box</Heading>
-        <Para>
-          I wanted something to standardize the layouts of my pages instead of
-          having a ton of random <ui.code>div</ui.code>s strewn across the page.
-          But more than that, it makes my code more readable by exposing
-          easier-to-understand props like <ui.code>axis</ui.code> to control the
-          flex direction.
-        </Para>
-        <Box vfx={{ axis: "y" }}>
+        </ShowcaseRow>
+      </ShowcaseBlock>
+
+      <ShowcaseBlock
+        title="Box"
+        snippet={boxSnippet}
+        description={
+          <>
+            I wanted something to standardize the layouts of my pages instead
+            of having a ton of random <ui.code>div</ui.code>s strewn across the
+            page. But more than that, it makes my code more readable by
+            exposing easier-to-understand props like <ui.code>axis</ui.code> to
+            control the flex direction.
+          </>
+        }
+      >
+        <Box
+          vfx={{
+            axis: "x",
+            align: "end",
+            justify: "center",
+            padding: "xs",
+            gap: "xs",
+            border: true,
+            borderColor: "primary",
+          }}
+        >
           <Box
             vfx={{
-              axis: "x",
-              align: "end",
+              axis: "y",
+              align: "center",
               justify: "center",
-              padding: "xs",
-              gap: "xs",
+              padding: "m",
               border: true,
               borderColor: "primary",
             }}
           >
-            <Box
-              vfx={{
-                axis: "y",
-                align: "center",
-                justify: "center",
-                padding: "m",
-                border: true,
-                borderColor: "primary",
-              }}
-            >
-              L
-            </Box>
-            <Box
-              vfx={{
-                axis: "y",
-                align: "center",
-                justify: "center",
-                padding: "xl",
-                border: true,
-                borderColor: "primary",
-              }}
-            >
-              XL
-            </Box>
-            <Box
-              vfx={{
-                axis: "y",
-                align: "center",
-                justify: "center",
-                padding: "xxl",
-                border: true,
-                borderColor: "primary",
-              }}
-            >
-              XXL
-            </Box>
+            L
+          </Box>
+          <Box
+            vfx={{
+              axis: "y",
+              align: "center",
+              justify: "center",
+              padding: "xl",
+              border: true,
+              borderColor: "primary",
+            }}
+          >
+            XL
+          </Box>
+          <Box
+            vfx={{
+              axis: "y",
+              align: "center",
+              justify: "center",
+              padding: "xxl",
+              border: true,
+              borderColor: "primary",
+            }}
+          >
+            XXL
           </Box>
         </Box>
-        <HiddenSnippet>{boxSnippet}</HiddenSnippet>
-      </>
-      {/* Carousel */}
-      <>
-        <Heading level={2}>Carousel</Heading>
-        <Para>
-          I've wanted to build some sort of site that could show off a collage
-          of pictures that I've been taking on recent trips. I figured it'd be
-          cool to have the page segmented by trip, and each trip would have a
-          carousel of images, which is why I needed this component. This one
-          ended up being one of the more tricky things in this library to
-          implement due to all of the complex CSS involved.
-        </Para>
+      </ShowcaseBlock>
+
+      <ShowcaseBlock
+        title="Carousel"
+        snippet={carouselSnippet}
+        description={
+          <>
+            I've wanted to build some sort of site that could show off a collage
+            of pictures that I've been taking on recent trips. I figured it'd
+            be cool to have the page segmented by trip, and each trip would
+            have a carousel of images, which is why I needed this component.
+            This one ended up being one of the more tricky things in this
+            library to implement due to all of the complex CSS involved.
+          </>
+        }
+      >
         <Carousel
           vfx={{ marginX: "auto", radius: "rounded" }}
           className="white"
@@ -234,19 +245,21 @@ export default function Presentation() {
             "We live in a twilight world"
           </Box>
         </Carousel>
-        <HiddenSnippet>{carouselSnippet}</HiddenSnippet>
-      </>
+      </ShowcaseBlock>
 
-      {/* Layer */}
-      <>
-        <Heading level={2}>Layer</Heading>
-        <Para>
-          The layer component is a simple wrapper that allows you to create a
-          layer on top of your content. This is particularly useful when you
-          want to create a modal or a dropdown menu that should cover the entire
-          screen.
-        </Para>
-        <Box vfx={{ axis: "y", align: "center", gap: "s" }}>
+      <ShowcaseBlock
+        title="Layer"
+        snippet={layerSnippet}
+        description={
+          <>
+            The layer component is a simple wrapper that allows you to create a
+            layer on top of your content. This is particularly useful when you
+            want to create a modal or a dropdown menu that should cover the
+            entire screen.
+          </>
+        }
+      >
+        <ShowcaseRow vfx={{ axis: "y", gap: "s", padding: "none" }}>
           <Button vfx={{ width: "fit" }} onClick={() => setLayerOpen(true)}>
             Open layer
           </Button>
@@ -260,20 +273,22 @@ export default function Presentation() {
               </Box>
             </Layer>
           )}
-          <HiddenSnippet>{layerSnippet}</HiddenSnippet>
-        </Box>
-      </>
+        </ShowcaseRow>
+      </ShowcaseBlock>
 
-      {/* Modal */}
-      <>
-        <Heading level={2}>Modal</Heading>
-        <Para>
-          Built as a simple wrapper on top of the lower-level Layer component,
-          the Modal component seeks to provide an easy interface for commonly
-          used modal design patterns, providing props for doing something on
-          confirm and close.
-        </Para>
-        <Box vfx={{ axis: "y", align: "center", gap: "s" }}>
+      <ShowcaseBlock
+        title="Modal"
+        snippet={modalSnippet}
+        description={
+          <>
+            Built as a simple wrapper on top of the lower-level Layer
+            component, the Modal component seeks to provide an easy interface
+            for commonly used modal design patterns, providing props for doing
+            something on confirm and close.
+          </>
+        }
+      >
+        <ShowcaseRow vfx={{ axis: "y", gap: "s", padding: "none" }}>
           <Button vfx={{ width: "fit" }} onClick={() => setModalOpen(true)}>
             Open Modal
           </Button>
@@ -287,18 +302,20 @@ export default function Presentation() {
               you'd like.
             </Box>
           </Modal>
-          <HiddenSnippet>{modalSnippet}</HiddenSnippet>
-        </Box>
-      </>
+        </ShowcaseRow>
+      </ShowcaseBlock>
 
-      {/* Table */}
-      <>
-        <Heading level={2}>Table</Heading>
-        <Para>
-          This quite possibly could contain the most complex TypeScripting I've
-          done in my life to get the types for the table rows good. It also
-          contains some of the most annoying styling I've had to do to date.
-        </Para>
+      <ShowcaseBlock
+        title="Table"
+        description={
+          <>
+            This quite possibly could contain the most complex TypeScripting
+            I've done in my life to get the types for the table rows good. It
+            also contains some of the most annoying styling I've had to do to
+            date.
+          </>
+        }
+      >
         <Box vfx={{ axis: "y", align: "center" }}>
           <Table
             gutters
@@ -322,7 +339,7 @@ export default function Presentation() {
             })}
           />
         </Box>
-      </>
+      </ShowcaseBlock>
     </ui.section>
   );
 }
