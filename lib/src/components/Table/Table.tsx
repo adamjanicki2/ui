@@ -97,68 +97,63 @@ const Table = <Item extends MinimalItem>({
   >
     {/* Inner container (scrollable within parent) */}
     <Box className="aui-table" role="table" vfx={{ width: "full" }}>
-      <Box className="aui-table-header-group" role="rowgroup">
-        <Box className="aui-table-row" role="row">
-          {columns.map(({ key, header, sortable = false }, colIndex) => {
-            const columnSorted = sortable && sort && sort.key === key;
-            const direction = columnSorted ? sort.direction : "none";
-            const icon = sortable ? directionToIcon[direction] : null;
-            const { vfx, style, ...restHeaderCellProps } = headerCellProps;
+      {/* Header row */}
+      <Box className="aui-table-row" role="row">
+        {columns.map(({ key, header, sortable = false }, colIndex) => {
+          const columnSorted = sortable && sort && sort.key === key;
+          const direction = columnSorted ? sort.direction : "none";
+          const icon = sortable ? directionToIcon[direction] : null;
+          const { vfx, ...restHeaderCellProps } = headerCellProps;
 
-            return (
-              <TableCell
-                {...restHeaderCellProps}
-                key={String(key)}
-                vfx={{
-                  borderRight: gutters && colIndex < columns.length - 1,
-                  borderBottom: true,
-                  fontSize: "s",
-                  fontWeight: 7,
-                  ...vfx,
-                }}
-              >
-                {sort && icon ? (
-                  <UnstyledButton
-                    onClick={() =>
-                      sort.onSort(key, nextSortDirection[direction])
-                    }
-                    vfx={{
-                      fontWeight: 7,
-                      axis: "x",
-                      align: "center",
-                      gap: "s",
-                    }}
-                  >
-                    {header}
-                    {
-                      <Icon
-                        icon={icon}
-                        vfx={{ color: "muted" }}
-                        size="xs"
-                        aria-hidden
-                      />
-                    }
-                  </UnstyledButton>
-                ) : (
-                  header
-                )}
-              </TableCell>
-            );
-          })}
-        </Box>
+          return (
+            <TableCell
+              {...restHeaderCellProps}
+              key={String(key)}
+              vfx={{
+                borderRight: gutters && colIndex < columns.length - 1,
+                borderBottom: true,
+                fontSize: "s",
+                fontWeight: 7,
+                ...vfx,
+              }}
+            >
+              {sort && icon ? (
+                <UnstyledButton
+                  onClick={() => sort.onSort(key, nextSortDirection[direction])}
+                  vfx={{
+                    fontWeight: 7,
+                    axis: "x",
+                    align: "center",
+                    gap: "s",
+                  }}
+                >
+                  {header}
+                  {
+                    <Icon
+                      icon={icon}
+                      vfx={{ color: "muted" }}
+                      size="xs"
+                      aria-hidden
+                    />
+                  }
+                </UnstyledButton>
+              ) : (
+                header
+              )}
+            </TableCell>
+          );
+        })}
       </Box>
-
-      <Box className="aui-table-body-group" role="rowgroup">
-        {items.map((item) => (
-          <TableBodyRow
-            key={item.id}
-            item={item}
-            columns={columns}
-            getAction={getAction}
-            gutters={gutters}
-          />
-        ))}
-      </Box>
+      {/* Rows */}
+      {items.map((item) => (
+        <TableBodyRow
+          key={item.id}
+          item={item}
+          columns={columns}
+          getAction={getAction}
+          gutters={gutters}
+        />
+      ))}
     </Box>
   </Box>
 );
