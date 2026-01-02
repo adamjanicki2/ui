@@ -10,7 +10,6 @@ import classNames from "../../functions/classNames";
 
 type LinkProps = React.ComponentProps<typeof UnstyledLink>;
 type RouteLinkProps = Pick<LinkProps, "to" | "newTab">;
-type Action = RouteLinkProps | { onClick: () => void };
 
 type MinimalItem = {
   id: string;
@@ -54,8 +53,8 @@ type Props<Item extends MinimalItem> = ContainerProps & {
     /** Callback to fire when the sort column/direction change */
     onSort: (key: keyof Item, direction: SortDirection) => void;
   };
-  /** A row's action can either be a URL or an onClick callback */
-  getAction?: (item: Item) => Action;
+  /** A row can either be a link to somewhere */
+  routeTo?: (item: Item) => RouteLinkProps;
   /** Whether to render a small before between columns */
   gutters?: boolean;
 };
@@ -77,7 +76,7 @@ const Table = <Item extends MinimalItem>({
   columns,
   headerCellProps = {},
   sort,
-  getAction,
+  routeTo,
   vfx,
   gutters,
   ...boxProps
@@ -150,7 +149,7 @@ const Table = <Item extends MinimalItem>({
           key={item.id}
           item={item}
           columns={columns}
-          getAction={getAction}
+          routeTo={routeTo}
           gutters={gutters}
         />
       ))}
@@ -158,20 +157,19 @@ const Table = <Item extends MinimalItem>({
   </Box>
 );
 
-type TableBodyRowProps<Item extends MinimalItem> = {
+type TableBodyRowProps<Item extends MinimalItem> = Pick<
+  Props<Item>,
+  "columns" | "gutters" | "routeTo"
+> & {
   item: Item;
-  columns: ReadonlyableArray<ColumnConfig<Item>>;
-  getAction?: (item: Item) => Action;
-  gutters?: boolean;
 };
 
 const TableBodyRow = <Item extends MinimalItem>({
   item,
   columns,
-  getAction,
+  routeTo,
   gutters,
 }: TableBodyRowProps<Item>) => {
-  const action = getAction?.(item);
   const children = columns.map(({ key, cellProps = {}, render }, colIndex) => {
     const { vfx, ...rest } = cellProps;
     return (
@@ -188,26 +186,22 @@ const TableBodyRow = <Item extends MinimalItem>({
     );
   });
 
-  const baseRowProps = {
+  const rowProps = {
     role: "row",
     children,
   } as const;
 
-  if (!action) {
-    return <Box {...baseRowProps} className="aui-table-row" />;
+  if (!routeTo) {
+    return <Box {...rowProps} className="aui-table-row" />;
   }
 
-  const actionProps = {
-    ...baseRowProps,
-    ...action,
-    className: "aui-table-row-action",
-  } as const;
-
-  if ("to" in actionProps) {
-    return <UnstyledLink {...actionProps} />;
-  }
-
-  return <UnstyledButton {...actionProps} />;
+  return (
+    <UnstyledLink
+      {...rowProps}
+      {...routeTo(item)}
+      className="aui-table-row-link"
+    />
+  );
 };
 
 const TableCell = ({ vfx, children, className, ...rest }: BoxProps) => (

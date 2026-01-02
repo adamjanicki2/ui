@@ -313,20 +313,13 @@ export default function Presentation() {
                 setSortKey(direction === "none" ? undefined : key);
               },
             }}
-            getAction={(item) =>
-              Number(item.id) % 2 === 0
-                ? {
-                    to: `https://adamovies.com/review/${item.title
-                      .toLowerCase()
-                      .split(/\s+/)
-                      .join("-")}`,
-                    newTab: true,
-                  }
-                : {
-                    onClick: () =>
-                      window.alert(`${item.title} is an awesome movie!`),
-                  }
-            }
+            routeTo={(item) => ({
+              to: `https://adamovies.com/review/${item.title
+                .toLowerCase()
+                .split(/\s+/)
+                .join("-")}`,
+              newTab: true,
+            })}
           />
         </Box>
       </>

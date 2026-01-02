@@ -220,25 +220,18 @@ textarea {
   transition: opacity var(--aui-default-transition);
 }
 
+// Table
 .aui-table {
   display: table;
   border-spacing: 0;
 }
 
-.aui-table-header-group {
-  display: table-header-group;
-}
-
-.aui-table-body-group {
-  display: table-row-group;
-}
-
 .aui-table-row,
-.aui-table-row-action {
+.aui-table-row-link {
   display: table-row;
 }
 
-.aui-table-row-action {
+.aui-table-row-link {
   background-color: transparent;
   transition: background-color var(--aui-default-transition);
 }
@@ -248,6 +241,7 @@ textarea {
   vertical-align: middle;
 }
 
+// Hover effects
 @media (hover: hover) {
   .aui-button-primary:not([disabled]):hover,
   .aui-dim:not([disabled]):hover,
@@ -263,7 +257,7 @@ textarea {
     opacity: 1;
   }
 
-  .aui-table-row-action:not([disabled]):hover {
+  .aui-table-row-link:not([disabled]):hover {
     background-color: var(--aui-static-background);
   }
 }
