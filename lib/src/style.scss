@@ -493,7 +493,8 @@ $margin-props: ma margin, mt margin-top, mb margin-bottom, ml margin-left,
 }
 
 // Dimension Utilities
-$dimension-props: w width, mw max-width, h height, mh max-height;
+$dimension-props: w width, minw min-width, maxw max-width, h height,
+  minh min-height, maxh max-height;
 $dimension-vals: full 100%, fit fit-content, min min-content, max max-content;
 @each $short, $prop in $dimension-props {
   @each $name, $val in $dimension-vals {

@@ -29,9 +29,9 @@ export default function Presentation() {
   const [modalOpen, setModalOpen] = useState(false);
   const [openDrawers, setOpenDrawers] = useState<Set<number>>(new Set());
   const [sortKey, setSortKey] = useState<keyof (typeof tableItems)[number]>();
-  const [sortDirection, setSortDirection] = useState<
-    "none" | "asc" | "desc"
-  >("none");
+  const [sortDirection, setSortDirection] = useState<"none" | "asc" | "desc">(
+    "none"
+  );
 
   const sortedTableItems = useMemo(() => {
     if (!sortKey || sortDirection === "none") return tableItems;
@@ -397,6 +397,6 @@ const tableColumns = [
   { key: "director", header: "Director", sortable: true },
   { key: "year", header: "Year", sortable: true },
   { key: "genre", header: "Genre", sortable: true },
-  { key: "rating", header: "IMDb", sortable: true },
+  { key: "rating", header: "Adamovies", sortable: true },
   { key: "logline", header: "Logline", sortable: true },
 ] as const;

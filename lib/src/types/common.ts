@@ -68,10 +68,14 @@ export type Vfx = {
 
   /** Width of the content */
   width?: SizeDimension;
+  /** Minimum width of the content */
+  minWidth?: SizeDimension;
   /** Maximum width of the content */
   maxWidth?: SizeDimension;
   /** Height of the content */
   height?: SizeDimension;
+  /** Minimum height of the content */
+  minHeight?: SizeDimension;
   /** Maximum height of the content */
   maxHeight?: SizeDimension;
 

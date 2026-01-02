@@ -128,66 +128,70 @@ const Table = <Item extends MinimalItem>({
       border: true,
       radius: "rounded",
       shadow: "subtle",
+      overflowX: "scroll",
       ...vfx,
     }}
   >
-    {/* header row container */}
-    <Box
-      vfx={{
-        axis: "x",
-        gap: "m",
-        paddingX: "m",
-        padding: "s",
-        justify: "start",
-        align: "center",
-        borderBottom: true,
-      }}
-    >
-      {columns.map(({ key, header, sortable = false, cellProps = {} }) => {
-        const { vfx, ...restCellProps } = cellProps;
-        const columnSorted = sortable && sort && sort.key === key;
-        const direction = columnSorted ? sort.direction : "none";
-        const icon = sortable ? directionToIcon[direction] : null;
+    {/* Extra box layer for overflow scrolling in main table box */}
+    <Box vfx={{ axis: "y", minWidth: "max" }}>
+      {/* header row container */}
+      <Box
+        vfx={{
+          axis: "x",
+          gap: "m",
+          paddingX: "m",
+          padding: "s",
+          justify: "start",
+          align: "center",
+          borderBottom: true,
+        }}
+      >
+        {columns.map(({ key, header, sortable = false, cellProps = {} }) => {
+          const { vfx, ...restCellProps } = cellProps;
+          const columnSorted = sortable && sort && sort.key === key;
+          const direction = columnSorted ? sort.direction : "none";
+          const icon = sortable ? directionToIcon[direction] : null;
 
-        return (
-          <TableCell
-            {...restCellProps}
-            key={String(key)}
-            vfx={{ fontWeight: 7, fontSize: "s", ...vfx }}
-          >
-            {sort && icon ? (
-              <UnstyledButton
-                onClick={() => sort.onSort(key, nextSortDirection[direction])}
-                vfx={{ fontWeight: 7, axis: "x", align: "center", gap: "s" }}
-              >
-                {header}
-                {
-                  <Icon
-                    icon={icon}
-                    vfx={{ color: "muted" }}
-                    size="xs"
-                    aria-hidden
-                  />
-                }
-              </UnstyledButton>
-            ) : (
-              header
-            )}
-          </TableCell>
-        );
-      })}
-    </Box>
-    {/* Table body container */}
-    <Box vfx={{ axis: "y" }}>
-      {items.map((item) => (
-        <TableRow key={item.id} action={getAction?.(item)}>
-          {columns.map(({ key, cellProps, render }) => (
-            <TableCell {...cellProps} key={String(key)}>
-              {render ? render(item) : <>{item[key]}</>}
+          return (
+            <TableCell
+              {...restCellProps}
+              key={String(key)}
+              vfx={{ fontWeight: 7, fontSize: "s", ...vfx }}
+            >
+              {sort && icon ? (
+                <UnstyledButton
+                  onClick={() => sort.onSort(key, nextSortDirection[direction])}
+                  vfx={{ fontWeight: 7, axis: "x", align: "center", gap: "s" }}
+                >
+                  {header}
+                  {
+                    <Icon
+                      icon={icon}
+                      vfx={{ color: "muted" }}
+                      size="xs"
+                      aria-hidden
+                    />
+                  }
+                </UnstyledButton>
+              ) : (
+                header
+              )}
             </TableCell>
-          ))}
-        </TableRow>
-      ))}
+          );
+        })}
+      </Box>
+      {/* Table body container */}
+      <Box vfx={{ axis: "y" }}>
+        {items.map((item) => (
+          <TableRow key={item.id} action={getAction?.(item)}>
+            {columns.map(({ key, cellProps, render }) => (
+              <TableCell {...cellProps} key={String(key)}>
+                {render ? render(item) : <>{item[key]}</>}
+              </TableCell>
+            ))}
+          </TableRow>
+        ))}
+      </Box>
     </Box>
   </Box>
 );

@@ -70,15 +70,19 @@ describe("transformVfx", () => {
     ).toBe("aui-pl-s aui-pr-s aui-pt-m aui-pb-m");
   });
 
-  it("applies width/height/maxWidth/maxHeight correctly", () => {
+  it("applies width/height/minWidth/minHeight/maxWidth/maxHeight correctly", () => {
     expect(
       transformVfx({
         width: "full",
+        minWidth: "min",
         maxWidth: "fit",
         height: "min",
+        minHeight: "fit",
         maxHeight: "max",
       })
-    ).toBe("aui-w-full aui-mw-fit aui-h-min aui-mh-max");
+    ).toBe(
+      "aui-w-full aui-minw-min aui-maxw-fit aui-h-min aui-minh-fit aui-maxh-max"
+    );
   });
 
   it("handles a full complex vfx", () => {
@@ -145,11 +149,15 @@ describe("transformVfx", () => {
     expect(
       transformVfx({
         width: "full",
+        minWidth: "min",
         maxWidth: "fit",
         height: "min",
+        minHeight: "fit",
         maxHeight: "max",
       })
-    ).toBe("aui-w-full aui-mw-fit aui-h-min aui-mh-max");
+    ).toBe(
+      "aui-w-full aui-minw-min aui-maxw-fit aui-h-min aui-minh-fit aui-maxh-max"
+    );
   });
 
   it("handles all border-related props", () => {

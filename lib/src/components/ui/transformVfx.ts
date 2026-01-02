@@ -55,9 +55,11 @@ const transformers: Record<keyof Vfx, Transformer> = {
 
   // --- Dimensions ---
   width: ({ width }) => `aui-w-${width}`,
-  maxWidth: ({ maxWidth }) => `aui-mw-${maxWidth}`,
+  minWidth: ({ minWidth }) => `aui-minw-${minWidth}`,
+  maxWidth: ({ maxWidth }) => `aui-maxw-${maxWidth}`,
   height: ({ height }) => `aui-h-${height}`,
-  maxHeight: ({ maxHeight }) => `aui-mh-${maxHeight}`,
+  minHeight: ({ minHeight }) => `aui-minh-${minHeight}`,
+  maxHeight: ({ maxHeight }) => `aui-maxh-${maxHeight}`,
 
   // --- Borders ---
   radius: ({ radius }) => `aui-radius-${radius}`,
