@@ -220,6 +220,11 @@ textarea {
   transition: opacity var(--aui-default-transition);
 }
 
+.aui-table-row {
+  background-color: transparent;
+  transition: background-color var(--aui-default-transition);
+}
+
 @media (hover: hover) {
   .aui-button-primary:not([disabled]):hover,
   .aui-dim:not([disabled]):hover,
