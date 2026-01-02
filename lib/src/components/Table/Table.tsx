@@ -31,7 +31,7 @@ type ColumnConfig<
   render?: (item: Item) => React.ReactNode;
   /** Whether this column is sortable */
   sortable?: boolean;
-  /** Additional props for the cell container */
+  /** Additional props for the body cell container */
   cellProps?: ContainerProps;
 };
 
@@ -40,6 +40,8 @@ type Props<Item extends MinimalItem> = {
   items: ReadonlyableArray<Item>;
   /** Columns to render for each data item */
   columns: ReadonlyableArray<ColumnConfig<Item>>;
+  /** Additional props for each header cell container */
+  headerCellProps?: ContainerProps;
   /**
    * Options for controlled sorting of rows
    */
@@ -114,6 +116,7 @@ const directionToIcon = {
 const Table = <Item extends MinimalItem>({
   items,
   columns,
+  headerCellProps = {},
   sort,
   getAction,
   vfx,
@@ -139,59 +142,50 @@ const Table = <Item extends MinimalItem>({
         vfx={{
           axis: "x",
           gap: "m",
-          align: "center",
           paddingX: "m",
+          align: "center",
           borderBottom: true,
         }}
       >
-        {columns.map(
-          ({ key, header, sortable = false, cellProps = {} }, colIndex) => {
-            const { vfx, ...restCellProps } = cellProps;
-            const columnSorted = sortable && sort && sort.key === key;
-            const direction = columnSorted ? sort.direction : "none";
-            const icon = sortable ? directionToIcon[direction] : null;
+        {columns.map(({ key, header, sortable = false }, colIndex) => {
+          const { vfx, ...restCellProps } = headerCellProps;
+          const columnSorted = sortable && sort && sort.key === key;
+          const direction = columnSorted ? sort.direction : "none";
+          const icon = sortable ? directionToIcon[direction] : null;
 
-            return (
-              <TableCell
-                {...restCellProps}
-                key={String(key)}
-                vfx={{
-                  fontWeight: 7,
-                  fontSize: "s",
-                  paddingY: "s",
-                  borderRight: colIndex < columns.length - 1,
-                  ...vfx,
-                }}
-              >
-                {sort && icon ? (
-                  <UnstyledButton
-                    onClick={() =>
-                      sort.onSort(key, nextSortDirection[direction])
-                    }
-                    vfx={{
-                      fontWeight: 7,
-                      axis: "x",
-                      align: "center",
-                      gap: "s",
-                    }}
-                  >
-                    {header}
-                    {
-                      <Icon
-                        icon={icon}
-                        vfx={{ color: "muted" }}
-                        size="xs"
-                        aria-hidden
-                      />
-                    }
-                  </UnstyledButton>
-                ) : (
-                  header
-                )}
-              </TableCell>
-            );
-          }
-        )}
+          return (
+            <TableCell
+              {...restCellProps}
+              key={String(key)}
+              vfx={{
+                fontWeight: 7,
+                fontSize: "s",
+                paddingY: "s",
+                borderRight: colIndex < columns.length - 1,
+                ...vfx,
+              }}
+            >
+              {sort && icon ? (
+                <UnstyledButton
+                  onClick={() => sort.onSort(key, nextSortDirection[direction])}
+                  vfx={{ fontWeight: 7, axis: "x", align: "center", gap: "s" }}
+                >
+                  {header}
+                  {
+                    <Icon
+                      icon={icon}
+                      vfx={{ color: "muted" }}
+                      size="xs"
+                      aria-hidden
+                    />
+                  }
+                </UnstyledButton>
+              ) : (
+                header
+              )}
+            </TableCell>
+          );
+        })}
       </Box>
       {/* Table body container */}
       <Box vfx={{ axis: "y" }}>
