@@ -313,13 +313,20 @@ export default function Presentation() {
                 setSortKey(direction === "none" ? undefined : key);
               },
             }}
-            getAction={(item) => ({
-              to: `https://adamovies.com/review/${item.title
-                .toLowerCase()
-                .split(/\s+/)
-                .join("-")}`,
-              newTab: true,
-            })}
+            getAction={(item) =>
+              Number(item.id) % 2 === 0
+                ? {
+                    to: `https://adamovies.com/review/${item.title
+                      .toLowerCase()
+                      .split(/\s+/)
+                      .join("-")}`,
+                    newTab: true,
+                  }
+                : {
+                    onClick: () =>
+                      window.alert(`${item.title} is an awesome movie!`),
+                  }
+            }
           />
         </Box>
       </>
@@ -353,7 +360,7 @@ const tableItems = [
     year: 1981,
     genre: "Adventure",
     rating: 94,
-    logline: "A globe-trotting race to keep the Ark out of Nazi hands.",
+    logline: "Snakes... Why'd it have to be snakes?",
   },
   {
     id: "4",
@@ -371,7 +378,7 @@ const tableItems = [
     year: 2008,
     genre: "Action",
     rating: 93,
-    logline: "Batman",
+    logline: "I'm Batman.",
   },
   {
     id: "6",
@@ -382,15 +389,6 @@ const tableItems = [
     rating: 92,
     logline: "An adventure 65 million years in the making.",
   },
-  {
-    id: "7",
-    title: "Whiplash",
-    director: "Damien Chazelle",
-    year: 2014,
-    genre: "Drama",
-    rating: 92,
-    logline: "The line between greatness and obsession snaps at 300 BPM.",
-  },
 ] as const;
 
 const tableColumns = [
@@ -399,5 +397,5 @@ const tableColumns = [
   { key: "year", header: "Year", sortable: true },
   { key: "genre", header: "Genre", sortable: true },
   { key: "rating", header: "Adamovies", sortable: true },
-  { key: "logline", header: "Logline", sortable: true },
+  { key: "logline", header: "Logline" },
 ] as const;

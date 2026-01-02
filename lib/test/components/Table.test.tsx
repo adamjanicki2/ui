@@ -33,6 +33,43 @@ describe("Table", () => {
     expect(screen.getByText("Alien")).toBeInTheDocument();
   });
 
+  it("applies headerCellProps to header cells", () => {
+    render(
+      <Table
+        items={movies}
+        headerCellProps={{ className: "header" }}
+        columns={[
+          { key: "title", header: "Title", cellProps: { className: "body" } },
+          { key: "year", header: "Year" },
+        ]}
+      />
+    );
+
+    expect(screen.getByText("Title").closest(".header")).toBeTruthy();
+    expect(screen.getByText("Title").closest(".body")).toBeNull();
+
+    expect(screen.getByText("Interstellar").closest(".body")).toBeTruthy();
+    expect(screen.getByText("Interstellar").closest(".header")).toBeNull();
+  });
+
+  it("adds column dividers when gutters is true", () => {
+    render(
+      <Table
+        gutters
+        items={movies}
+        columns={[
+          { key: "title", header: "Title" },
+          { key: "year", header: "Year" },
+        ]}
+      />
+    );
+
+    expect(screen.getByText("Title").closest(".aui-br")).toBeTruthy();
+    expect(screen.getByText("Year").closest(".aui-br")).toBeNull();
+    expect(screen.getByText("Interstellar").closest(".aui-br")).toBeTruthy();
+    expect(screen.getByText("2014").closest(".aui-br")).toBeNull();
+  });
+
   it("wraps rows with links", () => {
     render(
       <Table
@@ -49,6 +86,7 @@ describe("Table", () => {
       .getByText("Interstellar")
       .closest("a") as HTMLAnchorElement;
     expect(link.getAttribute("href")).toBe("/movies/1");
+    expect(screen.getByText("2014").closest("a")).toBe(link);
   });
 
   it("wraps rows with buttons when using action", async () => {
@@ -68,7 +106,8 @@ describe("Table", () => {
 
     const rowButton = screen.getByText("Interstellar").closest("button");
     expect(rowButton).toBeInTheDocument();
-    await user.click(screen.getByText("Interstellar"));
+    expect(screen.getByText("2014").closest("button")).toBe(rowButton);
+    await user.click(screen.getByText("2014"));
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
