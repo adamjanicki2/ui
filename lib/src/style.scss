@@ -220,9 +220,39 @@ textarea {
   transition: opacity var(--aui-default-transition);
 }
 
-.aui-table-row {
+.aui-table {
+  display: table;
+  border-spacing: 0;
+}
+
+.aui-table-header-group {
+  display: table-header-group;
+}
+
+.aui-table-body-group {
+  display: table-row-group;
+}
+
+.aui-table-row,
+.aui-table-row-action {
+  display: table-row;
+}
+
+.aui-table-row-action {
   background-color: transparent;
   transition: background-color var(--aui-default-transition);
+}
+
+.aui-table-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.aui-table-header-row .aui-table-header-cell {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--aui-default-background);
 }
 
 @media (hover: hover) {
@@ -240,7 +270,7 @@ textarea {
     opacity: 1;
   }
 
-  .aui-table-row:not([disabled]):hover {
+  .aui-table-row-action:not([disabled]):hover {
     background-color: var(--aui-static-background);
   }
 }
