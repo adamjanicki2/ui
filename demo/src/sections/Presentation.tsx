@@ -301,6 +301,7 @@ export default function Presentation() {
         </Para>
         <Box vfx={{ axis: "y", align: "center" }}>
           <Table
+            gutters
             items={sortedTableItems}
             columns={tableColumns}
             vfx={{ width: "full" }}
