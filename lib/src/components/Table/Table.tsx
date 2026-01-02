@@ -74,15 +74,6 @@ const TableCell = ({ vfx, children, className, ...rest }: TableCellProps) => (
   </Box>
 );
 
-const TableHeaderCell = ({ vfx, children, ...rest }: TableCellProps) => (
-  <TableCell
-    {...rest}
-    vfx={{ fontWeight: 7, fontSize: "s", borderBottom: true, ...vfx }}
-  >
-    <Box className="aui-table-header-cell">{children}</Box>
-  </TableCell>
-);
-
 const nextSortDirection = {
   none: "asc",
   asc: "desc",
@@ -125,12 +116,52 @@ const Table = <Item extends MinimalItem>({
       vfx={{ minWidth: "max", width: "full" }}
     >
       <Box className="aui-table-header-group" role="rowgroup">
-        <TableHeaderRow
-          gutters={gutters}
-          columns={columns}
-          headerCellProps={headerCellProps}
-          sort={sort}
-        />
+        <Box className="aui-table-row" role="row">
+          {columns.map(({ key, header, sortable = false }, colIndex) => {
+            const columnSorted = sortable && sort && sort.key === key;
+            const direction = columnSorted ? sort.direction : "none";
+            const icon = sortable ? directionToIcon[direction] : null;
+            const { vfx, ...restHeaderCellProps } = headerCellProps;
+
+            return (
+              <TableCell
+                {...restHeaderCellProps}
+                key={String(key)}
+                vfx={{
+                  borderRight: gutters && colIndex < columns.length - 1,
+                  borderBottom: true,
+                  ...vfx,
+                }}
+              >
+                {sort && icon ? (
+                  <UnstyledButton
+                    onClick={() =>
+                      sort.onSort(key, nextSortDirection[direction])
+                    }
+                    vfx={{
+                      fontWeight: 7,
+                      axis: "x",
+                      align: "center",
+                      gap: "s",
+                    }}
+                  >
+                    {header}
+                    {
+                      <Icon
+                        icon={icon}
+                        vfx={{ color: "muted" }}
+                        size="xs"
+                        aria-hidden
+                      />
+                    }
+                  </UnstyledButton>
+                ) : (
+                  header
+                )}
+              </TableCell>
+            );
+          })}
+        </Box>
       </Box>
 
       <Box className="aui-table-body-group" role="rowgroup">
@@ -199,58 +230,5 @@ const TableBodyRow = <Item extends MinimalItem>({
 
   return <UnstyledButton {...actionProps} />;
 };
-
-type TableHeaderRowProps<Item extends MinimalItem> = {
-  columns: ReadonlyableArray<ColumnConfig<Item>>;
-  headerCellProps: ContainerProps;
-  sort: Props<Item>["sort"];
-  gutters?: boolean;
-};
-
-const TableHeaderRow = <Item extends MinimalItem>({
-  columns,
-  headerCellProps,
-  sort,
-  gutters,
-}: TableHeaderRowProps<Item>) => (
-  <Box className="aui-table-row aui-table-header-row" role="row">
-    {columns.map(({ key, header, sortable = false }, colIndex) => {
-      const columnSorted = sortable && sort && sort.key === key;
-      const direction = columnSorted ? sort.direction : "none";
-      const icon = sortable ? directionToIcon[direction] : null;
-      const { vfx, ...restHeaderCellProps } = headerCellProps;
-
-      return (
-        <TableHeaderCell
-          {...restHeaderCellProps}
-          key={String(key)}
-          vfx={{
-            borderRight: gutters && colIndex < columns.length - 1,
-            ...vfx,
-          }}
-        >
-          {sort && icon ? (
-            <UnstyledButton
-              onClick={() => sort.onSort(key, nextSortDirection[direction])}
-              vfx={{ fontWeight: 7, axis: "x", align: "center", gap: "s" }}
-            >
-              {header}
-              {
-                <Icon
-                  icon={icon}
-                  vfx={{ color: "muted" }}
-                  size="xs"
-                  aria-hidden
-                />
-              }
-            </UnstyledButton>
-          ) : (
-            header
-          )}
-        </TableHeaderCell>
-      );
-    })}
-  </Box>
-);
 
 export default Table;

@@ -248,13 +248,6 @@ textarea {
   vertical-align: middle;
 }
 
-.aui-table-header-row .aui-table-header-cell {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background-color: var(--aui-default-background);
-}
-
 @media (hover: hover) {
   .aui-button-primary:not([disabled]):hover,
   .aui-dim:not([disabled]):hover,
