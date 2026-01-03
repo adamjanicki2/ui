@@ -17,11 +17,13 @@ export type Props = {
    */
   basename?: string;
   /**
-   * Whether to maintain current page scroll height on navigate.
-   * By default, when navigating to a different pathname, the page will reset to top.
-   * @default false
+   * Whether to reset the page scroll position to the top on navigation.
+   * This applies when navigating to a different pathname (query/hash changes do not reset scroll).
+   * When enabled, this also sets `history.scrollRestoration = "manual"` to avoid browser scroll
+   * restoration fighting the instant scroll.
+   * @default true
    */
-  maintainScrollHeight?: boolean;
+  resetScroll?: boolean;
 };
 
 /**
@@ -30,7 +32,7 @@ export type Props = {
 export default function Router({
   children,
   basename,
-  maintainScrollHeight,
+  resetScroll = true,
 }: Props) {
   basename = normalizeBasename(basename ?? "");
   const historyRef = React.useRef<RouterHistory | null>(null);
@@ -73,7 +75,7 @@ export default function Router({
 
     prevPathnameRef.current = nextPathname;
 
-    if (maintainScrollHeight) {
+    if (!resetScroll) {
       cleanupScrollRestoration();
       return;
     }
@@ -88,7 +90,7 @@ export default function Router({
     }
 
     return cleanupScrollRestoration;
-  }, [location.pathname, maintainScrollHeight, cleanupScrollRestoration]);
+  }, [location.pathname, resetScroll, cleanupScrollRestoration]);
 
   const navigate: Navigate = React.useCallback(
     (to: string | number, options?: NavigateOptions) => {

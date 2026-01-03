@@ -110,15 +110,15 @@ describe("Router", () => {
     });
   });
 
-  it("restores scrollRestoration when maintainScrollHeight toggles to true", async () => {
+  it("restores scrollRestoration when resetScroll toggles to false", async () => {
     function Wrapper() {
-      const [maintain, setMaintain] = React.useState(false);
+      const [resetScroll, setResetScroll] = React.useState(true);
       return (
         <>
-          <button type="button" onClick={() => setMaintain(true)}>
+          <button type="button" onClick={() => setResetScroll(false)}>
             Toggle
           </button>
-          <Router maintainScrollHeight={maintain}>
+          <Router resetScroll={resetScroll}>
             <LocationView />
           </Router>
         </>
@@ -138,9 +138,9 @@ describe("Router", () => {
     });
   });
 
-  it("does not touch scrollRestoration when maintainScrollHeight is true", () => {
+  it("does not touch scrollRestoration when resetScroll is false", () => {
     const { unmount } = render(
-      <Router maintainScrollHeight>
+      <Router resetScroll={false}>
         <LocationView />
       </Router>
     );
@@ -255,7 +255,7 @@ describe("Router", () => {
     window.history.replaceState(null, "", "/app/base");
 
     render(
-      <Router basename="/app/" maintainScrollHeight>
+      <Router basename="/app/" resetScroll={false}>
         <LocationView />
         <Redirect to="relative" />
       </Router>
