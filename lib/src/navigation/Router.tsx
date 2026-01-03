@@ -8,8 +8,8 @@ export type Props = {
   /** Children to render inside the router provider */
   children: React.ReactNode;
   /**
-   * Optional basename prefix for all internal navigation (eg "/app").
-   * @default ""
+   * Optional basename prefix for all internal navigation.
+   * @example "/app"
    */
   basename?: string;
   /**
@@ -21,9 +21,6 @@ export type Props = {
 
 /**
  * Router provider for navigation hooks and components.
- *
- * @param props Router props.
- * @returns Provider Element.
  */
 export default function Router({
   children,

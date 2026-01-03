@@ -1,10 +1,19 @@
 /** Location object of the current URL */
 export type Location = {
-  /** URL pathname (eg "/movies/123") */
+  /**
+   * URL pathname
+   * @example "/movies/123"
+   */
   pathname: string;
-  /** URL search (eg "?q=inception") */
+  /**
+   * URL search
+   * @example "?q=inception"
+   */
   search: string;
-  /** URL hash (eg "#home") */
+  /**
+   * URL hash
+   * @example "#home"
+   */
   hash: string;
 };
 
@@ -36,7 +45,7 @@ export type Navigate = {
 
 /**
  * Object containing params from the pathname.
- * Eg `{id: "1"}` for `/movie/:id <=> /movie/1`.
+ * @example `{id: "1"}` for `/movie/:id <=> /movie/1`
  */
 export type PathParams = {
   [key: string]: string | undefined;
@@ -44,7 +53,7 @@ export type PathParams = {
 
 /**
  * Object containing params from the search string.
- * Eg `{id: "1", movies: ["inception", "alien"]}` for `"?id=1&movies=inception&movies=alien"`.
+ * @example `{id: "1", movies: ["inception", "alien"]}` for `"?id=1&movies=inception&movies=alien"`
  */
 export type SearchParams = {
   [key: string]: string | string[] | undefined;
