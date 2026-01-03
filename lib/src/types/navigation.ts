@@ -24,10 +24,12 @@ export type NavigateOptions = {
 };
 
 /**
- * A function to handle page navigation
+ * A function to handle page navigation either to a destination URL or relative to browser history
  */
 export type Navigate = {
+  /** Navigate to a URL, e.g. `navigate("/settings", { historyMode: "replace" })` */
   (to: string, options?: NavigateOptions): void;
+  /** Navigate forward or backwards through history, e.g. `navigate(-1)` to go back */
   (historyOffset: number): void;
 };
 
