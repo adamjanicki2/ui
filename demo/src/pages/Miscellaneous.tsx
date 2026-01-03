@@ -31,6 +31,7 @@ import {
 import { useState } from "react";
 import * as icons from "@adamjanicki/ui/icons";
 import { Tooltip } from "@adamjanicki/ui-extended";
+import Page from "src/components/Page";
 
 export default function Miscellaneous() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
@@ -38,8 +39,7 @@ export default function Miscellaneous() {
   const toggleHamburger = () => setHamburgerOpen(!hamburgerOpen);
 
   return (
-    <ui.section id="miscellaneous-section">
-      <Heading level={1}>Miscellaneous</Heading>
+    <Page title="Miscellaneous">
       <Para>
         Probably the most fun set of components, although{" "}
         <Link to="/presentation#animated">Animated</Link> and{" "}
@@ -234,7 +234,7 @@ export default function Miscellaneous() {
           </Box>
         </ErrorBoundary>
       </ShowcaseBlock>
-    </ui.section>
+    </Page>
   );
 }
 

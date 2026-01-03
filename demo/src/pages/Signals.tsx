@@ -3,11 +3,11 @@ import Para from "src/components/Para";
 import { alertSnippet, badgeSnippet, bannerSnippet } from "src/codeSnippets";
 import { Alert, Badge, Banner, ui } from "@adamjanicki/ui";
 import { ShowcaseBlock, ShowcaseRow } from "src/components/Showcase";
+import Page from "src/components/Page";
 
 export default function Signals() {
   return (
-    <ui.section id="signals-section">
-      <Heading level={1}>Signals</Heading>
+    <Page title="Signals">
       <Para>
         This section includes all components that involve signaling information
         or other alerting to a user visually. This will typically be something
@@ -97,6 +97,6 @@ export default function Signals() {
           <Banner type="error">This is an error banner</Banner>
         </ShowcaseRow>
       </ShowcaseBlock>
-    </ui.section>
+    </Page>
   );
 }

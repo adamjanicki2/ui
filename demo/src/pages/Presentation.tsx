@@ -22,6 +22,7 @@ import {
   Table,
   ui,
 } from "@adamjanicki/ui";
+import Page from "src/components/Page";
 
 export default function Presentation() {
   const [animatedOpen, setAnimatedOpen] = useState(false);
@@ -59,8 +60,7 @@ export default function Presentation() {
   }, [sortDirection, sortKey]);
 
   return (
-    <ui.section id="layout-section">
-      <Heading level={1}>Presentation</Heading>
+    <Page title="Presentation">
       <Para>
         Perhaps the most foundational of the sections of components within my
         library, the layout and presentation components allow nice composition
@@ -340,7 +340,7 @@ export default function Presentation() {
           />
         </Box>
       </ShowcaseBlock>
-    </ui.section>
+    </Page>
   );
 }
 

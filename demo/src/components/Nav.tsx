@@ -51,7 +51,7 @@ export default function Nav() {
       >
         <Navlink to="/presentation">Presentation</Navlink>
         <Navlink to="/signals">Signals</Navlink>
-        <Navlink to="/user-action">User Action</Navlink>
+        <Navlink to="/action">Action</Navlink>
         <Navlink to="/miscellaneous">Miscellaneous</Navlink>
       </ui.ul>
     </ui.nav>
