@@ -29,12 +29,27 @@ export default function Signals() {
           </>
         }
       >
-        <ShowcaseRow vfx={{ axis: "y", gap: "s", padding: "none" }}>
-          <Alert type="static">This is a static alert</Alert>
-          <Alert type="info">This is an info alert</Alert>
-          <Alert type="success">This is a success alert</Alert>
-          <Alert type="warning">This is a warning alert</Alert>
-          <Alert type="error">This is an error alert</Alert>
+        <ShowcaseRow
+          vfx={{ axis: "y", gap: "s", padding: "none", marginX: "auto" }}
+          style={{
+            width: `min(100%, 400px)`,
+          }}
+        >
+          <Alert type="static" vfx={{ width: "full" }}>
+            This is a static alert
+          </Alert>
+          <Alert type="info" vfx={{ width: "full" }}>
+            This is an info alert
+          </Alert>
+          <Alert type="success" vfx={{ width: "full" }}>
+            This is a success alert
+          </Alert>
+          <Alert type="warning" vfx={{ width: "full" }}>
+            This is a warning alert
+          </Alert>
+          <Alert type="error" vfx={{ width: "full" }}>
+            This is an error alert
+          </Alert>
         </ShowcaseRow>
       </ShowcaseBlock>
 

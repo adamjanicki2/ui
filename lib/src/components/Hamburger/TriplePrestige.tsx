@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import Hamburger, { type Props, defaultAngles } from "./Hamburger";
 
+/** The default hamburger */
 const TriplePrestige = (props: Props) => {
   const { direction = "left", ...rest } = props;
 

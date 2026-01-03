@@ -17,6 +17,7 @@ type MinimalItem = {
 
 type ContainerProps = Omit<BoxProps, "children">;
 
+/** Options for data sort direction, used by `Table` */
 export type SortDirection = "none" | "asc" | "desc";
 
 type ColumnConfig<
@@ -29,7 +30,10 @@ type ColumnConfig<
   header: React.ReactNode;
   /** Custom render function for the inner cell content */
   render?: (item: Item) => React.ReactNode;
-  /** Whether this column is sortable */
+  /**
+   * Whether this column is sortable.
+   * @default false
+   */
   sortable?: boolean;
   /** Additional props for the body cell container */
   cellProps?: ContainerProps;
@@ -40,11 +44,12 @@ type Props<Item extends MinimalItem> = ContainerProps & {
   items: ReadonlyableArray<Item>;
   /** Columns to render for each data item */
   columns: ReadonlyableArray<ColumnConfig<Item>>;
-  /** Additional props for each header cell container */
-  headerCellProps?: ContainerProps;
   /**
-   * Options for controlled sorting of rows
+   * Additional props for each header cell container.
+   * @default {}
    */
+  headerCellProps?: ContainerProps;
+  /** Options for controlled sorting of rows */
   sort?: {
     /** The key of the sorted column, or undefined if none */
     key: keyof Item | undefined;
@@ -55,7 +60,7 @@ type Props<Item extends MinimalItem> = ContainerProps & {
   };
   /** A row can either be a link to somewhere */
   routeTo?: (item: Item) => RouteLinkProps;
-  /** Whether to render a small before between columns */
+  /** Whether to render a small separator between columns */
   gutters?: boolean;
 };
 
@@ -71,6 +76,7 @@ const directionToIcon = {
   none: select,
 } as const;
 
+/** A sortable table to render data */
 const Table = <Item extends MinimalItem>({
   items,
   columns,

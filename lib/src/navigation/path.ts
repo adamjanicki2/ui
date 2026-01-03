@@ -10,7 +10,6 @@ function normalizePath(path: string) {
   return path;
 }
 
-// false == no match
 export function matchPath(
   pattern: string,
   pathname: string

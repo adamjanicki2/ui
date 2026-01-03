@@ -1,10 +1,10 @@
 import type { ReadonlyableArray } from "../types/common";
 
 /**
- * Reduce a list of classnames into one string
+ * Reduce a list of class names into one string.
  *
- * @param classNames list of class names to concatenate
- * @returns single aggregated string of classnames
+ * @param classNames List of class names to concatenate.
+ * @returns Single Aggregated string of class names.
  */
 export default function classNames(
   ...classNames: ReadonlyableArray<string | null | undefined>

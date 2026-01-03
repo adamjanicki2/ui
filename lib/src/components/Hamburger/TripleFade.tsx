@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import Hamburger, { type Props, defaultAngles } from "./Hamburger";
 
+/** A three-bar hamburger that fades the middle bar */
 const TripleFade = (props: Props) => {
   const { direction = "left", ...rest } = props;
 

@@ -7,56 +7,42 @@ import Icon from "../Icon";
 import { chevronLeft, chevronRight } from "../../icons";
 
 type ButtonProps = {
-  /**
-   * Children to render inside the button
-   */
+  /** Children to render inside the button */
   children?: Children;
-  /**
-   * Additional class name to apply to the button
-   */
+  /** Additional class name to apply to the button */
   className?: string;
-  /**
-   * Additional styles to apply to the button
-   */
+  /** Additional styles to apply to the button */
   style?: Style;
 };
 
 type Props = BoxProps & {
-  /**
-   * The child elements/slides of the carousel
-   */
+  /** The child elements/slides of the carousel */
   children: ReadonlyableArray<React.ReactNode>;
   /**
-   * How long the transition lasts (in seconds)
+   * How long the transition lasts (in seconds).
    * @default 1
    */
   duration?: number;
   /**
-   * The interval at which autoplay runs (in seconds)
-   * @default false
+   * The interval at which autoplay runs (in seconds).
+   * @example 5
    */
   autoplayInterval?: number;
   /**
-   * Whether to hide the arrow controls
+   * Whether to hide the arrow controls.
    * @default false
    */
   hideArrows?: boolean;
   /**
-   * Whether to hide the dot controls
+   * Whether to hide the dot controls.
    * @default false
    */
   hideDots?: boolean;
-  /**
-   * [Optional] props to supply to the dot buttons
-   */
+  /** Props to supply to the dot buttons */
   dotProps?: Omit<ButtonProps, "children">;
-  /**
-   * [Optional] props to supply to the left arrow button
-   */
+  /** Props to supply to the left arrow button */
   leftArrowProps?: ButtonProps;
-  /**
-   * [Optional] props to supply to the right arrow button
-   */
+  /** Props to supply to the right arrow button */
   rightArrowProps?: ButtonProps;
 };
 
@@ -77,6 +63,7 @@ const arrowVfx = {
   padding: "none",
 } as const;
 
+/** A carousel for paging through a list of slides */
 const Carousel = React.forwardRef<HTMLDivElement, Props>(
   (
     {

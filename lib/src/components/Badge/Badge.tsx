@@ -4,12 +4,11 @@ import classNames from "../../functions/classNames";
 import Box, { type BoxProps } from "../Box/Box";
 
 type Props = BoxProps & {
-  /**
-   * The type of badge to display.
-   */
+  /** The type of badge to display */
   type: ContentType;
 };
 
+/** A small label for status */
 const Badge = React.forwardRef<HTMLDivElement, Props>(
   ({ type, className, vfx, ...rest }, ref) => (
     <Box

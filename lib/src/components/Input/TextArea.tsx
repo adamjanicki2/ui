@@ -4,6 +4,7 @@ import ui from "../ui";
 
 type Props = React.ComponentProps<typeof ui.textarea>;
 
+/** A styled `textarea` component */
 const TextArea = forwardRef<HTMLTextAreaElement, Props>(
   ({ className, rows = 3, vfx, ...props }, ref) => (
     <ui.textarea

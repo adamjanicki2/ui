@@ -5,20 +5,15 @@ import Box, { type BoxProps } from "../Box/Box";
 import ui from "../ui";
 
 type IconInputProps = Omit<BoxProps, "children"> & {
-  /**
-   * [Optional] Icon to display at the start of the input
-   */
+  /** Icon to display at the start of the input */
   startIcon?: React.ReactNode;
-  /**
-   * [Optional] Icon to display at the end of the input
-   */
+  /** Icon to display at the end of the input */
   endIcon?: React.ReactNode;
-  /**
-   * [Optional] Props to pass directly to the input element
-   */
+  /** Props to pass directly to the input element */
   inputProps?: InputProps;
 };
 
+/** An input wrapper with optional icons */
 const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
   ({ startIcon, endIcon, className, vfx, inputProps, ...rest }, ref) => {
     const {

@@ -42,6 +42,12 @@ function serialize(params: SearchParams): string {
   return stringified ? `?${stringified}` : "";
 }
 
+/**
+ * Get and update URL search params.
+ *
+ * @returns Tuple of params and a setter.
+ * @example const [params, setSearchParams] = useSearchParams()
+ */
 export default function useSearchParams(): [SearchParams, SetSearchParams] {
   const router = useRouterContext("useSearchParams()");
   const { location, navigate } = router;

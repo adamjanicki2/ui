@@ -1,18 +1,27 @@
 import React from "react";
 import RouterContext from "./RouterContext";
 import { createHistory, getCurrentLocation, type History } from "./history";
-import type { Location, Navigate } from "../types/navigation";
+import type { Location, Navigate, NavigateOptions } from "../types/navigation";
 import { getHref, normalizeBasename } from "./href";
 
 export type Props = {
   /** Children to render inside the router provider */
   children: React.ReactNode;
-  /** Optional basename prefix for all internal navigation (e.g. "/app") */
+  /**
+   * Optional basename prefix for all internal navigation.
+   * @example "/app"
+   */
   basename?: string;
-  /** Whether to maintain current page scroll height on navigate */
+  /**
+   * Whether to maintain current page scroll height on navigate.
+   * @default false
+   */
   maintainScrollHeight?: boolean;
 };
 
+/**
+ * Router provider for navigation hooks and components.
+ */
 export default function Router({
   children,
   basename,
@@ -40,8 +49,13 @@ export default function Router({
     };
   }, [history]);
 
-  const navigate = React.useCallback<Navigate>(
-    (to, options) => {
+  const navigate: Navigate = React.useCallback(
+    (to: string | number, options?: NavigateOptions) => {
+      if (typeof to === "number") {
+        history.go(to);
+        return;
+      }
+
       const { url } = getHref(to, locationRef.current.pathname, basename);
       history.update(url, options?.historyMode);
 

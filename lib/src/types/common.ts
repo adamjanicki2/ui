@@ -1,10 +1,21 @@
 import type * as React from "react";
 
+/** Accepts both mutable and readonly arrays */
 export type ReadonlyableArray<T> = readonly T[] | T[];
+
+/** React children, single or many */
 export type Children = React.ReactNode | ReadonlyableArray<React.ReactNode>;
+
+/** Content type used for UI styling */
 export type ContentType = "success" | "warning" | "error" | "info" | "static";
+
+/** Inline CSS style */
 export type Style = React.CSSProperties;
+
+/** Size presets for full/fitted layouts */
 export type SizeDimension = "full" | "fit" | "min" | "max";
+
+/** Standard size tokens used for various `vfx` properties */
 export type SizeToken = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
 
 type SpacingSize = SizeToken | "none";
@@ -12,6 +23,14 @@ type AutoSize = SpacingSize | "auto";
 type Color = "default" | "muted" | "inherit" | "transparent";
 type Overflow = "hidden" | "scroll";
 
+/**
+ * Custom styling props that map to class names.
+ * This is meant for consistent, token-based styling instead of inline CSS.
+ * Keys are converted to class names and applied to the element.
+ *
+ * @example <ui.span vfx={{ axis: "y", gap: "m", padding: "m" }} />
+ * @example <Box vfx={{ radius: "rounded", shadow: "subtle", border: true }} />
+ */
 export type Vfx = {
   /** Element's positioning */
   pos?: "static" | "relative" | "absolute" | "fixed" | "sticky";
@@ -110,7 +129,7 @@ export type Vfx = {
   fontWeight?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   /** Text alignment */
   textAlign?: "center" | "left" | "right";
-  /** Use italics? */
+  /** Use italics */
   italics?: boolean;
 
   /** Color */

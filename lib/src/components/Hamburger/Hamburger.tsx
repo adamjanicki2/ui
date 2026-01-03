@@ -2,50 +2,42 @@ import { useMemo } from "react";
 import { UnstyledButton } from "../Button";
 import type { Style } from "../../types/common";
 
+/** Props shared by all the hamburgers */
 export type Props = {
   /**
-   * Size of the button in pixels
+   * Size of the button in pixels.
    * @default 36
    */
   size?: number;
-  /**
-   * Line height of the bars in pixels
-   */
+  /** Line height of the bars in pixels */
   lineHeight?: number;
   /**
-   * Direction the animation originates from;
-   * play around with this to see how it affects the animation because some of the animations are complicated
+   * Direction the animation originates from.
+   * Play around with this to see how it affects the animation because some of the animations are complicated.
    * @default "left"
    */
   direction?: "left" | "right";
-  /**
-   * Whether the button is open or closed
-   */
+  /** Whether the button is open or closed */
   open: boolean;
-  /**
-   * Function to call when the button is clicked, usually should toggle the `open` state
-   */
+  /** Function to call when the button is clicked, usually should toggle the `open` state */
   onClick?: () => void;
   /**
-   * Aria label for the button
+   * Aria label for the button.
    * @default "hamburger"
    */
   "aria-label"?: string;
   /**
-   * Duration of the animation in seconds
+   * Duration of the animation in seconds.
    * @default 0.25
    */
   duration?: number;
-  /**
-   * [Optional] additional class name to apply to the button
-   */
+  /** Additional class name to apply to the button */
   className?: string;
-  /**
-   * [Optional] additional styles to apply to the button
-   */
+  /** Additional styles to apply to the button */
   style?: Style;
   /**
-   * [Optional] round borders of the bars
+   * Round borders of the bars.
+   * @default false
    */
   rounded?: boolean;
 };
@@ -62,16 +54,19 @@ type InnerProps = Omit<Props, "variant" | "direction"> & {
   openStyle: OpenStyle;
 };
 
+/** Default angles for rotate-style hamburger animations */
 export const defaultAngles = {
   right: 45,
   left: -45,
 } as const;
 
+/** Alternate angles for flip-style hamburger animations */
 export const flipAngles = {
   right: -135,
   left: -225,
 } as const;
 
+/** Base hamburger button used by the exported hamburger variants */
 const Hamburger = (props: InnerProps) => {
   const {
     size = 36,

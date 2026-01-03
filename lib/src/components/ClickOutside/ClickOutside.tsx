@@ -16,16 +16,17 @@ type Props = {
   /**
    * The function to call when a click occurs outside the child element.
    *
-   * @param event - The mouse event object
+   * @param event The mouse event object.
    */
   onClickOutside: (event: MouseEvent) => void;
   /**
-   * The mouse event to trigger on
+   * The mouse event to trigger on.
    * @default "click"
    */
   mouseEvent?: keyof typeof mouseEvents;
 };
 
+/** Fire a callback when a click occurs outside the child target */
 const ClickOutside = ({
   children,
   onClickOutside,

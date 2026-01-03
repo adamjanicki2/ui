@@ -1,9 +1,9 @@
 type DeviceType = "mobile" | "desktop";
 
 /**
- * Best effort checks to determine the device being used
+ * Best effort checks to determine the device being used.
  *
- * @returns the type of device
+ * @returns The device type.
  */
 export default function getDeviceType(): DeviceType {
   if (!navigator) return "desktop";

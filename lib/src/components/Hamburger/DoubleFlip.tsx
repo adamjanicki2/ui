@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import Hamburger, { type Props, flipAngles } from "./Hamburger";
 
+/** A double-bar "flip" hamburger */
 const DoubleFlip = (props: Props) => {
   const { direction = "left", ...rest } = props;
 
