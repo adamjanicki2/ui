@@ -6,9 +6,8 @@ const selector =
 /**
  * A hook for trapping focus within an element.
  *
- * @param isActive Whether the trap is active.
- * @default true
- * @returns Ref Object that must be passed to the element that should be trapped.
+ * @param isActive Whether the trap is active, defaults to `true`.
+ * @returns Ref object that must be passed to the element that should be trapped.
  */
 const useFocusTrap = <T extends HTMLElement>(isActive = true) => {
   const trapRef = useRef<T | null>(null);

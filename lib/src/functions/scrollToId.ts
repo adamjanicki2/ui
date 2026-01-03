@@ -3,7 +3,6 @@
  *
  * @param id The id of the element to scroll to.
  * @param behavior Scroll behavior.
- * @returns Nothing.
  */
 export default function scrollToId(
   id: string,
