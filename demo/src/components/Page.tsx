@@ -1,6 +1,6 @@
 import type { Children } from "src/types";
 import Box, { type BoxProps } from "@adamjanicki/ui/components/Box/Box";
-import { ui } from "@adamjanicki/ui";
+import { ui, useScrollToHash } from "@adamjanicki/ui";
 import { useDocumentTitle } from "src/hooks";
 
 type Props = Omit<BoxProps, "children" | "title"> & {
@@ -10,6 +10,7 @@ type Props = Omit<BoxProps, "children" | "title"> & {
 
 export default function Page({ children, title, vfx, ...rest }: Props) {
   useDocumentTitle(title);
+  useScrollToHash();
 
   return (
     <Box
