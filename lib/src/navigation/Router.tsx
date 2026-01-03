@@ -14,6 +14,7 @@ export type Props = {
   basename?: string;
   /**
    * Whether to maintain current page scroll height on navigate.
+   * By default, when navigating to a different pathname, the page will reset to top.
    * @default false
    */
   maintainScrollHeight?: boolean;
@@ -34,9 +35,19 @@ export default function Router({
 
   const [location, setLocation] = React.useState<Location>(getCurrentLocation);
 
-  // to avoid infinite rerenders
   const locationRef = React.useRef<Location>(location);
+  const prevPathnameRef = React.useRef(location.pathname);
+  const prevScrollRestorationRef = React.useRef<ScrollRestoration | null>(null);
 
+  const cleanupScrollRestoration = React.useCallback(() => {
+    const prev = prevScrollRestorationRef.current;
+    if (prev) {
+      window.history.scrollRestoration = prev;
+      prevScrollRestorationRef.current = null;
+    }
+  }, []);
+
+  // effect for managing listeners
   React.useLayoutEffect(() => {
     const removeListener = history.addListener((nextLocation) => {
       locationRef.current = nextLocation;
@@ -49,21 +60,40 @@ export default function Router({
     };
   }, [history]);
 
+  // effect for scrolling to top
+  React.useLayoutEffect(() => {
+    const prevPathname = prevPathnameRef.current;
+    const nextPathname = location.pathname;
+
+    prevPathnameRef.current = nextPathname;
+
+    if (maintainScrollHeight) {
+      return cleanupScrollRestoration();
+    }
+
+    // ignore hash/query changes
+    if (prevPathname === nextPathname) return;
+
+    if (!prevScrollRestorationRef.current) {
+      prevScrollRestorationRef.current = window.history.scrollRestoration;
+    }
+    window.history.scrollRestoration = "manual";
+
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
+    return cleanupScrollRestoration;
+  }, [location.pathname, maintainScrollHeight, cleanupScrollRestoration]);
+
   const navigate: Navigate = React.useCallback(
     (to: string | number, options?: NavigateOptions) => {
       if (typeof to === "number") {
         history.go(to);
-        return;
-      }
-
-      const { url } = getHref(to, locationRef.current.pathname, basename);
-      history.update(url, options?.historyMode);
-
-      if (!maintainScrollHeight) {
-        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      } else {
+        const { url } = getHref(to, locationRef.current.pathname, basename);
+        history.update(url, options?.historyMode);
       }
     },
-    [history, basename, maintainScrollHeight]
+    [history, basename]
   );
 
   const contextValue = React.useMemo(
