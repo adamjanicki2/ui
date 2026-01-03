@@ -30,7 +30,10 @@ type ColumnConfig<
   header: React.ReactNode;
   /** Custom render function for the inner cell content */
   render?: (item: Item) => React.ReactNode;
-  /** Whether this column is sortable */
+  /**
+   * Whether this column is sortable
+   * @default false
+   */
   sortable?: boolean;
   /** Additional props for the body cell container */
   cellProps?: ContainerProps;
@@ -41,7 +44,10 @@ type Props<Item extends MinimalItem> = ContainerProps & {
   items: ReadonlyableArray<Item>;
   /** Columns to render for each data item */
   columns: ReadonlyableArray<ColumnConfig<Item>>;
-  /** Additional props for each header cell container */
+  /**
+   * Additional props for each header cell container
+   * @default {}
+   */
   headerCellProps?: ContainerProps;
   /** Options for controlled sorting of rows */
   sort?: {

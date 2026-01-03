@@ -35,7 +35,10 @@ export type Props = {
   className?: string;
   /** additional styles to apply to the button */
   style?: Style;
-  /** round borders of the bars */
+  /**
+   * round borders of the bars
+   * @default false
+   */
   rounded?: boolean;
 };
 

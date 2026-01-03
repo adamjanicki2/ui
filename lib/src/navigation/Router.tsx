@@ -9,7 +9,10 @@ export type Props = {
   children: React.ReactNode;
   /** Optional basename prefix for all internal navigation (eg "/app") */
   basename?: string;
-  /** Whether to maintain current page scroll height on navigate */
+  /**
+   * Whether to maintain current page scroll height on navigate
+   * @default false
+   */
   maintainScrollHeight?: boolean;
 };
 

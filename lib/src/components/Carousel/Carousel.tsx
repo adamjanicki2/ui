@@ -25,7 +25,7 @@ type Props = BoxProps & {
   duration?: number;
   /**
    * The interval at which autoplay runs (in seconds)
-   * @default false
+   * @example 5
    */
   autoplayInterval?: number;
   /**
