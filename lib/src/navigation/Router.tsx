@@ -1,7 +1,7 @@
 import React from "react";
 import RouterContext from "./RouterContext";
 import { createHistory, getCurrentLocation, type History } from "./history";
-import type { Location, Navigate } from "../types/navigation";
+import type { Location, Navigate, NavigateOptions } from "../types/navigation";
 import { getHref, normalizeBasename } from "./href";
 
 export type Props = {
@@ -40,8 +40,13 @@ export default function Router({
     };
   }, [history]);
 
-  const navigate = React.useCallback<Navigate>(
-    (to, options) => {
+  const navigate: Navigate = React.useCallback(
+    (to: string | number, options?: NavigateOptions) => {
+      if (typeof to === "number") {
+        history.go(to);
+        return;
+      }
+
       const { url } = getHref(to, locationRef.current.pathname, basename);
       history.update(url, options?.historyMode);
 

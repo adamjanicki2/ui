@@ -26,7 +26,10 @@ export type NavigateOptions = {
 /**
  * A function to handle page navigation
  */
-export type Navigate = (to: string, options?: NavigateOptions) => void;
+export type Navigate = {
+  (to: string, options?: NavigateOptions): void;
+  (historyOffset: number): void;
+};
 
 /**
  * Object containing params from the pathname

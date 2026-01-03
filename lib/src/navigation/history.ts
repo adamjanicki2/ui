@@ -38,6 +38,10 @@ export function createHistory() {
       notifyListeners();
     },
 
+    go(historyOffset: number) {
+      window.history.go(historyOffset);
+    },
+
     addListener(listener: LocationListener) {
       startListening();
       listeners.add(listener);

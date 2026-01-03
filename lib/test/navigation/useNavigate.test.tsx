@@ -16,6 +16,21 @@ function NavigateButton({ to, label }: Props) {
   );
 }
 
+function NavigateHistoryOffsetButton({
+  historyOffset,
+  label,
+}: {
+  historyOffset: number;
+  label: string;
+}) {
+  const navigate = useNavigate();
+  return (
+    <button data-testid={`go-${label}`} onClick={() => navigate(historyOffset)}>
+      Go {label}
+    </button>
+  );
+}
+
 function LocationView() {
   const location = useLocation();
 
@@ -155,5 +170,24 @@ describe("useNavigate", () => {
     expect(screen.getByTestId("pathname")).toHaveTextContent(
       "/app/base/relative"
     );
+  });
+
+  it("supports navigating backwards with a history offset", async () => {
+    const user = userEvent.setup();
+    const goSpy = jest.spyOn(window.history, "go");
+
+    render(
+      <Router>
+        <NavigateButton to="/a" label="a" />
+        <NavigateHistoryOffsetButton historyOffset={-1} label="back" />
+      </Router>
+    );
+
+    await user.click(screen.getByTestId("go-a"));
+    await user.click(screen.getByTestId("go-back"));
+
+    expect(goSpy).toHaveBeenCalledWith(-1);
+
+    goSpy.mockRestore();
   });
 });
