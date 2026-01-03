@@ -1,6 +1,10 @@
 import React from "react";
 import RouterContext from "./RouterContext";
-import { createHistory, getCurrentLocation, type History } from "./history";
+import {
+  createRouterHistory,
+  getCurrentLocation,
+  type RouterHistory,
+} from "./history";
 import type { Location, Navigate, NavigateOptions } from "../types/navigation";
 import { getHref, normalizeBasename } from "./href";
 
@@ -29,15 +33,17 @@ export default function Router({
   maintainScrollHeight,
 }: Props) {
   basename = normalizeBasename(basename ?? "");
-  const historyRef = React.useRef<History | null>(null);
-  if (!historyRef.current) historyRef.current = createHistory();
+  const historyRef = React.useRef<RouterHistory | null>(null);
+  if (!historyRef.current) historyRef.current = createRouterHistory();
   const history = historyRef.current;
 
   const [location, setLocation] = React.useState<Location>(getCurrentLocation);
 
   const locationRef = React.useRef<Location>(location);
   const prevPathnameRef = React.useRef(location.pathname);
-  const prevScrollRestorationRef = React.useRef<ScrollRestoration | null>(null);
+  const prevScrollRestorationRef = React.useRef<
+    History["scrollRestoration"] | null
+  >(null);
 
   const cleanupScrollRestoration = React.useCallback(() => {
     const prev = prevScrollRestorationRef.current;
@@ -68,18 +74,18 @@ export default function Router({
     prevPathnameRef.current = nextPathname;
 
     if (maintainScrollHeight) {
-      return cleanupScrollRestoration();
+      cleanupScrollRestoration();
+      return;
     }
 
-    // ignore hash/query changes
-    if (prevPathname === nextPathname) return;
-
-    if (!prevScrollRestorationRef.current) {
+    if (prevScrollRestorationRef.current) {
       prevScrollRestorationRef.current = window.history.scrollRestoration;
     }
     window.history.scrollRestoration = "manual";
 
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    if (prevPathname !== nextPathname) {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
 
     return cleanupScrollRestoration;
   }, [location.pathname, maintainScrollHeight, cleanupScrollRestoration]);
