@@ -11,17 +11,11 @@ type IconButtonProps = Omit<DefaultButtonProps, "children"> & {
    * @default "dim"
    */
   variant?: "dim" | "undim";
-  /**
-   * Which icon to render in the button
-   */
+  /** Which icon to render in the button */
   icon: IconProps["icon"];
-  /**
-   * The size of the icon
-   */
+  /** The size of the icon */
   size?: IconProps["size"];
-  /**
-   * Other props to pass to the icon element
-   */
+  /** Other props to pass to the icon element */
   iconProps?: Omit<IconProps, "icon" | "size">;
 };
 

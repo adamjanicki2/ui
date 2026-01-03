@@ -2,7 +2,7 @@ import React from "react";
 
 export type Props = {
   /**
-   * Path pattern to match against window.location.pathname (e.g. `"/movie/:id"`)
+   * Path pattern to match against window.location.pathname (eg `"/movie/:id"`)
    * Currently, only 2 types are supported:
    * 1. static: `/reviews/movies`
    * 2. dynamic (params): `/reviews/:media/:title/view`
@@ -13,9 +13,7 @@ export type Props = {
   element: React.ReactElement;
 };
 
-/**
- * A simple wrapper to be used by <Routes>
- */
+/** A simple wrapper to be used by <Routes> */
 export default function Route({}: Props) {
   return null;
 }

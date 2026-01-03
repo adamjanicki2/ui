@@ -4,14 +4,12 @@ import type { SizeToken } from "../../types/common";
 import ui from "../ui";
 import type { IconType } from "../../types/icon";
 
-/** Props for `Icon`. */
+/** Props for `Icon` */
 export type Props = Omit<
   React.ComponentProps<typeof ui.svg>,
   "children" | "viewBox"
 > & {
-  /**
-   * Icon type to render (import from `components/Icon/icons`)
-   */
+  /** Icon type to render (import from `components/Icon/icons`) */
   icon: IconType;
   /**
    * Size of the icon; will control both width and height

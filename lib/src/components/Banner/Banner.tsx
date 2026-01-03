@@ -4,13 +4,11 @@ import classNames from "../../functions/classNames";
 import Box, { type BoxProps } from "../Box/Box";
 
 type Props = BoxProps & {
-  /**
-   * The type of banner to display.
-   */
+  /** The type of banner to display */
   type: ContentType;
 };
 
-/** A full-width banner for page-level  */
+/** A full-width banner for page-level messages */
 const Banner = React.forwardRef<HTMLDivElement, Props>(
   ({ type, className, vfx, ...rest }, ref) => (
     <Box

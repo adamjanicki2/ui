@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 /**
- * A hook getting the current scroll position of the window.
- * @returns an object containing the current scroll position of the window.
+ * A hook getting the current scroll position of the window
+ * @returns an object containing the current scroll position of the window
  */
 const useScroll = (): { scrollX: number; scrollY: number } => {
   const [scroll, setScroll] = useState({

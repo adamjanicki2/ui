@@ -10,18 +10,16 @@ import RouterContext from "./RouterContext";
 import { getHref, type Href } from "./href";
 
 type LinkProps = Omit<React.ComponentProps<typeof ui.a>, "href"> & {
-  /**
-   * URL to navigate to
-   */
+  /** URL to navigate to */
   to: string;
   /**
-   * Whether to open the link in a new tab.
+   * Whether to open the link in a new tab
    * @default false
    */
   newTab?: boolean;
   /**
-   * The VFX or other organizational css to apply to this element.
-   * Properties are translated to class names before being applied.
+   * The VFX or other organizational css to apply to this element
+   * Properties are translated to class names before being applied
    */
   vfx?: Vfx;
 };
@@ -40,7 +38,7 @@ function routeInternally(event: React.MouseEvent<HTMLAnchorElement>) {
 
 /**
  * A basic, unstyled link that uses client-side navigation if used within a `<Router>`
- * If rendered outside a `<Router>`, this behaves like a normal `<a>`.
+ * If rendered outside a `<Router>`, this behaves like a normal `<a>`
  */
 export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
   ({ to, className, newTab, onClick, target, rel, ...rest }, ref) => {
@@ -87,7 +85,7 @@ export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
 
 /**
  * A styled link that uses client-side navigation if used within a `<Router>`
- * If rendered outside a `<Router>`, this behaves like a normal `<a>`.
+ * If rendered outside a `<Router>`, this behaves like a normal `<a>`
  */
 export const ButtonLink = React.forwardRef<
   HTMLAnchorElement,

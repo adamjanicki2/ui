@@ -1,23 +1,19 @@
 import { useEffect, useState } from "react";
 
 type Config = {
-  /**
-   * Callback for when the media query matches.
-   */
+  /** Callback for when the media query matches */
   onMatch?: () => void;
-  /**
-   * Callback for when the media query does not match.
-   */
+  /** Callback for when the media query does not match */
   onUnmatch?: () => void;
   /**
-   * The media query to watch for.
+   * The media query to watch for
    * @example "(max-width: 768px)"
    */
   query: string;
 };
 
 /**
- * A hook for watching media queries.
+ * A hook for watching media queries
  *
  * @param config the configuration for the hook
  * @returns true if the media query matches, false otherwise

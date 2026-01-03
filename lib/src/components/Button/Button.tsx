@@ -4,7 +4,7 @@ import ui from "../ui";
 
 type DefaultButtonProps = React.ComponentProps<typeof ui.button>;
 
-/** Visual styling options for `Button` and `ButtonLink`. */
+/** Visual styling options for `Button` and `ButtonLink` */
 export type VisualButtonProps = {
   /**
    * Type of button
@@ -12,7 +12,7 @@ export type VisualButtonProps = {
    */
   variant?: "primary" | "secondary";
   /**
-   * [Optional] Size of the button, if wishing to make smaller
+   * Size of the button, if wishing to make smaller
    * @default "regular"
    */
   size?: "regular" | "small";

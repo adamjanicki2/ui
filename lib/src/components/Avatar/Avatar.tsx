@@ -10,9 +10,7 @@ type Props = Omit<BoxProps, "children"> & {
    * @default "s"
    */
   size?: SizeToken | number;
-  /**
-   * Image to be used in the background
-   */
+  /** Image to be used in the background */
   backgroundImage?: string;
   /**
    * Username to render the first char of,

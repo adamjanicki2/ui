@@ -8,9 +8,7 @@ import { select } from "../../icons";
 
 type SelectProps = React.ComponentProps<typeof ui.select>;
 type Props = Omit<BoxProps, "children" | "onChange"> & {
-  /**
-   * Array of options to display in the select
-   */
+  /** Array of options to display in the select */
   options: ReadonlyableArray<string>;
   /**
    * Mapper function to get the label of the option
@@ -19,17 +17,11 @@ type Props = Omit<BoxProps, "children" | "onChange"> & {
    * @returns the label of the option
    */
   getOptionLabel?: (option: string) => string;
-  /**
-   * Current value of the select
-   */
+  /** Current value of the select */
   value?: SelectProps["value"];
-  /**
-   * Change handler for the select
-   */
+  /** Change handler for the select */
   onChange?: SelectProps["onChange"];
-  /**
-   * Props to pass to the underlying select element
-   */
+  /** Props to pass to the underlying select element */
   selectProps?: Omit<SelectProps, "value" | "onChange">;
 };
 

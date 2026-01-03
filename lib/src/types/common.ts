@@ -25,7 +25,11 @@ type Overflow = "hidden" | "scroll";
 
 /**
  * Custom styling props that map to class names
- * Used by `ui.*` elements and many components for layout + styling.
+ *
+ * This is meant for consistent, token-based styling instead of inline CSS
+ *
+ * @example <ui.div vfx={{ axis: "y", gap: "m", padding: "m" }} />
+ * @example <Box vfx={{ radius: "rounded", shadow: "subtle", border: true }} />
  */
 export type Vfx = {
   /** Element's positioning */
@@ -125,7 +129,7 @@ export type Vfx = {
   fontWeight?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   /** Text alignment */
   textAlign?: "center" | "left" | "right";
-  /** Use italics? */
+  /** Use italics */
   italics?: boolean;
 
   /** Color */

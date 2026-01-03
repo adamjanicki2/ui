@@ -4,13 +4,11 @@ import classNames from "../../functions/classNames";
 import Box, { type BoxProps } from "../Box/Box";
 
 type Props = BoxProps & {
-  /**
-   * The type of alert to display.
-   */
+  /** The type of alert to display */
   type: ContentType;
 };
 
-/** A styled container for status messages. */
+/** A styled container for status messages */
 const Alert = React.forwardRef<HTMLDivElement, Props>(
   ({ type, vfx, className, ...rest }, ref) => (
     <Box

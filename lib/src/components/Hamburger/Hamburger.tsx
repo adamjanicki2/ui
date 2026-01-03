@@ -9,9 +9,7 @@ export type Props = {
    * @default 36
    */
   size?: number;
-  /**
-   * Line height of the bars in pixels
-   */
+  /** Line height of the bars in pixels */
   lineHeight?: number;
   /**
    * Direction the animation originates from;
@@ -19,13 +17,9 @@ export type Props = {
    * @default "left"
    */
   direction?: "left" | "right";
-  /**
-   * Whether the button is open or closed
-   */
+  /** Whether the button is open or closed */
   open: boolean;
-  /**
-   * Function to call when the button is clicked, usually should toggle the `open` state
-   */
+  /** Function to call when the button is clicked, usually should toggle the `open` state */
   onClick?: () => void;
   /**
    * Aria label for the button
@@ -37,17 +31,11 @@ export type Props = {
    * @default 0.25
    */
   duration?: number;
-  /**
-   * [Optional] additional class name to apply to the button
-   */
+  /** additional class name to apply to the button */
   className?: string;
-  /**
-   * [Optional] additional styles to apply to the button
-   */
+  /** additional styles to apply to the button */
   style?: Style;
-  /**
-   * [Optional] round borders of the bars
-   */
+  /** round borders of the bars */
   rounded?: boolean;
 };
 
@@ -63,19 +51,19 @@ type InnerProps = Omit<Props, "variant" | "direction"> & {
   openStyle: OpenStyle;
 };
 
-/** Default angles for rotate-style hamburger animations. */
+/** Default angles for rotate-style hamburger animations */
 export const defaultAngles = {
   right: 45,
   left: -45,
 } as const;
 
-/** Alternate angles for flip-style hamburger animations. */
+/** Alternate angles for flip-style hamburger animations */
 export const flipAngles = {
   right: -135,
   left: -225,
 } as const;
 
-/** Base hamburger button used by the exported hamburger variants. */
+/** Base hamburger button used by the exported hamburger variants */
 const Hamburger = (props: InnerProps) => {
   const {
     size = 36,

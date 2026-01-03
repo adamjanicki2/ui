@@ -7,8 +7,8 @@ type Tag = keyof React.JSX.IntrinsicElements;
 
 type Props<T extends Tag> = React.ComponentPropsWithoutRef<T> & {
   /**
-   * The VFX or other organizational css to apply to this element.
-   * Properties are translated to class names before being applied.
+   * The VFX or other organizational css to apply to this element
+   * Properties are translated to class names before being applied
    */
   vfx?: Vfx;
 };
@@ -31,8 +31,15 @@ type UI = {
 };
 
 /**
- * Collection of builtin DOM elements that support custom styling transformations via the `vfx` prop
- * @example <ui.span vfx={{ padding: "m", axis: "y" }} />
+ * Collection of builtin DOM elements that support the `vfx` prop
+ *
+ * `vfx` is transformed into class names and merged with the `className` property if provided
+ *
+ * Each element forwards refs and accepts the normal props for that intrinsic element
+ *
+ * @example <ui.div vfx={{ padding: "m", axis: "y", gap: "s" }} />
+ * @example <ui.button vfx={{ radius: "rounded", fontWeight: 6 }} />
+ * @example const Card = ui.section
  */
 const ui = new Proxy(
   {},

@@ -1,20 +1,16 @@
-/**
- * Location object of the current URL.
- */
+/** Location object of the current URL */
 export type Location = {
-  /** URL pathname (e.g. "/movies/123") */
+  /** URL pathname (eg "/movies/123") */
   pathname: string;
-  /** URL search (e.g. "?q=inception") */
+  /** URL search (eg "?q=inception") */
   search: string;
-  /** URL hash (e.g. "#home") */
+  /** URL hash (eg "#home") */
   hash: string;
 };
 
 export type HistoryMode = "push" | "replace";
 
-/**
- * Additional params to feed the navigate() function
- */
+/** Additional params to feed the navigate() function */
 export type NavigateOptions = {
   /**
    * Whether to append a new entry or overwrite the current browser url in history
@@ -23,19 +19,24 @@ export type NavigateOptions = {
   historyMode?: HistoryMode;
 };
 
-/**
- * A function to handle page navigation either to a destination URL or relative to browser history
- */
+/** A function to handle page navigation either to a destination URL or relative to browser history */
 export type Navigate = {
-  /** Navigate to a URL, e.g. `navigate("/settings", { historyMode: "replace" })` */
+  /**
+   * Navigate to a URL
+   * @example navigate("/settings", { historyMode: "replace" })
+   */
   (to: string, options?: NavigateOptions): void;
-  /** Navigate forward or backwards through history, e.g. `navigate(-1)` to go back */
+  /**
+   * Navigate relative to the browser history stack
+   * Positive values go forward, negative values go backward
+   * @example navigate(-1)
+   */
   (historyOffset: number): void;
 };
 
 /**
  * Object containing params from the pathname
- * e.g. `{id: "1"}` for `/movie/:id <=> /movie/1`
+ * eg `{id: "1"}` for `/movie/:id <=> /movie/1`
  */
 export type PathParams = {
   [key: string]: string | undefined;
@@ -43,7 +44,7 @@ export type PathParams = {
 
 /**
  * Object containing params from the search string
- * e.g. `{id: "1", movies: ["inception", "alien"]}` for `"?id=1&movies=inception&movies=alien"`
+ * eg `{id: "1", movies: ["inception", "alien"]}` for `"?id=1&movies=inception&movies=alien"`
  */
 export type SearchParams = {
   [key: string]: string | string[] | undefined;

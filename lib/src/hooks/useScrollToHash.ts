@@ -7,19 +7,13 @@ type UseScrollToHashConfig = {
    * @default true
    */
   active?: boolean;
-  /**
-   * The scroll behavior to use
-   */
+  /** The scroll behavior to use */
   behavior?: ScrollBehavior;
-  /**
-   * Delay in ms to set using setTimeout
-   */
+  /** Delay in ms to set using setTimeout */
   delay?: number;
 };
 
-/**
- * A hook for scrolling to a hash on the page.
- */
+/** A hook for scrolling to a hash on the page */
 const useScrollToHash = (config: UseScrollToHashConfig = {}) => {
   const { active = true, behavior, delay } = config;
   useEffect(() => {

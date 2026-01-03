@@ -7,7 +7,7 @@ import { getHref, normalizeBasename } from "./href";
 export type Props = {
   /** Children to render inside the router provider */
   children: React.ReactNode;
-  /** Optional basename prefix for all internal navigation (e.g. "/app") */
+  /** Optional basename prefix for all internal navigation (eg "/app") */
   basename?: string;
   /** Whether to maintain current page scroll height on navigate */
   maintainScrollHeight?: boolean;

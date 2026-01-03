@@ -4,24 +4,18 @@ import type { ReadonlyableArray, Style, Vfx } from "../../types/common";
 import Box, { type BoxProps } from "../Box/Box";
 
 type AnimationState = {
-  /**
-   * Class to apply to the component when at this state
-   */
+  /** Class to apply to the component when at this state */
   className?: string;
-  /**
-   * Inline styles to apply to the component at this state
-   */
+  /** Inline styles to apply to the component at this state */
   style?: Style;
-  /**
-   * The VFX or other organizational css to apply at this state
-   */
+  /** The VFX or other organizational css to apply at this state */
   vfx?: Vfx;
 };
 
 type Props = BoxProps & {
   /**
-   * Whether to begin the animation and render the component.
-   * Set to true to start animation, false to start the exit animation.
+   * Whether to begin the animation and render the component
+   * Set to true to start animation, false to start the exit animation
    */
   visible: boolean;
   /**
@@ -31,13 +25,9 @@ type Props = BoxProps & {
   duration?:
     | number
     | {
-        /**
-         * Length of the forward direction
-         */
+        /** Length of the forward direction */
         forward: number;
-        /**
-         * Length of the reverse direction
-         */
+        /** Length of the reverse direction */
         reverse: number;
       };
   /**
@@ -45,13 +35,9 @@ type Props = BoxProps & {
    * @default false
    */
   keepMounted?: boolean;
-  /**
-   * Animation css for the start state
-   */
+  /** Animation css for the start state */
   animateTo?: AnimationState;
-  /**
-   * animation css for the end state
-   */
+  /** animation css for the end state */
   animateFrom?: AnimationState;
   /**
    * The properties to apply a transition

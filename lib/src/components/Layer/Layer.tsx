@@ -5,22 +5,20 @@ import Box, { type BoxProps } from "../Box/Box";
 import useMergeRefs from "../../hooks/useMergeRefs";
 
 type Props = Omit<BoxProps, "children"> & {
-  /**
-   * Callback that fires when the user clicks outside the layer
-   */
+  /** Callback that fires when the user clicks outside the layer */
   onClose?: () => void;
   /**
-   * The child of the layer.
+   * The child of the layer
    * IMPORTANT: the child must be able to accept a ref
    */
   children: React.ReactElement<any>;
   /**
-   * [Optional] Whether to return focus to the element that triggered the layer
+   * Whether to return focus to the element that triggered the layer
    * @default false
    */
   returnFocusOnEscape?: boolean;
   /**
-   * [Optional] disable the scroll lock behavior of the layer
+   * Disable the scroll lock behavior of the layer
    * @default false
    */
   disableScrollLock?: boolean;

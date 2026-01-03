@@ -43,9 +43,7 @@ type Props<Item extends MinimalItem> = ContainerProps & {
   columns: ReadonlyableArray<ColumnConfig<Item>>;
   /** Additional props for each header cell container */
   headerCellProps?: ContainerProps;
-  /**
-   * Options for controlled sorting of rows
-   */
+  /** Options for controlled sorting of rows */
   sort?: {
     /** The key of the sorted column, or undefined if none */
     key: keyof Item | undefined;

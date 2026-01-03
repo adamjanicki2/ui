@@ -7,13 +7,9 @@ import type { ReadonlyableArray } from "../../types/common";
 import { chevronDown, chevronRight } from "../../icons";
 
 type Props = Omit<BoxProps, "children"> & {
-  /**
-   * Drawers to render as accordion sections
-   */
+  /** Drawers to render as accordion sections */
   drawers: ReadonlyableArray<Drawer>;
-  /**
-   * Duration of the drawer animation (in seconds)
-   */
+  /** Duration of the drawer animation (in seconds) */
   duration?: number;
   /**
    * Whether to hide the dividers between drawers
@@ -22,7 +18,7 @@ type Props = Omit<BoxProps, "children"> & {
   hideDividers?: boolean;
 };
 
-/** A vertical list of collapsible drawers. */
+/** A vertical list of collapsible drawers */
 const Accordion = React.forwardRef<HTMLDivElement, Props>(
   ({ drawers, duration, hideDividers, vfx, ...rest }, ref) => (
     <Box
@@ -51,21 +47,13 @@ const Accordion = React.forwardRef<HTMLDivElement, Props>(
 );
 
 type Drawer = {
-  /**
-   * Label for the accordion drawer
-   */
+  /** Label for the accordion drawer */
   label: string;
-  /**
-   * Content hidden within this accordion drawer
-   */
+  /** Content hidden within this accordion drawer */
   content: React.ReactNode;
-  /**
-   * Whether the drawer is open
-   */
+  /** Whether the drawer is open */
   open: boolean;
-  /**
-   * Callback that fires when the open state changes for this drawer
-   */
+  /** Callback that fires when the open state changes for this drawer */
   onOpenChange: (open: boolean) => void;
 };
 

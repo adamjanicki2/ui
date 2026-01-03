@@ -4,7 +4,7 @@ const selector =
   'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
 
 /**
- * A hook for trapping focus within an element.
+ * A hook for trapping focus within an element
  *
  * @param isActive true if the element is active, false otherwise
  * `true` by default
