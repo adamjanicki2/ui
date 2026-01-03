@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import Heading from "src/components/Heading";
 import Para from "src/components/Para";
 import {
   accordionSnippet,

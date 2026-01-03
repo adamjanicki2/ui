@@ -1,4 +1,3 @@
-import Heading from "src/components/Heading";
 import Para from "src/components/Para";
 import { alertSnippet, badgeSnippet, bannerSnippet } from "src/codeSnippets";
 import { Alert, Badge, Banner, ui } from "@adamjanicki/ui";
