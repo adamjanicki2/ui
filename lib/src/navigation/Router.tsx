@@ -47,7 +47,7 @@ export default function Router({
 
   const cleanupScrollRestoration = React.useCallback(() => {
     const prev = prevScrollRestorationRef.current;
-    if (prev) {
+    if (prev !== null) {
       window.history.scrollRestoration = prev;
       prevScrollRestorationRef.current = null;
     }
@@ -78,7 +78,7 @@ export default function Router({
       return;
     }
 
-    if (prevScrollRestorationRef.current) {
+    if (prevScrollRestorationRef.current === null) {
       prevScrollRestorationRef.current = window.history.scrollRestoration;
     }
     window.history.scrollRestoration = "manual";

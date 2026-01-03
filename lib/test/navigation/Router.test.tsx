@@ -3,7 +3,7 @@ import { render, screen, act, waitFor } from "@testing-library/react";
 import { Router, useLocation, useNavigate } from "../../src";
 import type { NavigateOptions } from "../../src/types/navigation";
 
-function LocationRenderer() {
+function LocationView() {
   const location = useLocation();
   return (
     <div>
@@ -14,13 +14,7 @@ function LocationRenderer() {
   );
 }
 
-function NavigateOnMount({
-  to,
-  options,
-}: {
-  to: string;
-  options?: NavigateOptions;
-}) {
+function Redirect({ to, options }: { to: string; options?: NavigateOptions }) {
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -36,6 +30,7 @@ describe("Router", () => {
     (
       window.scrollTo as jest.MockedFunction<typeof window.scrollTo>
     ).mockClear?.();
+    window.history.scrollRestoration = "auto";
   });
 
   it("renders children", () => {
@@ -52,7 +47,7 @@ describe("Router", () => {
 
     render(
       <Router>
-        <LocationRenderer />
+        <LocationView />
       </Router>
     );
 
@@ -64,7 +59,7 @@ describe("Router", () => {
   it("responds to browser popstate events by updating location", () => {
     render(
       <Router>
-        <LocationRenderer />
+        <LocationView />
       </Router>
     );
 
@@ -78,6 +73,83 @@ describe("Router", () => {
     expect(screen.getByTestId("pathname")).toHaveTextContent("/next");
     expect(screen.getByTestId("search")).toHaveTextContent("?query=1");
     expect(screen.getByTestId("hash")).toHaveTextContent("#hash");
+    expect(window.scrollTo).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not scroll to top when only search and hash change", () => {
+    render(
+      <Router>
+        <LocationView />
+      </Router>
+    );
+
+    act(() => {
+      window.history.replaceState(null, "", "/?query=1#hash");
+      window.dispatchEvent(new PopStateEvent("popstate"));
+    });
+
+    expect(screen.getByTestId("pathname")).toHaveTextContent("/");
+    expect(screen.getByTestId("search")).toHaveTextContent("?query=1");
+    expect(screen.getByTestId("hash")).toHaveTextContent("#hash");
+    expect(window.scrollTo).not.toHaveBeenCalled();
+  });
+
+  it("sets scrollRestoration to manual on mount and restores it on unmount", async () => {
+    const { unmount } = render(
+      <Router>
+        <LocationView />
+      </Router>
+    );
+
+    expect(window.history.scrollRestoration).toBe("manual");
+
+    act(() => unmount());
+
+    await waitFor(() => {
+      expect(window.history.scrollRestoration).toBe("auto");
+    });
+  });
+
+  it("restores scrollRestoration when maintainScrollHeight toggles to true", async () => {
+    function Wrapper() {
+      const [maintain, setMaintain] = React.useState(false);
+      return (
+        <>
+          <button type="button" onClick={() => setMaintain(true)}>
+            Toggle
+          </button>
+          <Router maintainScrollHeight={maintain}>
+            <LocationView />
+          </Router>
+        </>
+      );
+    }
+
+    render(<Wrapper />);
+
+    expect(window.history.scrollRestoration).toBe("manual");
+
+    act(() => {
+      screen.getByRole("button", { name: "Toggle" }).click();
+    });
+
+    await waitFor(() => {
+      expect(window.history.scrollRestoration).toBe("auto");
+    });
+  });
+
+  it("does not touch scrollRestoration when maintainScrollHeight is true", () => {
+    const { unmount } = render(
+      <Router maintainScrollHeight>
+        <LocationView />
+      </Router>
+    );
+
+    expect(window.history.scrollRestoration).toBe("auto");
+
+    act(() => unmount());
+
+    expect(window.history.scrollRestoration).toBe("auto");
   });
 
   it("provides a stable navigation function", () => {
@@ -92,7 +164,7 @@ describe("Router", () => {
     render(
       <Router>
         <CaptureNavigateIdentity />
-        <LocationRenderer />
+        <LocationView />
       </Router>
     );
 
@@ -141,8 +213,8 @@ describe("Router", () => {
 
     render(
       <Router basename="/app">
-        <LocationRenderer />
-        <NavigateOnMount to="/a" />
+        <LocationView />
+        <Redirect to="/a" />
       </Router>
     );
 
@@ -160,8 +232,8 @@ describe("Router", () => {
 
     render(
       <Router>
-        <LocationRenderer />
-        <NavigateOnMount to="/replaced" options={{ historyMode: "replace" }} />
+        <LocationView />
+        <Redirect to="/replaced" options={{ historyMode: "replace" }} />
       </Router>
     );
 
@@ -184,8 +256,8 @@ describe("Router", () => {
 
     render(
       <Router basename="/app/" maintainScrollHeight>
-        <LocationRenderer />
-        <NavigateOnMount to="relative" />
+        <LocationView />
+        <Redirect to="relative" />
       </Router>
     );
 
