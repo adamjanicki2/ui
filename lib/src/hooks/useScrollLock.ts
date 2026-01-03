@@ -35,9 +35,8 @@ const lockScroll = () => {
 };
 
 /**
- * Hook to lock and unlock the scroll position on enable change or mount/unmount
- * @param enable whether to lock the scroll position, defaults to `true`
- * @default true
+ * Hook to lock and unlock the scroll position on enable change or mount/unmount.
+ * @param enable Whether to lock the scroll position, defaults to `true`.
  */
 const useScrollLock = (enable = true) => {
   useEffect(() => {

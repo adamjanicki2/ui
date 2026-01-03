@@ -6,15 +6,15 @@ import { classNames } from "../../functions";
 
 type Props = Omit<BoxProps, "children"> & {
   /**
-   * Size of the avatar
+   * Size of the avatar.
    * @default "s"
    */
   size?: SizeToken | number;
   /** Image to be used in the background */
   backgroundImage?: string;
   /**
-   * Username to render the first char of,
-   * or as a fallback if there's a 404 getting the backgroundImage url
+   * Username to render the first char of,.
+   * Or as a fallback if there's a 404 getting the backgroundImage URL.
    */
   username: string;
 };

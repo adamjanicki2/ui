@@ -7,7 +7,7 @@ type DefaultButtonProps = React.ComponentProps<typeof UnstyledButton>;
 
 type IconButtonProps = Omit<DefaultButtonProps, "children"> & {
   /**
-   * The hover effect to play when the user hovers over the button
+   * The hover effect to play when the user hovers over the button.
    * @default "dim"
    */
   variant?: "dim" | "undim";

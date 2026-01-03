@@ -8,18 +8,18 @@ type AnimationState = {
   className?: string;
   /** Inline styles to apply to the component at this state */
   style?: Style;
-  /** The VFX or other organizational css to apply at this state */
+  /** The VFX or other organizational CSS to apply at this state */
   vfx?: Vfx;
 };
 
 type Props = BoxProps & {
   /**
-   * Whether to begin the animation and render the component
-   * Set to true to start animation, false to start the exit animation
+   * Whether to begin the animation and render the component.
+   * Set to true to start animation, false to start the exit animation.
    */
   visible: boolean;
   /**
-   * Duration of the animation in seconds
+   * Duration of the animation in seconds.
    * @default 0.25
    */
   duration?:
@@ -31,16 +31,16 @@ type Props = BoxProps & {
         reverse: number;
       };
   /**
-   * Whether to keep the component mounted when it is not animated
+   * Whether to keep the component mounted when it is not animated.
    * @default false
    */
   keepMounted?: boolean;
-  /** Animation css for the start state */
+  /** Animation CSS for the start state */
   animateTo?: AnimationState;
-  /** animation css for the end state */
+  /** Animation CSS for the end state */
   animateFrom?: AnimationState;
   /**
-   * The properties to apply a transition
+   * The properties to apply a transition.
    * @default ['all']
    */
   transitionProperties?: ReadonlyableArray<string>;

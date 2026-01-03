@@ -3,7 +3,7 @@ import scrollToId from "../functions/scrollToId";
 
 type UseScrollToHashConfig = {
   /**
-   * Whether or not to scroll to the hash
+   * Whether or not to scroll to the hash.
    * @default true
    */
   active?: boolean;
@@ -13,7 +13,11 @@ type UseScrollToHashConfig = {
   delay?: number;
 };
 
-/** A hook for scrolling to a hash on the page */
+/**
+ * A hook for scrolling to a hash on the page.
+ *
+ * @param config Hook configuration.
+ */
 const useScrollToHash = (config: UseScrollToHashConfig = {}) => {
   const { active = true, behavior, delay } = config;
   useEffect(() => {

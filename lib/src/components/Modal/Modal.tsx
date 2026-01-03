@@ -14,12 +14,12 @@ type Props = BoxProps & {
   /** Callback that fires when the user clicks the Ok button in the modal */
   onConfirm: () => void;
   /**
-   * Label rendered in the ok/confirm button
+   * Label rendered in the ok/confirm button.
    * @default "Ok"
    */
   confirmLabel?: React.ReactNode;
   /**
-   * Label rendered in the cancel button
+   * Label rendered in the cancel button.
    * @default "Cancel"
    */
   cancelLabel?: React.ReactNode;
@@ -32,7 +32,7 @@ type Props = BoxProps & {
   /** Callback that fires when the user closes the modal */
   onClose: () => void;
   /**
-   * Whether to return focus to the element that triggered the modal
+   * Whether to return focus to the element that triggered the modal.
    * @default false
    */
   returnFocusOnEscape?: boolean;

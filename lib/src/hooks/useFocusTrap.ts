@@ -4,11 +4,11 @@ const selector =
   'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
 
 /**
- * A hook for trapping focus within an element
+ * A hook for trapping focus within an element.
  *
- * @param isActive true if the element is active, false otherwise
+ * @param isActive Whether the trap is active.
  * @default true
- * @returns ref object that must be passed to the element that should be trapped
+ * @returns Ref Object that must be passed to the element that should be trapped.
  */
 const useFocusTrap = <T extends HTMLElement>(isActive = true) => {
   const trapRef = useRef<T | null>(null);

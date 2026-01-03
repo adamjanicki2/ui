@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
 /**
- * A hook that listens for window resize events
+ * A hook that listens for window resize events.
  *
- * @param callback the callback function fired when the window is resized
+ * @param callback The callback function fired when the window is resized.
  */
 const useWindowResize = (callback: (event?: UIEvent) => void) => {
   useEffect(() => {

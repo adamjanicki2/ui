@@ -24,11 +24,11 @@ type Color = "default" | "muted" | "inherit" | "transparent";
 type Overflow = "hidden" | "scroll";
 
 /**
- * Custom styling props that map to class names
+ * Custom styling props that map to class names.
+ * This is meant for consistent, token-based styling instead of inline CSS.
+ * Keys are converted to class names and applied to the element.
  *
- * This is meant for consistent, token-based styling instead of inline CSS
- *
- * @example <ui.div vfx={{ axis: "y", gap: "m", padding: "m" }} />
+ * @example <ui.span vfx={{ axis: "y", gap: "m", padding: "m" }} />
  * @example <Box vfx={{ radius: "rounded", shadow: "subtle", border: true }} />
  */
 export type Vfx = {

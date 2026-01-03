@@ -5,15 +5,15 @@ import type { Style } from "../../types/common";
 /** Props shared by all the hamburgers */
 export type Props = {
   /**
-   * Size of the button in pixels
+   * Size of the button in pixels.
    * @default 36
    */
   size?: number;
   /** Line height of the bars in pixels */
   lineHeight?: number;
   /**
-   * Direction the animation originates from;
-   * play around with this to see how it affects the animation because some of the animations are complicated
+   * Direction the animation originates from.
+   * Play around with this to see how it affects the animation because some of the animations are complicated.
    * @default "left"
    */
   direction?: "left" | "right";
@@ -22,21 +22,21 @@ export type Props = {
   /** Function to call when the button is clicked, usually should toggle the `open` state */
   onClick?: () => void;
   /**
-   * Aria label for the button
+   * Aria label for the button.
    * @default "hamburger"
    */
   "aria-label"?: string;
   /**
-   * Duration of the animation in seconds
+   * Duration of the animation in seconds.
    * @default 0.25
    */
   duration?: number;
-  /** additional class name to apply to the button */
+  /** Additional class name to apply to the button */
   className?: string;
-  /** additional styles to apply to the button */
+  /** Additional styles to apply to the button */
   style?: Style;
   /**
-   * round borders of the bars
+   * Round borders of the bars.
    * @default false
    */
   rounded?: boolean;

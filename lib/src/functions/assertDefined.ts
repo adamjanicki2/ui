@@ -1,9 +1,9 @@
 /**
- * Assert a value is defined
+ * Assert a value is defined.
  *
- * @param value the value to assert presence of
- * @param message optional error message
- * @returns the present value
+ * @param value The value to assert presence of.
+ * @param message Optional error message.
+ * @returns The present value.
  */
 export default function assertDefined<T>(
   value: T | undefined,

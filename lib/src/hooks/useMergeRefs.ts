@@ -2,10 +2,10 @@ import React, { useCallback } from "react";
 import type { ReadonlyableArray } from "../types/common";
 
 /**
- * Simple hook that merges N refs into one callback
+ * Simple hook that merges N refs into one callback.
  *
- * @param refs all the refs you want to merge
- * @returns one combined ref
+ * @param refs All the refs you want to merge.
+ * @returns one Combined ref.
  */
 const useMergeRefs = <T>(
   ...refs: ReadonlyableArray<React.Ref<T> | null | undefined>

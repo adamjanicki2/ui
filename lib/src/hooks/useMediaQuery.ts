@@ -6,17 +6,17 @@ type Config = {
   /** Callback for when the media query does not match */
   onUnmatch?: () => void;
   /**
-   * The media query to watch for
+   * The media query to watch for.
    * @example "(max-width: 768px)"
    */
   query: string;
 };
 
 /**
- * A hook for watching media queries
+ * A hook for watching media queries.
  *
- * @param config the configuration for the hook
- * @returns true if the media query matches, false otherwise
+ * @param config The configuration for the hook.
+ * @returns true If the media query matches, false otherwise.
  */
 const useMediaQuery = (config: Config): boolean => {
   const { onMatch, onUnmatch, query } = config;

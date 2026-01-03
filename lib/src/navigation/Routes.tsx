@@ -8,8 +8,8 @@ import { stripBasename } from "./href";
 
 export type Props = {
   /**
-   * Child <Route> elements to switch between
-   * Note: non <Route> children will be silently ignored
+   * Child <Route> elements to switch between.
+   * Note: non <Route> children will be silently ignored.
    */
   children: Children;
   /** What to render when no routes match, like a 404 page */
@@ -23,8 +23,8 @@ function findRouteElements(children: ReadonlyableArray<React.ReactNode>) {
 }
 
 /**
- * Nested within a router component, this component handles rendering the proper route
- * Note: sticking any other components besides routes in here will not be rendered
+ * Nested within a router component, this component handles rendering the proper route.
+ * Note: sticking any other components besides routes in here will not be rendered.
  */
 export default function Routes({
   children: rawChildren,

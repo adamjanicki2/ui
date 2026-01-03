@@ -1,7 +1,9 @@
 /**
- * Scroll to the element with the given id
- * @param id the id of the element to scroll to
- * @param behavior behavior of the scroll
+ * Scroll to the element with the given id.
+ *
+ * @param id The id of the element to scroll to.
+ * @param behavior Scroll behavior.
+ * @returns Nothing.
  */
 export default function scrollToId(
   id: string,

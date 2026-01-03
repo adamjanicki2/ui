@@ -12,15 +12,15 @@ export type Props = Omit<
   /** Icon type to render (import from `components/Icon/icons`) */
   icon: IconType;
   /**
-   * Size of the icon; will control both width and height
+   * Size of the icon; will control both width and height.
    * @default "s"
    */
   size?: SizeToken;
 };
 
 /**
- * Render from a selected set of defined icon paths
- * Icons can be imported from `/icons`
+ * Render from a selected set of defined icon paths.
+ * Icons can be imported from `/icons`.
  */
 const Icon = React.forwardRef<SVGSVGElement, Props>(
   ({ icon, className, size = "s", ...rest }, ref) => (

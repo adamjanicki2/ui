@@ -8,17 +8,17 @@ type Props = Omit<BoxProps, "children"> & {
   /** Callback that fires when the user clicks outside the layer */
   onClose?: () => void;
   /**
-   * The child of the layer
-   * IMPORTANT: the child must be able to accept a ref
+   * The child of the layer.
+   * IMPORTANT: the child must be able to accept a ref.
    */
   children: React.ReactElement<any>;
   /**
-   * Whether to return focus to the element that triggered the layer
+   * Whether to return focus to the element that triggered the layer.
    * @default false
    */
   returnFocusOnEscape?: boolean;
   /**
-   * Disable the scroll lock behavior of the layer
+   * Disable the scroll lock behavior of the layer.
    * @default false
    */
   disableScrollLock?: boolean;

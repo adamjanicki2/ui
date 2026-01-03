@@ -11,10 +11,10 @@ type Props = Omit<BoxProps, "children" | "onChange"> & {
   /** Array of options to display in the select */
   options: ReadonlyableArray<string>;
   /**
-   * Mapper function to get the label of the option
+   * Mapper function to get the label of the option.
    *
-   * @param option the option to get the label of
-   * @returns the label of the option
+   * @param option The option to get the label of.
+   * @returns The label of the option.
    */
   getOptionLabel?: (option: string) => string;
   /** Current value of the select */

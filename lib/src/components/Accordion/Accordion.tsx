@@ -12,7 +12,7 @@ type Props = Omit<BoxProps, "children"> & {
   /** Duration of the drawer animation (in seconds) */
   duration?: number;
   /**
-   * Whether to hide the dividers between drawers
+   * Whether to hide the dividers between drawers.
    * @default false
    */
   hideDividers?: boolean;

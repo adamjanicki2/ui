@@ -31,7 +31,7 @@ type ColumnConfig<
   /** Custom render function for the inner cell content */
   render?: (item: Item) => React.ReactNode;
   /**
-   * Whether this column is sortable
+   * Whether this column is sortable.
    * @default false
    */
   sortable?: boolean;
@@ -45,7 +45,7 @@ type Props<Item extends MinimalItem> = ContainerProps & {
   /** Columns to render for each data item */
   columns: ReadonlyableArray<ColumnConfig<Item>>;
   /**
-   * Additional props for each header cell container
+   * Additional props for each header cell container.
    * @default {}
    */
   headerCellProps?: ContainerProps;
@@ -60,7 +60,7 @@ type Props<Item extends MinimalItem> = ContainerProps & {
   };
   /** A row can either be a link to somewhere */
   routeTo?: (item: Item) => RouteLinkProps;
-  /** Whether to render a small before between columns */
+  /** Whether to render a small separator between columns */
   gutters?: boolean;
 };
 
@@ -76,7 +76,7 @@ const directionToIcon = {
   none: select,
 } as const;
 
-/** A sortable, table to render data */
+/** A sortable table to render data */
 const Table = <Item extends MinimalItem>({
   items,
   columns,

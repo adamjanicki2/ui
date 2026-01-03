@@ -19,30 +19,30 @@ type Props = BoxProps & {
   /** The child elements/slides of the carousel */
   children: ReadonlyableArray<React.ReactNode>;
   /**
-   * How long the transition lasts (in seconds)
+   * How long the transition lasts (in seconds).
    * @default 1
    */
   duration?: number;
   /**
-   * The interval at which autoplay runs (in seconds)
+   * The interval at which autoplay runs (in seconds).
    * @example 5
    */
   autoplayInterval?: number;
   /**
-   * Whether to hide the arrow controls
+   * Whether to hide the arrow controls.
    * @default false
    */
   hideArrows?: boolean;
   /**
-   * Whether to hide the dot controls
+   * Whether to hide the dot controls.
    * @default false
    */
   hideDots?: boolean;
-  /** props to supply to the dot buttons */
+  /** Props to supply to the dot buttons */
   dotProps?: Omit<ButtonProps, "children">;
-  /** props to supply to the left arrow button */
+  /** Props to supply to the left arrow button */
   leftArrowProps?: ButtonProps;
-  /** props to supply to the right arrow button */
+  /** Props to supply to the right arrow button */
   rightArrowProps?: ButtonProps;
 };
 

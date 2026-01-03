@@ -90,7 +90,6 @@ const transformers: Record<keyof Vfx, Transformer> = {
   cursor: ({ cursor }) => `aui-cursor-${cursor}`,
 };
 
-// Main function
 export default function transformVfx(vfx: Vfx | undefined): string | null {
   if (!vfx) return null;
 
