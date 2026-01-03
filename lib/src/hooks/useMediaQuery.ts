@@ -7,7 +7,7 @@ type Config = {
   onUnmatch?: () => void;
   /**
    * The media query to watch for.
-   * @example "(max-width: 768px)"
+   * @example "(max-width: 820px)"
    */
   query: string;
 };
