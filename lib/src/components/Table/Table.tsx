@@ -17,6 +17,7 @@ type MinimalItem = {
 
 type ContainerProps = Omit<BoxProps, "children">;
 
+/** Options for data sort direction, used by `Table` */
 export type SortDirection = "none" | "asc" | "desc";
 
 type ColumnConfig<
@@ -71,6 +72,7 @@ const directionToIcon = {
   none: select,
 } as const;
 
+/** A sortable, table to render data */
 const Table = <Item extends MinimalItem>({
   items,
   columns,

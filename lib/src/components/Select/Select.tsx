@@ -33,6 +33,7 @@ type Props = Omit<BoxProps, "children" | "onChange"> & {
   selectProps?: Omit<SelectProps, "value" | "onChange">;
 };
 
+/** A styled `select` component */
 const Select = React.forwardRef<HTMLSelectElement, Props>(
   (
     {

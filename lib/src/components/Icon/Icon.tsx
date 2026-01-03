@@ -4,6 +4,7 @@ import type { SizeToken } from "../../types/common";
 import ui from "../ui";
 import type { IconType } from "../../types/icon";
 
+/** Props for `Icon`. */
 export type Props = Omit<
   React.ComponentProps<typeof ui.svg>,
   "children" | "viewBox"
@@ -19,6 +20,10 @@ export type Props = Omit<
   size?: SizeToken;
 };
 
+/**
+ * Render from a selected set of defined icon paths
+ * Icons can be imported from `/icons`
+ */
 const Icon = React.forwardRef<SVGSVGElement, Props>(
   ({ icon, className, size = "s", ...rest }, ref) => (
     <ui.svg

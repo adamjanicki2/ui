@@ -3,6 +3,7 @@ import ui from "../ui";
 
 type Props = Omit<React.ComponentProps<typeof ui.svg>, "children" | "viewBox">;
 
+/** Animated loading spinner */
 const Spinner = ({ className, ...props }: Props) => (
   // Designed on 2023-08-18
   <ui.svg

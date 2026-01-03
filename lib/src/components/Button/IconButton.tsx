@@ -25,6 +25,7 @@ type IconButtonProps = Omit<DefaultButtonProps, "children"> & {
   iconProps?: Omit<IconProps, "icon" | "size">;
 };
 
+/** A button that renders an `Icon` component */
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   (
     { icon, size, vfx, iconProps, variant = "dim", className, ...rest },

@@ -10,6 +10,7 @@ type Props = BoxProps & {
   type: ContentType;
 };
 
+/** A styled container for status messages. */
 const Alert = React.forwardRef<HTMLDivElement, Props>(
   ({ type, vfx, className, ...rest }, ref) => (
     <Box

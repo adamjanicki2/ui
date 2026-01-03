@@ -19,6 +19,7 @@ type IconInputProps = Omit<BoxProps, "children"> & {
   inputProps?: InputProps;
 };
 
+/** An input wrapper with optional icons */
 const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
   ({ startIcon, endIcon, className, vfx, inputProps, ...rest }, ref) => {
     const {

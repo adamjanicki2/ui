@@ -21,6 +21,7 @@ type Props = Omit<BoxProps, "children"> & {
   username: string;
 };
 
+/** An image or letter to represent a user/similar */
 const Avatar = React.forwardRef<HTMLDivElement, Props>(
   (
     { size = "s", backgroundImage, className, style, username, vfx, ...rest },

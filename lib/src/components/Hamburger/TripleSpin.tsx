@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import Hamburger, { type Props, defaultAngles } from "./Hamburger";
 
+/** A three-bar "spin" hamburger */
 const TripleSpin = (props: Props) => {
   const { direction = "left", ...rest } = props;
 

@@ -26,6 +26,7 @@ type Props = {
   mouseEvent?: keyof typeof mouseEvents;
 };
 
+/** Fire a callback when a click occurs outside the child target */
 const ClickOutside = ({
   children,
   onClickOutside,

@@ -52,6 +52,7 @@ type Props = BoxProps & {
   wrapperBoxProps?: Omit<BoxProps, "children">;
 };
 
+/** Confirmation modal with cancel/confirm actions */
 const Modal = React.forwardRef<HTMLDivElement, Props>(
   (
     {

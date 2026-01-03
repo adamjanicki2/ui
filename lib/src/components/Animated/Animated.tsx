@@ -62,6 +62,7 @@ type Props = BoxProps & {
 
 type Phase = "from" | "forward" | "reverse";
 
+/** Wrapper for animating enter/exit states */
 const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     visible,

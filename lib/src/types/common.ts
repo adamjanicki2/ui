@@ -1,10 +1,21 @@
 import type * as React from "react";
 
+/** Accepts both mutable and readonly arrays */
 export type ReadonlyableArray<T> = readonly T[] | T[];
+
+/** React children, single or many */
 export type Children = React.ReactNode | ReadonlyableArray<React.ReactNode>;
+
+/** Content type used for UI styling */
 export type ContentType = "success" | "warning" | "error" | "info" | "static";
+
+/** Inline CSS style */
 export type Style = React.CSSProperties;
+
+/** Size presets for full/fitted layouts */
 export type SizeDimension = "full" | "fit" | "min" | "max";
+
+/** Standard size tokens used for various `vfx` properties */
 export type SizeToken = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
 
 type SpacingSize = SizeToken | "none";
@@ -12,6 +23,10 @@ type AutoSize = SpacingSize | "auto";
 type Color = "default" | "muted" | "inherit" | "transparent";
 type Overflow = "hidden" | "scroll";
 
+/**
+ * Custom styling props that map to class names
+ * Used by `ui.*` elements and many components for layout + styling.
+ */
 export type Vfx = {
   /** Element's positioning */
   pos?: "static" | "relative" | "absolute" | "fixed" | "sticky";

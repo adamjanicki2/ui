@@ -26,6 +26,7 @@ type Props = Omit<BoxProps, "children"> & {
   disableScrollLock?: boolean;
 };
 
+/** A focus-trapped backdrop that closes on click outside */
 const Layer = React.forwardRef<HTMLDivElement, Props>(
   (
     {

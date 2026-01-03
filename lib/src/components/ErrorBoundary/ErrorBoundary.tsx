@@ -30,6 +30,7 @@ type State = {
   error: Error | null;
 };
 
+/** Catch rendering errors and render a fallback component */
 export default class ErrorBoundary extends React.Component<Props, State> {
   state: State = { error: null };
 

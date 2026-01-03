@@ -30,6 +30,10 @@ type UI = {
   [T in Tag]: ReturnType<typeof createVfxElement<T>>;
 };
 
+/**
+ * Collection of builtin DOM elements that support custom styling transformations via the `vfx` prop
+ * @example <ui.span vfx={{ padding: "m", axis: "y" }} />
+ */
 const ui = new Proxy(
   {},
   {

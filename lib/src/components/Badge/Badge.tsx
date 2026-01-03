@@ -10,6 +10,7 @@ type Props = BoxProps & {
   type: ContentType;
 };
 
+/** A small label for status */
 const Badge = React.forwardRef<HTMLDivElement, Props>(
   ({ type, className, vfx, ...rest }, ref) => (
     <Box

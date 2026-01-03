@@ -38,6 +38,10 @@ function routeInternally(event: React.MouseEvent<HTMLAnchorElement>) {
   );
 }
 
+/**
+ * A basic, unstyled link that uses client-side navigation if used within a `<Router>`
+ * If rendered outside a `<Router>`, this behaves like a normal `<a>`.
+ */
 export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
   ({ to, className, newTab, onClick, target, rel, ...rest }, ref) => {
     const router = React.useContext(RouterContext);
@@ -53,17 +57,16 @@ export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
 
     const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
       onClick?.(event);
-
       if (
         !router ||
         newTab ||
         href.type === "external" ||
         href.type === "octo" ||
         !routeInternally(event)
-      )
+      ) {
         return;
+      }
 
-      // Client-side navigation
       event.preventDefault();
       router.navigate(to);
     };
@@ -82,6 +85,10 @@ export const UnstyledLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
   }
 );
 
+/**
+ * A styled link that uses client-side navigation if used within a `<Router>`
+ * If rendered outside a `<Router>`, this behaves like a normal `<a>`.
+ */
 export const ButtonLink = React.forwardRef<
   HTMLAnchorElement,
   LinkProps & VisualButtonProps
@@ -103,6 +110,7 @@ export const ButtonLink = React.forwardRef<
   );
 });
 
+/** A styled link element */
 const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
   ({ className, vfx, ...props }, ref) => (
     <UnstyledLink

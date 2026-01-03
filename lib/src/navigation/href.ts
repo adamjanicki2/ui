@@ -5,7 +5,6 @@ export type Href = {
   url: string;
 };
 
-// computes href given to, current pathname, and optional basename
 export function getHref(
   to: string,
   pathname: string,
@@ -35,14 +34,12 @@ export function getHref(
   };
 }
 
-// formats with a starting slash and removes trailing slash
 export function normalizeBasename(basename: string): string {
   if (!basename || basename === "/") return "";
 
   return prependSlash(popSlash(basename));
 }
 
-// simple heuristic check
 export function isExternal(to: string) {
   return /^(https?:\/\/|mailto:|tel:)/i.test(to);
 }

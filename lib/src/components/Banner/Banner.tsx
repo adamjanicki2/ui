@@ -10,6 +10,7 @@ type Props = BoxProps & {
   type: ContentType;
 };
 
+/** A full-width banner for page-level  */
 const Banner = React.forwardRef<HTMLDivElement, Props>(
   ({ type, className, vfx, ...rest }, ref) => (
     <Box

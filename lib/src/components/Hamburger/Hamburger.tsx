@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { UnstyledButton } from "../Button";
 import type { Style } from "../../types/common";
 
+/** Props shared by all the hamburgers */
 export type Props = {
   /**
    * Size of the button in pixels
@@ -62,16 +63,19 @@ type InnerProps = Omit<Props, "variant" | "direction"> & {
   openStyle: OpenStyle;
 };
 
+/** Default angles for rotate-style hamburger animations. */
 export const defaultAngles = {
   right: 45,
   left: -45,
 } as const;
 
+/** Alternate angles for flip-style hamburger animations. */
 export const flipAngles = {
   right: -135,
   left: -225,
 } as const;
 
+/** Base hamburger button used by the exported hamburger variants. */
 const Hamburger = (props: InnerProps) => {
   const {
     size = 36,

@@ -22,6 +22,7 @@ type Props = Omit<BoxProps, "children"> & {
   hideDividers?: boolean;
 };
 
+/** A vertical list of collapsible drawers. */
 const Accordion = React.forwardRef<HTMLDivElement, Props>(
   ({ drawers, duration, hideDividers, vfx, ...rest }, ref) => (
     <Box

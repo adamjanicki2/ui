@@ -77,6 +77,7 @@ const arrowVfx = {
   padding: "none",
 } as const;
 
+/** A carousel for paging through a list of slides. */
 const Carousel = React.forwardRef<HTMLDivElement, Props>(
   (
     {

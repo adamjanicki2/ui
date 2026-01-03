@@ -4,6 +4,7 @@ import ui from "../ui";
 
 type DefaultButtonProps = React.ComponentProps<typeof ui.button>;
 
+/** Visual styling options for `Button` and `ButtonLink`. */
 export type VisualButtonProps = {
   /**
    * Type of button
@@ -19,6 +20,7 @@ export type VisualButtonProps = {
 
 type ButtonProps = DefaultButtonProps & VisualButtonProps;
 
+/** An unstyled `button` */
 export const UnstyledButton = React.forwardRef<
   HTMLButtonElement,
   DefaultButtonProps
@@ -35,6 +37,7 @@ const vfxBySize = {
   regular: { padding: "s" },
 } as const;
 
+/** A styled `button` component */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant, className, vfx, size, ...rest }, ref) => {
     const { vfx: additionalVfx, className: additionalClassName } =
