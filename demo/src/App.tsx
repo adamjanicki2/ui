@@ -1,16 +1,15 @@
-import Home from "src/components/Home";
 import Nav from "src/components/Nav";
 import Footer from "src/components/Footer";
-import { Box, useScrollToHash, Router, Routes, Route } from "@adamjanicki/ui";
+import { Box, Router, Routes, Route } from "@adamjanicki/ui";
 import { useSetDocumentTheme } from "src/hooks";
-import Presentation from "src/sections/Presentation";
-import Signals from "src/sections/Signals";
-import UserAction from "src/sections/UserAction";
-import Miscellaneous from "src/sections/Miscellaneous";
-import NotFound from "src/components/NotFound";
+import Presentation from "src/pages/Presentation";
+import Signals from "src/pages/Signals";
+import Action from "src/pages/Action";
+import Miscellaneous from "src/pages/Miscellaneous";
+import Home from "src/pages/Home";
+import NotFound from "src/pages/NotFound";
 
 export default function App() {
-  useScrollToHash();
   useSetDocumentTheme();
 
   return (
@@ -21,7 +20,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/presentation" element={<Presentation />} />
           <Route path="/signals" element={<Signals />} />
-          <Route path="/user-action" element={<UserAction />} />
+          <Route path="/action" element={<Action />} />
           <Route path="/miscellaneous" element={<Miscellaneous />} />
         </Routes>
       </Box>

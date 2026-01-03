@@ -1,11 +1,14 @@
 import { importCss } from "src/codeSnippets";
-import Header from "src/components/Heading";
+import Heading from "src/components/Heading";
 import Para from "src/components/Para";
 import Snippet from "src/components/Snippet";
 import { ui, Icon, Link } from "@adamjanicki/ui";
 import { architect } from "@adamjanicki/ui/icons";
+import { useDocumentTitle } from "src/hooks";
 
 export default function Home() {
+  useDocumentTitle("@adamjanicki/ui");
+
   return (
     <>
       <ui.h1 vfx={{ textAlign: "center", fontSize: "xxl" }}>
@@ -24,7 +27,7 @@ export default function Home() {
         Checkout the docs and examples below to see what's available.
       </ui.p>
       <Snippet lang="bash">npm install --save @adamjanicki/ui</Snippet>
-      <Header level={1}>Setup</Header>
+      <Heading>Setup</Heading>
       <Para>
         There's a little bit of setup required before you can start using the
         library. I hate it when libraries force their styles on you; oftentimes
@@ -34,7 +37,7 @@ export default function Home() {
         example.
       </Para>
       <Snippet>{importCss}</Snippet>
-      <Header level={1}>Categories</Header>
+      <Heading>Categories</Heading>
       <ui.ul vfx={{ axis: "y", gap: "s" }}>
         <ui.li>
           <Link to="/presentation">Presentation</Link>
@@ -43,7 +46,7 @@ export default function Home() {
           <Link to="/signals">Signals</Link>
         </ui.li>
         <ui.li>
-          <Link to="/user-action">User Action</Link>
+          <Link to="/action">Action</Link>
         </ui.li>
         <ui.li>
           <Link to="/miscellaneous">Miscellaneous</Link>

@@ -3,7 +3,6 @@ import React from "react";
 import "src/components/heading.css";
 
 type Props = {
-  level: 1 | 2 | 3;
   children: string;
 };
 
@@ -22,19 +21,18 @@ function headingToId(heading: string) {
     .replace(/[^a-zA-Z0-9-]/g, "");
 }
 
-export default function Heading({ level, children }: Props) {
+export default function Heading({ children }: Props) {
   const id = headingToId(children);
-  const Element = ui[`h${level}`];
   return (
-    <Element
+    <ui.h2
       id={id}
       className="has-octo-within"
-      vfx={{ axis: "x", align: "center" }}
+      vfx={{ axis: "x", align: "center", width: "full" }}
     >
       <>
         <HashLink id={id} />
         {children}
       </>
-    </Element>
+    </ui.h2>
   );
 }

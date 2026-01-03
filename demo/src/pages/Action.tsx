@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Heading from "src/components/Heading";
 import Para from "src/components/Para";
 import {
   buttonSnippet,
@@ -27,16 +26,16 @@ import {
   ShowcaseBlock,
   ShowcaseRow,
 } from "src/components/Showcase";
+import Page from "src/components/Page";
 
-export default function UserAction() {
+export default function Action() {
   const [inputValue, setInputValue] = useState("Here's looking at you, kid.");
   const [selectValue, setSelectValue] = useState("orange");
 
   const buttonAction = () => window.alert("You clicked me!");
 
   return (
-    <ui.section id="user-action-section">
-      <Heading level={1}>User Action</Heading>
+    <Page title="Action">
       <Para>
         I was trying to think of a good word for this heading; form wouldn't
         have been appropriate since links don't really fit into that set, even
@@ -161,6 +160,6 @@ export default function UserAction() {
           </LabeledField>
         </ShowcaseRow>
       </ShowcaseBlock>
-    </ui.section>
+    </Page>
   );
 }

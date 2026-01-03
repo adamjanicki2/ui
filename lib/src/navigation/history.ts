@@ -10,7 +10,7 @@ export function getCurrentLocation(): Location {
 
 type LocationListener = (location: Location) => void;
 
-export function createHistory() {
+export function createRouterHistory() {
   const listeners = new Set<LocationListener>();
 
   const notifyListeners = () => {
@@ -59,4 +59,4 @@ export function createHistory() {
   } as const;
 }
 
-export type History = ReturnType<typeof createHistory>;
+export type RouterHistory = ReturnType<typeof createRouterHistory>;

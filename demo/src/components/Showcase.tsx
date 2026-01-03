@@ -21,7 +21,7 @@ export function ShowcaseBlock({
 }: ShowcaseBlockProps) {
   return (
     <>
-      <Heading level={2}>{title}</Heading>
+      <Heading>{title}</Heading>
       {description ? <Para>{description}</Para> : null}
       {children}
       {snippet ? <HiddenSnippet>{snippet}</HiddenSnippet> : null}
