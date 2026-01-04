@@ -1,4 +1,4 @@
-import React from "react";
+import type * as React from "react";
 import type { ReadonlyableArray } from "../../types/common";
 import type { BoxProps } from "../Box/Box";
 import Box from "../Box/Box";

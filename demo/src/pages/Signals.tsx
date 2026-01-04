@@ -4,6 +4,8 @@ import { Alert, Badge, Banner, ui } from "@adamjanicki/ui";
 import { ShowcaseBlock, ShowcaseRow } from "src/components/Showcase";
 import Page from "src/components/Page";
 
+const contentTypes = ["static", "info", "success", "warning", "error"] as const;
+
 export default function Signals() {
   return (
     <Page title="Signals">
@@ -34,21 +36,11 @@ export default function Signals() {
             width: `min(100%, 400px)`,
           }}
         >
-          <Alert type="static" vfx={{ width: "full" }}>
-            This is a static alert
-          </Alert>
-          <Alert type="info" vfx={{ width: "full" }}>
-            This is an info alert
-          </Alert>
-          <Alert type="success" vfx={{ width: "full" }}>
-            This is a success alert
-          </Alert>
-          <Alert type="warning" vfx={{ width: "full" }}>
-            This is a warning alert
-          </Alert>
-          <Alert type="error" vfx={{ width: "full" }}>
-            This is an error alert
-          </Alert>
+          {contentTypes.map((type) => (
+            <Alert key={type} type={type} vfx={{ width: "full" }}>
+              This is a {type} alert
+            </Alert>
+          ))}
         </ShowcaseRow>
       </ShowcaseBlock>
 
@@ -64,11 +56,11 @@ export default function Signals() {
         }
       >
         <ShowcaseRow vfx={{ marginX: "auto", width: "fit" }}>
-          <Badge type="static">Static</Badge>
-          <Badge type="info">Info</Badge>
-          <Badge type="success">Success</Badge>
-          <Badge type="warning">Warning</Badge>
-          <Badge type="error">Error</Badge>
+          {contentTypes.map((type) => (
+            <Badge key={type} type={type}>
+              <ui.span style={{ textTransform: "capitalize" }}>{type}</ui.span>
+            </Badge>
+          ))}
         </ShowcaseRow>
       </ShowcaseBlock>
 
@@ -89,11 +81,11 @@ export default function Signals() {
         }
       >
         <ShowcaseRow vfx={{ axis: "y", gap: "s" }}>
-          <Banner type="static">This is a static banner</Banner>
-          <Banner type="info">This is an info banner</Banner>
-          <Banner type="success">This is a success banner</Banner>
-          <Banner type="warning">This is a warning banner</Banner>
-          <Banner type="error">This is an error banner</Banner>
+          {contentTypes.map((type) => (
+            <Banner key={type} type={type}>
+              This is a {type} banner
+            </Banner>
+          ))}
         </ShowcaseRow>
       </ShowcaseBlock>
     </Page>

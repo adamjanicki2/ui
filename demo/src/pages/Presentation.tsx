@@ -23,38 +23,40 @@ import {
 } from "@adamjanicki/ui";
 import Page from "src/components/Page";
 
+const accordionStatuses = ["success", "info", "error"] as const;
+const carouselSlides = ["bg-red", "bg-purple", "bg-blue"] as const;
+const boxSizes = [
+  ["L", "m"],
+  ["XL", "xl"],
+  ["XXL", "xxl"],
+] as const;
+
+const compareValues = (a: unknown, b: unknown) => {
+  if (a == null && b == null) return 0;
+  if (a == null) return 1;
+  if (b == null) return -1;
+  if (typeof a === "number" && typeof b === "number") return a - b;
+  return String(a).localeCompare(String(b), undefined, {
+    numeric: true,
+    sensitivity: "base",
+  });
+};
+
 export default function Presentation() {
   const [animatedOpen, setAnimatedOpen] = useState(false);
   const [layerOpen, setLayerOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [openDrawers, setOpenDrawers] = useState<Set<number>>(new Set());
-  const [sortKey, setSortKey] = useState<keyof (typeof tableItems)[number]>();
-  const [sortDirection, setSortDirection] = useState<"none" | "asc" | "desc">(
-    "none"
-  );
+  const [{ key: sortKey, direction: sortDirection }, setSort] = useState<{
+    key?: keyof (typeof tableItems)[number];
+    direction: "none" | "asc" | "desc";
+  }>({ direction: "none" });
 
   const sortedTableItems = useMemo(() => {
     if (!sortKey || sortDirection === "none") return tableItems;
-
-    const compareValues = (a: unknown, b: unknown) => {
-      if (a == null && b == null) return 0;
-      if (a == null) return 1;
-      if (b == null) return -1;
-      if (typeof a === "number" && typeof b === "number") return a - b;
-      return String(a).localeCompare(String(b), undefined, {
-        numeric: true,
-        sensitivity: "base",
-      });
-    };
-
-    const sorted = [...tableItems]
-      .map((item, index) => ({ item, index }))
-      .sort((a, b) => {
-        const cmp = compareValues(a.item[sortKey], b.item[sortKey]);
-        return cmp !== 0 ? cmp : a.index - b.index;
-      })
-      .map(({ item }) => item);
-
+    const sorted = [...tableItems].sort((a, b) =>
+      compareValues(a[sortKey], b[sortKey])
+    );
     return sortDirection === "asc" ? sorted : sorted.reverse();
   }, [sortDirection, sortKey]);
 
@@ -84,11 +86,11 @@ export default function Presentation() {
         <Accordion
           vfx={{ marginX: "auto" }}
           style={{ width: "calc(min(100%, 512px))" }}
-          drawers={(["success", "info", "error"] as const).map((status, i) => ({
-            label: status,
+          drawers={accordionStatuses.map((type, i) => ({
+            label: type,
             content: (
               <Box vfx={{ padding: "m", paddingTop: "none" }}>
-                <Alert type={status}>We live in a Twilight World.</Alert>
+                <Alert type={type}>We live in a Twilight World.</Alert>
               </Box>
             ),
             open: openDrawers.has(i),
@@ -167,42 +169,21 @@ export default function Presentation() {
             borderColor: "primary",
           }}
         >
-          <Box
-            vfx={{
-              axis: "y",
-              align: "center",
-              justify: "center",
-              padding: "m",
-              border: true,
-              borderColor: "primary",
-            }}
-          >
-            L
-          </Box>
-          <Box
-            vfx={{
-              axis: "y",
-              align: "center",
-              justify: "center",
-              padding: "xl",
-              border: true,
-              borderColor: "primary",
-            }}
-          >
-            XL
-          </Box>
-          <Box
-            vfx={{
-              axis: "y",
-              align: "center",
-              justify: "center",
-              padding: "xxl",
-              border: true,
-              borderColor: "primary",
-            }}
-          >
-            XXL
-          </Box>
+          {boxSizes.map(([label, padding]) => (
+            <Box
+              key={label}
+              vfx={{
+                axis: "y",
+                align: "center",
+                justify: "center",
+                padding,
+                border: true,
+                borderColor: "primary",
+              }}
+            >
+              {label}
+            </Box>
+          ))}
         </Box>
       </ShowcaseBlock>
 
@@ -225,24 +206,15 @@ export default function Presentation() {
           className="white"
           autoplayInterval={5}
         >
-          <Box
-            vfx={{ paddingY: "xxl", textAlign: "center", fontSize: "xl" }}
-            className="bg-red"
-          >
-            "We live in a twilight world"
-          </Box>
-          <Box
-            vfx={{ paddingY: "xxl", textAlign: "center", fontSize: "xl" }}
-            className="bg-purple"
-          >
-            "We live in a twilight world"
-          </Box>
-          <Box
-            vfx={{ paddingY: "xxl", textAlign: "center", fontSize: "xl" }}
-            className="bg-blue"
-          >
-            "We live in a twilight world"
-          </Box>
+          {carouselSlides.map((className) => (
+            <Box
+              key={className}
+              vfx={{ paddingY: "xxl", textAlign: "center", fontSize: "xl" }}
+              className={className}
+            >
+              "We live in a twilight world"
+            </Box>
+          ))}
         </Carousel>
       </ShowcaseBlock>
 
@@ -324,10 +296,8 @@ export default function Presentation() {
             sort={{
               key: sortKey,
               direction: sortDirection,
-              onSort: (key, direction) => {
-                setSortDirection(direction);
-                setSortKey(direction === "none" ? undefined : key);
-              },
+              onSort: (key, direction) =>
+                setSort({ key: direction === "none" ? undefined : key, direction }),
             }}
             routeTo={(item) => ({
               to: `https://adamovies.com/review/${item.title

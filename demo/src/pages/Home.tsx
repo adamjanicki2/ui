@@ -24,7 +24,7 @@ export default function Home() {
       >
         This is a collection of React components that I use across my projects.
         <ui.br />
-        Checkout the docs and examples below to see what's available.
+        Check out the docs and examples below to see what's available.
       </ui.p>
       <Snippet lang="bash">npm install --save @adamjanicki/ui</Snippet>
       <Heading>Setup</Heading>
@@ -66,7 +66,11 @@ export default function Home() {
         <ui.br />
         Adam
       </Para>
-      <Icon icon={architect} size="xl" style={{ color: "#0070ff" }} />
+      <Icon
+        icon={architect}
+        size="xl"
+        style={{ color: "var(--aui-link-color)" }}
+      />
     </>
   );
 }

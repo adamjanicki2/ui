@@ -1,25 +1,12 @@
 import { Link, ui } from "@adamjanicki/ui";
-import React from "react";
 import "src/components/heading.css";
 
 type Props = {
   children: string;
 };
 
-function HashLink({ id }: { id: string }) {
-  return (
-    <Link className="octo" to={`#${id}`}>
-      #
-    </Link>
-  );
-}
-
-function headingToId(heading: string) {
-  return heading
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace(/[^a-zA-Z0-9-]/g, "");
-}
+const headingToId = (heading: string) =>
+  heading.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/gi, "");
 
 export default function Heading({ children }: Props) {
   const id = headingToId(children);
@@ -29,10 +16,10 @@ export default function Heading({ children }: Props) {
       className="has-octo-within"
       vfx={{ axis: "x", align: "center", width: "full" }}
     >
-      <>
-        <HashLink id={id} />
-        {children}
-      </>
+      <Link className="octo" to={`#${id}`}>
+        #
+      </Link>
+      {children}
     </ui.h2>
   );
 }
