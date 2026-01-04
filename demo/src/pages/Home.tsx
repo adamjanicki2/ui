@@ -51,6 +51,9 @@ export default function Home() {
         <ui.li>
           <Link to="/miscellaneous">Miscellaneous</Link>
         </ui.li>
+        <ui.li>
+          <Link to="/floating">Floating</Link>
+        </ui.li>
       </ui.ul>
       <Para>
         And that's it! I hope you find this fun little library useful. If you

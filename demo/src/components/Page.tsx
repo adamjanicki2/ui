@@ -2,7 +2,7 @@ import { ui, useScrollToHash } from "@adamjanicki/ui";
 import Box, { BoxProps } from "@adamjanicki/ui/components/Box/Box";
 import { useDocumentTitle } from "src/hooks";
 
-type Props = Omit<BoxProps, "children" | "title"> & {
+type Props = Omit<BoxProps, "children" | "title" | "style"> & {
   children: React.ReactNode;
   title: string;
 };
@@ -21,6 +21,7 @@ export default function Page({ children, title, vfx, ...rest }: Props) {
         paddingX: "m",
         ...vfx,
       }}
+      style={{ minHeight: "50vh" }}
     >
       <ui.h1 vfx={{ width: "full" }}>{title}</ui.h1>
       {children}

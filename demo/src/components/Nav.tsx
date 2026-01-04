@@ -53,6 +53,7 @@ export default function Nav() {
         <Navlink to="/signals">Signals</Navlink>
         <Navlink to="/action">Action</Navlink>
         <Navlink to="/miscellaneous">Miscellaneous</Navlink>
+        <Navlink to="/floating">Floating</Navlink>
       </ui.ul>
     </ui.nav>
   );
