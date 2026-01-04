@@ -175,6 +175,96 @@ describe("Floating", () => {
     expect(floating).toHaveStyle({ top: "80px", left: "300px" });
   });
 
+  it("supports top-end placement", () => {
+    jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(function (this: HTMLElement) {
+        const testId = this.getAttribute("data-testid");
+        if (testId === "anchor") {
+          return rect({
+            top: 100,
+            left: 200,
+            width: 100,
+            height: 20,
+            right: 300,
+            bottom: 120,
+          });
+        }
+        if (testId === "floating") {
+          return rect({
+            width: 80,
+            height: 40,
+          });
+        }
+        return rect({});
+      });
+
+    render(
+      <Floating
+        data-testid="floating"
+        anchor={<button data-testid="anchor">Anchor</button>}
+        floatingContent={<div>Content</div>}
+        placement="top-end"
+        visible
+      />
+    );
+
+    const floating = screen.getByTestId("floating");
+    expect(floating).toHaveStyle({ top: "60px", left: "220px" });
+  });
+
+  it("applies offset", () => {
+    jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(function (this: HTMLElement) {
+        const testId = this.getAttribute("data-testid");
+        if (testId === "anchor") {
+          return rect({
+            top: 10,
+            left: 20,
+            width: 100,
+            height: 20,
+            right: 120,
+            bottom: 30,
+          });
+        }
+        if (testId === "floating") {
+          return rect({
+            width: 80,
+            height: 40,
+          });
+        }
+        return rect({});
+      });
+
+    render(
+      <Floating
+        data-testid="floating"
+        anchor={<button data-testid="anchor">Anchor</button>}
+        floatingContent={<div>Content</div>}
+        offset={12}
+        placement="bottom"
+        visible
+      />
+    );
+
+    const floating = screen.getByTestId("floating");
+    expect(floating).toHaveStyle({ top: "42px" });
+  });
+
+  it("does not render when visible is false", () => {
+    render(
+      <Floating
+        data-testid="floating"
+        anchor={<button data-testid="anchor">Anchor</button>}
+        floatingContent={<div>Content</div>}
+        visible={false}
+      />
+    );
+
+    expect(screen.queryByTestId("floating")).not.toBeInTheDocument();
+  });
+
   it("positions on mount without needing scroll", async () => {
     const seen = new Set<string | null>();
 
