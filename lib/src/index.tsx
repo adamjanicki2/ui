@@ -16,6 +16,7 @@ export * from "./components/Hamburger";
 export { default as Icon } from "./components/Icon";
 export { default as Input } from "./components/Input";
 export * from "./components/Input";
+export { default as Popover } from "./components/Popover";
 export { default as Layer } from "./components/Layer";
 export { default as Modal } from "./components/Modal";
 export { default as Select } from "./components/Select";

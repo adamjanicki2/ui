@@ -68,26 +68,27 @@ const opposites: Record<Placement, Placement> = {
 };
 
 /** Position content relative to an anchor element */
-const Floating = ({
-  anchor,
-  floatingContent,
-  visible,
-  placement = "bottom",
-  offset = 0,
-  flip = true,
-  style,
-  vfx,
-  ...rest
-}: Props): React.JSX.Element => {
+const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+  const {
+    anchor,
+    floatingContent,
+    visible,
+    placement = "bottom",
+    offset = 0,
+    flip = true,
+    style,
+    vfx,
+    ...rest
+  } = props;
   const anchorRef = useRef<HTMLElement | null>(null);
   const floatingRef = useRef<HTMLDivElement | null>(null);
-
-  const [position, setPosition] = useState<Position | null>(null);
-
+  const mergedFloatingRef = useMergeRefs<HTMLDivElement>(floatingRef, ref);
   const mergedAnchorRef = useMergeRefs<HTMLElement>(
     anchorRef,
     anchor.props.ref
   );
+
+  const [position, setPosition] = useState<Position | null>(null);
 
   const updatePosition = useCallback(() => {
     const anchorEl = anchorRef.current;
@@ -161,7 +162,7 @@ const Floating = ({
       })}
       <Animated
         {...rest}
-        ref={floatingRef}
+        ref={mergedFloatingRef}
         vfx={{ pos: "fixed", z: "floating", ...vfx }}
         style={{
           ...style,
@@ -175,7 +176,7 @@ const Floating = ({
       </Animated>
     </>
   );
-};
+});
 
 type Positioner = (args: {
   anchorRect: DOMRect;
