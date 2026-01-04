@@ -142,7 +142,6 @@ const Floating = ({
           visibility: position ? "visible" : "hidden",
         }}
         visible={visible}
-        aria-hidden={visible || undefined}
       >
         {floatingContent}
       </Animated>
