@@ -7,7 +7,7 @@ type FloatingProps = React.ComponentProps<typeof Floating>;
 
 export type PopoverProps = Omit<
   FloatingProps,
-  "visible" | "floatingContent"
+  "visible" | "floatingContent" | "duration" | "animateFrom" | "animateTo"
 > & {
   /** Whether the popover is open */
   open: boolean;
@@ -23,6 +23,7 @@ const Popover = ({
   open,
   onClose,
   children,
+  vfx,
   ...floatingProps
 }: PopoverProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -59,10 +60,25 @@ const Popover = ({
   return (
     <Floating
       {...floatingProps}
+      vfx={{
+        padding: "s",
+        backgroundColor: "default",
+        border: true,
+        shadow: "floating",
+        radius: "rounded",
+        z: "floating",
+        ...vfx,
+      }}
       ref={setFloatingEl}
       anchor={React.cloneElement(anchor, { ref: mergedAnchorRef })}
       visible={open}
       floatingContent={children}
+      animateFrom={{ style: { opacity: 0 } }}
+      animateTo={{ style: { opacity: 1 } }}
+      duration={{
+        forward: 0,
+        reverse: 0.25,
+      }}
     />
   );
 };
