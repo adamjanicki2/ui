@@ -98,29 +98,33 @@ const Floating = ({
     });
   }, [flip, offset, placement]);
 
-  useLayoutEffect(updatePosition, [updatePosition]);
-
   useLayoutEffect(() => {
+    if (!visible) return;
+
+    setPosition(null);
+    updatePosition();
+
     window.addEventListener("resize", updatePosition);
     document.addEventListener("scroll", updatePosition, true);
+
+    const anchorEl = anchorRef.current;
+    const floatingEl = floatingRef.current;
+    let resizeObserver: ResizeObserver | null = null;
+
+    if (anchorEl && floatingEl) {
+      resizeObserver = new ResizeObserver(updatePosition);
+      resizeObserver.observe(anchorEl);
+      resizeObserver.observe(floatingEl);
+    }
 
     return () => {
       window.removeEventListener("resize", updatePosition);
       document.removeEventListener("scroll", updatePosition, true);
+      resizeObserver?.disconnect();
     };
-  }, [updatePosition]);
+  }, [updatePosition, visible]);
 
-  useLayoutEffect(() => {
-    const anchorEl = anchorRef.current;
-    const floatingEl = floatingRef.current;
-    if (!anchorEl || !floatingEl) return;
-
-    const resizeObserver = new ResizeObserver(updatePosition);
-    resizeObserver.observe(anchorEl);
-    resizeObserver.observe(floatingEl);
-
-    return () => resizeObserver.disconnect();
-  }, [updatePosition]);
+  const { top = 0, left = 0 } = position ?? {};
 
   return (
     <>
@@ -133,13 +137,12 @@ const Floating = ({
         vfx={{ pos: "fixed", z: "floating", ...vfx }}
         style={{
           ...style,
-          top: position?.top,
-          left: position?.left,
+          top,
+          left,
           visibility: position ? "visible" : "hidden",
         }}
-        keepMounted
-        visible={Boolean(position) && visible}
-        aria-hidden={Boolean(position)}
+        visible={visible}
+        aria-hidden={visible || undefined}
       >
         {floatingContent}
       </Animated>

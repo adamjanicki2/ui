@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import Floating from "../../src/components/Floating";
 
 const rect = (r: Partial<DOMRect>): DOMRect =>
@@ -96,5 +96,48 @@ describe("Floating", () => {
 
     const floating = screen.getByTestId("floating");
     expect(floating).toHaveStyle({ top: "520px" });
+  });
+
+  it("positions on mount without needing scroll", async () => {
+    const seen = new Set<string | null>();
+
+    jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(function (this: HTMLElement) {
+        const testId = this.getAttribute("data-testid");
+        seen.add(testId);
+
+        if (testId === "anchor") {
+          return rect({
+            top: 10,
+            left: 20,
+            width: 100,
+            height: 20,
+            right: 120,
+            bottom: 30,
+          });
+        }
+        if (testId === "floating") {
+          return rect({ width: 80, height: 40 });
+        }
+        return rect({});
+      });
+
+    render(
+      <Floating
+        data-testid="floating"
+        anchor={<button data-testid="anchor">Anchor</button>}
+        floatingContent={<div>Content</div>}
+        visible
+      />
+    );
+
+    await waitFor(() => {
+      expect(seen.has("floating")).toBe(true);
+      expect(screen.getByTestId("floating")).toHaveStyle({
+        top: "30px",
+        left: "30px",
+      });
+    });
   });
 });
