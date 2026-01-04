@@ -1,9 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Floating from "../../src/components/Floating";
 
-type Rect = Omit<DOMRect, "toJSON">;
-
-const rect = (r: Partial<Rect>): DOMRect =>
+const rect = (r: Partial<DOMRect>): DOMRect =>
   ({
     x: 0,
     y: 0,
@@ -14,24 +12,15 @@ const rect = (r: Partial<Rect>): DOMRect =>
     width: 0,
     height: 0,
     ...r,
-    toJSON: () => ({}),
   } as DOMRect);
 
 describe("Floating", () => {
   beforeEach(() => {
-    Object.defineProperty(window, "innerWidth", {
-      value: 1000,
-      writable: true,
-    });
-    Object.defineProperty(window, "innerHeight", {
-      value: 600,
-      writable: true,
-    });
+    window.innerWidth = 1000;
+    window.innerHeight = 600;
   });
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
+  afterEach(jest.restoreAllMocks);
 
   it("centers content under the anchor by default", () => {
     jest
@@ -62,6 +51,7 @@ describe("Floating", () => {
         data-testid="floating"
         anchor={<button data-testid="anchor">Anchor</button>}
         floatingContent={<div>Content</div>}
+        visible
       />
     );
 
@@ -100,6 +90,7 @@ describe("Floating", () => {
         data-testid="floating"
         anchor={<div data-testid="anchor">Anchor</div>}
         floatingContent={<div>Content</div>}
+        visible
       />
     );
 

@@ -65,7 +65,7 @@ function FloatingPage() {
           style={{ maxWidth: 900, marginLeft: "auto", marginRight: "auto" }}
         >
           <ShowcaseRow vfx={{ justify: "between", width: "full" }}>
-            <LabeledField label="Enabled (mount/unmount)">
+            <LabeledField label="Floating visible">
               <Button
                 variant="primary"
                 onClick={() => setEnabled((prev) => !prev)}
@@ -151,37 +151,41 @@ function FloatingPage() {
               <Box style={{ height: spacerHeight }} />
 
               <Box vfx={{ axis: "x", justify: xAlign, width: "full" }}>
-                {enabled ? (
-                  <Floating
-                    anchor={anchor}
-                    floatingContent={
-                      <Box
-                        vfx={{
-                          axis: "y",
-                          gap: "xs",
-                          padding: "s",
-                          radius: "rounded",
-                          border: true,
-                          shadow: "floating",
-                          backgroundColor: "default",
-                          color: "default",
-                        }}
-                        style={{ width: 220 }}
-                      >
-                        <Box vfx={{ fontWeight: 6 }}>Floating content</Box>
-                        <Box vfx={{ color: "muted", fontSize: "s" }}>
-                          placement={placement}, offset={offset}, flip=
-                          {String(flip)}
-                        </Box>
+                <Floating
+                  anchor={anchor}
+                  visible={enabled}
+                  floatingContent={
+                    <Box
+                      vfx={{
+                        axis: "y",
+                        gap: "xs",
+                        padding: "s",
+                        radius: "rounded",
+                        border: true,
+                        shadow: "floating",
+                        backgroundColor: "default",
+                        color: "default",
+                      }}
+                      style={{ width: 220 }}
+                    >
+                      <Box vfx={{ fontWeight: 6 }}>Floating content</Box>
+                      <Box vfx={{ color: "muted", fontSize: "s" }}>
+                        placement={placement}, offset={offset}, flip=
+                        {String(flip)}
                       </Box>
-                    }
-                    placement={placement}
-                    offset={offset}
-                    flip={flip}
-                  />
-                ) : (
-                  anchor
-                )}
+                    </Box>
+                  }
+                  placement={placement}
+                  offset={offset}
+                  flip={flip}
+                  animateTo={{
+                    style: { opacity: 1, transform: "translateY(0)" },
+                  }}
+                  animateFrom={{
+                    style: { opacity: 0, transform: "translateY(-4px)" },
+                  }}
+                  transitionProperties={["opacity", "transform"]}
+                />
               </Box>
 
               <Box style={{ height: 520 }} />

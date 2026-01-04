@@ -1,13 +1,13 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
-import { type BoxProps } from "../Box/Box";
 import useMergeRefs from "../../hooks/useMergeRefs";
-import classNames from "../../functions/classNames";
 import type { Children } from "../../types/common";
 import Animated from "../Animated";
 
 type Placement = "top" | "bottom" | "left" | "right";
 
-type Props = Omit<BoxProps, "children"> & {
+type AnimatedProps = React.ComponentProps<typeof Animated>;
+
+type Props = Omit<AnimatedProps, "children" | "visible" | "keepMounted"> & {
   /**
    * Anchor element the floating content is positioned relative to.
    * IMPORTANT: must be a single element that can hold a ref.
@@ -15,6 +15,8 @@ type Props = Omit<BoxProps, "children"> & {
   anchor: React.ReactElement<any>;
   /** Content rendered in the floating element */
   floatingContent: Children;
+  /** Controls the visibility of the floating content */
+  visible: boolean;
   /**
    * Position the floating element around the anchor.
    * @default "bottom"
@@ -38,10 +40,10 @@ type Position = { top: number; left: number };
 const Floating = ({
   anchor,
   floatingContent,
+  visible,
   placement = "bottom",
   offset = 0,
   flip = true,
-  className,
   style,
   vfx,
   ...rest
@@ -99,23 +101,21 @@ const Floating = ({
   useLayoutEffect(updatePosition, [updatePosition]);
 
   useLayoutEffect(() => {
-    const handle = () => updatePosition();
-
-    window.addEventListener("resize", handle);
-    document.addEventListener("scroll", handle, true);
+    window.addEventListener("resize", updatePosition);
+    document.addEventListener("scroll", updatePosition, true);
 
     return () => {
-      window.removeEventListener("resize", handle);
-      document.removeEventListener("scroll", handle, true);
+      window.removeEventListener("resize", updatePosition);
+      document.removeEventListener("scroll", updatePosition, true);
     };
   }, [updatePosition]);
 
   useLayoutEffect(() => {
     const anchorEl = anchorRef.current;
     const floatingEl = floatingRef.current;
-    if (!anchorEl || !floatingEl || !("ResizeObserver" in window)) return;
+    if (!anchorEl || !floatingEl) return;
 
-    const resizeObserver = new ResizeObserver(() => updatePosition());
+    const resizeObserver = new ResizeObserver(updatePosition);
     resizeObserver.observe(anchorEl);
     resizeObserver.observe(floatingEl);
 
@@ -131,13 +131,15 @@ const Floating = ({
         {...rest}
         ref={floatingRef}
         vfx={{ pos: "fixed", z: "floating", ...vfx }}
-        className={classNames("aui-floating", className)}
         style={{
           ...style,
           top: position?.top,
           left: position?.left,
+          visibility: position ? "visible" : "hidden",
         }}
-        visible={Boolean(position)}
+        keepMounted
+        visible={Boolean(position) && visible}
+        aria-hidden={Boolean(position)}
       >
         {floatingContent}
       </Animated>
