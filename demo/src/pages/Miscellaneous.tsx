@@ -32,10 +32,24 @@ import * as icons from "@adamjanicki/ui/icons";
 import { Tooltip } from "@adamjanicki/ui-extended";
 import Page from "src/components/Page";
 
+const defaultClickOutsideText = "Click outside me!";
+
 export default function Miscellaneous() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
-  const [clickOutsideText, setClickOutsideText] = useState("Click outside me!");
+  const [clickOutsideText, setClickOutsideText] = useState(
+    defaultClickOutsideText
+  );
   const toggleHamburger = () => setHamburgerOpen(!hamburgerOpen);
+
+  const hamburgers = [
+    { Component: DoubleSpin, className: "red" },
+    { Component: DoubleFlip, className: "orange" },
+    { Component: DoubleCross, className: "yellow" },
+    { Component: TripleSpin, className: "green" },
+    { Component: TripleFlip, className: "blue" },
+    { Component: TripleFade, style: { color: "#4B0082" } },
+    { Component: TriplePrestige, style: { color: "#7F00FF" } },
+  ] as const;
 
   return (
     <Page title="Miscellaneous">
@@ -67,7 +81,7 @@ export default function Miscellaneous() {
             onClickOutside={() => {
               setClickOutsideText("You clicked outside!");
               window.setTimeout(
-                () => setClickOutsideText("Click outside!"),
+                () => setClickOutsideText(defaultClickOutsideText),
                 1000
               );
             }}
@@ -91,41 +105,14 @@ export default function Miscellaneous() {
         }
       >
         <ShowcaseRow>
-          <DoubleSpin
-            open={hamburgerOpen}
-            onClick={toggleHamburger}
-            className="red"
-          />
-          <DoubleFlip
-            open={hamburgerOpen}
-            onClick={toggleHamburger}
-            className="orange"
-          />
-          <DoubleCross
-            open={hamburgerOpen}
-            onClick={toggleHamburger}
-            className="yellow"
-          />
-          <TripleSpin
-            open={hamburgerOpen}
-            onClick={toggleHamburger}
-            className="green"
-          />
-          <TripleFlip
-            open={hamburgerOpen}
-            onClick={toggleHamburger}
-            className="blue"
-          />
-          <TripleFade
-            open={hamburgerOpen}
-            onClick={toggleHamburger}
-            style={{ color: "#4B0082" }}
-          />
-          <TriplePrestige
-            open={hamburgerOpen}
-            onClick={toggleHamburger}
-            style={{ color: "#7F00FF" }}
-          />
+          {hamburgers.map(({ Component, ...rest }, i) => (
+            <Component
+              key={i}
+              open={hamburgerOpen}
+              onClick={toggleHamburger}
+              {...rest}
+            />
+          ))}
         </ShowcaseRow>
       </ShowcaseBlock>
 
@@ -202,11 +189,9 @@ export default function Miscellaneous() {
         }
       >
         <ShowcaseRow vfx={{ width: "fit", marginX: "auto" }}>
-          <Avatar username="A" size="m" />
-          <Avatar username="B" size="m" />
-          <Avatar username="C" size="m" />
-          <Avatar username="D" size="m" />
-          <Avatar username="E" size="m" />
+          {"ABCDE".split("").map((username) => (
+            <Avatar key={username} username={username} size="m" />
+          ))}
           <Avatar
             backgroundImage="https://adamjanicki.xyz/images/logo512.png"
             username="A"

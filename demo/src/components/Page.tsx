@@ -1,10 +1,9 @@
-import type { Children } from "src/types";
-import Box, { type BoxProps } from "@adamjanicki/ui/components/Box/Box";
 import { ui, useScrollToHash } from "@adamjanicki/ui";
+import Box, { BoxProps } from "@adamjanicki/ui/components/Box/Box";
 import { useDocumentTitle } from "src/hooks";
 
 type Props = Omit<BoxProps, "children" | "title"> & {
-  children: Children;
+  children: React.ReactNode;
   title: string;
 };
 
@@ -23,7 +22,7 @@ export default function Page({ children, title, vfx, ...rest }: Props) {
         ...vfx,
       }}
     >
-      {title && <ui.h1 vfx={{ width: "full" }}>{title}</ui.h1>}
+      <ui.h1 vfx={{ width: "full" }}>{title}</ui.h1>
       {children}
     </Box>
   );

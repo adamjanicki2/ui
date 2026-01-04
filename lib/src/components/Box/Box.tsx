@@ -1,4 +1,4 @@
-import React from "react";
+import type * as React from "react";
 import ui from "../ui";
 
 /** Basic layout component */
