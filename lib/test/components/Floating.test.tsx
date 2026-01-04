@@ -90,12 +90,89 @@ describe("Floating", () => {
         data-testid="floating"
         anchor={<div data-testid="anchor">Anchor</div>}
         floatingContent={<div>Content</div>}
+        placement="bottom-end"
         visible
       />
     );
 
     const floating = screen.getByTestId("floating");
-    expect(floating).toHaveStyle({ top: "520px" });
+    expect(floating).toHaveStyle({ top: "520px", left: "60px" });
+  });
+
+  it("supports bottom-start placement", () => {
+    jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(function (this: HTMLElement) {
+        const testId = this.getAttribute("data-testid");
+        if (testId === "anchor") {
+          return rect({
+            top: 100,
+            left: 200,
+            width: 100,
+            height: 20,
+            right: 300,
+            bottom: 120,
+          });
+        }
+        if (testId === "floating") {
+          return rect({
+            width: 80,
+            height: 40,
+          });
+        }
+        return rect({});
+      });
+
+    render(
+      <Floating
+        data-testid="floating"
+        anchor={<button data-testid="anchor">Anchor</button>}
+        floatingContent={<div>Content</div>}
+        placement="bottom-start"
+        visible
+      />
+    );
+
+    const floating = screen.getByTestId("floating");
+    expect(floating).toHaveStyle({ top: "120px", left: "200px" });
+  });
+
+  it("supports right-end placement", () => {
+    jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(function (this: HTMLElement) {
+        const testId = this.getAttribute("data-testid");
+        if (testId === "anchor") {
+          return rect({
+            top: 100,
+            left: 200,
+            width: 100,
+            height: 20,
+            right: 300,
+            bottom: 120,
+          });
+        }
+        if (testId === "floating") {
+          return rect({
+            width: 80,
+            height: 40,
+          });
+        }
+        return rect({});
+      });
+
+    render(
+      <Floating
+        data-testid="floating"
+        anchor={<button data-testid="anchor">Anchor</button>}
+        floatingContent={<div>Content</div>}
+        placement="right-end"
+        visible
+      />
+    );
+
+    const floating = screen.getByTestId("floating");
+    expect(floating).toHaveStyle({ top: "80px", left: "300px" });
   });
 
   it("positions on mount without needing scroll", async () => {

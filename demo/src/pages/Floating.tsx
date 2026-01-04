@@ -9,44 +9,30 @@ import {
 import { Box, Button, Input, Select, ui } from "@adamjanicki/ui";
 import Floating from "@adamjanicki/ui/components/Floating";
 
+const placements = [
+  "top",
+  "top-start",
+  "top-end",
+  "bottom",
+  "bottom-start",
+  "bottom-end",
+  "left",
+  "left-start",
+  "left-end",
+  "right",
+  "right-start",
+  "right-end",
+] as const;
+type Placement = (typeof placements)[number];
+
 function FloatingPage() {
-  const placements = useMemo(
-    () => ["top", "bottom", "left", "right"] as const,
-    []
-  );
-  type Placement = (typeof placements)[number];
-
-  const alignments = useMemo(() => ["start", "center", "end"] as const, []);
-  type Alignment = (typeof alignments)[number];
-
-  const verticalPositions = useMemo(
-    () => ["top", "middle", "bottom"] as const,
-    []
-  );
-  type VerticalPosition = (typeof verticalPositions)[number];
-
   const [enabled, setEnabled] = useState(true);
   const [placement, setPlacement] = useState<Placement>("bottom");
   const [flip, setFlip] = useState(true);
   const [offset, setOffset] = useState(0);
-  const [xAlign, setXAlign] = useState<Alignment>("center");
-  const [yPos, setYPos] = useState<VerticalPosition>("middle");
-
-  const spacerHeight = useMemo(() => {
-    const spacerByPos: Record<VerticalPosition, number> = {
-      top: 16,
-      middle: 220,
-      bottom: 460,
-    };
-    return spacerByPos[yPos];
-  }, [yPos]);
 
   const anchor = (
-    <Button
-      variant="secondary"
-      style={{ width: 160 }}
-      onClick={() => setEnabled((prev) => !prev)}
-    >
+    <Button variant="secondary" onClick={() => setEnabled((prev) => !prev)}>
       {enabled ? "Hide content" : "Show content"}
     </Button>
   );
@@ -101,30 +87,11 @@ function FloatingPage() {
                       : 0
                   )
                 }
-                style={{ width: 120 }}
               />
             </LabeledField>
           </ShowcaseRow>
 
           <ShowcaseRow vfx={{ justify: "between", width: "full" }}>
-            <LabeledField label="Anchor X align">
-              <Select
-                aria-label="x-align"
-                options={[...alignments]}
-                value={xAlign}
-                onChange={(e) => setXAlign(e.target.value as Alignment)}
-              />
-            </LabeledField>
-
-            <LabeledField label="Anchor Y position">
-              <Select
-                aria-label="y-pos"
-                options={[...verticalPositions]}
-                value={yPos}
-                onChange={(e) => setYPos(e.target.value as VerticalPosition)}
-              />
-            </LabeledField>
-
             <Box vfx={{ width: "fit" }}>
               <Box vfx={{ marginBottom: "xs", fontWeight: 5, fontSize: "s" }}>
                 Tip
@@ -147,10 +114,7 @@ function FloatingPage() {
           >
             <Box vfx={{ axis: "y", gap: "l" }}>
               <ui.div vfx={{ color: "muted" }}>Scroll area start</ui.div>
-
-              <Box style={{ height: spacerHeight }} />
-
-              <Box vfx={{ axis: "x", justify: xAlign, width: "full" }}>
+              <Box vfx={{ axis: "x", width: "full" }}>
                 <Floating
                   anchor={anchor}
                   visible={enabled}

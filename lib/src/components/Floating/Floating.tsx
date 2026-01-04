@@ -3,11 +3,27 @@ import useMergeRefs from "../../hooks/useMergeRefs";
 import type { Children } from "../../types/common";
 import Animated from "../Animated";
 
-type Placement = "top" | "bottom" | "left" | "right";
+const placements = [
+  "top",
+  "top-start",
+  "top-end",
+  "bottom",
+  "bottom-start",
+  "bottom-end",
+  "left",
+  "left-start",
+  "left-end",
+  "right",
+  "right-start",
+  "right-end",
+] as const;
 
-type AnimatedProps = React.ComponentProps<typeof Animated>;
+type Placement = (typeof placements)[number];
 
-type Props = Omit<AnimatedProps, "children" | "visible" | "keepMounted"> & {
+type Props = Omit<
+  React.ComponentProps<typeof Animated>,
+  "children" | "visible" | "keepMounted"
+> & {
   /**
    * Anchor element the floating content is positioned relative to.
    * IMPORTANT: must be a single element that can hold a ref.
@@ -35,6 +51,115 @@ type Props = Omit<AnimatedProps, "children" | "visible" | "keepMounted"> & {
 };
 
 type Position = { top: number; left: number };
+
+const opposites: Record<Placement, Placement> = {
+  top: "bottom",
+  "top-start": "bottom-start",
+  "top-end": "bottom-end",
+  bottom: "top",
+  "bottom-start": "top-start",
+  "bottom-end": "top-end",
+  left: "right",
+  "left-start": "right-start",
+  "left-end": "right-end",
+  right: "left",
+  "right-start": "left-start",
+  "right-end": "left-end",
+};
+
+const centerX = (anchorRect: DOMRect, contentRect: DOMRect) =>
+  anchorRect.left + anchorRect.width / 2 - contentRect.width / 2;
+const startX = (anchorRect: DOMRect) => anchorRect.left;
+const endX = (anchorRect: DOMRect, contentRect: DOMRect) =>
+  anchorRect.right - contentRect.width;
+
+const centerY = (anchorRect: DOMRect, contentRect: DOMRect) =>
+  anchorRect.top + anchorRect.height / 2 - contentRect.height / 2;
+const startY = (anchorRect: DOMRect) => anchorRect.top;
+const endY = (anchorRect: DOMRect, contentRect: DOMRect) =>
+  anchorRect.bottom - contentRect.height;
+
+type Positioner = (args: {
+  anchorRect: DOMRect;
+  contentRect: DOMRect;
+  offset: number;
+}) => Position;
+
+const positioners: Record<Placement, Positioner> = {
+  top: ({ anchorRect, contentRect, offset }) => ({
+    top: anchorRect.top - contentRect.height - offset,
+    left: centerX(anchorRect, contentRect),
+  }),
+  "top-start": ({ anchorRect, contentRect, offset }) => ({
+    top: anchorRect.top - contentRect.height - offset,
+    left: startX(anchorRect),
+  }),
+  "top-end": ({ anchorRect, contentRect, offset }) => ({
+    top: anchorRect.top - contentRect.height - offset,
+    left: endX(anchorRect, contentRect),
+  }),
+
+  bottom: ({ anchorRect, contentRect, offset }) => ({
+    top: anchorRect.bottom + offset,
+    left: centerX(anchorRect, contentRect),
+  }),
+  "bottom-start": ({ anchorRect, offset }) => ({
+    top: anchorRect.bottom + offset,
+    left: startX(anchorRect),
+  }),
+  "bottom-end": ({ anchorRect, contentRect, offset }) => ({
+    top: anchorRect.bottom + offset,
+    left: endX(anchorRect, contentRect),
+  }),
+
+  left: ({ anchorRect, contentRect, offset }) => ({
+    top: centerY(anchorRect, contentRect),
+    left: anchorRect.left - contentRect.width - offset,
+  }),
+  "left-start": ({ anchorRect, contentRect, offset }) => ({
+    top: startY(anchorRect),
+    left: anchorRect.left - contentRect.width - offset,
+  }),
+  "left-end": ({ anchorRect, contentRect, offset }) => ({
+    top: endY(anchorRect, contentRect),
+    left: anchorRect.left - contentRect.width - offset,
+  }),
+
+  right: ({ anchorRect, contentRect, offset }) => ({
+    top: centerY(anchorRect, contentRect),
+    left: anchorRect.right + offset,
+  }),
+  "right-start": ({ anchorRect, offset }) => ({
+    top: startY(anchorRect),
+    left: anchorRect.right + offset,
+  }),
+  "right-end": ({ anchorRect, contentRect, offset }) => ({
+    top: endY(anchorRect, contentRect),
+    left: anchorRect.right + offset,
+  }),
+};
+
+const overflowChecks: Record<
+  Placement,
+  (position: Position, rect: DOMRect) => boolean
+> = {
+  top: (position) => position.top < 0,
+  "top-start": (position) => position.top < 0,
+  "top-end": (position) => position.top < 0,
+  bottom: (position, rect) => position.top + rect.height > window.innerHeight,
+  "bottom-start": (position, rect) =>
+    position.top + rect.height > window.innerHeight,
+  "bottom-end": (position, rect) =>
+    position.top + rect.height > window.innerHeight,
+  left: (position) => position.left < 0,
+  "left-start": (position) => position.left < 0,
+  "left-end": (position) => position.left < 0,
+  right: (position, rect) => position.left + rect.width > window.innerWidth,
+  "right-start": (position, rect) =>
+    position.left + rect.width > window.innerWidth,
+  "right-end": (position, rect) =>
+    position.left + rect.width > window.innerWidth,
+};
 
 /** Position content relative to an anchor element */
 const Floating = ({
@@ -67,11 +192,11 @@ const Floating = ({
     const contentRect = floatingEl.getBoundingClientRect();
 
     let nextPlacement = placement;
-    let nextPosition = positioners[nextPlacement](
+    let nextPosition = positioners[nextPlacement]({
       anchorRect,
       contentRect,
-      offset
-    );
+      offset,
+    });
     const overflowsViewport = overflowChecks[nextPlacement](
       nextPosition,
       contentRect
@@ -79,11 +204,11 @@ const Floating = ({
 
     if (flip && overflowsViewport) {
       nextPlacement = opposites[nextPlacement];
-      nextPosition = positioners[nextPlacement](
+      nextPosition = positioners[nextPlacement]({
         anchorRect,
         contentRect,
-        offset
-      );
+        offset,
+      });
     }
 
     setPosition((prev) => {
@@ -147,45 +272,6 @@ const Floating = ({
       </Animated>
     </>
   );
-};
-
-const opposites: Record<Placement, Placement> = {
-  top: "bottom",
-  bottom: "top",
-  left: "right",
-  right: "left",
-};
-
-const positioners: Record<
-  Placement,
-  (anchorRect: DOMRect, contentRect: DOMRect, offset: number) => Position
-> = {
-  bottom: (anchorRect, contentRect, offset) => ({
-    top: anchorRect.bottom + offset,
-    left: anchorRect.left + anchorRect.width / 2 - contentRect.width / 2,
-  }),
-  top: (anchorRect, contentRect, offset) => ({
-    top: anchorRect.top - contentRect.height - offset,
-    left: anchorRect.left + anchorRect.width / 2 - contentRect.width / 2,
-  }),
-  right: (anchorRect, contentRect, offset) => ({
-    top: anchorRect.top + anchorRect.height / 2 - contentRect.height / 2,
-    left: anchorRect.right + offset,
-  }),
-  left: (anchorRect, contentRect, offset) => ({
-    top: anchorRect.top + anchorRect.height / 2 - contentRect.height / 2,
-    left: anchorRect.left - contentRect.width - offset,
-  }),
-};
-
-const overflowChecks: Record<
-  Placement,
-  (position: Position, rect: DOMRect) => boolean
-> = {
-  bottom: (position, rect) => position.top + rect.height > window.innerHeight,
-  top: (position) => position.top < 0,
-  right: (position, rect) => position.left + rect.width > window.innerWidth,
-  left: (position) => position.left < 0,
 };
 
 export default Floating;

@@ -9,8 +9,7 @@ class MockResizeObserver {
   observe = jest.fn();
   unobserve = jest.fn();
   disconnect = jest.fn();
-
-  constructor(_callback: ResizeObserverCallback) {}
+  constructor() {}
 }
 
 Object.defineProperty(window, "ResizeObserver", {
