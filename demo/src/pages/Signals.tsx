@@ -58,7 +58,7 @@ export default function Signals() {
         <ShowcaseRow vfx={{ marginX: "auto", width: "fit" }}>
           {contentTypes.map((type) => (
             <Badge key={type} type={type}>
-              {type[0].toUpperCase() + type.slice(1)}
+              <ui.span style={{ textTransform: "capitalize" }}>{type}</ui.span>
             </Badge>
           ))}
         </ShowcaseRow>
