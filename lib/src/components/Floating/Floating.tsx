@@ -3,7 +3,7 @@ import useMergeRefs from "../../hooks/useMergeRefs";
 import type { Children } from "../../types/common";
 import Animated from "../Animated";
 
-const placements = [
+export const placements = [
   "top",
   "top-start",
   "top-end",
