@@ -1,27 +1,25 @@
 import { useCallback, useEffect, useRef } from "react";
 import type { ReadonlyableArray } from "../../types/common";
 
-export type EventTypes = {
-  click: MouseEvent;
-  mousedown: MouseEvent;
-  mouseup: MouseEvent;
-  pointerdown: PointerEvent;
-  pointerup: PointerEvent;
-};
+export type EventType =
+  | "click"
+  | "mousedown"
+  | "mouseup"
+  | "pointerdown"
+  | "pointerup";
 
-export type EventType = keyof EventTypes;
 type Target = Element | null | undefined;
 
-type Config<T extends EventType> = {
+type Config = {
   /** Element(s) to treat as the "inside" boundary */
   targets: ReadonlyableArray<Target>;
   /** Callback fired when an event occurs outside all targets */
-  onClickOutside: (event: EventTypes[T]) => void;
+  onClickOutside: (event: MouseEvent | PointerEvent) => void;
   /**
    * Document event type to listen for.
    * @default "click"
    */
-  eventType?: T;
+  eventType?: EventType;
   /**
    * Whether the listener is enabled.
    * @default true
@@ -41,7 +39,7 @@ function isInside(event: Event, element: Target) {
  * Fire a callback when an event occurs outside all targets.
  * This does not add any DOM; it relies on a provided list of elements.
  */
-const useClickOutside = <T extends EventType>(config: Config<T>) => {
+const useClickOutside = (config: Config) => {
   const {
     targets,
     onClickOutside,
@@ -62,10 +60,9 @@ const useClickOutside = <T extends EventType>(config: Config<T>) => {
     };
   }, []);
 
-  const handler = useCallback(
-    (event: EventTypes[T]) => {
+  const handleEvent = useCallback(
+    (event: MouseEvent | PointerEvent) => {
       if (!enabled || !startedRef.current) return;
-
       const insideTarget = targets.some((el) => isInside(event, el));
       if (insideTarget) return;
 
@@ -76,10 +73,9 @@ const useClickOutside = <T extends EventType>(config: Config<T>) => {
 
   useEffect(() => {
     if (!enabled) return;
-    document.addEventListener(eventType, handler as EventListener);
-    return () =>
-      document.removeEventListener(eventType, handler as EventListener);
-  }, [enabled, handler, eventType]);
+    document.addEventListener(eventType, handleEvent);
+    return () => document.removeEventListener(eventType, handleEvent);
+  }, [enabled, handleEvent, eventType]);
 };
 
 export default useClickOutside;

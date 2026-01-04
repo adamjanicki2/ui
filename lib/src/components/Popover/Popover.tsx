@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useMergeRefs from "../../hooks/useMergeRefs";
-import useClickOutside from "../../hooks/useClickOutside";
+import useClickOutside from "../ClickOutside/useClickOutside";
 import Floating from "../Floating";
 
 type FloatingProps = React.ComponentProps<typeof Floating>;
@@ -18,13 +18,13 @@ export type PopoverProps = Omit<
 };
 
 /** A controlled popover anchored to an element */
-export default function Popover({
+const Popover = ({
   anchor,
   open,
   onClose,
   children,
   ...floatingProps
-}: PopoverProps): React.JSX.Element {
+}: PopoverProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [floatingEl, setFloatingEl] = useState<HTMLDivElement | null>(null);
 
@@ -65,4 +65,6 @@ export default function Popover({
       floatingContent={children}
     />
   );
-}
+};
+
+export default Popover;
