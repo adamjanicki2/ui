@@ -67,100 +67,6 @@ const opposites: Record<Placement, Placement> = {
   "right-end": "left-end",
 };
 
-const centerX = (anchorRect: DOMRect, contentRect: DOMRect) =>
-  anchorRect.left + anchorRect.width / 2 - contentRect.width / 2;
-const startX = (anchorRect: DOMRect) => anchorRect.left;
-const endX = (anchorRect: DOMRect, contentRect: DOMRect) =>
-  anchorRect.right - contentRect.width;
-
-const centerY = (anchorRect: DOMRect, contentRect: DOMRect) =>
-  anchorRect.top + anchorRect.height / 2 - contentRect.height / 2;
-const startY = (anchorRect: DOMRect) => anchorRect.top;
-const endY = (anchorRect: DOMRect, contentRect: DOMRect) =>
-  anchorRect.bottom - contentRect.height;
-
-type Positioner = (args: {
-  anchorRect: DOMRect;
-  contentRect: DOMRect;
-  offset: number;
-}) => Position;
-
-const positioners: Record<Placement, Positioner> = {
-  top: ({ anchorRect, contentRect, offset }) => ({
-    top: anchorRect.top - contentRect.height - offset,
-    left: centerX(anchorRect, contentRect),
-  }),
-  "top-start": ({ anchorRect, contentRect, offset }) => ({
-    top: anchorRect.top - contentRect.height - offset,
-    left: startX(anchorRect),
-  }),
-  "top-end": ({ anchorRect, contentRect, offset }) => ({
-    top: anchorRect.top - contentRect.height - offset,
-    left: endX(anchorRect, contentRect),
-  }),
-
-  bottom: ({ anchorRect, contentRect, offset }) => ({
-    top: anchorRect.bottom + offset,
-    left: centerX(anchorRect, contentRect),
-  }),
-  "bottom-start": ({ anchorRect, offset }) => ({
-    top: anchorRect.bottom + offset,
-    left: startX(anchorRect),
-  }),
-  "bottom-end": ({ anchorRect, contentRect, offset }) => ({
-    top: anchorRect.bottom + offset,
-    left: endX(anchorRect, contentRect),
-  }),
-
-  left: ({ anchorRect, contentRect, offset }) => ({
-    top: centerY(anchorRect, contentRect),
-    left: anchorRect.left - contentRect.width - offset,
-  }),
-  "left-start": ({ anchorRect, contentRect, offset }) => ({
-    top: startY(anchorRect),
-    left: anchorRect.left - contentRect.width - offset,
-  }),
-  "left-end": ({ anchorRect, contentRect, offset }) => ({
-    top: endY(anchorRect, contentRect),
-    left: anchorRect.left - contentRect.width - offset,
-  }),
-
-  right: ({ anchorRect, contentRect, offset }) => ({
-    top: centerY(anchorRect, contentRect),
-    left: anchorRect.right + offset,
-  }),
-  "right-start": ({ anchorRect, offset }) => ({
-    top: startY(anchorRect),
-    left: anchorRect.right + offset,
-  }),
-  "right-end": ({ anchorRect, contentRect, offset }) => ({
-    top: endY(anchorRect, contentRect),
-    left: anchorRect.right + offset,
-  }),
-};
-
-const overflowChecks: Record<
-  Placement,
-  (position: Position, rect: DOMRect) => boolean
-> = {
-  top: (position) => position.top < 0,
-  "top-start": (position) => position.top < 0,
-  "top-end": (position) => position.top < 0,
-  bottom: (position, rect) => position.top + rect.height > window.innerHeight,
-  "bottom-start": (position, rect) =>
-    position.top + rect.height > window.innerHeight,
-  "bottom-end": (position, rect) =>
-    position.top + rect.height > window.innerHeight,
-  left: (position) => position.left < 0,
-  "left-start": (position) => position.left < 0,
-  "left-end": (position) => position.left < 0,
-  right: (position, rect) => position.left + rect.width > window.innerWidth,
-  "right-start": (position, rect) =>
-    position.left + rect.width > window.innerWidth,
-  "right-end": (position, rect) =>
-    position.left + rect.width > window.innerWidth,
-};
-
 /** Position content relative to an anchor element */
 const Floating = ({
   anchor,
@@ -272,6 +178,100 @@ const Floating = ({
       </Animated>
     </>
   );
+};
+
+const centerX = (anchorRect: DOMRect, contentRect: DOMRect) =>
+  anchorRect.left + anchorRect.width / 2 - contentRect.width / 2;
+const startX = (anchorRect: DOMRect) => anchorRect.left;
+const endX = (anchorRect: DOMRect, contentRect: DOMRect) =>
+  anchorRect.right - contentRect.width;
+
+const centerY = (anchorRect: DOMRect, contentRect: DOMRect) =>
+  anchorRect.top + anchorRect.height / 2 - contentRect.height / 2;
+const startY = (anchorRect: DOMRect) => anchorRect.top;
+const endY = (anchorRect: DOMRect, contentRect: DOMRect) =>
+  anchorRect.bottom - contentRect.height;
+
+type Positioner = (args: {
+  anchorRect: DOMRect;
+  contentRect: DOMRect;
+  offset: number;
+}) => Position;
+
+const positioners: Record<Placement, Positioner> = {
+  top: ({ anchorRect, contentRect, offset }) => ({
+    top: anchorRect.top - contentRect.height - offset,
+    left: centerX(anchorRect, contentRect),
+  }),
+  "top-start": ({ anchorRect, contentRect, offset }) => ({
+    top: anchorRect.top - contentRect.height - offset,
+    left: startX(anchorRect),
+  }),
+  "top-end": ({ anchorRect, contentRect, offset }) => ({
+    top: anchorRect.top - contentRect.height - offset,
+    left: endX(anchorRect, contentRect),
+  }),
+
+  bottom: ({ anchorRect, contentRect, offset }) => ({
+    top: anchorRect.bottom + offset,
+    left: centerX(anchorRect, contentRect),
+  }),
+  "bottom-start": ({ anchorRect, offset }) => ({
+    top: anchorRect.bottom + offset,
+    left: startX(anchorRect),
+  }),
+  "bottom-end": ({ anchorRect, contentRect, offset }) => ({
+    top: anchorRect.bottom + offset,
+    left: endX(anchorRect, contentRect),
+  }),
+
+  left: ({ anchorRect, contentRect, offset }) => ({
+    top: centerY(anchorRect, contentRect),
+    left: anchorRect.left - contentRect.width - offset,
+  }),
+  "left-start": ({ anchorRect, contentRect, offset }) => ({
+    top: startY(anchorRect),
+    left: anchorRect.left - contentRect.width - offset,
+  }),
+  "left-end": ({ anchorRect, contentRect, offset }) => ({
+    top: endY(anchorRect, contentRect),
+    left: anchorRect.left - contentRect.width - offset,
+  }),
+
+  right: ({ anchorRect, contentRect, offset }) => ({
+    top: centerY(anchorRect, contentRect),
+    left: anchorRect.right + offset,
+  }),
+  "right-start": ({ anchorRect, offset }) => ({
+    top: startY(anchorRect),
+    left: anchorRect.right + offset,
+  }),
+  "right-end": ({ anchorRect, contentRect, offset }) => ({
+    top: endY(anchorRect, contentRect),
+    left: anchorRect.right + offset,
+  }),
+};
+
+const overflowChecks: Record<
+  Placement,
+  (position: Position, rect: DOMRect) => boolean
+> = {
+  top: (position) => position.top < 0,
+  "top-start": (position) => position.top < 0,
+  "top-end": (position) => position.top < 0,
+  bottom: (position, rect) => position.top + rect.height > window.innerHeight,
+  "bottom-start": (position, rect) =>
+    position.top + rect.height > window.innerHeight,
+  "bottom-end": (position, rect) =>
+    position.top + rect.height > window.innerHeight,
+  left: (position) => position.left < 0,
+  "left-start": (position) => position.left < 0,
+  "left-end": (position) => position.left < 0,
+  right: (position, rect) => position.left + rect.width > window.innerWidth,
+  "right-start": (position, rect) =>
+    position.left + rect.width > window.innerWidth,
+  "right-end": (position, rect) =>
+    position.left + rect.width > window.innerWidth,
 };
 
 export default Floating;
