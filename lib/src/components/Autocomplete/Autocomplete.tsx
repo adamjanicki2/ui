@@ -8,62 +8,53 @@ type PopoverProps = React.ComponentProps<typeof Popover>;
 type IconInputProps = React.ComponentProps<typeof IconInput>;
 type InputElementProps = NonNullable<IconInputProps["inputProps"]>;
 
-export type ChangeReason = "select" | "enter" | "clear";
-
-export type AutocompleteProps<T> = {
+type Props<T> = Omit<IconInputProps, "inputProps" | "onSelect"> & {
+  /** The value of the input field */
+  value: string;
+  /**
+   * Callback for when the input field changes.
+   * @param event Standard React ChangeEvent.
+   */
+  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  /**
+   * Callback for when an option is selected.
+   * @param value Selected value.
+   */
+  onSelect: (value: T) => void;
   /** The list of available options */
   options: ReadonlyableArray<T>;
-  /** Currently selected value */
-  value: T | null;
-  /** Fired when the selected value changes */
-  onChange: (
-    value: T | null,
-    info: { reason: ChangeReason; option?: T }
-  ) => void;
-  /** Current query text value */
-  query: string;
-  /** Set the query text value */
-  setQuery: (query: string) => void;
-  /** Allow selecting arbitrary text being typed in */
-  customize?: boolean;
-  /** Fired when an arbitrary query is selected via customize */
-  onCustomSelect?: (query: string, info: { reason: ChangeReason }) => void;
-  /** Get display label for an option */
-  getOptionLabel?: (option: T) => string;
-  /** Determine if two options are equal (used for selected state) */
-  isOptionEqual?: (a: T, b: T) => boolean;
-  /** Predicate to filter options */
-  filterOption?: (option: T, query: string) => boolean;
-  /** Render function for a normal option */
-  renderOption?: (
-    option: T,
-    state: { highlighted: boolean; selected: boolean }
-  ) => React.ReactNode;
-  /** Render function for the customize option */
-  renderCustomOption?: (query: string) => React.ReactNode;
+  /**
+   * Predicate to filter options.
+   * @param option Current option.
+   * @returns True if the option should be displayed.
+   */
+  filterOption?: (option: T) => boolean;
+  /**
+   * Render function for the option.
+   * @param option Current option.
+   * @returns Node to render for the option.
+   */
+  renderOption?: (option: T) => React.ReactNode;
   /** Node to render when no options are available */
   noOptionsNode?: React.ReactNode;
-  /** Group options by a string. */
-  groupBy?: (option: T) => string;
-  /** Render function for the group. */
-  renderGroup?: (group: string) => React.ReactNode;
   /**
-   * Close the popover when a selection occurs.
-   * @default true
+   * Group options by a string.
+   * @param option Current option.
+   * @returns String to group by.
    */
-  closeOnSelect?: boolean;
+  groupBy?: (option: T) => string;
+  /**
+   * Render function for the group.
+   * @param group Name.
+   * @returns Node to render for the group.
+   */
+  renderGroup?: (group: string) => React.ReactNode;
+  /** Allow free text input */
+  customize?: boolean;
   /** Props to pass to the underlying `input` */
-  inputProps?: Omit<
-    InputElementProps,
-    "value" | "onChange" | "ref" | "autoComplete"
-  >;
-  /** Props to pass to the IconInput wrapper */
-  iconInputProps?: Omit<IconInputProps, "inputProps">;
+  inputProps?: Omit<InputElementProps, "value" | "onChange" | "autoComplete">;
   /** Props for the popover */
-  popoverProps?: Omit<
-    PopoverProps,
-    "open" | "onClose" | "anchor" | "children" | "placement"
-  >;
+  popoverProps?: Omit<PopoverProps, "open" | "onClose" | "anchor" | "children">;
   /** Footer node to render at the bottom of the popover */
   footer?: React.ReactNode;
   /**
@@ -71,36 +62,39 @@ export type AutocompleteProps<T> = {
    * @default true
    */
   closeOnFooterClick?: boolean;
+  /** Callback fired when the user hits the Enter key while no option is selected */
+  onUnselectedEnter?: () => void;
+  /**
+   * Whether or not to leave the popover open after a selection occurs.
+   * @default false
+   */
+  remainOpenOnSelectOrEnter?: boolean;
 };
 
-const defaultRenderOption = (label: string) => (
-  <Box vfx={{ padding: "s" }}>{label}</Box>
+const defaultRenderOption = <T,>(option: T) => (
+  <Box vfx={{ padding: "s" }}>{`${option}`}</Box>
 );
 
 /** Searchable select input with an overlay menu */
-const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
+const Autocomplete = <T,>(props: Props<T>) => {
   const {
+    inputProps,
     options,
-    value,
-    onChange,
-    query,
-    setQuery,
-    customize,
-    onCustomSelect,
-    getOptionLabel,
-    isOptionEqual,
-    filterOption,
-    renderOption,
-    renderCustomOption,
+    renderOption = defaultRenderOption,
+    filterOption = () => true,
     groupBy,
     renderGroup,
     noOptionsNode,
-    closeOnSelect = true,
-    inputProps,
-    iconInputProps,
+    customize = false,
+    value,
+    onInputChange,
+    onSelect,
     popoverProps,
     footer,
+    onUnselectedEnter,
     closeOnFooterClick = true,
+    remainOpenOnSelectOrEnter = false,
+    ...iconInputProps
   } = props;
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
@@ -111,13 +105,7 @@ const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
   const [open, setOpen] = useState(false);
 
   const { filteredOptions, groupMap } = useMemo(() => {
-    const getLabel = (option: T) => getOptionLabel?.(option) ?? `${option}`;
-    const filter =
-      filterOption ??
-      ((option: T, input: string) =>
-        getLabel(option).toLowerCase().includes(input.toLowerCase()));
-
-    let filtered = options.filter((option) => filter(option, query));
+    let filtered = options.filter(filterOption);
     const map = new Map<number, string>();
 
     if (groupBy) {
@@ -135,8 +123,11 @@ const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
       });
     }
 
+    if (customize && value.length > 0 && filtered.length === 0)
+      filtered = [...filtered, value as T];
+
     return { filteredOptions: filtered, groupMap: map };
-  }, [filterOption, getOptionLabel, groupBy, options, query]);
+  }, [customize, filterOption, groupBy, options, value]);
 
   const openMenu = () => setOpen(true);
 
@@ -146,21 +137,14 @@ const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
     inputRef.current?.blur();
   };
 
-  const selectCustom = (reason: ChangeReason) => {
-    if (!customize || !query) return;
-    onCustomSelect?.(query, { reason });
-    if (closeOnSelect) closeMenu();
-  };
-
-  const selectOption = (selected: T, reason: ChangeReason) => {
-    onChange(selected, { reason, option: selected });
-    setQuery(getOptionLabel?.(selected) ?? `${selected}`);
-    if (closeOnSelect) closeMenu();
+  const handleSelect = (selected: T) => {
+    onSelect(selected);
+    if (!remainOpenOnSelectOrEnter) closeMenu();
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHighlightedIndex(undefined);
-    setQuery(e.target.value);
+    onInputChange(e);
     if (e.target.value || options.length > 0) openMenu();
   };
 
@@ -175,11 +159,12 @@ const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
     if (code === "Enter") {
       if (highlightedIndex !== undefined) {
         const selected = filteredOptions[highlightedIndex];
-        if (selected !== undefined) selectOption(selected, "select");
+        if (selected !== undefined) handleSelect(selected);
         return;
       }
 
-      selectCustom("enter");
+      onUnselectedEnter?.();
+      if (!remainOpenOnSelectOrEnter) closeMenu();
       return;
     }
 
@@ -196,17 +181,14 @@ const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
   };
 
   useEffect(() => {
-    if (highlightedIndex !== undefined)
-      highlightedRef.current?.scrollIntoView?.({
-        block: "nearest",
-        behavior: "smooth",
-      });
+    if (highlightedIndex === undefined) return;
+    highlightedRef.current?.scrollIntoView?.({
+      block: "nearest",
+      behavior: "smooth",
+    });
   }, [highlightedIndex]);
 
-  const popoverOpen = open && (filteredOptions.length > 0 || query.length > 0);
-  const showCustomOption = Boolean(
-    customize && query && filteredOptions.length === 0
-  );
+  const popoverOpen = open && (filteredOptions.length > 0 || value.length > 0);
 
   const {
     style: popoverStyle,
@@ -216,7 +198,7 @@ const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
     ...restPopoverProps
   } = popoverProps || {};
 
-  const { onKeyUp: onKeyUpProp, ...restIconInputProps } = iconInputProps || {};
+  const { onKeyUp: onKeyUpProp, ...restIconInputProps } = iconInputProps;
 
   return (
     <Popover
@@ -236,7 +218,7 @@ const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
           }}
           inputProps={{
             ...inputProps,
-            value: query,
+            value,
             onChange: handleInputChange,
             onFocus: handleInputFocus,
             ref: inputRef,
@@ -262,42 +244,31 @@ const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
         style={{ maxHeight: 300 }}
         tabIndex={-1}
       >
-        {filteredOptions.map((option, index) => {
-          const group = groupMap.get(index);
-          const selected = value
-            ? isOptionEqual?.(value, option) ?? value === option
-            : false;
-          const highlighted = highlightedIndex === index;
+        {filteredOptions.length
+          ? filteredOptions.map((option, index) => {
+              const group = groupMap.get(index);
+              const highlighted = highlightedIndex === index;
 
-          return (
-            <React.Fragment key={index}>
-              {group && (renderGroup?.(group) || group)}
-              <Box
-                vfx={{ axis: "x", cursor: "pointer", radius: "rounded" }}
-                ref={highlighted ? highlightedRef : undefined}
-                onMouseEnter={() => setHighlightedIndex(index)}
-                className={
-                  highlighted ? "aui-autocomplete-on-option" : undefined
-                }
-                onClick={() => selectOption(option, "select")}
-              >
-                {renderOption?.(option, { highlighted, selected }) ??
-                  defaultRenderOption(getOptionLabel?.(option) ?? `${option}`)}
-              </Box>
-            </React.Fragment>
-          );
-        })}
-        {!filteredOptions.length &&
-          (showCustomOption ? (
-            <Box
-              vfx={{ axis: "x", cursor: "pointer", radius: "rounded" }}
-              onClick={() => selectCustom("select")}
-            >
-              {renderCustomOption?.(query) ?? defaultRenderOption(query)}
-            </Box>
-          ) : (
-            noOptionsNode || defaultRenderOption("No results found")
-          ))}
+              return (
+                <React.Fragment key={index}>
+                  {group && (renderGroup?.(group) || group)}
+                  <Box
+                    vfx={{ axis: "x", cursor: "pointer", radius: "rounded" }}
+                    ref={highlighted ? highlightedRef : undefined}
+                    onMouseEnter={() => setHighlightedIndex(index)}
+                    className={
+                      highlighted ? "aui-autocomplete-on-option" : undefined
+                    }
+                    onClick={() => handleSelect(option)}
+                  >
+                    {renderOption(option)}
+                  </Box>
+                </React.Fragment>
+              );
+            })
+          : customize
+          ? null
+          : noOptionsNode || defaultRenderOption("No results found")}
       </Box>
       {footer && (
         <Box onClick={closeOnFooterClick ? closeMenu : undefined}>{footer}</Box>

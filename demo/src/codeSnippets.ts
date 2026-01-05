@@ -199,13 +199,9 @@ export const autoCompleteSnippet = `
 <Autocomplete
   options={fruits}
   value={value}
-  onChange={setValue}
-  onCustomSelect={setValue}
-  query={query}
-  setQuery={setQuery}
-  filterOption={(option, query) =>
-    option.toLowerCase().includes(query.toLowerCase())
-  }
+  onInputChange={(e) => setValue(e.target.value)}
+  filterOption={(option) => option.toLowerCase().includes(value.toLowerCase())}
+  onSelect={(selected) => setValue(selected)}
   inputProps={{ placeholder: "Fruits" }}
   customize
 />;
