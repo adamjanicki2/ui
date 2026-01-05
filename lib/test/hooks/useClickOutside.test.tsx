@@ -13,7 +13,7 @@ describe("useClickOutside", () => {
     const callback = jest.fn();
 
     const Wrapper = () => {
-      const [target, setTarget] = React.useState<HTMLDivElement | null>(null);
+      const target = React.useRef<HTMLDivElement | null>(null);
       useClickOutside({
         targets: [target],
         eventType: "pointerdown",
@@ -21,7 +21,7 @@ describe("useClickOutside", () => {
       });
       return (
         <div>
-          <div data-testid="target" ref={setTarget} />
+          <div data-testid="target" ref={target} />
           <button data-testid="outside">Outside</button>
         </div>
       );
@@ -38,7 +38,7 @@ describe("useClickOutside", () => {
     const callback = jest.fn();
 
     const Wrapper = () => {
-      const [target, setTarget] = React.useState<HTMLDivElement | null>(null);
+      const target = React.useRef<HTMLDivElement | null>(null);
       useClickOutside({
         targets: [target],
         eventType: "pointerdown",
@@ -46,7 +46,7 @@ describe("useClickOutside", () => {
       });
       return (
         <div>
-          <div data-testid="target" ref={setTarget} />
+          <div data-testid="target" ref={target} />
         </div>
       );
     };
@@ -62,8 +62,8 @@ describe("useClickOutside", () => {
     const callback = jest.fn();
 
     const Wrapper = () => {
-      const [a, setA] = React.useState<HTMLDivElement | null>(null);
-      const [b, setB] = React.useState<HTMLDivElement | null>(null);
+      const a = React.useRef<HTMLDivElement | null>(null);
+      const b = React.useRef<HTMLDivElement | null>(null);
       useClickOutside({
         targets: [a, b],
         eventType: "pointerdown",
@@ -71,8 +71,8 @@ describe("useClickOutside", () => {
       });
       return (
         <div>
-          <div data-testid="a" ref={setA} />
-          <div data-testid="b" ref={setB} />
+          <div data-testid="a" ref={a} />
+          <div data-testid="b" ref={b} />
           <button data-testid="outside">Outside</button>
         </div>
       );
@@ -90,7 +90,7 @@ describe("useClickOutside", () => {
     const callback = jest.fn();
 
     const Wrapper = () => {
-      const [target, setTarget] = React.useState<HTMLDivElement | null>(null);
+      const target = React.useRef<HTMLDivElement | null>(null);
       useClickOutside({
         targets: [target],
         enabled: false,
@@ -99,7 +99,7 @@ describe("useClickOutside", () => {
       });
       return (
         <div>
-          <div data-testid="target" ref={setTarget} />
+          <div data-testid="target" ref={target} />
           <button data-testid="outside">Outside</button>
         </div>
       );
@@ -112,4 +112,3 @@ describe("useClickOutside", () => {
     expect(callback).toHaveBeenCalledTimes(0);
   });
 });
-
