@@ -59,10 +59,7 @@ type Props<T> = Omit<IconInputProps, "inputProps"> & {
   renderGroup?: (group: string) => React.ReactNode;
   /** Allow free text input */
   customize?: boolean;
-  /**
-   * Props to pass to the underlying `input`.
-   * `value`, `onChange`, `onClick`, `ref`, and `autoComplete` are controlled by `Autocomplete`.
-   */
+  /** Props to pass to the underlying `input` */
   inputProps?: Omit<
     InputElementProps,
     "value" | "onChange" | "onClick" | "ref" | "autoComplete"
@@ -182,7 +179,15 @@ const Autocomplete = <T,>(props: Props<T>) => {
     [onInputChange, openMenu, options.length]
   );
 
-  const handleInputClick = useCallback(() => openMenu(), [openMenu]);
+  const handleInputFocus = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      inputPropsFromProps?.onFocus?.(e);
+      if (e.defaultPrevented) return;
+      if (inputPropsFromProps?.disabled) return;
+      openMenu();
+    },
+    [inputPropsFromProps, openMenu]
+  );
 
   const handleKeyUp = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -232,7 +237,6 @@ const Autocomplete = <T,>(props: Props<T>) => {
   const {
     style: popoverStyle,
     vfx: popoverVfx,
-    placement: popoverPlacement,
     ...restPopoverProps
   } = popoverProps || {};
 
@@ -243,17 +247,16 @@ const Autocomplete = <T,>(props: Props<T>) => {
       ...(inputPropsFromProps ?? {}),
       value,
       onChange: handleInputChange,
-      onClick: handleInputClick,
+      onFocus: handleInputFocus,
       ref: inputRef,
       autoComplete: "off",
     }),
-    [handleInputChange, handleInputClick, inputPropsFromProps, value]
+    [handleInputChange, handleInputFocus, inputPropsFromProps, value]
   );
 
   return (
     <Popover
       {...restPopoverProps}
-      placement={popoverPlacement ?? "bottom-start"}
       open={popoverOpen}
       onClose={closeMenu}
       anchor={

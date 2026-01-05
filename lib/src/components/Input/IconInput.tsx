@@ -7,15 +7,13 @@ import ui from "../ui";
 type IconInputProps = Omit<BoxProps, "children"> & {
   /** Icon to display at the start of the input */
   startIcon?: React.ReactNode;
-  /** Icon to display at the end of the input */
-  endIcon?: React.ReactNode;
   /** Props to pass directly to the input element */
   inputProps?: InputProps;
 };
 
 /** An input wrapper with optional icons */
 const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
-  ({ startIcon, endIcon, className, vfx, inputProps, ...rest }, ref) => {
+  ({ startIcon, className, vfx, inputProps, ...rest }, ref) => {
     const {
       className: inputClassName,
       vfx: inputVfx,
@@ -46,7 +44,6 @@ const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
           }}
           className={classNames(`aui-input-base`, inputClassName)}
         />
-        {endIcon}
       </Box>
     );
   }

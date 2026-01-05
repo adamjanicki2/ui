@@ -4,6 +4,28 @@ import userEvent from "@testing-library/user-event";
 import Autocomplete from "../../src/components/Autocomplete";
 
 describe("Autocomplete", () => {
+  it("opens on focus without a click", async () => {
+    const user = userEvent.setup();
+
+    const Controlled = () => {
+      const [value, setValue] = React.useState("");
+      return (
+        <Autocomplete
+          value={value}
+          onInputChange={(e) => setValue(e.target.value)}
+          onSelect={() => {}}
+          options={["Apple", "Banana"]}
+          popoverProps={{ duration: 0 }}
+        />
+      );
+    };
+
+    render(<Controlled />);
+
+    await user.tab();
+    expect(screen.getByText("Apple")).toBeInTheDocument();
+  });
+
   it("opens on click and selects an option", async () => {
     const user = userEvent.setup();
     const onSelect = jest.fn();
@@ -57,4 +79,3 @@ describe("Autocomplete", () => {
     expect(onUnselectedEnter).toHaveBeenCalledTimes(1);
   });
 });
-
