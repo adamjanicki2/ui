@@ -121,30 +121,22 @@ const Autocomplete = <T,>(props: Props<T>) => {
     const map = new Map<number, string>();
 
     if (groupBy) {
-      const uniqueGroups: string[] = [];
-      const seen = new Set<string>();
+      const grouped = new Map<string, T[]>();
       for (const option of filtered) {
         const group = groupBy(option);
-        if (!seen.has(group)) {
-          seen.add(group);
-          uniqueGroups.push(group);
-        }
+        const items = grouped.get(group);
+        if (items) items.push(option);
+        else grouped.set(group, [option]);
       }
-
-      let offset = 0;
-      filtered = uniqueGroups.flatMap((group) => {
-        const groupItems = filtered.filter(
-          (option) => groupBy(option) === group
-        );
-        map.set(offset, group);
-        offset += groupItems.length;
-        return groupItems;
+      filtered = [];
+      grouped.forEach((items, group) => {
+        map.set(filtered.length, group);
+        filtered.push(...items);
       });
     }
 
-    if (customize && value.length > 0 && filtered.length === 0) {
+    if (customize && value && !filtered.length)
       filtered = [...filtered, value as T];
-    }
 
     return { filteredOptions: filtered, groupMap: map };
   }, [customize, filterOption, groupBy, options, value]);
@@ -177,9 +169,7 @@ const Autocomplete = <T,>(props: Props<T>) => {
   const handleInputFocus = useCallback(
     (e: React.FocusEvent<HTMLInputElement>) => {
       inputProps?.onFocus?.(e);
-      if (e.defaultPrevented) return;
-      if (inputProps?.disabled) return;
-      openMenu();
+      if (!e.defaultPrevented && !inputProps?.disabled) openMenu();
     },
     [inputProps, openMenu]
   );
@@ -220,11 +210,11 @@ const Autocomplete = <T,>(props: Props<T>) => {
   );
 
   useEffect(() => {
-    if (highlightedIndex === undefined) return;
-    highlightedRef.current?.scrollIntoView?.({
-      block: "nearest",
-      behavior: "smooth",
-    });
+    if (highlightedIndex !== undefined)
+      highlightedRef.current?.scrollIntoView?.({
+        block: "nearest",
+        behavior: "smooth",
+      });
   }, [highlightedIndex]);
 
   const popoverOpen = open && (filteredOptions.length > 0 || value.length > 0);
@@ -289,15 +279,15 @@ const Autocomplete = <T,>(props: Props<T>) => {
         {filteredOptions.length
           ? filteredOptions.map((option, index) => {
               const group = groupMap.get(index);
-              const ref =
-                index === highlightedIndex ? highlightedRef : undefined;
 
               return (
                 <React.Fragment key={index}>
                   {group && (renderGroup?.(group) || group)}
                   <Box
                     vfx={{ axis: "x", cursor: "pointer", radius: "rounded" }}
-                    ref={ref}
+                    ref={
+                      index === highlightedIndex ? highlightedRef : undefined
+                    }
                     onMouseEnter={() => setHighlightedIndex(index)}
                     className={
                       highlightedIndex === index

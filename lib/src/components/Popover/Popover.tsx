@@ -38,10 +38,7 @@ const Popover = ({
   onCloseRef.current = onClose;
   openRef.current = open;
 
-  const mergedAnchorRef = useMergeRefs<HTMLElement>(
-    anchorRef,
-    anchor.props.ref
-  );
+  const mergedAnchorRef = useMergeRefs<HTMLElement>(anchorRef, anchor.props.ref);
 
   useClickOutside({
     targets: [floatingRef, anchorRef],
