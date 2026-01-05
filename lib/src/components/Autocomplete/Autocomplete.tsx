@@ -104,7 +104,7 @@ const Autocomplete = <T,>(props: Props<T>) => {
   const [highlightedIndex, setHighlightedIndex] = useState<number>();
   const [open, setOpen] = useState(false);
 
-  const { filteredOptions, groupMap } = useMemo(() => {
+  const { filteredOptions, groupMap, hasCustomOption } = useMemo(() => {
     let filtered = options.filter(filterOption);
     const map = new Map<number, string>();
 
@@ -123,8 +123,17 @@ const Autocomplete = <T,>(props: Props<T>) => {
       });
     }
 
-    return { filteredOptions: filtered, groupMap: map };
-  }, [filterOption, groupBy, options]);
+    const hasCustomOption = Boolean(
+      customize && value.length > 0 && !filtered.length
+    );
+    if (hasCustomOption && customize) filtered = [customize(value)];
+
+    return {
+      filteredOptions: filtered,
+      groupMap: map,
+      hasCustomOption,
+    };
+  }, [customize, filterOption, groupBy, options, value]);
 
   const openMenu = () => setOpen(true);
 
@@ -150,29 +159,14 @@ const Autocomplete = <T,>(props: Props<T>) => {
     if (!e.defaultPrevented && !inputProps?.disabled) openMenu();
   };
 
-  const showCustomOption = Boolean(customize && value.length > 0 && filteredOptions.length === 0);
-
-  const selectCustom = () => {
-    if (!customize) return;
-    handleSelect(customize(value));
-  };
-
   const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const { code } = e;
 
     if (code === "Enter") {
-      if (highlightedIndex !== undefined) {
-        if (showCustomOption && highlightedIndex === filteredOptions.length) {
-          selectCustom();
-          return;
-        }
-        const selected = filteredOptions[highlightedIndex];
+      const index = highlightedIndex ?? (hasCustomOption ? 0 : undefined);
+      if (index !== undefined) {
+        const selected = filteredOptions[index];
         if (selected !== undefined) handleSelect(selected);
-        return;
-      }
-
-      if (showCustomOption) {
-        selectCustom();
         return;
       }
 
@@ -181,7 +175,7 @@ const Autocomplete = <T,>(props: Props<T>) => {
       return;
     }
 
-    const optionCount = filteredOptions.length + (showCustomOption ? 1 : 0);
+    const optionCount = filteredOptions.length;
     if (optionCount <= 0) return;
 
     if (code === "ArrowDown") {
@@ -213,6 +207,24 @@ const Autocomplete = <T,>(props: Props<T>) => {
 
   const { onKeyUp: onKeyUpProp, ...restIconInputProps } = iconInputProps;
 
+  const renderRow = (
+    index: number,
+    onClick: () => void,
+    children: React.ReactNode
+  ) => (
+    <Box
+      vfx={{ axis: "x", cursor: "pointer", radius: "rounded" }}
+      ref={highlightedIndex === index ? highlightedRef : undefined}
+      onMouseEnter={() => setHighlightedIndex(index)}
+      className={
+        highlightedIndex === index ? "aui-autocomplete-on-option" : undefined
+      }
+      onClick={onClick}
+    >
+      {children}
+    </Box>
+  );
+
   return (
     <Popover
       {...restPopoverProps}
@@ -224,7 +236,7 @@ const Autocomplete = <T,>(props: Props<T>) => {
         <IconInput
           {...restIconInputProps}
           ref={anchorRef}
-          onKeyUp={(e) => {
+          onKeyUp={(e: React.KeyboardEvent<HTMLDivElement>) => {
             onKeyUpProp?.(e);
             if (e.defaultPrevented) return;
             handleKeyUp(e);
@@ -259,42 +271,21 @@ const Autocomplete = <T,>(props: Props<T>) => {
       >
         {filteredOptions.map((option, index) => {
           const group = groupMap.get(index);
-          const highlighted = highlightedIndex === index;
 
           return (
             <React.Fragment key={index}>
               {group && (renderGroup?.(group) || group)}
-              <Box
-                vfx={{ axis: "x", cursor: "pointer", radius: "rounded" }}
-                ref={highlighted ? highlightedRef : undefined}
-                onMouseEnter={() => setHighlightedIndex(index)}
-                className={
-                  highlighted ? "aui-autocomplete-on-option" : undefined
-                }
-                onClick={() => handleSelect(option)}
-              >
-                {renderOption(option)}
-              </Box>
+              {renderRow(
+                index,
+                () => handleSelect(option),
+                renderOption(option)
+              )}
             </React.Fragment>
           );
         })}
-        {showCustomOption ? (
-          <Box
-            vfx={{ axis: "x", cursor: "pointer", radius: "rounded" }}
-            ref={highlightedIndex === filteredOptions.length ? highlightedRef : undefined}
-            onMouseEnter={() => setHighlightedIndex(filteredOptions.length)}
-            className={
-              highlightedIndex === filteredOptions.length
-                ? "aui-autocomplete-on-option"
-                : undefined
-            }
-            onClick={selectCustom}
-          >
-            {defaultRenderOption(value)}
-          </Box>
-        ) : filteredOptions.length ? null : (
-          noOptionsNode || defaultRenderOption("No results found")
-        )}
+        {filteredOptions.length > 0
+          ? null
+          : noOptionsNode || defaultRenderOption("No results found")}
       </Box>
       {footer && (
         <Box onClick={closeOnFooterClick ? closeMenu : undefined}>{footer}</Box>
