@@ -6,17 +6,15 @@ import React, {
   useState,
 } from "react";
 import type { ReadonlyableArray } from "../../types/common";
-import classNames from "../../functions/classNames";
 import Box from "../Box";
 import { IconInput } from "../Input";
 import Popover from "../Popover";
-import ui from "../ui";
 
 type PopoverProps = React.ComponentProps<typeof Popover>;
 type IconInputProps = React.ComponentProps<typeof IconInput>;
 type InputElementProps = NonNullable<IconInputProps["inputProps"]>;
 
-type Props<T> = Omit<IconInputProps, "inputProps"> & {
+type Props<T> = Omit<IconInputProps, "inputProps" | "onSelect"> & {
   /** The value of the input field */
   value: string;
   /**
@@ -62,14 +60,13 @@ type Props<T> = Omit<IconInputProps, "inputProps"> & {
   /** Props to pass to the underlying `input` */
   inputProps?: Omit<
     InputElementProps,
-    "value" | "onChange" | "onClick" | "ref" | "autoComplete"
+    "value" | "onChange" | "ref" | "autoComplete"
   >;
   /** Props for the popover */
-  popoverProps?: Omit<PopoverProps, "open" | "onClose" | "anchor" | "children">;
-  /** Props for the list element */
-  listProps?: React.ComponentProps<typeof ui.ul>;
-  /** Props for the list item elements */
-  listItemProps?: React.ComponentProps<typeof ui.li>;
+  popoverProps?: Omit<
+    PopoverProps,
+    "open" | "onClose" | "anchor" | "children" | "placement"
+  >;
   /** Footer node to render at the bottom of the popover */
   footer?: React.ReactNode;
   /**
@@ -106,8 +103,6 @@ const Autocomplete = <T,>(props: Props<T>) => {
     onSelect,
     popoverProps,
     footer,
-    listItemProps = {},
-    listProps = {},
     onUnselectedEnter,
     closeOnFooterClick = true,
     remainOpenOnSelectOrEnter = false,
@@ -116,7 +111,7 @@ const Autocomplete = <T,>(props: Props<T>) => {
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const highlightedRef = useRef<HTMLLIElement | null>(null);
+  const highlightedRef = useRef<HTMLDivElement | null>(null);
 
   const [highlightedIndex, setHighlightedIndex] = useState<number>();
   const [open, setOpen] = useState(false);
@@ -237,6 +232,8 @@ const Autocomplete = <T,>(props: Props<T>) => {
   const {
     style: popoverStyle,
     vfx: popoverVfx,
+    flip = false,
+    offset = 8,
     ...restPopoverProps
   } = popoverProps || {};
 
@@ -245,6 +242,8 @@ const Autocomplete = <T,>(props: Props<T>) => {
   return (
     <Popover
       {...restPopoverProps}
+      flip={flip}
+      offset={offset}
       open={popoverOpen}
       onClose={closeMenu}
       anchor={
@@ -277,17 +276,14 @@ const Autocomplete = <T,>(props: Props<T>) => {
         ...popoverStyle,
         width: anchorRef.current?.offsetWidth,
       }}
+      animateFrom={{
+        style: { opacity: 0, transform: `translateY(-${offset}px)` },
+      }}
+      animateTo={{ style: { opacity: 1, transform: "translateY(0)" } }}
     >
-      <ui.ul
-        {...listProps}
-        vfx={{
-          axis: "y",
-          padding: "s",
-          margin: "none",
-          overflow: "scroll",
-          ...listProps.vfx,
-        }}
-        style={{ maxHeight: 300, ...listProps.style }}
+      <Box
+        vfx={{ axis: "y", padding: "s", overflow: "scroll" }}
+        style={{ maxHeight: 300 }}
         tabIndex={-1}
       >
         {filteredOptions.length
@@ -299,33 +295,26 @@ const Autocomplete = <T,>(props: Props<T>) => {
               return (
                 <React.Fragment key={index}>
                   {group && (renderGroup?.(group) || group)}
-                  <ui.li
-                    {...listItemProps}
-                    vfx={{
-                      axis: "x",
-                      cursor: "pointer",
-                      radius: "rounded",
-                      ...listItemProps.vfx,
-                    }}
+                  <Box
+                    vfx={{ axis: "x", cursor: "pointer", radius: "rounded" }}
                     ref={ref}
                     onMouseEnter={() => setHighlightedIndex(index)}
-                    className={classNames(
+                    className={
                       highlightedIndex === index
                         ? "aui-autocomplete-on-option"
-                        : undefined,
-                      listItemProps.className
-                    )}
+                        : undefined
+                    }
                     onClick={() => handleSelect(option)}
                   >
                     {renderOption(option)}
-                  </ui.li>
+                  </Box>
                 </React.Fragment>
               );
             })
           : customize
           ? null
           : noOptionsNode || defaultRenderOption("No results found")}
-      </ui.ul>
+      </Box>
       {footer && (
         <Box onClick={closeOnFooterClick ? closeMenu : undefined}>{footer}</Box>
       )}

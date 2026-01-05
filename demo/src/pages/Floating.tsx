@@ -96,7 +96,6 @@ export default function FloatingPage() {
               options={fruits}
               onSelect={(selected) => setValue1(selected)}
               inputProps={{ placeholder: "Fruits" }}
-              popoverProps={{ offset: 8 }}
               customize
             />
           </Box>
@@ -133,7 +132,6 @@ export default function FloatingPage() {
                 <Icon icon={ticket} size="m" vfx={{ marginLeft: "s" }} />
               }
               inputProps={{ placeholder: "Reviews" }}
-              popoverProps={{ offset: 8 }}
             />
           </Box>
         </ShowcaseRow>
