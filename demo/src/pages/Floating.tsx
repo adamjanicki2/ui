@@ -58,8 +58,10 @@ const titles: readonly Title[] = [
 export default function FloatingPage() {
   const [popoverOpen1, setPopoverOpen1] = useState(false);
   const [popoverOpen2, setPopoverOpen2] = useState(false);
-  const [value1, setValue1] = useState("");
-  const [value2, setValue2] = useState("");
+  const [fruitValue, setFruitValue] = useState<string | null>(null);
+  const [fruitQuery, setFruitQuery] = useState("");
+  const [reviewValue, setReviewValue] = useState<Title | null>(null);
+  const [reviewQuery, setReviewQuery] = useState("");
 
   return (
     <Page title="Floating">
@@ -88,26 +90,30 @@ export default function FloatingPage() {
         <ShowcaseRow>
           <Box vfx={{ margin: "xs" }}>
             <Autocomplete
-              filterOption={(option) =>
-                option.toLowerCase().includes(value1.toLowerCase())
+              filterOption={(option, query) =>
+                option.toLowerCase().includes(query.toLowerCase())
               }
-              value={value1}
-              onInputChange={(e) => setValue1(e.target.value)}
+              value={fruitValue}
+              onChange={(next) => setFruitValue(next)}
+              onCustomSelect={(next) => setFruitValue(next)}
+              query={fruitQuery}
+              setQuery={setFruitQuery}
               options={fruits}
-              onSelect={(selected) => setValue1(selected)}
               inputProps={{ placeholder: "Fruits" }}
               customize
             />
           </Box>
           <Box vfx={{ margin: "xs" }}>
             <Autocomplete
-              value={value2}
-              onInputChange={(e) => setValue2(e.target.value)}
+              getOptionLabel={(option) => option.title}
+              value={reviewValue}
+              onChange={(next) => setReviewValue(next)}
+              query={reviewQuery}
+              setQuery={setReviewQuery}
               options={titles}
-              filterOption={(option) =>
-                option.title.toLowerCase().includes(value2.toLowerCase())
+              filterOption={(option, query) =>
+                option.title.toLowerCase().includes(query.toLowerCase())
               }
-              onSelect={(selected) => setValue2(selected.title)}
               groupBy={(option) => option.type}
               renderGroup={(group) => (
                 <Box vfx={{ marginX: "s", marginY: "xs", fontWeight: 7 }}>
@@ -128,9 +134,9 @@ export default function FloatingPage() {
                   </Box>
                 </UnstyledLink>
               )}
-              startIcon={
-                <Icon icon={ticket} size="m" vfx={{ marginLeft: "s" }} />
-              }
+              iconInputProps={{
+                startIcon: <Icon icon={ticket} size="m" vfx={{ marginLeft: "s" }} />,
+              }}
               inputProps={{ placeholder: "Reviews" }}
             />
           </Box>

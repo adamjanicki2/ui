@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import type { ReadonlyableArray } from "../../types/common";
 import Box from "../Box";
 import { IconInput } from "../Input";
@@ -14,54 +8,57 @@ type PopoverProps = React.ComponentProps<typeof Popover>;
 type IconInputProps = React.ComponentProps<typeof IconInput>;
 type InputElementProps = NonNullable<IconInputProps["inputProps"]>;
 
-type Props<T> = Omit<IconInputProps, "inputProps" | "onSelect"> & {
-  /** The value of the input field */
-  value: string;
-  /**
-   * Callback for when the input field changes.
-   * @param event Standard React ChangeEvent.
-   */
-  onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  /**
-   * Callback for when an option is selected.
-   * @param value Selected value.
-   */
-  onSelect: (value: T) => void;
+export type ChangeReason = "select" | "enter" | "clear";
+
+export type AutocompleteProps<Option> = {
   /** The list of available options */
-  options: ReadonlyableArray<T>;
-  /**
-   * Predicate to filter options.
-   * @param option Current option.
-   * @returns True if the option should be displayed.
-   */
-  filterOption?: (option: T) => boolean;
-  /**
-   * Render function for the option.
-   * @param option Current option.
-   * @returns Node to render for the option.
-   */
-  renderOption?: (option: T) => React.ReactNode;
+  options: ReadonlyableArray<Option>;
+  /** Currently selected value */
+  value: Option | null;
+  /** Fired when the selected value changes */
+  onChange: (
+    value: Option | null,
+    meta: { reason: ChangeReason; option?: Option }
+  ) => void;
+  /** Current query text value */
+  query: string;
+  /** Set the query text value */
+  setQuery: (query: string) => void;
+  /** Allow selecting arbitrary text being typed in */
+  customize?: boolean;
+  /** Fired when an arbitrary query is selected via customize */
+  onCustomSelect?: (query: string, meta: { reason: ChangeReason }) => void;
+  /** Get display label for an option */
+  getOptionLabel?: (option: Option) => string;
+  /** Determine if two options are equal (used for selected state) */
+  isOptionEqual?: (a: Option, b: Option) => boolean;
+  /** Predicate to filter options */
+  filterOption?: (option: Option, query: string) => boolean;
+  /** Render function for a normal option */
+  renderOption?: (
+    option: Option,
+    state: { highlighted: boolean; selected: boolean }
+  ) => React.ReactNode;
+  /** Render function for the customize option */
+  renderCustomOption?: (query: string) => React.ReactNode;
   /** Node to render when no options are available */
   noOptionsNode?: React.ReactNode;
-  /**
-   * Group options by a string.
-   * @param option Current option.
-   * @returns String to group by.
-   */
-  groupBy?: (option: T) => string;
-  /**
-   * Render function for the group.
-   * @param group Name.
-   * @returns Node to render for the group.
-   */
+  /** Group options by a string. */
+  groupBy?: (option: Option) => string;
+  /** Render function for the group. */
   renderGroup?: (group: string) => React.ReactNode;
-  /** Allow free text input */
-  customize?: boolean;
+  /**
+   * Close the popover when a selection occurs.
+   * @default true
+   */
+  closeOnSelect?: boolean;
   /** Props to pass to the underlying `input` */
   inputProps?: Omit<
     InputElementProps,
     "value" | "onChange" | "ref" | "autoComplete"
   >;
+  /** Props to pass to the IconInput wrapper */
+  iconInputProps?: Omit<IconInputProps, "inputProps">;
   /** Props for the popover */
   popoverProps?: Omit<
     PopoverProps,
@@ -74,39 +71,36 @@ type Props<T> = Omit<IconInputProps, "inputProps" | "onSelect"> & {
    * @default true
    */
   closeOnFooterClick?: boolean;
-  /** Callback fired when the user hits the Enter key while no option is selected */
-  onUnselectedEnter?: () => void;
-  /**
-   * Whether or not to leave the popover open after a selection occurs.
-   * @default false
-   */
-  remainOpenOnSelectOrEnter?: boolean;
 };
 
-const defaultRenderOption = <T,>(option: T) => (
-  <Box vfx={{ padding: "s" }}>{`${option}`}</Box>
+const defaultRenderOption = (label: string) => (
+  <Box vfx={{ padding: "s" }}>{label}</Box>
 );
 
 /** Searchable select input with an overlay menu */
-const Autocomplete = <T,>(props: Props<T>) => {
+const Autocomplete = <Option,>(props: AutocompleteProps<Option>) => {
   const {
-    inputProps,
     options,
-    renderOption = defaultRenderOption,
-    filterOption = () => true,
+    value,
+    onChange,
+    query,
+    setQuery,
+    customize,
+    onCustomSelect,
+    getOptionLabel,
+    isOptionEqual,
+    filterOption,
+    renderOption,
+    renderCustomOption,
     groupBy,
     renderGroup,
     noOptionsNode,
-    customize = false,
-    value,
-    onInputChange,
-    onSelect,
+    closeOnSelect = true,
+    inputProps,
+    iconInputProps,
     popoverProps,
     footer,
-    onUnselectedEnter,
     closeOnFooterClick = true,
-    remainOpenOnSelectOrEnter = false,
-    ...iconInputProps
   } = props;
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
@@ -117,11 +111,18 @@ const Autocomplete = <T,>(props: Props<T>) => {
   const [open, setOpen] = useState(false);
 
   const { filteredOptions, groupMap } = useMemo(() => {
-    let filtered = options.filter(filterOption);
+    const getLabel = (option: Option) =>
+      getOptionLabel?.(option) ?? `${option}`;
+    const filter =
+      filterOption ??
+      ((option: Option, input: string) =>
+        getLabel(option).toLowerCase().includes(input.toLowerCase()));
+
+    let filtered = options.filter((option) => filter(option, query));
     const map = new Map<number, string>();
 
     if (groupBy) {
-      const grouped = new Map<string, T[]>();
+      const grouped = new Map<string, Option[]>();
       for (const option of filtered) {
         const group = groupBy(option);
         const items = grouped.get(group);
@@ -135,79 +136,67 @@ const Autocomplete = <T,>(props: Props<T>) => {
       });
     }
 
-    if (customize && value && !filtered.length)
-      filtered = [...filtered, value as T];
-
     return { filteredOptions: filtered, groupMap: map };
-  }, [customize, filterOption, groupBy, options, value]);
+  }, [filterOption, getOptionLabel, groupBy, options, query]);
 
-  const openMenu = useCallback(() => setOpen(true), []);
+  function openMenu() {
+    setOpen(true);
+  }
 
-  const closeMenu = useCallback(() => {
+  function closeMenu() {
     setHighlightedIndex(undefined);
     setOpen(false);
     inputRef.current?.blur();
-  }, []);
+  }
 
-  const handleSelect = useCallback(
-    (selected: T) => {
-      onSelect(selected);
-      if (!remainOpenOnSelectOrEnter) closeMenu();
-    },
-    [closeMenu, onSelect, remainOpenOnSelectOrEnter]
-  );
+  function selectCustom(reason: ChangeReason) {
+    if (!customize || !query) return;
+    onCustomSelect?.(query, { reason });
+    if (closeOnSelect) closeMenu();
+  }
 
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setHighlightedIndex(undefined);
-      onInputChange(e);
-      if (e.target.value || options.length > 0) openMenu();
-    },
-    [onInputChange, openMenu, options.length]
-  );
+  function selectOption(selected: Option, reason: ChangeReason) {
+    onChange(selected, { reason, option: selected });
+    setQuery(getOptionLabel?.(selected) ?? `${selected}`);
+    if (closeOnSelect) closeMenu();
+  }
 
-  const handleInputFocus = useCallback(
-    (e: React.FocusEvent<HTMLInputElement>) => {
-      inputProps?.onFocus?.(e);
-      if (!e.defaultPrevented && !inputProps?.disabled) openMenu();
-    },
-    [inputProps, openMenu]
-  );
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setHighlightedIndex(undefined);
+    setQuery(e.target.value);
+    if (e.target.value || options.length > 0) openMenu();
+  }
 
-  const handleKeyUp = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      const { code } = e;
+  function handleInputFocus(e: React.FocusEvent<HTMLInputElement>) {
+    inputProps?.onFocus?.(e);
+    if (!e.defaultPrevented && !inputProps?.disabled) openMenu();
+  }
 
-      if (code === "Enter") {
-        if (highlightedRef.current) {
-          const child = highlightedRef.current.firstChild as HTMLElement | null;
-          child?.click?.();
-          return;
-        }
+  function handleKeyUp(e: React.KeyboardEvent<HTMLDivElement>) {
+    const { code } = e;
 
-        onUnselectedEnter?.();
-        if (!remainOpenOnSelectOrEnter) closeMenu();
+    if (code === "Enter") {
+      if (highlightedIndex !== undefined) {
+        const selected = filteredOptions[highlightedIndex];
+        if (selected !== undefined) selectOption(selected, "select");
         return;
       }
 
-      const optionCount = filteredOptions.length;
-      if (optionCount <= 0) return;
+      selectCustom("enter");
+      return;
+    }
 
-      if (code === "ArrowDown") {
-        setHighlightedIndex((index) => ((index ?? -1) + 1) % optionCount);
-      } else if (code === "ArrowUp") {
-        setHighlightedIndex(
-          (index) => ((index ?? 0) - 1 + optionCount) % optionCount
-        );
-      }
-    },
-    [
-      closeMenu,
-      filteredOptions.length,
-      onUnselectedEnter,
-      remainOpenOnSelectOrEnter,
-    ]
-  );
+    const optionCount = filteredOptions.length;
+    if (optionCount <= 0) return;
+
+    if (code === "ArrowDown") {
+      setHighlightedIndex((index) => ((index ?? -1) + 1) % optionCount);
+    } else if (code === "ArrowUp") {
+      setHighlightedIndex(
+        (index) => ((index ?? 0) - 1 + optionCount) % optionCount
+      );
+    }
+  }
 
   useEffect(() => {
     if (highlightedIndex !== undefined)
@@ -217,7 +206,10 @@ const Autocomplete = <T,>(props: Props<T>) => {
       });
   }, [highlightedIndex]);
 
-  const popoverOpen = open && (filteredOptions.length > 0 || value.length > 0);
+  const popoverOpen = open && (filteredOptions.length > 0 || query.length > 0);
+  const showCustomOption = Boolean(
+    customize && query && filteredOptions.length === 0
+  );
 
   const {
     style: popoverStyle,
@@ -227,7 +219,7 @@ const Autocomplete = <T,>(props: Props<T>) => {
     ...restPopoverProps
   } = popoverProps || {};
 
-  const { onKeyUp: onKeyUpProp, ...restIconInputProps } = iconInputProps;
+  const { onKeyUp: onKeyUpProp, ...restIconInputProps } = iconInputProps || {};
 
   return (
     <Popover
@@ -247,7 +239,7 @@ const Autocomplete = <T,>(props: Props<T>) => {
           }}
           inputProps={{
             ...inputProps,
-            value,
+            value: query,
             onChange: handleInputChange,
             onFocus: handleInputFocus,
             ref: inputRef,
@@ -262,10 +254,7 @@ const Autocomplete = <T,>(props: Props<T>) => {
         fontWeight: 4,
         ...popoverVfx,
       }}
-      style={{
-        ...popoverStyle,
-        width: anchorRef.current?.offsetWidth,
-      }}
+      style={{ ...popoverStyle, width: anchorRef.current?.offsetWidth }}
       animateFrom={{
         style: { opacity: 0, transform: `translateY(-${offset}px)` },
       }}
@@ -276,34 +265,42 @@ const Autocomplete = <T,>(props: Props<T>) => {
         style={{ maxHeight: 300 }}
         tabIndex={-1}
       >
-        {filteredOptions.length
-          ? filteredOptions.map((option, index) => {
-              const group = groupMap.get(index);
+        {filteredOptions.map((option, index) => {
+          const group = groupMap.get(index);
+          const selected = value
+            ? isOptionEqual?.(value, option) ?? value === option
+            : false;
+          const highlighted = highlightedIndex === index;
 
-              return (
-                <React.Fragment key={index}>
-                  {group && (renderGroup?.(group) || group)}
-                  <Box
-                    vfx={{ axis: "x", cursor: "pointer", radius: "rounded" }}
-                    ref={
-                      index === highlightedIndex ? highlightedRef : undefined
-                    }
-                    onMouseEnter={() => setHighlightedIndex(index)}
-                    className={
-                      highlightedIndex === index
-                        ? "aui-autocomplete-on-option"
-                        : undefined
-                    }
-                    onClick={() => handleSelect(option)}
-                  >
-                    {renderOption(option)}
-                  </Box>
-                </React.Fragment>
-              );
-            })
-          : customize
-          ? null
-          : noOptionsNode || defaultRenderOption("No results found")}
+          return (
+            <React.Fragment key={index}>
+              {group && (renderGroup?.(group) || group)}
+              <Box
+                vfx={{ axis: "x", cursor: "pointer", radius: "rounded" }}
+                ref={highlighted ? highlightedRef : undefined}
+                onMouseEnter={() => setHighlightedIndex(index)}
+                className={
+                  highlighted ? "aui-autocomplete-on-option" : undefined
+                }
+                onClick={() => selectOption(option, "select")}
+              >
+                {renderOption?.(option, { highlighted, selected }) ??
+                  defaultRenderOption(getOptionLabel?.(option) ?? `${option}`)}
+              </Box>
+            </React.Fragment>
+          );
+        })}
+        {!filteredOptions.length &&
+          (showCustomOption ? (
+            <Box
+              vfx={{ axis: "x", cursor: "pointer", radius: "rounded" }}
+              onClick={() => selectCustom("select")}
+            >
+              {renderCustomOption?.(query) ?? defaultRenderOption(query)}
+            </Box>
+          ) : (
+            noOptionsNode || defaultRenderOption("No results found")
+          ))}
       </Box>
       {footer && (
         <Box onClick={closeOnFooterClick ? closeMenu : undefined}>{footer}</Box>

@@ -199,9 +199,13 @@ export const autoCompleteSnippet = `
 <Autocomplete
   options={fruits}
   value={value}
-  onInputChange={(e) => setValue(e.target.value)}
-  filterOption={(option) => option.toLowerCase().includes(value.toLowerCase())}
-  onSelect={(selected) => setValue(selected)}
+  onChange={setValue}
+  onCustomSelect={setValue}
+  query={query}
+  setQuery={setQuery}
+  filterOption={(option, query) =>
+    option.toLowerCase().includes(query.toLowerCase())
+  }
   inputProps={{ placeholder: "Fruits" }}
   popoverProps={{ offset: 8 }}
   customize
