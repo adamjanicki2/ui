@@ -72,8 +72,15 @@ export default function FloatingPage() {
         title="Autocomplete"
         description={
           <>
-            A searchable select input powered by <ui.code>Popover</ui.code>.
-            This is what I use for search bars and searchable selects.
+            The autocomplete component is probably the most complex component
+            I've ever built; it's very large: boasting a code footprint of over
+            300 lines. I mainly use it to power my search bars and searchable
+            select fields on{" "}
+            <Link to="https://adamovies.com" newTab>
+              adamovies.com
+            </Link>
+            . Check out these examples below on simple and more complex use
+            cases!
           </>
         }
         snippet={autoCompleteSnippet}
@@ -136,8 +143,11 @@ export default function FloatingPage() {
         title="Popover"
         description={
           <>
-            A foundational component for positioning floating content relative
-            to another element. Click outside or press Escape to dismiss.
+            The popover component serves as a foundational component for
+            overlaying a layer on top of another object while not shifting down
+            any page content. It's mounted such that it floats over the rest of
+            the page. In fact, this popover component is what powers the
+            autocomplete component that we just looked at above!
           </>
         }
         snippet={popoversSnippet}
@@ -195,24 +205,16 @@ export default function FloatingPage() {
         title="Tooltip"
         description={
           <>
-            Tooltips are handy for small bits of contextual information.
-            <ui.br />
-            TODO: add a <ui.code>Tooltip</ui.code> component + demos here.
+            The tooltip component is a simple component that shows a tooltip
+            when hovering over an element. It's a simple component but can be
+            very useful, especially when you need to show more information about
+            an element without taking up too much space in your main UI. Check
+            out the examples below!
           </>
         }
       >
         <Box vfx={{ axis: "y", gap: "s" }}>
-          <Para>
-            Tooltip isn&apos;t part of this repo yet. For now, check out the
-            rest of the floating components above.
-          </Para>
-          <Para>
-            If you need tooltips today, consider using{" "}
-            <Link to="https://floating-ui.com/" newTab>
-              Floating UI
-            </Link>{" "}
-            directly.
-          </Para>
+          <Para>TODO: coming soon!</Para>
         </Box>
       </ShowcaseBlock>
     </Page>
