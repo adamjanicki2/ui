@@ -117,18 +117,16 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
     };
 
     useEffect(() => {
-      if (autoplayInterval) {
-        intervalRef.current = window.setInterval(() => {
-          startTransition(1);
-        }, autoplayInterval * 1000);
-      }
+      if (autoplayInterval)
+        intervalRef.current = window.setInterval(
+          () => startTransition(1),
+          autoplayInterval * 1000
+        );
 
       return () => {
         const interval = intervalRef.current;
         intervalRef.current = null;
-        if (interval) {
-          clearInterval(interval);
-        }
+        if (interval) clearInterval(interval);
       };
     }, [autoplayInterval, startTransition]);
 

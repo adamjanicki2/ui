@@ -45,21 +45,14 @@ const Layer = React.forwardRef<HTMLDivElement, Props>(
 
     useEffect(() => {
       const handleEscape = (event: KeyboardEvent) => {
-        if (event.key === "Escape") {
-          if (!returnFocusOnEscape) {
-            const activeEl = document.activeElement as HTMLElement | null;
-            activeEl?.blur?.();
-          }
-
-          onClose?.();
-        }
+        if (event.key !== "Escape") return;
+        if (!returnFocusOnEscape)
+          (document.activeElement as HTMLElement | null)?.blur?.();
+        onClose?.();
       };
 
       document.addEventListener("keydown", handleEscape);
-
-      return () => {
-        document.removeEventListener("keydown", handleEscape);
-      };
+      return () => document.removeEventListener("keydown", handleEscape);
     }, [onClose, returnFocusOnEscape]);
 
     const mergedRef = useMergeRefs(focusRef, children.props.ref);

@@ -38,7 +38,10 @@ const Popover = ({
   onCloseRef.current = onClose;
   openRef.current = open;
 
-  const mergedAnchorRef = useMergeRefs<HTMLElement>(anchorRef, anchor.props.ref);
+  const mergedAnchorRef = useMergeRefs<HTMLElement>(
+    anchorRef,
+    anchor.props.ref
+  );
 
   useClickOutside({
     targets: [floatingRef, anchorRef],
@@ -49,16 +52,11 @@ const Popover = ({
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && openRef.current) {
-        onCloseRef.current();
-      }
+      if (event.key === "Escape" && openRef.current) onCloseRef.current();
     };
 
     document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (

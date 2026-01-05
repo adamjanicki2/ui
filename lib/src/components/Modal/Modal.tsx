@@ -93,8 +93,6 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
             >
               <IconButton icon={x} onClick={onClose} />
             </Box>
-
-            {/* children here */}
             <Box {...rest} ref={ref} />
 
             <Box

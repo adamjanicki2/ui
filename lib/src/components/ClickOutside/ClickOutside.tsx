@@ -17,9 +17,7 @@ const ClickOutside = ({ children, ...rest }: Props): React.JSX.Element => {
 
   useClickOutside({ targets: [elementRef], ...rest });
 
-  return cloneElement(children, {
-    ref: mergedRef,
-  });
+  return cloneElement(children, { ref: mergedRef });
 };
 
 export default ClickOutside;

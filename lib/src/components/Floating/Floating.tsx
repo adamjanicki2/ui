@@ -83,7 +83,10 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const anchorRef = useRef<HTMLElement | null>(null);
   const floatingRef = useRef<HTMLDivElement | null>(null);
   const mergedFloatingRef = useMergeRefs<HTMLDivElement>(floatingRef, ref);
-  const mergedAnchorRef = useMergeRefs<HTMLElement>(anchorRef, anchor.props.ref);
+  const mergedAnchorRef = useMergeRefs<HTMLElement>(
+    anchorRef,
+    anchor.props.ref
+  );
 
   const [position, setPosition] = useState<Position | null>(null);
 
@@ -154,9 +157,7 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   return (
     <>
-      {React.cloneElement(anchor, {
-        ref: mergedAnchorRef,
-      })}
+      {React.cloneElement(anchor, { ref: mergedAnchorRef })}
       <Animated
         {...rest}
         ref={mergedFloatingRef}
