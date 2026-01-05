@@ -15,7 +15,7 @@ const useMergeRefs = <T>(
       refs.forEach((ref) => {
         if (typeof ref === "function") {
           ref(node);
-        } else if (ref && typeof ref === "object") {
+        } else if (ref && typeof ref === "object" && "current" in ref) {
           ref.current = node;
         }
       });

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import useMergeRefs from "../../hooks/useMergeRefs";
 import useClickOutside from "../ClickOutside/useClickOutside";
 import Floating from "../Floating";
@@ -30,16 +30,16 @@ const Popover = ({
   animateTo,
   ...floatingProps
 }: PopoverProps) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [floatingEl, setFloatingEl] = useState<HTMLDivElement | null>(null);
+  const anchorRef = useRef<HTMLElement | null>(null);
+  const floatingRef = useRef<HTMLDivElement | null>(null);
 
   const mergedAnchorRef = useMergeRefs<HTMLElement>(
-    setAnchorEl,
+    anchorRef,
     anchor.props.ref
   );
 
   useClickOutside({
-    targets: [floatingEl, anchorEl],
+    targets: [floatingRef, anchorRef],
     eventType: "pointerdown",
     enabled: open,
     onClickOutside: onClose,
@@ -73,7 +73,7 @@ const Popover = ({
         z: "floating",
         ...vfx,
       }}
-      ref={setFloatingEl}
+      ref={floatingRef}
       anchor={React.cloneElement(anchor, { ref: mergedAnchorRef })}
       visible={open}
       floatingContent={children}

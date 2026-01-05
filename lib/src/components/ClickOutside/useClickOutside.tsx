@@ -8,11 +8,11 @@ export type EventType =
   | "pointerdown"
   | "pointerup";
 
-type Target = Element | null | undefined;
+type TargetRef = React.RefObject<Element | null | undefined>;
 
 export type Config = {
   /** Element(s) to treat as the "inside" boundary */
-  targets: ReadonlyableArray<Target>;
+  targets: ReadonlyableArray<TargetRef>;
   /** Callback fired when an event occurs outside all targets */
   onClickOutside: (event: MouseEvent | PointerEvent) => void;
   /**
@@ -27,7 +27,8 @@ export type Config = {
   enabled?: boolean;
 };
 
-function isInside(event: Event, element: Target) {
+function isInside(event: Event, ref: TargetRef) {
+  const element = ref.current;
   if (!element) return false;
   const target = event.target as Node | null;
   if (!target) return false;
