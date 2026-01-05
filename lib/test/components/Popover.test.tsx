@@ -80,4 +80,33 @@ describe("Popover", () => {
     await user.keyboard("{Escape}");
     expect(onClose).toHaveBeenCalledTimes(1);
   });
+
+  it("closes all open popovers on escape", async () => {
+    const user = userEvent.setup();
+    const onClose1 = jest.fn();
+    const onClose2 = jest.fn();
+
+    render(
+      <div>
+        <Popover
+          open
+          onClose={onClose1}
+          anchor={<button data-testid="anchor1">Anchor 1</button>}
+        >
+          <div>Content 1</div>
+        </Popover>
+        <Popover
+          open
+          onClose={onClose2}
+          anchor={<button data-testid="anchor2">Anchor 2</button>}
+        >
+          <div>Content 2</div>
+        </Popover>
+      </div>
+    );
+
+    await user.keyboard("{Escape}");
+    expect(onClose1).toHaveBeenCalledTimes(1);
+    expect(onClose2).toHaveBeenCalledTimes(1);
+  });
 });

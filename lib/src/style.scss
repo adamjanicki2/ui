@@ -257,7 +257,9 @@ textarea {
     opacity: 1;
   }
 
-  .aui-table-row-link:not([disabled]):hover {
+  .aui-table-row-link:not([disabled]):hover,
+  .aui-autocomplete-option:hover,
+  .aui-autocomplete-on-option {
     background-color: var(--aui-static-background);
   }
 }

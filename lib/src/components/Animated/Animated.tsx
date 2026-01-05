@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classNames from "../../functions/classNames";
 import type { ReadonlyableArray, Style, Vfx } from "../../types/common";
 import Box, { type BoxProps } from "../Box/Box";
@@ -71,25 +71,18 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const instantForward = forwardDuration <= 0;
   const instantReverse = reverseDuration <= 0;
 
-  const [phase, setPhase] = useState<Phase>("from");
+  // initialize based on whether we can instantly render
+  const [phase, setPhase] = useState<Phase>(() =>
+    visible && instantForward ? "forward" : "from"
+  );
 
   const timeoutRef = useRef<number | null>(null);
   const animationFrameRef = useRef<number | null>(null);
 
-  const clearRefs = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-      animationFrameRef.current = null;
-    }
-  };
-
   useEffect(() => {
-    clearRefs();
+    // cases where no update is needed; already in correct phase
+    if (visible && instantForward && phase === "forward") return;
+    if (!visible && instantReverse && phase === "from") return;
 
     if (visible) {
       if (phase !== "forward") {
@@ -104,9 +97,9 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     } else if (phase !== "from") {
       if (instantReverse) {
         setPhase("from");
-      } else if (phase !== "reverse") {
+      } else if (phase === "forward") {
         setPhase("reverse");
-      } else if (phase === "reverse") {
+      } else {
         timeoutRef.current = window.setTimeout(
           () => setPhase("from"),
           reverseDuration * 1000
@@ -114,7 +107,18 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       }
     }
 
-    return clearRefs;
+    // clean up refs
+    return () => {
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+    };
   }, [visible, phase, instantForward, instantReverse, reverseDuration]);
 
   if (phase === "from" && !keepMounted && !visible) return null;

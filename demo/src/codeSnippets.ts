@@ -194,3 +194,32 @@ export const avatarSnippet = `
   username="A"
   size="m"
 />`;
+
+export const autoCompleteSnippet = `
+<Autocomplete
+  options={fruits}
+  value={value}
+  onInputChange={(e) => setValue(e.target.value)}
+  filterOption={(option) => option.toLowerCase().includes(value.toLowerCase())}
+  onSelect={(selected) => setValue(selected)}
+  inputProps={{ placeholder: "Fruits" }}
+  popoverProps={{ offset: 8 }}
+  customize
+/>;
+`;
+
+export const popoversSnippet = `
+<Popover
+  open={open}
+  onClose={() => setOpen(false)}
+  placement="bottom-start"
+  offset={8}
+  anchor={
+    <Button onClick={() => setOpen((open) => !open)}>
+      Toggle popover
+    </Button>
+  }
+>
+  I'm a popover!
+</Popover>
+`;
