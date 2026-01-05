@@ -2,7 +2,7 @@ import React from "react";
 import { matchPath } from "./path";
 import PathParamsContext from "./PathParamsContext";
 import Route, { type Props as RouteProps } from "./Route";
-import type { Children, ReadonlyableArray } from "../types/common";
+import type { Children } from "../types/common";
 import useRouterContext from "./useRouterContext";
 import { stripBasename } from "./href";
 
@@ -16,25 +16,33 @@ export type Props = {
   fallback?: React.ReactNode;
 };
 
-function findRouteElements(children: ReadonlyableArray<React.ReactNode>) {
-  return children.filter(
-    (child) => React.isValidElement(child) && child.type === Route
-  ) as React.ReactElement<RouteProps, typeof Route>[];
+type RouteElement = React.ReactElement<RouteProps, typeof Route>;
+
+function findRouteElements(children: React.ReactNode) {
+  let routeElements: RouteElement[] = [];
+
+  React.Children.forEach(children, (child) => {
+    if (React.isValidElement(child)) {
+      if (child.type === Route) {
+        routeElements.push(child as RouteElement);
+      } else {
+        const props = child.props as { children?: React.ReactNode };
+        routeElements = routeElements.concat(findRouteElements(props.children));
+      }
+    }
+  });
+
+  return routeElements;
 }
 
 /**
  * Nested within a router component, this component handles rendering the proper route.
  * Note: sticking any other components besides routes in here will not be rendered.
  */
-export default function Routes({
-  children: rawChildren,
-  fallback,
-}: Props): React.ReactNode {
+export default function Routes({ children, fallback }: Props): React.ReactNode {
   const router = useRouterContext("<Routes>");
   const { location, basename } = router;
   const pathname = stripBasename(location.pathname, basename);
-
-  const children = Array.isArray(rawChildren) ? rawChildren : [rawChildren];
 
   const routes = findRouteElements(children);
 

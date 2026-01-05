@@ -26,6 +26,25 @@ describe("Routes", () => {
     expect(screen.getByTestId("page")).toHaveTextContent("about");
   });
 
+  it("renders a route nested in fragments", () => {
+    window.history.replaceState(null, "", "/about");
+
+    render(
+      <Router>
+        <Routes>
+          <Route path="/" element={<Page name="home" />} />
+          <>
+            <>
+              <Route path="/about" element={<Page name="about" />} />
+            </>
+          </>
+        </Routes>
+      </Router>
+    );
+
+    expect(screen.getByTestId("page")).toHaveTextContent("about");
+  });
+
   it("renders nothing when no route matches and no fallback used", () => {
     window.history.replaceState(null, "", "/404");
 
