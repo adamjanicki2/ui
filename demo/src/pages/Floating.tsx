@@ -31,7 +31,7 @@ const fruits = [
   "Pineapple 🍍",
   "Strawberry 🍓",
   "Watermelon 🍉",
-] as const;
+];
 
 const capitalize = (str: string) => str[0].toUpperCase() + str.slice(1);
 
@@ -96,7 +96,7 @@ export default function FloatingPage() {
               }
               onSelect={(selected) => setFruitValue(selected)}
               inputProps={{ placeholder: "Fruits" }}
-              customize
+              customize={(query) => query}
             />
           </Box>
           <Box vfx={{ margin: "xs" }}>
@@ -108,6 +108,12 @@ export default function FloatingPage() {
                 option.title.toLowerCase().includes(reviewValue.toLowerCase())
               }
               onSelect={(selected) => setReviewValue(selected.title)}
+              customize={(query): Title => ({
+                title: query,
+                type: "movie",
+                year: new Date().getFullYear(),
+                rating: 0,
+              })}
               groupBy={(option) => option.type}
               renderGroup={(group) => (
                 <Box vfx={{ marginX: "s", marginY: "xs", fontWeight: 7 }}>
@@ -128,7 +134,9 @@ export default function FloatingPage() {
                   </Box>
                 </UnstyledLink>
               )}
-              startIcon={<Icon icon={ticket} size="m" vfx={{ marginLeft: "s" }} />}
+              startIcon={
+                <Icon icon={ticket} size="m" vfx={{ marginLeft: "s" }} />
+              }
               inputProps={{ placeholder: "Reviews" }}
             />
           </Box>
