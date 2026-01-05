@@ -3,7 +3,6 @@ export { default as Accordion } from "./components/Accordion";
 export { default as Alert } from "./components/Alert";
 export { default as Animated } from "./components/Animated";
 export { default as Avatar } from "./components/Avatar";
-export { default as Autocomplete } from "./components/Autocomplete";
 export { default as Badge } from "./components/Badge";
 export { default as Banner } from "./components/Banner";
 export { default as Box } from "./components/Box";
@@ -17,7 +16,6 @@ export * from "./components/Hamburger";
 export { default as Icon } from "./components/Icon";
 export { default as Input } from "./components/Input";
 export * from "./components/Input";
-export { default as Popover } from "./components/Popover";
 export { default as Layer } from "./components/Layer";
 export { default as Modal } from "./components/Modal";
 export { default as Select } from "./components/Select";
@@ -30,3 +28,6 @@ export * from "./hooks";
 export * from "./functions";
 // Navigation
 export * from "./navigation";
+// Floating
+export { default as Autocomplete } from "./components/Autocomplete";
+export { default as Popover } from "./components/Popover";
