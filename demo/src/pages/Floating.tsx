@@ -31,7 +31,6 @@ function PopoverDemo({ placement, title }: DemoProps) {
         <Box vfx={{ color: "muted", fontSize: "s" }}>
           placement: {placement}
         </Box>
-        <Button size="small">Toggleable</Button>
       </Popover>
     </Box>
   );
