@@ -207,7 +207,6 @@ export const autoCompleteSnippet = `
     option.toLowerCase().includes(query.toLowerCase())
   }
   inputProps={{ placeholder: "Fruits" }}
-  popoverProps={{ offset: 8 }}
   customize
 />;
 `;

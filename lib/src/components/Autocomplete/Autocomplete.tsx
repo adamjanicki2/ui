@@ -10,15 +10,15 @@ type InputElementProps = NonNullable<IconInputProps["inputProps"]>;
 
 export type ChangeReason = "select" | "enter" | "clear";
 
-export type AutocompleteProps<Option> = {
+export type AutocompleteProps<T> = {
   /** The list of available options */
-  options: ReadonlyableArray<Option>;
+  options: ReadonlyableArray<T>;
   /** Currently selected value */
-  value: Option | null;
+  value: T | null;
   /** Fired when the selected value changes */
   onChange: (
-    value: Option | null,
-    meta: { reason: ChangeReason; option?: Option }
+    value: T | null,
+    info: { reason: ChangeReason; option?: T }
   ) => void;
   /** Current query text value */
   query: string;
@@ -27,16 +27,16 @@ export type AutocompleteProps<Option> = {
   /** Allow selecting arbitrary text being typed in */
   customize?: boolean;
   /** Fired when an arbitrary query is selected via customize */
-  onCustomSelect?: (query: string, meta: { reason: ChangeReason }) => void;
+  onCustomSelect?: (query: string, info: { reason: ChangeReason }) => void;
   /** Get display label for an option */
-  getOptionLabel?: (option: Option) => string;
+  getOptionLabel?: (option: T) => string;
   /** Determine if two options are equal (used for selected state) */
-  isOptionEqual?: (a: Option, b: Option) => boolean;
+  isOptionEqual?: (a: T, b: T) => boolean;
   /** Predicate to filter options */
-  filterOption?: (option: Option, query: string) => boolean;
+  filterOption?: (option: T, query: string) => boolean;
   /** Render function for a normal option */
   renderOption?: (
-    option: Option,
+    option: T,
     state: { highlighted: boolean; selected: boolean }
   ) => React.ReactNode;
   /** Render function for the customize option */
@@ -44,7 +44,7 @@ export type AutocompleteProps<Option> = {
   /** Node to render when no options are available */
   noOptionsNode?: React.ReactNode;
   /** Group options by a string. */
-  groupBy?: (option: Option) => string;
+  groupBy?: (option: T) => string;
   /** Render function for the group. */
   renderGroup?: (group: string) => React.ReactNode;
   /**
@@ -78,7 +78,7 @@ const defaultRenderOption = (label: string) => (
 );
 
 /** Searchable select input with an overlay menu */
-const Autocomplete = <Option,>(props: AutocompleteProps<Option>) => {
+const Autocomplete = <T,>(props: AutocompleteProps<T>) => {
   const {
     options,
     value,
@@ -111,18 +111,17 @@ const Autocomplete = <Option,>(props: AutocompleteProps<Option>) => {
   const [open, setOpen] = useState(false);
 
   const { filteredOptions, groupMap } = useMemo(() => {
-    const getLabel = (option: Option) =>
-      getOptionLabel?.(option) ?? `${option}`;
+    const getLabel = (option: T) => getOptionLabel?.(option) ?? `${option}`;
     const filter =
       filterOption ??
-      ((option: Option, input: string) =>
+      ((option: T, input: string) =>
         getLabel(option).toLowerCase().includes(input.toLowerCase()));
 
     let filtered = options.filter((option) => filter(option, query));
     const map = new Map<number, string>();
 
     if (groupBy) {
-      const grouped = new Map<string, Option[]>();
+      const grouped = new Map<string, T[]>();
       for (const option of filtered) {
         const group = groupBy(option);
         const items = grouped.get(group);
@@ -139,40 +138,38 @@ const Autocomplete = <Option,>(props: AutocompleteProps<Option>) => {
     return { filteredOptions: filtered, groupMap: map };
   }, [filterOption, getOptionLabel, groupBy, options, query]);
 
-  function openMenu() {
-    setOpen(true);
-  }
+  const openMenu = () => setOpen(true);
 
-  function closeMenu() {
+  const closeMenu = () => {
     setHighlightedIndex(undefined);
     setOpen(false);
     inputRef.current?.blur();
-  }
+  };
 
-  function selectCustom(reason: ChangeReason) {
+  const selectCustom = (reason: ChangeReason) => {
     if (!customize || !query) return;
     onCustomSelect?.(query, { reason });
     if (closeOnSelect) closeMenu();
-  }
+  };
 
-  function selectOption(selected: Option, reason: ChangeReason) {
+  const selectOption = (selected: T, reason: ChangeReason) => {
     onChange(selected, { reason, option: selected });
     setQuery(getOptionLabel?.(selected) ?? `${selected}`);
     if (closeOnSelect) closeMenu();
-  }
+  };
 
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHighlightedIndex(undefined);
     setQuery(e.target.value);
     if (e.target.value || options.length > 0) openMenu();
-  }
+  };
 
-  function handleInputFocus(e: React.FocusEvent<HTMLInputElement>) {
+  const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     inputProps?.onFocus?.(e);
     if (!e.defaultPrevented && !inputProps?.disabled) openMenu();
-  }
+  };
 
-  function handleKeyUp(e: React.KeyboardEvent<HTMLDivElement>) {
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const { code } = e;
 
     if (code === "Enter") {
@@ -196,7 +193,7 @@ const Autocomplete = <Option,>(props: AutocompleteProps<Option>) => {
         (index) => ((index ?? 0) - 1 + optionCount) % optionCount
       );
     }
-  }
+  };
 
   useEffect(() => {
     if (highlightedIndex !== undefined)
