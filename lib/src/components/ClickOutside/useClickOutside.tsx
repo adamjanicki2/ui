@@ -10,14 +10,14 @@ export type EventType =
 
 type Target = Element | null | undefined;
 
-type Config = {
+export type Config = {
   /** Element(s) to treat as the "inside" boundary */
   targets: ReadonlyableArray<Target>;
   /** Callback fired when an event occurs outside all targets */
   onClickOutside: (event: MouseEvent | PointerEvent) => void;
   /**
    * Document event type to listen for.
-   * @default "click"
+   * @default "pointerdown"
    */
   eventType?: EventType;
   /**
@@ -43,7 +43,7 @@ const useClickOutside = (config: Config) => {
   const {
     targets,
     onClickOutside,
-    eventType = "click",
+    eventType = "pointerdown",
     enabled = true,
   } = config;
 
@@ -68,7 +68,7 @@ const useClickOutside = (config: Config) => {
 
       onClickOutside(event);
     },
-    [enabled, onClickOutside, targets]
+    [enabled, targets, onClickOutside]
   );
 
   useEffect(() => {

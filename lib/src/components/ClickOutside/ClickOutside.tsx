@@ -1,40 +1,21 @@
-import React, { cloneElement, useState } from "react";
+import React, { cloneElement, useRef } from "react";
 import useMergeRefs from "../../hooks/useMergeRefs";
-import useClickOutside, {
-  type EventType,
-} from "./useClickOutside";
+import useClickOutside, { type Config } from "./useClickOutside";
 
-type Props = {
+type Props = Pick<Config, "onClickOutside" | "eventType"> & {
   /**
    * The children to render.
    * IMPORTANT: The child must be a single element which can hold a ref.
    */
   children: React.ReactElement<any>;
-  /**
-   * The function to call when a click occurs outside the child element.
-   *
-   * @param event The mouse event object.
-   */
-  onClickOutside: (event: MouseEvent | PointerEvent) => void;
-  /**
-   * The mouse event to trigger on.
-   * @default "click"
-   */
-  mouseEvent?: EventType;
 };
 
 /** Fire a callback when a click occurs outside the child target */
-const ClickOutside = (props: Props): React.JSX.Element => {
-  const { children, onClickOutside, mouseEvent = "click" } = props;
-  const [element, setElement] = useState<Element | null>(null);
+const ClickOutside = ({ children, ...rest }: Props): React.JSX.Element => {
+  const elementRef = useRef<Element | null>(null);
+  const mergedRef = useMergeRefs<Element>(elementRef, children.props.ref);
 
-  useClickOutside({
-    targets: [element],
-    onClickOutside,
-    eventType: mouseEvent,
-  });
-
-  const mergedRef = useMergeRefs<HTMLElement>(setElement, children.props.ref);
+  useClickOutside({ targets: [elementRef.current], ...rest });
 
   return cloneElement(children, {
     ref: mergedRef,
