@@ -45,7 +45,6 @@ export default function Routes({ children, fallback }: Props): React.ReactNode {
   const pathname = stripBasename(location.pathname, basename);
 
   const routes = findRouteElements(children);
-  console.log(routes);
 
   for (const routeElement of routes) {
     const { path, element } = routeElement.props;
