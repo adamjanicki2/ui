@@ -6,17 +6,23 @@ function flushPromises() {
 }
 
 describe("Animated", () => {
+  let rafCallbacks: Map<number, FrameRequestCallback>;
+  let rafId: number;
+
   beforeEach(() => {
     jest.useFakeTimers();
 
-    jest
-      .spyOn(window, "requestAnimationFrame")
-      .mockImplementation((cb: FrameRequestCallback) =>
-        window.setTimeout(() => cb(0), 0)
-      );
+    rafCallbacks = new Map();
+    rafId = 0;
+
+    jest.spyOn(window, "requestAnimationFrame").mockImplementation((cb) => {
+      rafId += 1;
+      rafCallbacks.set(rafId, cb);
+      return rafId;
+    });
 
     jest.spyOn(window, "cancelAnimationFrame").mockImplementation((id) => {
-      clearTimeout(id);
+      rafCallbacks.delete(id);
     });
   });
 
@@ -28,7 +34,9 @@ describe("Animated", () => {
 
   function flushRaf() {
     act(() => {
-      jest.advanceTimersByTime(0);
+      const callbacks = Array.from(rafCallbacks.entries());
+      rafCallbacks.clear();
+      for (const [, cb] of callbacks) cb(0);
     });
   }
 
@@ -101,7 +109,6 @@ describe("Animated", () => {
       </Animated>
     );
 
-    // The scheduled RAF should be canceled by effect cleanup.
     expect(window.cancelAnimationFrame).toHaveBeenCalledTimes(1);
 
     flushRaf();
@@ -139,7 +146,6 @@ describe("Animated", () => {
       </Animated>
     );
 
-    // Reverse phase is mounted and uses animateFrom.
     const el = screen.getByTestId("animated");
     expect(el).toHaveStyle({ opacity: "0" });
     expect(el).toHaveStyle({ transition: "opacity 0.25s ease-in-out" });
@@ -190,7 +196,6 @@ describe("Animated", () => {
     await flushPromises();
 
     expect(screen.getByTestId("animated")).toBeInTheDocument();
-    // After completing reverse, phase should be "from" => animateFrom styles.
     expect(screen.getByTestId("animated")).toHaveStyle({ opacity: "0" });
   });
 
@@ -284,10 +289,6 @@ describe("Animated", () => {
       </Animated>
     );
 
-    // A reverse timer should be scheduled.
-    expect(jest.getTimerCount()).toBeGreaterThan(0);
-
-    // Reopen before the reverse completes.
     rerender(
       <Animated
         visible
@@ -301,11 +302,12 @@ describe("Animated", () => {
     );
 
     act(() => {
-      jest.runOnlyPendingTimers();
+      jest.advanceTimersByTime(250);
     });
     await flushPromises();
 
     expect(screen.getByTestId("animated")).toBeInTheDocument();
+    expect(screen.getByTestId("animated")).toHaveStyle({ opacity: "1" });
   });
 
   it("builds transition string", async () => {

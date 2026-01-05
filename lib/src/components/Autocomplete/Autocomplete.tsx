@@ -93,7 +93,7 @@ const defaultRenderOption = <T,>(option: T) => (
 /** Searchable select input with an overlay menu */
 const Autocomplete = <T,>(props: Props<T>) => {
   const {
-    inputProps: inputPropsFromProps,
+    inputProps,
     options,
     renderOption = defaultRenderOption,
     filterOption = () => true,
@@ -181,12 +181,12 @@ const Autocomplete = <T,>(props: Props<T>) => {
 
   const handleInputFocus = useCallback(
     (e: React.FocusEvent<HTMLInputElement>) => {
-      inputPropsFromProps?.onFocus?.(e);
+      inputProps?.onFocus?.(e);
       if (e.defaultPrevented) return;
-      if (inputPropsFromProps?.disabled) return;
+      if (inputProps?.disabled) return;
       openMenu();
     },
-    [inputPropsFromProps, openMenu]
+    [inputProps, openMenu]
   );
 
   const handleKeyUp = useCallback(
@@ -242,18 +242,6 @@ const Autocomplete = <T,>(props: Props<T>) => {
 
   const { onKeyUp: onKeyUpProp, ...restIconInputProps } = iconInputProps;
 
-  const inputProps: InputElementProps = useMemo(
-    () => ({
-      ...(inputPropsFromProps ?? {}),
-      value,
-      onChange: handleInputChange,
-      onFocus: handleInputFocus,
-      ref: inputRef,
-      autoComplete: "off",
-    }),
-    [handleInputChange, handleInputFocus, inputPropsFromProps, value]
-  );
-
   return (
     <Popover
       {...restPopoverProps}
@@ -268,7 +256,14 @@ const Autocomplete = <T,>(props: Props<T>) => {
             if (e.defaultPrevented) return;
             handleKeyUp(e);
           }}
-          inputProps={inputProps}
+          inputProps={{
+            ...inputProps,
+            value,
+            onChange: handleInputChange,
+            onFocus: handleInputFocus,
+            ref: inputRef,
+            autoComplete: "off",
+          }}
         />
       }
       vfx={{
