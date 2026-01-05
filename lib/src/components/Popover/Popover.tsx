@@ -32,6 +32,11 @@ const Popover = ({
 }: PopoverProps) => {
   const anchorRef = useRef<HTMLElement | null>(null);
   const floatingRef = useRef<HTMLDivElement | null>(null);
+  const onCloseRef = useRef(onClose);
+  const openRef = useRef(open);
+
+  onCloseRef.current = onClose;
+  openRef.current = open;
 
   const mergedAnchorRef = useMergeRefs<HTMLElement>(
     anchorRef,
@@ -46,11 +51,9 @@ const Popover = ({
   });
 
   useEffect(() => {
-    if (!open) return;
-
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
+      if (event.key === "Escape" && openRef.current) {
+        onCloseRef.current();
       }
     };
 
@@ -59,7 +62,7 @@ const Popover = ({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onClose, open]);
+  }, []);
 
   return (
     <Floating
