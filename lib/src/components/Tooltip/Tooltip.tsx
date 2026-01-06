@@ -88,7 +88,8 @@ const makeQuadrilateral = (
   side: Side,
   fromRect: DOMRect,
   toRect: DOMRect,
-  padding: number
+  // small amount of jitter around the connecting quad bridge
+  padding = 4
 ): Quadrilateral => quadBuilders[side](fromRect, toRect, padding);
 
 const Tooltip = ({
@@ -96,8 +97,6 @@ const Tooltip = ({
   children,
   disabled = false,
   vfx,
-  offset = 0,
-  duration = 0,
   animateFrom,
   animateTo,
   ...floatingProps
@@ -114,7 +113,7 @@ const Tooltip = ({
 
   useEffect(() => stopTracking, [stopTracking]);
 
-  const startTracking = (from: "anchor" | "floating") => {
+  const startTracking = () => {
     stopTracking();
 
     const anchorEl = anchorRef.current;
@@ -127,10 +126,7 @@ const Tooltip = ({
     const anchorRect = anchorEl.getBoundingClientRect();
     const floatingRect = floatingEl.getBoundingClientRect();
     const side = inferSide(anchorRect, floatingRect);
-    const quad =
-      from === "anchor"
-        ? makeQuadrilateral(side, anchorRect, floatingRect, offset)
-        : makeQuadrilateral(side, floatingRect, anchorRect, offset);
+    const quad = makeQuadrilateral(side, anchorRect, floatingRect);
 
     const onMove = (e: PointerEvent) => {
       const point = { x: e.clientX, y: e.clientY };
@@ -175,7 +171,7 @@ const Tooltip = ({
     },
     onMouseLeave: (e: React.MouseEvent) => {
       children.props?.onMouseLeave?.(e);
-      startTracking("anchor");
+      startTracking();
     },
     ref: mergedAnchorRef,
   });
@@ -187,14 +183,13 @@ const Tooltip = ({
       role="tooltip"
       anchor={anchor}
       visible={open}
-      duration={duration}
       animateFrom={animateFrom ?? { style: { opacity: 0 } }}
       animateTo={animateTo ?? { style: { opacity: 1 } }}
       onMouseEnter={() => {
         stopTracking();
         setOpen(true);
       }}
-      onMouseLeave={() => startTracking("floating")}
+      onMouseLeave={startTracking}
       vfx={{
         padding: "s",
         backgroundColor: "default",
