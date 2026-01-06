@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { Children } from "../../types/common";
 import useMergeRefs from "../../hooks/useMergeRefs";
 import Floating from "../Floating/Floating";
@@ -90,11 +90,12 @@ const zoids: Record<
   ],
 };
 
+// a hover safe zone between anchor and floating elements
 const makeZoid = (
   side: Side,
   fromRect: DOMRect,
   toRect: DOMRect,
-  // tiny bit of safe zone jitter
+  // bit of jitter
   padding = 4
 ): Zoid => zoids[side](fromRect, toRect, padding);
 
@@ -112,10 +113,10 @@ const Tooltip = ({
   const floatingRef = useRef<HTMLDivElement | null>(null);
   const stopTrackingRef = useRef<(() => void) | null>(null);
 
-  const stopTracking = useCallback(() => {
+  const stopTracking = () => {
     stopTrackingRef.current?.();
     stopTrackingRef.current = null;
-  }, []);
+  };
 
   useEffect(() => stopTracking, [stopTracking]);
 
@@ -132,7 +133,7 @@ const Tooltip = ({
     const anchorRect = anchorEl.getBoundingClientRect();
     const floatingRect = floatingEl.getBoundingClientRect();
     const side = inferSide(anchorRect, floatingRect);
-    const zoid = makeZoid(side, anchorRect, floatingRect);
+    const safeZoid = makeZoid(side, anchorRect, floatingRect);
 
     const onMove = (e: PointerEvent) => {
       const point = { x: e.clientX, y: e.clientY };
@@ -147,7 +148,7 @@ const Tooltip = ({
       if (
         withinRect(point, anchorRect) ||
         withinRect(point, floatingRect) ||
-        pip(point, zoid)
+        pip(point, safeZoid)
       )
         return;
 
