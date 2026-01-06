@@ -156,7 +156,7 @@ const Autocomplete = <T,>(props: Props<T>) => {
 
   const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     inputProps?.onFocus?.(e);
-    if (!e.defaultPrevented && !inputProps?.disabled && value) openMenu();
+    if (!e.defaultPrevented && !inputProps?.disabled) openMenu();
   };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
