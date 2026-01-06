@@ -118,7 +118,13 @@ const Tooltip = ({
     stopTrackingRef.current = null;
   }, []);
 
-  useEffect(() => stopTracking, [stopTracking]);
+  useEffect(() => {
+    if (disabled) {
+      stopTracking();
+      setOpen(false);
+    }
+    return stopTracking;
+  }, [disabled, stopTracking]);
 
   const startTracking = () => {
     stopTracking();
