@@ -25,7 +25,9 @@ export type TooltipProps = Omit<
 
 type Side = "top" | "bottom" | "left" | "right";
 type Point = { x: number; y: number };
-type Quadrilateral = readonly [Point, Point, Point, Point];
+
+// ordered (clockwise or counter clockwise) set of vertices of a trapezoid
+type Zoid = readonly [Point, Point, Point, Point];
 
 const withinRect = (point: Point, rect: DOMRect) =>
   point.x >= rect.left &&
@@ -33,20 +35,23 @@ const withinRect = (point: Point, rect: DOMRect) =>
   point.y >= rect.top &&
   point.y <= rect.bottom;
 
-const withinQuadrilateral = (point: Point, quad: Quadrilateral) => {
+// point in poly/raycasting algorithm
+const pip = (point: Point, zoid: Zoid) => {
+  const { x, y } = point;
   let inside = false;
-  for (let i = 0, j = 3; i < 4; j = i++) {
-    const { x: xi, y: yi } = quad[i];
-    const { x: xj, y: yj } = quad[j];
+  // only look at vertex pairs which are the true edges
+  for (let i = 0, j = zoid.length - 1; i < zoid.length; j = i++) {
+    const { x: xi, y: yi } = zoid[i];
+    const { x: xj, y: yj } = zoid[j];
 
     const intersects =
-      yi > point.y !== yj > point.y &&
-      point.x < ((xj - xi) * (point.y - yi)) / (yj - yi) + xi;
+      yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
     if (intersects) inside = !inside;
   }
   return inside;
 };
 
+/** Which side the tooltip is relative to the anchor. */
 const inferSide = (anchorRect: DOMRect, floatingRect: DOMRect): Side => {
   if (floatingRect.top >= anchorRect.bottom) return "bottom";
   if (floatingRect.bottom <= anchorRect.top) return "top";
@@ -54,9 +59,10 @@ const inferSide = (anchorRect: DOMRect, floatingRect: DOMRect): Side => {
   return "left";
 };
 
-const quadBuilders: Record<
+// bridge the gap between anchor and floating as a safe area
+const zoids: Record<
   Side,
-  (fromRect: DOMRect, toRect: DOMRect, padding: number) => Quadrilateral
+  (fromRect: DOMRect, toRect: DOMRect, padding: number) => Zoid
 > = {
   bottom: (fromRect, toRect, padding) => [
     { x: fromRect.left - padding, y: fromRect.bottom - padding },
@@ -84,13 +90,13 @@ const quadBuilders: Record<
   ],
 };
 
-const makeQuadrilateral = (
+const makeZoid = (
   side: Side,
   fromRect: DOMRect,
   toRect: DOMRect,
-  // small amount of jitter around the connecting quad bridge
+  // tiny bit of safe zone jitter
   padding = 4
-): Quadrilateral => quadBuilders[side](fromRect, toRect, padding);
+): Zoid => zoids[side](fromRect, toRect, padding);
 
 const Tooltip = ({
   tooltipContent,
@@ -126,7 +132,7 @@ const Tooltip = ({
     const anchorRect = anchorEl.getBoundingClientRect();
     const floatingRect = floatingEl.getBoundingClientRect();
     const side = inferSide(anchorRect, floatingRect);
-    const quad = makeQuadrilateral(side, anchorRect, floatingRect);
+    const zoid = makeZoid(side, anchorRect, floatingRect);
 
     const onMove = (e: PointerEvent) => {
       const point = { x: e.clientX, y: e.clientY };
@@ -141,7 +147,7 @@ const Tooltip = ({
       if (
         withinRect(point, anchorRect) ||
         withinRect(point, floatingRect) ||
-        withinQuadrilateral(point, quad)
+        pip(point, zoid)
       )
         return;
 
