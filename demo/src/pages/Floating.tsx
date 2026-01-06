@@ -9,12 +9,23 @@ import {
   Icon,
   Link,
   Popover,
+  Tooltip,
   UnstyledButton,
   UnstyledLink,
   ui,
 } from "@adamjanicki/ui";
-import { ticket } from "@adamjanicki/ui/icons";
-import { autoCompleteSnippet, popoversSnippet } from "src/codeSnippets";
+import {
+  arrowDown,
+  arrowLeft,
+  arrowRight,
+  arrowUp,
+  ticket,
+} from "@adamjanicki/ui/icons";
+import {
+  autoCompleteSnippet,
+  popoversSnippet,
+  tooltipSnippet,
+} from "src/codeSnippets";
 
 const fruits = [
   "Apple 🍎",
@@ -216,9 +227,33 @@ export default function FloatingPage() {
             out the examples below!
           </>
         }
+        snippet={tooltipSnippet}
       >
-        <Box vfx={{ axis: "y", gap: "s" }}>
-          <Para>TODO: coming soon!</Para>
+        <Box vfx={{ axis: "x", gap: "m", align: "center", justify: "center" }}>
+          <Tooltip tooltipContent="I'm a tooltip!" offset={2} placement="left">
+            <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
+              <Icon icon={arrowLeft} /> Left
+            </Box>
+          </Tooltip>
+          <Tooltip tooltipContent="I'm a tooltip!" offset={2} placement="top">
+            <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
+              <Icon icon={arrowUp} /> Top
+            </Box>
+          </Tooltip>
+          <Tooltip
+            tooltipContent="I'm a tooltip!"
+            offset={2}
+            placement="bottom"
+          >
+            <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
+              <Icon icon={arrowDown} /> Bottom
+            </Box>
+          </Tooltip>
+          <Tooltip tooltipContent="I'm a tooltip!" offset={2} placement="right">
+            <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
+              <Icon icon={arrowRight} /> Right
+            </Box>
+          </Tooltip>
         </Box>
       </ShowcaseBlock>
     </Page>

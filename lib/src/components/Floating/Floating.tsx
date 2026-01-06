@@ -18,7 +18,7 @@ export const placements = [
   "right-end",
 ] as const;
 
-type Placement = (typeof placements)[number];
+export type Placement = (typeof placements)[number];
 
 type Props = Omit<
   React.ComponentProps<typeof Animated>,
