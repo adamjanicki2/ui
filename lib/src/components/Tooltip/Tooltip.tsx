@@ -7,7 +7,7 @@ type FloatingProps = React.ComponentProps<typeof Floating>;
 
 export type TooltipProps = Omit<
   FloatingProps,
-  "onMouseEnter" | "onMouseLeave" | "visible" | "floatingContent" | "anchor"
+  "onPointerEnter" | "onPointerLeave" | "visible" | "floatingContent" | "anchor"
 > & {
   /** Children to render inside the tooltip container */
   tooltipContent: Children;
@@ -142,6 +142,8 @@ const Tooltip = ({
     const safeZoid = makeZoid(side, anchorRect, floatingRect);
 
     const onMove = (e: PointerEvent) => {
+      const pointerType = e.pointerType;
+      if (pointerType !== "mouse") return;
       const point = { x: e.clientX, y: e.clientY };
 
       const anchorEl = anchorRef.current;
@@ -177,14 +179,16 @@ const Tooltip = ({
   if (disabled) return children;
 
   const anchor = React.cloneElement(children, {
-    onMouseEnter: (e: React.MouseEvent) => {
-      children.props?.onMouseEnter?.(e);
-      stopTracking();
-      setOpen(true);
+    onPointerEnter: (e: React.PointerEvent) => {
+      children.props?.onPointerEnter?.(e);
+      if (e.pointerType === "mouse") {
+        stopTracking();
+        setOpen(true);
+      }
     },
-    onMouseLeave: (e: React.MouseEvent) => {
-      children.props?.onMouseLeave?.(e);
-      startTracking();
+    onPointerLeave: (e: React.PointerEvent) => {
+      children.props?.onPointerLeave?.(e);
+      if (e.pointerType === "mouse") startTracking();
     },
     ref: mergedAnchorRef,
   });
@@ -198,11 +202,15 @@ const Tooltip = ({
       visible={open}
       animateFrom={animateFrom ?? { style: { opacity: 0 } }}
       animateTo={animateTo ?? { style: { opacity: 1 } }}
-      onMouseEnter={() => {
-        stopTracking();
-        setOpen(true);
+      onPointerEnter={(e: React.PointerEvent) => {
+        if (e.pointerType === "mouse") {
+          stopTracking();
+          setOpen(true);
+        }
       }}
-      onMouseLeave={startTracking}
+      onPointerLeave={(e: React.PointerEvent) => {
+        if (e.pointerType === "mouse") startTracking();
+      }}
       vfx={{
         padding: "s",
         backgroundColor: "default",
