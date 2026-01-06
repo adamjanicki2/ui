@@ -1,22 +1,14 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import type { ReadonlyableArray } from "../../types/common";
-import classNames from "../../functions/classNames";
 import Box from "../Box";
 import { IconInput } from "../Input";
 import Popover from "../Popover";
-import ui from "../ui";
 
 type PopoverProps = React.ComponentProps<typeof Popover>;
 type IconInputProps = React.ComponentProps<typeof IconInput>;
 type InputElementProps = NonNullable<IconInputProps["inputProps"]>;
 
-type Props<T> = Omit<IconInputProps, "inputProps"> & {
+type Props<T> = Omit<IconInputProps, "inputProps" | "onSelect"> & {
   /** The value of the input field */
   value: string;
   /**
@@ -57,19 +49,12 @@ type Props<T> = Omit<IconInputProps, "inputProps"> & {
    * @returns Node to render for the group.
    */
   renderGroup?: (group: string) => React.ReactNode;
-  /** Allow free text input */
-  customize?: boolean;
+  /** Allow free text input by converting the query string to a value */
+  customize?: (query: string) => T;
   /** Props to pass to the underlying `input` */
-  inputProps?: Omit<
-    InputElementProps,
-    "value" | "onChange" | "onClick" | "ref" | "autoComplete"
-  >;
+  inputProps?: Omit<InputElementProps, "value" | "onChange" | "autoComplete">;
   /** Props for the popover */
   popoverProps?: Omit<PopoverProps, "open" | "onClose" | "anchor" | "children">;
-  /** Props for the list element */
-  listProps?: React.ComponentProps<typeof ui.ul>;
-  /** Props for the list item elements */
-  listItemProps?: React.ComponentProps<typeof ui.li>;
   /** Footer node to render at the bottom of the popover */
   footer?: React.ReactNode;
   /**
@@ -100,14 +85,12 @@ const Autocomplete = <T,>(props: Props<T>) => {
     groupBy,
     renderGroup,
     noOptionsNode,
-    customize = false,
+    customize,
     value,
     onInputChange,
     onSelect,
     popoverProps,
     footer,
-    listItemProps = {},
-    listProps = {},
     onUnselectedEnter,
     closeOnFooterClick = true,
     remainOpenOnSelectOrEnter = false,
@@ -116,113 +99,93 @@ const Autocomplete = <T,>(props: Props<T>) => {
 
   const anchorRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const highlightedRef = useRef<HTMLLIElement | null>(null);
+  const highlightedRef = useRef<HTMLDivElement | null>(null);
 
   const [highlightedIndex, setHighlightedIndex] = useState<number>();
   const [open, setOpen] = useState(false);
 
-  const { filteredOptions, groupMap } = useMemo(() => {
+  const { filteredOptions, groupMap, hasCustomOption } = useMemo(() => {
     let filtered = options.filter(filterOption);
     const map = new Map<number, string>();
 
     if (groupBy) {
-      const uniqueGroups: string[] = [];
-      const seen = new Set<string>();
+      const grouped = new Map<string, T[]>();
       for (const option of filtered) {
         const group = groupBy(option);
-        if (!seen.has(group)) {
-          seen.add(group);
-          uniqueGroups.push(group);
-        }
+        const items = grouped.get(group);
+        if (items) items.push(option);
+        else grouped.set(group, [option]);
       }
-
-      let offset = 0;
-      filtered = uniqueGroups.flatMap((group) => {
-        const groupItems = filtered.filter(
-          (option) => groupBy(option) === group
-        );
-        map.set(offset, group);
-        offset += groupItems.length;
-        return groupItems;
+      filtered = [];
+      grouped.forEach((items, group) => {
+        map.set(filtered.length, group);
+        filtered.push(...items);
       });
     }
 
-    if (customize && value.length > 0 && filtered.length === 0) {
-      filtered = [...filtered, value as T];
-    }
+    const hasCustomOption = Boolean(
+      customize && value.length > 0 && !filtered.length
+    );
+    if (hasCustomOption && customize) filtered = [customize(value)];
 
-    return { filteredOptions: filtered, groupMap: map };
+    return {
+      filteredOptions: filtered,
+      groupMap: map,
+      hasCustomOption,
+    };
   }, [customize, filterOption, groupBy, options, value]);
 
-  const openMenu = useCallback(() => setOpen(true), []);
+  const openMenu = () => setOpen(true);
 
-  const closeMenu = useCallback(() => {
+  const closeMenu = () => {
     setHighlightedIndex(undefined);
     setOpen(false);
     inputRef.current?.blur();
-  }, []);
+  };
 
-  const handleSelect = useCallback(
-    (selected: T) => {
-      onSelect(selected);
-      if (!remainOpenOnSelectOrEnter) closeMenu();
-    },
-    [closeMenu, onSelect, remainOpenOnSelectOrEnter]
-  );
+  const handleSelect = (selected: T) => {
+    onSelect(selected);
+    if (!remainOpenOnSelectOrEnter) closeMenu();
+  };
 
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setHighlightedIndex(undefined);
-      onInputChange(e);
-      if (e.target.value || options.length > 0) openMenu();
-    },
-    [onInputChange, openMenu, options.length]
-  );
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHighlightedIndex(undefined);
+    onInputChange(e);
+    if (e.target.value || options.length > 0) openMenu();
+  };
 
-  const handleInputFocus = useCallback(
-    (e: React.FocusEvent<HTMLInputElement>) => {
-      inputProps?.onFocus?.(e);
-      if (e.defaultPrevented) return;
-      if (inputProps?.disabled) return;
-      openMenu();
-    },
-    [inputProps, openMenu]
-  );
+  const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    inputProps?.onFocus?.(e);
+    if (!e.defaultPrevented && !inputProps?.disabled) openMenu();
+  };
 
-  const handleKeyUp = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      const { code } = e;
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const { code } = e;
 
-      if (code === "Enter") {
-        if (highlightedRef.current) {
-          const child = highlightedRef.current.firstChild as HTMLElement | null;
-          child?.click?.();
-          return;
-        }
-
-        onUnselectedEnter?.();
-        if (!remainOpenOnSelectOrEnter) closeMenu();
+    if (code === "Enter") {
+      const index = highlightedIndex ?? (hasCustomOption ? 0 : undefined);
+      if (index !== undefined) {
+        const selected = filteredOptions[index];
+        if (selected !== undefined) handleSelect(selected);
         return;
       }
 
-      const optionCount = filteredOptions.length;
-      if (optionCount <= 0) return;
+      onUnselectedEnter?.();
+      if (!remainOpenOnSelectOrEnter) closeMenu();
+      return;
+    }
 
-      if (code === "ArrowDown") {
-        setHighlightedIndex((index) => ((index ?? -1) + 1) % optionCount);
-      } else if (code === "ArrowUp") {
-        setHighlightedIndex(
-          (index) => ((index ?? 0) - 1 + optionCount) % optionCount
-        );
-      }
-    },
-    [
-      closeMenu,
-      filteredOptions.length,
-      onUnselectedEnter,
-      remainOpenOnSelectOrEnter,
-    ]
-  );
+    const optionCount = filteredOptions.length;
+    if (optionCount <= 0) return;
+
+    if (code === "ArrowDown") {
+      setHighlightedIndex((index) => ((index ?? -1) + 1) % optionCount);
+    } else if (code === "ArrowUp") {
+      setHighlightedIndex(
+        (index) => ((index ?? 0) - 1 + optionCount) % optionCount
+      );
+    }
+  };
 
   useEffect(() => {
     if (highlightedIndex === undefined) return;
@@ -237,21 +200,43 @@ const Autocomplete = <T,>(props: Props<T>) => {
   const {
     style: popoverStyle,
     vfx: popoverVfx,
+    flip = false,
+    offset = 8,
     ...restPopoverProps
   } = popoverProps || {};
 
   const { onKeyUp: onKeyUpProp, ...restIconInputProps } = iconInputProps;
 
+  const renderRow = (
+    index: number,
+    onClick: () => void,
+    children: React.ReactNode
+  ) => (
+    <Box
+      vfx={{ axis: "x", cursor: "pointer", radius: "rounded" }}
+      ref={highlightedIndex === index ? highlightedRef : undefined}
+      onMouseEnter={() => setHighlightedIndex(index)}
+      className={
+        highlightedIndex === index ? "aui-autocomplete-on-option" : undefined
+      }
+      onClick={onClick}
+    >
+      {children}
+    </Box>
+  );
+
   return (
     <Popover
       {...restPopoverProps}
+      flip={flip}
+      offset={offset}
       open={popoverOpen}
       onClose={closeMenu}
       anchor={
         <IconInput
           {...restIconInputProps}
           ref={anchorRef}
-          onKeyUp={(e) => {
+          onKeyUp={(e: React.KeyboardEvent<HTMLDivElement>) => {
             onKeyUpProp?.(e);
             if (e.defaultPrevented) return;
             handleKeyUp(e);
@@ -273,59 +258,35 @@ const Autocomplete = <T,>(props: Props<T>) => {
         fontWeight: 4,
         ...popoverVfx,
       }}
-      style={{
-        ...popoverStyle,
-        width: anchorRef.current?.offsetWidth,
+      style={{ ...popoverStyle, width: anchorRef.current?.offsetWidth }}
+      animateFrom={{
+        style: { opacity: 0, transform: `translateY(-${offset}px)` },
       }}
+      animateTo={{ style: { opacity: 1, transform: "translateY(0)" } }}
     >
-      <ui.ul
-        {...listProps}
-        vfx={{
-          axis: "y",
-          padding: "s",
-          margin: "none",
-          overflow: "scroll",
-          ...listProps.vfx,
-        }}
-        style={{ maxHeight: 300, ...listProps.style }}
+      <Box
+        vfx={{ axis: "y", padding: "s", overflow: "scroll" }}
+        style={{ maxHeight: 300 }}
         tabIndex={-1}
       >
-        {filteredOptions.length
-          ? filteredOptions.map((option, index) => {
-              const group = groupMap.get(index);
-              const ref =
-                index === highlightedIndex ? highlightedRef : undefined;
+        {filteredOptions.map((option, index) => {
+          const group = groupMap.get(index);
 
-              return (
-                <React.Fragment key={index}>
-                  {group && (renderGroup?.(group) || group)}
-                  <ui.li
-                    {...listItemProps}
-                    vfx={{
-                      axis: "x",
-                      cursor: "pointer",
-                      radius: "rounded",
-                      ...listItemProps.vfx,
-                    }}
-                    ref={ref}
-                    onMouseEnter={() => setHighlightedIndex(index)}
-                    className={classNames(
-                      highlightedIndex === index
-                        ? "aui-autocomplete-on-option"
-                        : undefined,
-                      listItemProps.className
-                    )}
-                    onClick={() => handleSelect(option)}
-                  >
-                    {renderOption(option)}
-                  </ui.li>
-                </React.Fragment>
-              );
-            })
-          : customize
+          return (
+            <React.Fragment key={index}>
+              {group && (renderGroup?.(group) || group)}
+              {renderRow(
+                index,
+                () => handleSelect(option),
+                renderOption(option)
+              )}
+            </React.Fragment>
+          );
+        })}
+        {filteredOptions.length > 0
           ? null
           : noOptionsNode || defaultRenderOption("No results found")}
-      </ui.ul>
+      </Box>
       {footer && (
         <Box onClick={closeOnFooterClick ? closeMenu : undefined}>{footer}</Box>
       )}

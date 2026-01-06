@@ -78,4 +78,34 @@ describe("Autocomplete", () => {
 
     expect(onUnselectedEnter).toHaveBeenCalledTimes(1);
   });
+
+  it("supports customize for non-string option types", async () => {
+    const user = userEvent.setup();
+    const onSelect = jest.fn();
+
+    type Option = { label: string };
+
+    const Controlled = () => {
+      const [value, setValue] = React.useState("");
+      return (
+        <Autocomplete
+          value={value}
+          onInputChange={(e) => setValue(e.target.value)}
+          onSelect={onSelect}
+          options={[] as const}
+          customize={(query): Option => ({ label: query })}
+          popoverProps={{ duration: 0 }}
+        />
+      );
+    };
+
+    render(<Controlled />);
+
+    await user.click(screen.getByRole("textbox"));
+    await user.type(screen.getByRole("textbox"), "Dragonfruit");
+    await user.keyboard("{Enter}");
+
+    expect(onSelect).toHaveBeenCalledTimes(1);
+    expect(onSelect).toHaveBeenCalledWith({ label: "Dragonfruit" });
+  });
 });

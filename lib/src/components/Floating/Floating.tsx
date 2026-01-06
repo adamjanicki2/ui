@@ -157,9 +157,7 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   return (
     <>
-      {React.cloneElement(anchor, {
-        ref: mergedAnchorRef,
-      })}
+      {React.cloneElement(anchor, { ref: mergedAnchorRef })}
       <Animated
         {...rest}
         ref={mergedFloatingRef}

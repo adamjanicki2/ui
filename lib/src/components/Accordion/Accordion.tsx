@@ -78,39 +78,37 @@ const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
   // https://developer.mozilla.org/en-US/docs/Web/CSS/calc-size#browser_compatibility
 
   return (
-    <>
-      <Box vfx={{ axis: "y", borderBottom: showDivider }}>
-        <UnstyledButton onClick={() => onOpenChange(!open)}>
-          <Box vfx={{ axis: "x", align: "center", gap: "s", padding: "m" }}>
-            <Icon
-              vfx={{ color: "muted" }}
-              size="xs"
-              icon={open ? chevronDown : chevronRight}
-            />
-            <Box vfx={{ fontWeight: 6 }}>{item.label}</Box>
-          </Box>
-        </UnstyledButton>
-        <Animated
-          vfx={{ overflow: "hidden" }}
-          keepMounted
-          duration={duration}
-          visible={open}
-          animateFrom={{
-            style: {
-              visibility: "hidden",
-              height: 0,
-              transform: "translateY(-4px)",
-              opacity: 0.9,
-            },
-          }}
-          animateTo={{
-            style: { height, transform: "translateY(0)", opacity: 1 },
-          }}
-        >
-          <Box ref={boxRef}>{children}</Box>
-        </Animated>
-      </Box>
-    </>
+    <Box vfx={{ axis: "y", borderBottom: showDivider }}>
+      <UnstyledButton onClick={() => onOpenChange(!open)}>
+        <Box vfx={{ axis: "x", align: "center", gap: "s", padding: "m" }}>
+          <Icon
+            vfx={{ color: "muted" }}
+            size="xs"
+            icon={open ? chevronDown : chevronRight}
+          />
+          <Box vfx={{ fontWeight: 6 }}>{item.label}</Box>
+        </Box>
+      </UnstyledButton>
+      <Animated
+        vfx={{ overflow: "hidden" }}
+        keepMounted
+        duration={duration}
+        visible={open}
+        animateFrom={{
+          style: {
+            visibility: "hidden",
+            height: 0,
+            transform: "translateY(-4px)",
+            opacity: 0.9,
+          },
+        }}
+        animateTo={{
+          style: { height, transform: "translateY(0)", opacity: 1 },
+        }}
+      >
+        <Box ref={boxRef}>{children}</Box>
+      </Animated>
+    </Box>
   );
 };
 

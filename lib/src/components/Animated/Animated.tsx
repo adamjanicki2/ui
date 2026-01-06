@@ -128,7 +128,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       ? animateTo
       : animateFrom;
 
-  let transition: string | undefined = undefined;
+  let transition: string | undefined;
   if (phase === "forward" && !instantForward) {
     transition = makeTransition(transitionProperties, forwardDuration);
   } else if (phase === "reverse" && !instantReverse) {

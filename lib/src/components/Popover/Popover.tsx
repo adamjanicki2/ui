@@ -52,16 +52,11 @@ const Popover = ({
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && openRef.current) {
-        onCloseRef.current();
-      }
+      if (event.key === "Escape" && openRef.current) onCloseRef.current();
     };
 
     document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (

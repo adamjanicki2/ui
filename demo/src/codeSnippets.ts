@@ -203,8 +203,7 @@ export const autoCompleteSnippet = `
   filterOption={(option) => option.toLowerCase().includes(value.toLowerCase())}
   onSelect={(selected) => setValue(selected)}
   inputProps={{ placeholder: "Fruits" }}
-  popoverProps={{ offset: 8 }}
-  customize
+  customize={(query) => query}
 />;
 `;
 
