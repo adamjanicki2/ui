@@ -27,6 +27,8 @@ const Tooltip = ({
   children,
   disabled = false,
   vfx,
+  animateFrom,
+  animateTo,
   ...floatingProps
 }: TooltipProps) => {
   const [open, setOpen] = useState(false);
@@ -36,18 +38,10 @@ const Tooltip = ({
   const anchor = React.cloneElement(children, {
     onMouseEnter: (e: React.MouseEvent) => {
       children.props?.onMouseEnter?.(e);
-      if (!disabled) setOpen(true);
+      setOpen(true);
     },
     onMouseLeave: (e: React.MouseEvent) => {
       children.props?.onMouseLeave?.(e);
-      setOpen(false);
-    },
-    onFocus: (e: React.FocusEvent) => {
-      children.props?.onFocus?.(e);
-      setOpen(true);
-    },
-    onBlur: (e: React.FocusEvent) => {
-      children.props?.onBlur?.(e);
       setOpen(false);
     },
   });
@@ -58,6 +52,8 @@ const Tooltip = ({
       role="tooltip"
       anchor={anchor}
       visible={open}
+      animateFrom={animateFrom ?? { style: { opacity: 0 } }}
+      animateTo={animateTo ?? { style: { opacity: 1 } }}
       vfx={{
         padding: "s",
         backgroundColor: "default",
