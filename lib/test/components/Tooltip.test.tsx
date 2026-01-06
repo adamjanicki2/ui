@@ -7,7 +7,7 @@ describe("Tooltip", () => {
     const user = userEvent.setup();
 
     render(
-      <Tooltip tooltipContent="Hello tooltip">
+      <Tooltip tooltipContent="Hello tooltip" duration={0}>
         <button type="button">Hover</button>
       </Tooltip>
     );
@@ -31,7 +31,7 @@ describe("Tooltip", () => {
     const user = userEvent.setup();
 
     render(
-      <Tooltip tooltipContent="Hello tooltip">
+      <Tooltip tooltipContent="Hello tooltip" duration={0}>
         <button type="button">Hover</button>
       </Tooltip>
     );
