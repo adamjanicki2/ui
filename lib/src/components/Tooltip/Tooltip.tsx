@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { Children } from "../../types/common";
 import useMergeRefs from "../../hooks/useMergeRefs";
 import Floating from "../Floating/Floating";
@@ -113,10 +113,10 @@ const Tooltip = ({
   const floatingRef = useRef<HTMLDivElement | null>(null);
   const stopTrackingRef = useRef<(() => void) | null>(null);
 
-  const stopTracking = () => {
+  const stopTracking = useCallback(() => {
     stopTrackingRef.current?.();
     stopTrackingRef.current = null;
-  };
+  }, []);
 
   useEffect(() => stopTracking, [stopTracking]);
 
