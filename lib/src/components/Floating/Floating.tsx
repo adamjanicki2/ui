@@ -49,6 +49,13 @@ type Props = Omit<
 
 type Position = { top: number; left: number };
 
+type Viewport = {
+  width: number;
+  height: number;
+  offsetTop: number;
+  offsetLeft: number;
+};
+
 const opposites: Record<Placement, Placement> = {
   top: "bottom",
   "top-start": "bottom-start",
@@ -92,25 +99,44 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const floatingEl = floatingRef.current;
     if (!anchorEl || !floatingEl) return;
 
+    const visViewPort = window.visualViewport;
+    const viewport: Viewport = {
+      width: visViewPort?.width ?? window.innerWidth,
+      height: visViewPort?.height ?? window.innerHeight,
+      offsetTop: visViewPort?.offsetTop ?? 0,
+      offsetLeft: visViewPort?.offsetLeft ?? 0,
+    };
     const anchorRect = anchorEl.getBoundingClientRect();
     const contentRect = floatingEl.getBoundingClientRect();
     const positionerArgs = { anchorRect, contentRect, offset } as const;
 
     let nextPlacement = placement;
     let nextPosition = positioners[nextPlacement](positionerArgs);
-    const overflowsViewport = overflowChecks[nextPlacement](
-      nextPosition,
-      contentRect
-    );
+    const overflowsViewport = overflowChecks[nextPlacement]({
+      position: nextPosition,
+      rect: contentRect,
+      viewport,
+    });
 
     if (flip && overflowsViewport) {
       const oppositePlacement = opposites[nextPlacement];
       const oppositePosition = positioners[oppositePlacement](positionerArgs);
-      if (!overflowChecks[oppositePlacement](oppositePosition, contentRect)) {
+      if (
+        !overflowChecks[oppositePlacement]({
+          position: oppositePosition,
+          rect: contentRect,
+          viewport,
+        })
+      ) {
         nextPlacement = oppositePlacement;
         nextPosition = oppositePosition;
       }
     }
+
+    nextPosition = {
+      top: nextPosition.top + viewport.offsetTop,
+      left: nextPosition.left + viewport.offsetLeft,
+    };
 
     setPosition((prev) => {
       if (
@@ -130,8 +156,14 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     setPosition(null);
     updatePosition();
 
-    window.addEventListener("resize", updatePosition);
     document.addEventListener("scroll", updatePosition, true);
+    const viewport = window.visualViewport;
+    if (viewport) {
+      viewport.addEventListener("resize", updatePosition);
+      viewport.addEventListener("scroll", updatePosition);
+    } else {
+      window.addEventListener("resize", updatePosition);
+    }
 
     const anchorEl = anchorRef.current;
     const floatingEl = floatingRef.current;
@@ -144,8 +176,13 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     }
 
     return () => {
-      window.removeEventListener("resize", updatePosition);
       document.removeEventListener("scroll", updatePosition, true);
+      if (viewport) {
+        viewport.removeEventListener("resize", updatePosition);
+        viewport.removeEventListener("scroll", updatePosition);
+      } else {
+        window.removeEventListener("resize", updatePosition);
+      }
       resizeObserver?.disconnect();
     };
   }, [updatePosition, visible]);
@@ -235,14 +272,20 @@ const positioners: Record<Placement, Positioner> = {
   "right-end": makeRight(endY),
 };
 
-type OverflowCheck = (position: Position, rect: DOMRect) => boolean;
+type OverflowCheck = (args: {
+  position: Position;
+  rect: DOMRect;
+  viewport: Viewport;
+}) => boolean;
 
-const overflowsTop: OverflowCheck = (position) => position.top < 0;
-const overflowsBottom: OverflowCheck = (position, rect) =>
-  position.top + rect.height > window.innerHeight;
-const overflowsLeft: OverflowCheck = (position) => position.left < 0;
-const overflowsRight: OverflowCheck = (position, rect) =>
-  position.left + rect.width > window.innerWidth;
+const overflowsTop: OverflowCheck = ({ position, viewport }) =>
+  position.top < viewport.offsetTop;
+const overflowsBottom: OverflowCheck = ({ position, rect, viewport }) =>
+  position.top + rect.height > viewport.offsetTop + viewport.height;
+const overflowsLeft: OverflowCheck = ({ position, viewport }) =>
+  position.left < viewport.offsetLeft;
+const overflowsRight: OverflowCheck = ({ position, rect, viewport }) =>
+  position.left + rect.width > viewport.offsetLeft + viewport.width;
 
 const overflowChecks: Record<Placement, OverflowCheck> = {
   top: overflowsTop,
