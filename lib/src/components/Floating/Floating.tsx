@@ -47,8 +47,7 @@ type Props = Omit<
   flip?: boolean;
 };
 
-type Position = { top: number; left: number };
-
+type Pos = { top: number; left: number };
 type Viewport = {
   width: number;
   height: number;
@@ -92,7 +91,7 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     anchor.props.ref
   );
 
-  const [position, setPosition] = useState<Position | null>(null);
+  const [position, setPosition] = useState<Pos | null>(null);
 
   const updatePosition = useCallback(() => {
     const anchorEl = anchorRef.current;
@@ -107,14 +106,14 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       offsetLeft: visViewPort?.offsetLeft ?? 0,
     };
     const anchorRect = anchorEl.getBoundingClientRect();
-    const contentRect = floatingEl.getBoundingClientRect();
-    const positionerArgs = { anchorRect, contentRect, offset } as const;
+    const floatingRect = floatingEl.getBoundingClientRect();
+    const positionerArgs = { anchorRect, floatingRect, offset } as const;
 
     let nextPlacement = placement;
     let nextPosition = positioners[nextPlacement](positionerArgs);
     const overflowsViewport = overflowChecks[nextPlacement]({
-      position: nextPosition,
-      rect: contentRect,
+      pos: nextPosition,
+      rect: floatingRect,
       viewport,
     });
 
@@ -123,8 +122,8 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       const oppositePosition = positioners[oppositePlacement](positionerArgs);
       if (
         !overflowChecks[oppositePlacement]({
-          position: oppositePosition,
-          rect: contentRect,
+          pos: oppositePosition,
+          rect: floatingRect,
           viewport,
         })
       ) {
@@ -212,48 +211,48 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
 type Positioner = (args: {
   anchorRect: DOMRect;
-  contentRect: DOMRect;
+  floatingRect: DOMRect;
   offset: number;
-}) => Position;
-type Aligner = (anchorRect: DOMRect, contentRect: DOMRect) => number;
+}) => Pos;
+type Aligner = (anchorRect: DOMRect, floatingRect: DOMRect) => number;
 
-const centerX: Aligner = (anchorRect, contentRect) =>
-  anchorRect.left + anchorRect.width / 2 - contentRect.width / 2;
+const centerX: Aligner = (anchorRect, floatingRect) =>
+  anchorRect.left + anchorRect.width / 2 - floatingRect.width / 2;
 const startX: Aligner = (anchorRect) => anchorRect.left;
-const endX: Aligner = (anchorRect, contentRect) =>
-  anchorRect.right - contentRect.width;
+const endX: Aligner = (anchorRect, floatingRect) =>
+  anchorRect.right - floatingRect.width;
 
-const centerY: Aligner = (anchorRect, contentRect) =>
-  anchorRect.top + anchorRect.height / 2 - contentRect.height / 2;
+const centerY: Aligner = (anchorRect, floatingRect) =>
+  anchorRect.top + anchorRect.height / 2 - floatingRect.height / 2;
 const startY: Aligner = (anchorRect) => anchorRect.top;
-const endY: Aligner = (anchorRect, contentRect) =>
-  anchorRect.bottom - contentRect.height;
+const endY: Aligner = (anchorRect, floatingRect) =>
+  anchorRect.bottom - floatingRect.height;
 
 const makeTop =
   (alignX: Aligner): Positioner =>
-  ({ anchorRect, contentRect, offset }) => ({
-    top: anchorRect.top - contentRect.height - offset,
-    left: alignX(anchorRect, contentRect),
+  ({ anchorRect, floatingRect, offset }) => ({
+    top: anchorRect.top - floatingRect.height - offset,
+    left: alignX(anchorRect, floatingRect),
   });
 
 const makeBottom =
   (alignX: Aligner): Positioner =>
-  ({ anchorRect, contentRect, offset }) => ({
+  ({ anchorRect, floatingRect, offset }) => ({
     top: anchorRect.bottom + offset,
-    left: alignX(anchorRect, contentRect),
+    left: alignX(anchorRect, floatingRect),
   });
 
 const makeLeft =
   (alignY: Aligner): Positioner =>
-  ({ anchorRect, contentRect, offset }) => ({
-    top: alignY(anchorRect, contentRect),
-    left: anchorRect.left - contentRect.width - offset,
+  ({ anchorRect, floatingRect, offset }) => ({
+    top: alignY(anchorRect, floatingRect),
+    left: anchorRect.left - floatingRect.width - offset,
   });
 
 const makeRight =
   (alignY: Aligner): Positioner =>
-  ({ anchorRect, contentRect, offset }) => ({
-    top: alignY(anchorRect, contentRect),
+  ({ anchorRect, floatingRect, offset }) => ({
+    top: alignY(anchorRect, floatingRect),
     left: anchorRect.right + offset,
   });
 
@@ -273,19 +272,19 @@ const positioners: Record<Placement, Positioner> = {
 };
 
 type OverflowCheck = (args: {
-  position: Position;
+  pos: Pos;
   rect: DOMRect;
   viewport: Viewport;
 }) => boolean;
 
-const overflowsTop: OverflowCheck = ({ position, viewport }) =>
-  position.top < viewport.offsetTop;
-const overflowsBottom: OverflowCheck = ({ position, rect, viewport }) =>
-  position.top + rect.height > viewport.offsetTop + viewport.height;
-const overflowsLeft: OverflowCheck = ({ position, viewport }) =>
-  position.left < viewport.offsetLeft;
-const overflowsRight: OverflowCheck = ({ position, rect, viewport }) =>
-  position.left + rect.width > viewport.offsetLeft + viewport.width;
+const overflowsTop: OverflowCheck = ({ pos, viewport }) =>
+  pos.top < viewport.offsetTop;
+const overflowsBottom: OverflowCheck = ({ pos, rect, viewport }) =>
+  pos.top + rect.height > viewport.offsetTop + viewport.height;
+const overflowsLeft: OverflowCheck = ({ pos, viewport }) =>
+  pos.left < viewport.offsetLeft;
+const overflowsRight: OverflowCheck = ({ pos, rect, viewport }) =>
+  pos.left + rect.width > viewport.offsetLeft + viewport.width;
 
 const overflowChecks: Record<Placement, OverflowCheck> = {
   top: overflowsTop,
