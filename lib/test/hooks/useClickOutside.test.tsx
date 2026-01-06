@@ -2,21 +2,20 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 import useClickOutside from "../../src/components/ClickOutside/useClickOutside";
 
-const dispatchPointerDown = (el: Element) =>
-  el.dispatchEvent(new Event("pointerdown", { bubbles: true }));
+const dispatchMouseDown = (el: Element) =>
+  el.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
 
 const waitForHookToStart = async () =>
   new Promise((resolve) => window.setTimeout(resolve, 0));
 
 describe("useClickOutside", () => {
-  it("fires callback on pointerdown outside targets", async () => {
+  it("fires callback on mousedown outside targets", async () => {
     const callback = jest.fn();
 
     const Wrapper = () => {
       const target = React.useRef<HTMLDivElement | null>(null);
       useClickOutside({
         targets: [target],
-        eventType: "pointerdown",
         onClickOutside: callback,
       });
       return (
@@ -30,18 +29,17 @@ describe("useClickOutside", () => {
     render(<Wrapper />);
     await waitForHookToStart();
 
-    dispatchPointerDown(screen.getByTestId("outside"));
+    dispatchMouseDown(screen.getByTestId("outside"));
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
-  it("does not fire callback on pointerdown inside a target", async () => {
+  it("does not fire callback on mousedown inside a target", async () => {
     const callback = jest.fn();
 
     const Wrapper = () => {
       const target = React.useRef<HTMLDivElement | null>(null);
       useClickOutside({
         targets: [target],
-        eventType: "pointerdown",
         onClickOutside: callback,
       });
       return (
@@ -54,7 +52,7 @@ describe("useClickOutside", () => {
     render(<Wrapper />);
     await waitForHookToStart();
 
-    dispatchPointerDown(screen.getByTestId("target"));
+    dispatchMouseDown(screen.getByTestId("target"));
     expect(callback).toHaveBeenCalledTimes(0);
   });
 
@@ -66,7 +64,6 @@ describe("useClickOutside", () => {
       const b = React.useRef<HTMLDivElement | null>(null);
       useClickOutside({
         targets: [a, b],
-        eventType: "pointerdown",
         onClickOutside: callback,
       });
       return (
@@ -81,8 +78,8 @@ describe("useClickOutside", () => {
     render(<Wrapper />);
     await waitForHookToStart();
 
-    dispatchPointerDown(screen.getByTestId("b"));
-    dispatchPointerDown(screen.getByTestId("outside"));
+    dispatchMouseDown(screen.getByTestId("b"));
+    dispatchMouseDown(screen.getByTestId("outside"));
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
@@ -94,7 +91,6 @@ describe("useClickOutside", () => {
       useClickOutside({
         targets: [target],
         enabled: false,
-        eventType: "pointerdown",
         onClickOutside: callback,
       });
       return (
@@ -108,7 +104,7 @@ describe("useClickOutside", () => {
     render(<Wrapper />);
     await waitForHookToStart();
 
-    dispatchPointerDown(screen.getByTestId("outside"));
+    dispatchMouseDown(screen.getByTestId("outside"));
     expect(callback).toHaveBeenCalledTimes(0);
   });
 });

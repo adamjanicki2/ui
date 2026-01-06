@@ -17,7 +17,7 @@ export type Config = {
   onClickOutside: (event: MouseEvent | PointerEvent) => void;
   /**
    * Document event type to listen for.
-   * @default "pointerdown"
+   * @default "mousedown"
    */
   eventType?: EventType;
   /**
@@ -44,7 +44,7 @@ const useClickOutside = (config: Config) => {
   const {
     targets,
     onClickOutside,
-    eventType = "pointerdown",
+    eventType = "mousedown",
     enabled = true,
   } = config;
 

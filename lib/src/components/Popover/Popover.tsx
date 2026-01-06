@@ -45,7 +45,7 @@ const Popover = ({
 
   useClickOutside({
     targets: [floatingRef, anchorRef],
-    eventType: "pointerdown",
+    eventType: "mousedown",
     enabled: open,
     onClickOutside: onClose,
   });

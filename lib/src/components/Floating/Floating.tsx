@@ -3,22 +3,19 @@ import useMergeRefs from "../../hooks/useMergeRefs";
 import type { Children } from "../../types/common";
 import Animated from "../Animated";
 
-export const placements = [
-  "top",
-  "top-start",
-  "top-end",
-  "bottom",
-  "bottom-start",
-  "bottom-end",
-  "left",
-  "left-start",
-  "left-end",
-  "right",
-  "right-start",
-  "right-end",
-] as const;
-
-type Placement = (typeof placements)[number];
+type Placement =
+  | "top"
+  | "top-start"
+  | "top-end"
+  | "bottom"
+  | "bottom-start"
+  | "bottom-end"
+  | "left"
+  | "left-start"
+  | "left-end"
+  | "right"
+  | "right-start"
+  | "right-end";
 
 type Props = Omit<
   React.ComponentProps<typeof Animated>,
@@ -78,6 +75,7 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     flip = true,
     style,
     vfx,
+    duration = 0,
     ...rest
   } = props;
   const anchorRef = useRef<HTMLElement | null>(null);
@@ -130,7 +128,6 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   useLayoutEffect(() => {
     if (!visible) return;
 
-    setPosition(null);
     updatePosition();
 
     window.addEventListener("resize", updatePosition);
@@ -169,6 +166,7 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           visibility: position ? "visible" : "hidden",
         }}
         visible={visible}
+        duration={duration}
       >
         {floatingContent}
       </Animated>

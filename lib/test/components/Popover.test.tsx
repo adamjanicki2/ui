@@ -2,11 +2,11 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Popover from "../../src/components/Popover";
 
-const dispatchPointerDown = (el: Element) =>
-  el.dispatchEvent(new Event("pointerdown", { bubbles: true }));
+const dispatchMouseDown = (el: Element) =>
+  el.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
 
 describe("Popover", () => {
-  it("fires onClose when pointerdown is outside anchor and content", async () => {
+  it("fires onClose when mousedown is outside anchor and content", async () => {
     const onClose = jest.fn();
 
     render(
@@ -25,11 +25,11 @@ describe("Popover", () => {
     // useClickOutside waits a tick before activating to avoid firing on mount
     await new Promise((resolve) => window.setTimeout(resolve, 0));
 
-    dispatchPointerDown(screen.getByTestId("outside"));
+    dispatchMouseDown(screen.getByTestId("outside"));
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("does not fire onClose when pointerdown is inside anchor", () => {
+  it("does not fire onClose when mousedown is inside anchor", () => {
     const onClose = jest.fn();
 
     render(
@@ -42,11 +42,11 @@ describe("Popover", () => {
       </Popover>
     );
 
-    dispatchPointerDown(screen.getByTestId("anchor"));
+    dispatchMouseDown(screen.getByTestId("anchor"));
     expect(onClose).toHaveBeenCalledTimes(0);
   });
 
-  it("does not fire onClose when pointerdown is inside content", () => {
+  it("does not fire onClose when mousedown is inside content", () => {
     const onClose = jest.fn();
 
     render(
@@ -59,7 +59,7 @@ describe("Popover", () => {
       </Popover>
     );
 
-    dispatchPointerDown(screen.getByTestId("content"));
+    dispatchMouseDown(screen.getByTestId("content"));
     expect(onClose).toHaveBeenCalledTimes(0);
   });
 

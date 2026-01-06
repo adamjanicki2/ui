@@ -31,3 +31,4 @@ export * from "./navigation";
 // Floating
 export { default as Autocomplete } from "./components/Autocomplete";
 export { default as Popover } from "./components/Popover";
+export { default as Tooltip } from "./components/Tooltip";

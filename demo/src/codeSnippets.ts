@@ -222,3 +222,11 @@ export const popoversSnippet = `
   I'm a popover!
 </Popover>
 `;
+
+export const tooltipSnippet = `
+<Tooltip tooltipContent="I'm a tooltip!" offset={2} placement="left">
+  <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
+    <Icon icon={arrowLeft} /> Left
+  </Box>
+</Tooltip>
+`;
