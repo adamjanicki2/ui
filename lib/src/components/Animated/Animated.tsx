@@ -128,20 +128,27 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       ? animateTo
       : animateFrom;
 
-  let transition: string | undefined;
+  let transitionProperty: string | undefined;
+  let transitionDuration: number | undefined;
+
   if (phase === "forward" && !instantForward) {
-    transition = makeTransition(transitionProperties, forwardDuration);
+    transitionDuration = forwardDuration;
+    transitionProperty = makeTransitionProperty(transitionProperties);
   } else if (phase === "reverse" && !instantReverse) {
-    transition = makeTransition(transitionProperties, reverseDuration);
+    transitionDuration = reverseDuration;
+    transitionProperty = makeTransitionProperty(transitionProperties);
   }
 
   return (
     <Box
       className={classNames(className, currentAnimation?.className)}
       style={{
-        transition,
         ...style,
         ...currentAnimation?.style,
+        transitionProperty,
+        transitionDuration: transitionDuration
+          ? `${transitionDuration}s`
+          : undefined,
       }}
       vfx={{ ...vfx, ...currentAnimation?.vfx }}
       {...rest}
@@ -150,14 +157,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   );
 });
 
-const makeTransition = (
-  transitionProperties: ReadonlyableArray<string>,
-  duration: number
-) =>
-  transitionProperties.length > 0
-    ? transitionProperties
-        .map((prop) => `${prop} ${duration}s ease-in-out`)
-        .join(", ")
-    : undefined;
+const makeTransitionProperty = (props: ReadonlyableArray<string>) =>
+  props.length <= 0 ? undefined : props.join(", ");
 
 export default Animated;
