@@ -1,10 +1,7 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import useMergeRefs from "../../hooks/useMergeRefs";
-import type { Children, Style } from "../../types/common";
-import Animated, {
-  type Props as AnimatedProps,
-  type AnimationState,
-} from "../Animated/Animated";
+import type { Children, ReadonlyableArray, Style } from "../../types/common";
+import Animated from "../Animated/Animated";
 
 type Placement =
   | "top"
@@ -22,17 +19,27 @@ type Placement =
 
 type SafeStyle = Omit<
   Style,
-  "top" | "left" | "right" | "bottom" | "position" | "transform" | "translate"
+  | "top"
+  | "left"
+  | "right"
+  | "bottom"
+  | "position"
+  | "transform"
+  | "translate"
+  | "all"
 >;
 
-type SafeAnimationState = Omit<AnimationState, "style"> & {
-  /** Style props that can be safely applied to the floating element without distrupting positioning */
-  style?: SafeStyle;
-};
+type AnimatedProps = React.ComponentProps<typeof Animated>;
 
 type Props = Omit<
   AnimatedProps,
-  "children" | "visible" | "keepMounted" | "style" | "animateFrom" | "animateTo"
+  | "children"
+  | "visible"
+  | "keepMounted"
+  | "style"
+  | "animateFrom"
+  | "animateTo"
+  | "transitionProperties"
 > & {
   /**
    * Anchor element the floating content is positioned relative to.
@@ -61,9 +68,11 @@ type Props = Omit<
   /** Style that can be safely applied to the floating element without distrupting positioning */
   style?: SafeStyle;
   /** Animation CSS for the start state (styles cannot override positioning) */
-  animateFrom?: SafeAnimationState;
+  animateFrom?: SafeStyle;
   /** Animation CSS for the end state (styles cannot override positioning) */
-  animateTo?: SafeAnimationState;
+  animateTo?: SafeStyle;
+  /** Safe properties that are allowed to be transitioned */
+  transitionProperties?: ReadonlyableArray<keyof SafeStyle>;
 };
 
 type Position = { top: number; left: number };

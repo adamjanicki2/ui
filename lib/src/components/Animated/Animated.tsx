@@ -1,18 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import classNames from "../../functions/classNames";
-import type { ReadonlyableArray, Style, Vfx } from "../../types/common";
+import type { ReadonlyableArray, Style } from "../../types/common";
 import Box, { type BoxProps } from "../Box/Box";
 
-export type AnimationState = {
-  /** Class to apply to the component when at this state */
-  className?: string;
-  /** Inline styles to apply to the component at this state */
-  style?: Style;
-  /** The VFX or other organizational CSS to apply at this state */
-  vfx?: Vfx;
-};
-
-export type Props = BoxProps & {
+type Props = BoxProps & {
   /**
    * Whether to begin the animation and render the component.
    * Set to true to start animation, false to start the exit animation.
@@ -35,10 +25,10 @@ export type Props = BoxProps & {
    * @default false
    */
   keepMounted?: boolean;
-  /** Animation CSS for the start state */
-  animateTo?: AnimationState;
-  /** Animation CSS for the end state */
-  animateFrom?: AnimationState;
+  /** Style applied at the start state */
+  animateTo?: Style;
+  /** Style applied at the end state */
+  animateFrom?: Style;
   /**
    * The properties to apply a transition.
    * @default ['all']
@@ -57,8 +47,6 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     transitionProperties = ["all"],
     animateTo,
     animateFrom,
-    className,
-    vfx,
     style,
     ...rest
   } = props;
@@ -123,7 +111,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   if (phase === "from" && !keepMounted && !visible) return null;
 
-  const currentAnimation =
+  const stateStyle =
     phase === "forward" || (visible && instantForward)
       ? animateTo
       : animateFrom;
@@ -141,16 +129,14 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   return (
     <Box
-      className={classNames(className, currentAnimation?.className)}
       style={{
         ...style,
-        ...currentAnimation?.style,
+        ...stateStyle,
         transitionProperty,
         transitionDuration: transitionDuration
           ? `${transitionDuration}s`
           : undefined,
       }}
-      vfx={{ ...vfx, ...currentAnimation?.vfx }}
       {...rest}
       ref={ref}
     />
