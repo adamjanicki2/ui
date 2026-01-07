@@ -3,7 +3,7 @@ import classNames from "../../functions/classNames";
 import type { ReadonlyableArray, Style, Vfx } from "../../types/common";
 import Box, { type BoxProps } from "../Box/Box";
 
-type AnimationState = {
+export type AnimationState = {
   /** Class to apply to the component when at this state */
   className?: string;
   /** Inline styles to apply to the component at this state */
@@ -12,7 +12,7 @@ type AnimationState = {
   vfx?: Vfx;
 };
 
-type Props = BoxProps & {
+export type Props = BoxProps & {
   /**
    * Whether to begin the animation and render the component.
    * Set to true to start animation, false to start the exit animation.

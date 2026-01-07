@@ -1,7 +1,10 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import useMergeRefs from "../../hooks/useMergeRefs";
-import type { Children } from "../../types/common";
-import Animated from "../Animated";
+import type { Children, Style } from "../../types/common";
+import Animated, {
+  type Props as AnimatedProps,
+  type AnimationState,
+} from "../Animated/Animated";
 
 type Placement =
   | "top"
@@ -17,9 +20,19 @@ type Placement =
   | "right-start"
   | "right-end";
 
+type SafeStyle = Omit<
+  Style,
+  "top" | "left" | "right" | "bottom" | "position" | "transform" | "translate"
+>;
+
+type SafeAnimationState = Omit<AnimationState, "style"> & {
+  /** Style props that can be safely applied to the floating element without distrupting positioning */
+  style?: SafeStyle;
+};
+
 type Props = Omit<
-  React.ComponentProps<typeof Animated>,
-  "children" | "visible" | "keepMounted"
+  AnimatedProps,
+  "children" | "visible" | "keepMounted" | "style" | "animateFrom" | "animateTo"
 > & {
   /**
    * Anchor element the floating content is positioned relative to.
@@ -45,6 +58,12 @@ type Props = Omit<
    * @default true
    */
   flip?: boolean;
+  /** Style that can be safely applied to the floating element without distrupting positioning */
+  style?: SafeStyle;
+  /** Animation CSS for the start state (styles cannot override positioning) */
+  animateFrom?: SafeAnimationState;
+  /** Animation CSS for the end state (styles cannot override positioning) */
+  animateTo?: SafeAnimationState;
 };
 
 type Position = { top: number; left: number };
@@ -183,7 +202,7 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           top: 0,
           left: 0,
           transform: `translate3d(${left}px, ${top}px, 0)`,
-          visibility: position ? "visible" : "hidden",
+          visibility: position ? undefined : "hidden",
         }}
         visible={visible}
         duration={duration}

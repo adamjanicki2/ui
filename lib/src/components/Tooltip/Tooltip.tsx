@@ -200,6 +200,7 @@ const Tooltip = ({
       role="tooltip"
       anchor={anchor}
       visible={open}
+      duration={0.25}
       animateFrom={animateFrom ?? { style: { opacity: 0 } }}
       animateTo={animateTo ?? { style: { opacity: 1 } }}
       onPointerEnter={(e: React.PointerEvent) => {

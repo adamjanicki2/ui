@@ -259,10 +259,9 @@ const Autocomplete = <T,>(props: Props<T>) => {
         ...popoverVfx,
       }}
       style={{ ...popoverStyle, width: anchorRef.current?.offsetWidth }}
-      animateFrom={{
-        style: { opacity: 0, transform: `translateY(-${offset}px)` },
-      }}
-      animateTo={{ style: { opacity: 1, transform: "translateY(0)" } }}
+      animateFrom={{ style: { opacity: 0 } }}
+      animateTo={{ style: { opacity: 1 } }}
+      transitionProperties={["opacity"]}
     >
       <Box
         vfx={{ axis: "y", padding: "s", overflow: "scroll" }}
