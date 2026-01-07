@@ -56,9 +56,11 @@ describe("Floating", () => {
     );
 
     const floating = screen.getByTestId("floating");
-    expect(floating).toHaveClass("aui-pos-fixed");
+    expect(floating).toHaveClass("aui-pos-absolute");
     expect(floating).toHaveClass("aui-z-floating");
-    expect(floating).toHaveStyle({ top: "120px", left: "210px" });
+    expect(floating).toHaveStyle({
+      transform: "translate3d(210px, 120px, 0)",
+    });
   });
 
   it("flips from bottom to top when bottom would overflow viewport", () => {
@@ -96,7 +98,9 @@ describe("Floating", () => {
     );
 
     const floating = screen.getByTestId("floating");
-    expect(floating).toHaveStyle({ top: "520px", left: "60px" });
+    expect(floating).toHaveStyle({
+      transform: "translate3d(60px, 520px, 0)",
+    });
   });
 
   it("supports bottom-start placement", () => {
@@ -134,7 +138,9 @@ describe("Floating", () => {
     );
 
     const floating = screen.getByTestId("floating");
-    expect(floating).toHaveStyle({ top: "120px", left: "200px" });
+    expect(floating).toHaveStyle({
+      transform: "translate3d(200px, 120px, 0)",
+    });
   });
 
   it("supports right-end placement", () => {
@@ -172,7 +178,9 @@ describe("Floating", () => {
     );
 
     const floating = screen.getByTestId("floating");
-    expect(floating).toHaveStyle({ top: "80px", left: "300px" });
+    expect(floating).toHaveStyle({
+      transform: "translate3d(300px, 80px, 0)",
+    });
   });
 
   it("supports top-end placement", () => {
@@ -210,7 +218,9 @@ describe("Floating", () => {
     );
 
     const floating = screen.getByTestId("floating");
-    expect(floating).toHaveStyle({ top: "60px", left: "220px" });
+    expect(floating).toHaveStyle({
+      transform: "translate3d(220px, 60px, 0)",
+    });
   });
 
   it("applies offset", () => {
@@ -249,7 +259,9 @@ describe("Floating", () => {
     );
 
     const floating = screen.getByTestId("floating");
-    expect(floating).toHaveStyle({ top: "42px" });
+    expect(floating).toHaveStyle({
+      transform: "translate3d(30px, 42px, 0)",
+    });
   });
 
   it("does not render when visible is false", () => {
@@ -302,8 +314,7 @@ describe("Floating", () => {
     await waitFor(() => {
       expect(seen.has("floating")).toBe(true);
       expect(screen.getByTestId("floating")).toHaveStyle({
-        top: "30px",
-        left: "30px",
+        transform: "translate3d(30px, 30px, 0)",
       });
     });
   });

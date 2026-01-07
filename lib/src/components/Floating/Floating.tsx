@@ -48,6 +48,10 @@ type Props = Omit<
 };
 
 type Position = { top: number; left: number };
+type Rect = Pick<
+  DOMRect,
+  "top" | "left" | "right" | "bottom" | "width" | "height"
+>;
 
 const opposites: Record<Placement, Placement> = {
   top: "bottom",
@@ -78,8 +82,10 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     duration = 0,
     ...rest
   } = props;
+
   const anchorRef = useRef<HTMLElement | null>(null);
   const floatingRef = useRef<HTMLDivElement | null>(null);
+
   const mergedFloatingRef = useMergeRefs<HTMLDivElement>(floatingRef, ref);
   const mergedAnchorRef = useMergeRefs<HTMLElement>(
     anchorRef,
@@ -93,36 +99,49 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const floatingEl = floatingRef.current;
     if (!anchorEl || !floatingEl) return;
 
+    const parent = anchorEl.offsetParent ?? anchorEl.parentElement;
+    if (!parent) return;
+
+    const parentRect = parent.getBoundingClientRect();
     const anchorRect = anchorEl.getBoundingClientRect();
-    const contentRect = floatingEl.getBoundingClientRect();
-    const positionerArgs = { anchorRect, contentRect, offset } as const;
+    const floatingRect = floatingEl.getBoundingClientRect();
+
+    const positionerArgs = {
+      // relative to parent
+      anchor: {
+        top: anchorRect.top - parentRect.top,
+        left: anchorRect.left - parentRect.left,
+        right: anchorRect.right - parentRect.left,
+        bottom: anchorRect.bottom - parentRect.top,
+        width: anchorRect.width,
+        height: anchorRect.height,
+      },
+      floating: floatingRect,
+      offset,
+    } as const;
 
     let nextPlacement = placement;
     let nextPosition = positioners[nextPlacement](positionerArgs);
+
     const overflowsViewport = overflowChecks[nextPlacement](
       nextPosition,
-      contentRect
+      floatingRect
     );
 
     if (flip && overflowsViewport) {
       const oppositePlacement = opposites[nextPlacement];
       const oppositePosition = positioners[oppositePlacement](positionerArgs);
-      if (!overflowChecks[oppositePlacement](oppositePosition, contentRect)) {
+      if (!overflowChecks[oppositePlacement](oppositePosition, floatingRect)) {
         nextPlacement = oppositePlacement;
         nextPosition = oppositePosition;
       }
     }
 
-    setPosition((prev) => {
-      if (
-        prev &&
-        prev.top === nextPosition.top &&
-        prev.left === nextPosition.left
-      ) {
-        return prev;
-      }
-      return nextPosition;
-    });
+    setPosition((prev) =>
+      prev && prev.top === nextPosition.top && prev.left === nextPosition.left
+        ? prev
+        : nextPosition
+    );
   }, [flip, offset, placement]);
 
   useLayoutEffect(() => {
@@ -158,11 +177,12 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       <Animated
         {...rest}
         ref={mergedFloatingRef}
-        vfx={{ pos: "fixed", z: "floating", ...vfx }}
+        vfx={{ pos: "absolute", z: "floating", ...vfx }}
         style={{
           ...style,
-          top,
-          left,
+          top: 0,
+          left: 0,
+          transform: `translate3d(${left}px, ${top}px, 0)`,
           visibility: position ? "visible" : "hidden",
         }}
         visible={visible}
@@ -175,50 +195,48 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 });
 
 type Positioner = (args: {
-  anchorRect: DOMRect;
-  contentRect: DOMRect;
+  anchor: Rect;
+  floating: Rect;
   offset: number;
 }) => Position;
-type Aligner = (anchorRect: DOMRect, contentRect: DOMRect) => number;
+type Aligner = (anchor: Rect, floating: Rect) => number;
 
-const centerX: Aligner = (anchorRect, contentRect) =>
-  anchorRect.left + anchorRect.width / 2 - contentRect.width / 2;
-const startX: Aligner = (anchorRect) => anchorRect.left;
-const endX: Aligner = (anchorRect, contentRect) =>
-  anchorRect.right - contentRect.width;
+const centerX: Aligner = (anchor, floating) =>
+  anchor.left + anchor.width / 2 - floating.width / 2;
+const startX: Aligner = (anchor) => anchor.left;
+const endX: Aligner = (anchor, floating) => anchor.right - floating.width;
 
-const centerY: Aligner = (anchorRect, contentRect) =>
-  anchorRect.top + anchorRect.height / 2 - contentRect.height / 2;
-const startY: Aligner = (anchorRect) => anchorRect.top;
-const endY: Aligner = (anchorRect, contentRect) =>
-  anchorRect.bottom - contentRect.height;
+const centerY: Aligner = (anchor, floating) =>
+  anchor.top + anchor.height / 2 - floating.height / 2;
+const startY: Aligner = (anchor) => anchor.top;
+const endY: Aligner = (anchor, floating) => anchor.bottom - floating.height;
 
 const makeTop =
   (alignX: Aligner): Positioner =>
-  ({ anchorRect, contentRect, offset }) => ({
-    top: anchorRect.top - contentRect.height - offset,
-    left: alignX(anchorRect, contentRect),
+  ({ anchor, floating, offset }) => ({
+    top: anchor.top - floating.height - offset,
+    left: alignX(anchor, floating),
   });
 
 const makeBottom =
   (alignX: Aligner): Positioner =>
-  ({ anchorRect, contentRect, offset }) => ({
-    top: anchorRect.bottom + offset,
-    left: alignX(anchorRect, contentRect),
+  ({ anchor, floating, offset }) => ({
+    top: anchor.bottom + offset,
+    left: alignX(anchor, floating),
   });
 
 const makeLeft =
   (alignY: Aligner): Positioner =>
-  ({ anchorRect, contentRect, offset }) => ({
-    top: alignY(anchorRect, contentRect),
-    left: anchorRect.left - contentRect.width - offset,
+  ({ anchor, floating, offset }) => ({
+    top: alignY(anchor, floating),
+    left: anchor.left - floating.width - offset,
   });
 
 const makeRight =
   (alignY: Aligner): Positioner =>
-  ({ anchorRect, contentRect, offset }) => ({
-    top: alignY(anchorRect, contentRect),
-    left: anchorRect.right + offset,
+  ({ anchor, floating, offset }) => ({
+    top: alignY(anchor, floating),
+    left: anchor.right + offset,
   });
 
 const positioners: Record<Placement, Positioner> = {
@@ -236,7 +254,7 @@ const positioners: Record<Placement, Positioner> = {
   "right-end": makeRight(endY),
 };
 
-type OverflowCheck = (position: Position, rect: DOMRect) => boolean;
+type OverflowCheck = (position: Position, rect: Rect) => boolean;
 
 const overflowsTop: OverflowCheck = (position) => position.top < 0;
 const overflowsBottom: OverflowCheck = (position, rect) =>
