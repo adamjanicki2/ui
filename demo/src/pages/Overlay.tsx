@@ -1,7 +1,3 @@
-import { useState } from "react";
-import Para from "src/components/Para";
-import Page from "src/components/Page";
-import { ShowcaseBlock, ShowcaseRow } from "src/components/Showcase";
 import {
   Autocomplete,
   Box,
@@ -21,11 +17,15 @@ import {
   arrowUp,
   ticket,
 } from "@adamjanicki/ui/icons";
+import { useState } from "react";
 import {
   autoCompleteSnippet,
   popoversSnippet,
   tooltipSnippet,
 } from "src/codeSnippets";
+import Page from "src/components/Page";
+import Para from "src/components/Para";
+import { ShowcaseBlock, ShowcaseRow } from "src/components/Showcase";
 
 const fruits = [
   "Apple 🍎",
@@ -66,7 +66,7 @@ const titles: readonly Title[] = [
   { title: "To Catch a Thief", year: 1955, type: "movie", rating: 83 },
 ] as const;
 
-export default function FloatingPage() {
+export default function Overlay() {
   const [popoverOpen1, setPopoverOpen1] = useState(false);
   const [popoverOpen2, setPopoverOpen2] = useState(false);
   const [fruitValue, setFruitValue] = useState("");

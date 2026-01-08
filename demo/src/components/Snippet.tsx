@@ -1,13 +1,13 @@
+import { Badge, Box, Button, classNames, Icon, ui } from "@adamjanicki/ui";
+import { check, clipboard } from "@adamjanicki/ui/icons";
 import { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
-  oneLight as light,
   oneDark as dark,
+  oneLight as light,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "src/components/snippet.css";
-import { Badge, Button, Box, Icon, ui, classNames } from "@adamjanicki/ui";
 import { useTheme } from "src/hooks";
-import { check, clipboard } from "@adamjanicki/ui/icons";
 
 export type Props = {
   className?: string;

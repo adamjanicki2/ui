@@ -1,14 +1,14 @@
-import Nav from "src/components/Nav";
+import { Box, Route, Router, Routes } from "@adamjanicki/ui";
 import Footer from "src/components/Footer";
-import { Box, Router, Routes, Route } from "@adamjanicki/ui";
+import Nav from "src/components/Nav";
 import { useSetDocumentTheme } from "src/hooks";
+import Action from "src/pages/Action";
+import Home from "src/pages/Home";
+import Miscellaneous from "src/pages/Miscellaneous";
+import NotFound from "src/pages/NotFound";
+import Overlay from "src/pages/Overlay";
 import Presentation from "src/pages/Presentation";
 import Signals from "src/pages/Signals";
-import Action from "src/pages/Action";
-import Miscellaneous from "src/pages/Miscellaneous";
-import Home from "src/pages/Home";
-import NotFound from "src/pages/NotFound";
-import Floating from "src/pages/Floating";
 
 export default function App() {
   useSetDocumentTheme();
@@ -23,7 +23,7 @@ export default function App() {
           <Route path="/signals" element={<Signals />} />
           <Route path="/action" element={<Action />} />
           <Route path="/miscellaneous" element={<Miscellaneous />} />
-          <Route path="/floating" element={<Floating />} />
+          <Route path="/overlay" element={<Overlay />} />
         </Routes>
       </Box>
       <Footer />

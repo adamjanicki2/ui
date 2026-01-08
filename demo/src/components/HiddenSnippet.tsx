@@ -1,4 +1,4 @@
-import { Animated, Button, Box } from "@adamjanicki/ui";
+import { Animated, Box, Button } from "@adamjanicki/ui";
 import { useState } from "react";
 import Snippet, { type Props } from "src/components/Snippet";
 

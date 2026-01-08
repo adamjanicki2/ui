@@ -14,10 +14,10 @@
     "url": "git+https://github.com/adamjanicki2/ui.git"
   },
   "scripts": {
-    "clean": "python clean.py",
+    "clean": "python3 clean.py",
     "lint": "eslint src test --max-warnings=0",
     "test": "jest --silent",
-    "build": "npm test && npm run lint && python build.py",
+    "build": "npm test && npm run lint && python3 build.py",
     "prepare": "npm run build"
   },
   "peerDependencies": {

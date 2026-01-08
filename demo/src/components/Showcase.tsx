@@ -1,8 +1,8 @@
-import React from "react";
 import { Box } from "@adamjanicki/ui";
+import React from "react";
 import Heading from "src/components/Heading";
-import Para from "src/components/Para";
 import HiddenSnippet from "src/components/HiddenSnippet";
+import Para from "src/components/Para";
 
 type BoxProps = React.ComponentProps<typeof Box>;
 

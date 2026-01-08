@@ -1,36 +1,36 @@
-import Para from "src/components/Para";
-import {
-  avatarSnippet,
-  burgerSnippet,
-  clickOutsideSnippet,
-  spinnerSnippet,
-} from "src/codeSnippets";
 import {
   Alert,
-  Box,
-  ClickOutside,
-  Spinner,
-  Icon,
   Avatar,
-  ui,
-  ErrorBoundary,
+  Box,
   Button,
+  ClickOutside,
+  ErrorBoundary,
+  Icon,
   Link,
+  Spinner,
+  ui,
 } from "@adamjanicki/ui";
-import { ShowcaseBlock, ShowcaseRow } from "src/components/Showcase";
+import { Tooltip } from "@adamjanicki/ui-extended";
 import {
   DoubleCross,
   DoubleFlip,
   DoubleSpin,
   TripleFade,
   TripleFlip,
-  TripleSpin,
   TriplePrestige,
+  TripleSpin,
 } from "@adamjanicki/ui/components/Hamburger";
-import { useState } from "react";
 import * as icons from "@adamjanicki/ui/icons";
-import { Tooltip } from "@adamjanicki/ui-extended";
+import { useState } from "react";
+import {
+  avatarSnippet,
+  burgerSnippet,
+  clickOutsideSnippet,
+  spinnerSnippet,
+} from "src/codeSnippets";
 import Page from "src/components/Page";
+import Para from "src/components/Para";
+import { ShowcaseBlock, ShowcaseRow } from "src/components/Showcase";
 
 const defaultClickOutsideText = "Click outside me!";
 

@@ -1,32 +1,32 @@
+import {
+  Button,
+  ButtonLink,
+  Icon,
+  IconButton,
+  IconInput,
+  Input,
+  Link,
+  Select,
+  TextArea,
+  ui,
+  UnstyledButton,
+  UnstyledLink,
+} from "@adamjanicki/ui";
+import { download, search } from "@adamjanicki/ui/icons";
 import { useState } from "react";
-import Para from "src/components/Para";
 import {
   buttonSnippet,
   inputSnippet,
   linkSnippet,
   selectSnippet,
 } from "src/codeSnippets";
-import {
-  Button,
-  IconInput,
-  Input,
-  Link,
-  UnstyledButton,
-  ButtonLink,
-  UnstyledLink,
-  IconButton,
-  Select,
-  TextArea,
-  Icon,
-  ui,
-} from "@adamjanicki/ui";
-import { download, search } from "@adamjanicki/ui/icons";
+import Page from "src/components/Page";
+import Para from "src/components/Para";
 import {
   LabeledField,
   ShowcaseBlock,
   ShowcaseRow,
 } from "src/components/Showcase";
-import Page from "src/components/Page";
 
 export default function Action() {
   const [inputValue, setInputValue] = useState("Here's looking at you, kid.");

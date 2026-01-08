@@ -1,6 +1,6 @@
+import { useEffect } from "react";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { useEffect } from "react";
 
 export type Theme = "light" | "dark";
 

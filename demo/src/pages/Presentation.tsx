@@ -1,14 +1,3 @@
-import { useMemo, useState } from "react";
-import Para from "src/components/Para";
-import {
-  accordionSnippet,
-  animatedSnippet,
-  boxSnippet,
-  carouselSnippet,
-  layerSnippet,
-  modalSnippet,
-} from "src/codeSnippets";
-import { ShowcaseBlock, ShowcaseRow } from "src/components/Showcase";
 import {
   Accordion,
   Alert,
@@ -21,7 +10,18 @@ import {
   Table,
   ui,
 } from "@adamjanicki/ui";
+import { useMemo, useState } from "react";
+import {
+  accordionSnippet,
+  animatedSnippet,
+  boxSnippet,
+  carouselSnippet,
+  layerSnippet,
+  modalSnippet,
+} from "src/codeSnippets";
 import Page from "src/components/Page";
+import Para from "src/components/Para";
+import { ShowcaseBlock, ShowcaseRow } from "src/components/Showcase";
 
 const accordionStatuses = ["success", "info", "error"] as const;
 const carouselSlides = ["bg-red", "bg-purple", "bg-blue"] as const;

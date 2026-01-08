@@ -1,9 +1,9 @@
+import { Icon, Link, ui } from "@adamjanicki/ui";
+import { architect } from "@adamjanicki/ui/icons";
 import { importCss } from "src/codeSnippets";
 import Heading from "src/components/Heading";
 import Para from "src/components/Para";
 import Snippet from "src/components/Snippet";
-import { ui, Icon, Link } from "@adamjanicki/ui";
-import { architect } from "@adamjanicki/ui/icons";
 import { useDocumentTitle } from "src/hooks";
 
 export default function Home() {
