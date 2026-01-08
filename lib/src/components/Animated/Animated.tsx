@@ -1,16 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import classNames from "../../functions/classNames";
-import type { ReadonlyableArray, Style, Vfx } from "../../types/common";
+import type { Style } from "../../types/common";
 import Box, { type BoxProps } from "../Box/Box";
-
-type AnimationState = {
-  /** Class to apply to the component when at this state */
-  className?: string;
-  /** Inline styles to apply to the component at this state */
-  style?: Style;
-  /** The VFX or other organizational CSS to apply at this state */
-  vfx?: Vfx;
-};
 
 type Props = BoxProps & {
   /**
@@ -35,18 +25,13 @@ type Props = BoxProps & {
    * @default false
    */
   keepMounted?: boolean;
-  /** Animation CSS for the start state */
-  animateTo?: AnimationState;
-  /** Animation CSS for the end state */
-  animateFrom?: AnimationState;
-  /**
-   * The properties to apply a transition.
-   * @default ['all']
-   */
-  transitionProperties?: ReadonlyableArray<string>;
+  /** Style applied at the start state */
+  to?: Style;
+  /** Style applied at the end state */
+  from?: Style;
 };
 
-type Phase = "from" | "forward" | "reverse";
+type Phase = "init" | "forward" | "reverse";
 
 /** Wrapper for animating enter/exit states */
 const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -54,11 +39,8 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     visible,
     duration = 0.25,
     keepMounted = false,
-    transitionProperties = ["all"],
-    animateTo,
-    animateFrom,
-    className,
-    vfx,
+    to,
+    from,
     style,
     ...rest
   } = props;
@@ -73,7 +55,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   // initialize based on whether we can instantly render
   const [phase, setPhase] = useState<Phase>(() =>
-    visible && instantForward ? "forward" : "from"
+    visible && instantForward ? "forward" : "init"
   );
 
   const timeoutRef = useRef<number | null>(null);
@@ -82,7 +64,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   useEffect(() => {
     // cases where no update is needed; already in correct phase
     if (visible && instantForward && phase === "forward") return;
-    if (!visible && instantReverse && phase === "from") return;
+    if (!visible && instantReverse && phase === "init") return;
 
     if (visible) {
       if (phase !== "forward") {
@@ -94,14 +76,14 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           );
         }
       }
-    } else if (phase !== "from") {
+    } else if (phase !== "init") {
       if (instantReverse) {
-        setPhase("from");
+        setPhase("init");
       } else if (phase === "forward") {
         setPhase("reverse");
       } else {
         timeoutRef.current = window.setTimeout(
-          () => setPhase("from"),
+          () => setPhase("init"),
           reverseDuration * 1000
         );
       }
@@ -121,43 +103,43 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     };
   }, [visible, phase, instantForward, instantReverse, reverseDuration]);
 
-  if (phase === "from" && !keepMounted && !visible) return null;
+  if (phase === "init" && !keepMounted && !visible) return null;
 
-  const currentAnimation =
-    phase === "forward" || (visible && instantForward)
-      ? animateTo
-      : animateFrom;
+  const stateStyle =
+    phase === "forward" || (visible && instantForward) ? to : from;
 
-  let transition: string | undefined;
+  let transitionProperty: string | undefined;
+  let transitionDuration: number | undefined;
+
   if (phase === "forward" && !instantForward) {
-    transition = makeTransition(transitionProperties, forwardDuration);
+    transitionDuration = forwardDuration;
+    transitionProperty = getTransitionProp(to);
   } else if (phase === "reverse" && !instantReverse) {
-    transition = makeTransition(transitionProperties, reverseDuration);
+    transitionDuration = reverseDuration;
+    transitionProperty = getTransitionProp(from);
   }
 
   return (
     <Box
-      className={classNames(className, currentAnimation?.className)}
       style={{
-        transition,
         ...style,
-        ...currentAnimation?.style,
+        ...stateStyle,
+        transitionProperty,
+        transitionDuration: transitionDuration
+          ? `${transitionDuration}s`
+          : undefined,
       }}
-      vfx={{ ...vfx, ...currentAnimation?.vfx }}
       {...rest}
       ref={ref}
     />
   );
 });
 
-const makeTransition = (
-  transitionProperties: ReadonlyableArray<string>,
-  duration: number
-) =>
-  transitionProperties.length > 0
-    ? transitionProperties
-        .map((prop) => `${prop} ${duration}s ease-in-out`)
-        .join(", ")
-    : undefined;
+const getTransitionProp = (style: Style = {}) => {
+  const props = Object.keys(style).map((key) =>
+    key.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`)
+  );
+  return props.length > 0 ? props.join(", ") : undefined;
+};
 
 export default Animated;

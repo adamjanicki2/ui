@@ -104,8 +104,8 @@ const Tooltip = ({
   children,
   disabled = false,
   vfx,
-  animateFrom,
-  animateTo,
+  from,
+  to,
   ...floatingProps
 }: TooltipProps) => {
   const [open, setOpen] = useState(false);
@@ -200,8 +200,9 @@ const Tooltip = ({
       role="tooltip"
       anchor={anchor}
       visible={open}
-      animateFrom={animateFrom ?? { style: { opacity: 0 } }}
-      animateTo={animateTo ?? { style: { opacity: 1 } }}
+      duration={0.25}
+      from={from ?? { opacity: 0 }}
+      to={to ?? { opacity: 1 }}
       onPointerEnter={(e: React.PointerEvent) => {
         if (e.pointerType === "mouse") {
           stopTracking();

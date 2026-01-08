@@ -54,7 +54,10 @@ type Props<T> = Omit<IconInputProps, "inputProps" | "onSelect"> & {
   /** Props to pass to the underlying `input` */
   inputProps?: Omit<InputElementProps, "value" | "onChange" | "autoComplete">;
   /** Props for the popover */
-  popoverProps?: Omit<PopoverProps, "open" | "onClose" | "anchor" | "children">;
+  popoverProps?: Omit<
+    PopoverProps,
+    "open" | "onClose" | "anchor" | "children" | "from" | "to"
+  >;
   /** Footer node to render at the bottom of the popover */
   footer?: React.ReactNode;
   /**
@@ -259,10 +262,8 @@ const Autocomplete = <T,>(props: Props<T>) => {
         ...popoverVfx,
       }}
       style={{ ...popoverStyle, width: anchorRef.current?.offsetWidth }}
-      animateFrom={{
-        style: { opacity: 0, transform: `translateY(-${offset}px)` },
-      }}
-      animateTo={{ style: { opacity: 1, transform: "translateY(0)" } }}
+      from={{ opacity: 0 }}
+      to={{ opacity: 1 }}
     >
       <Box
         vfx={{ axis: "y", padding: "s", overflow: "scroll" }}

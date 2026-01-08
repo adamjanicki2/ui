@@ -56,11 +56,13 @@ export const animatedSnippet = `
   keepMounted
   duration={0.8}
   visible={animatedOpen}
-  animateTo={{
-    style: { opacity: 1, transform: "rotate(0)" },
+  to={{
+    opacity: 1,
+    transform: "rotate(0)",
   }}
-  animateFrom={{
-    style: { opacity: 0, transform: "rotate(0.5turn)" },
+  from={{
+    opacity: 0,
+    transform: "rotate(0.5turn)",
   }}
 >
   <Alert type="info">This is an animated alert!</Alert>

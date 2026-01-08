@@ -94,16 +94,16 @@ const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
         keepMounted
         duration={duration}
         visible={open}
-        animateFrom={{
-          style: {
-            visibility: "hidden",
-            height: 0,
-            transform: "translateY(-4px)",
-            opacity: 0.9,
-          },
+        from={{
+          visibility: "hidden",
+          height: 0,
+          transform: "translateY(-4px)",
+          opacity: 0.9,
         }}
-        animateTo={{
-          style: { height, transform: "translateY(0)", opacity: 1 },
+        to={{
+          height,
+          transform: "translateY(0)",
+          opacity: 1,
         }}
       >
         <Box ref={boxRef}>{children}</Box>
