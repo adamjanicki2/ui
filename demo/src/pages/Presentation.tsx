@@ -132,8 +132,8 @@ export default function Presentation() {
             keepMounted
             duration={1}
             visible={animatedOpen}
-            to={{ opacity: 1, transform: "rotate(0)" }}
-            from={{ opacity: 1, transform: "rotate(0.5turn)" }}
+            to={{ transform: "rotate(0)" }}
+            from={{ transform: "rotate(0.5turn)" }}
             vfx={{ width: "full" }}
           >
             <Alert type="info">This is an animated alert!</Alert>

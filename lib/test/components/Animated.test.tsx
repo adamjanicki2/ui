@@ -311,7 +311,6 @@ describe("Animated", () => {
     render(
       <Animated
         visible
-        duration={0.4}
         to={{ opacity: 1, transform: "translateY(0px)" }}
         from={{ opacity: 0, transform: "translateY(10px)" }}
         data-testid="animated"
@@ -325,7 +324,28 @@ describe("Animated", () => {
 
     expect(screen.getByTestId("animated")).toHaveStyle({
       transitionProperty: "opacity, transform",
-      transitionDuration: "0.4s",
+      transitionDuration: "0.25s",
+    });
+  });
+
+  it("uses kebab-case transition properties for camelCase styles", async () => {
+    render(
+      <Animated
+        visible
+        to={{ backgroundColor: "red" }}
+        from={{ backgroundColor: "blue" }}
+        data-testid="animated"
+      >
+        Child
+      </Animated>
+    );
+
+    flushRaf();
+    await flushPromises();
+
+    expect(screen.getByTestId("animated")).toHaveStyle({
+      transitionProperty: "background-color",
+      transitionDuration: "0.25s",
     });
   });
 });
