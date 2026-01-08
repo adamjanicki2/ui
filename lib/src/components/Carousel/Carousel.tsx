@@ -15,7 +15,7 @@ type ButtonProps = {
   style?: Style;
 };
 
-type Props = BoxProps & {
+type Props = Omit<BoxProps, "children"> & {
   /** The child elements/slides of the carousel */
   children: ReadonlyableArray<React.ReactNode>;
   /**
