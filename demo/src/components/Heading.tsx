@@ -1,5 +1,6 @@
-import { Link, ui } from "@adamjanicki/ui";
 import "src/components/heading.css";
+
+import { Link, ui } from "@adamjanicki/ui";
 
 type Props = {
   children: string;

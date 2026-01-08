@@ -1,7 +1,8 @@
+import "src/components/nav.css";
+
 import { Box, Hamburger, Icon, Link, ui, UnstyledLink } from "@adamjanicki/ui";
 import { architect } from "@adamjanicki/ui/icons";
 import { useState } from "react";
-import "src/components/nav.css";
 
 type NavlinkProps = {
   to: string;

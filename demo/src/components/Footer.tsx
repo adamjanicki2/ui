@@ -1,5 +1,5 @@
 import { Link, Select, ui } from "@adamjanicki/ui";
-import { useTheme, type Theme } from "src/hooks/useTheme";
+import { type Theme, useTheme } from "src/hooks/useTheme";
 
 const labels = {
   light: "☀️",

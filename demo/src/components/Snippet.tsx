@@ -1,3 +1,5 @@
+import "src/components/snippet.css";
+
 import { Badge, Box, Button, classNames, Icon, ui } from "@adamjanicki/ui";
 import { check, clipboard } from "@adamjanicki/ui/icons";
 import { useState } from "react";
@@ -6,7 +8,6 @@ import {
   oneDark as dark,
   oneLight as light,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
-import "src/components/snippet.css";
 import { useTheme } from "src/hooks";
 
 export type Props = {

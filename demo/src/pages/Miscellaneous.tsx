@@ -10,7 +10,6 @@ import {
   Spinner,
   ui,
 } from "@adamjanicki/ui";
-import { Tooltip } from "@adamjanicki/ui-extended";
 import {
   DoubleCross,
   DoubleFlip,
@@ -21,6 +20,7 @@ import {
   TripleSpin,
 } from "@adamjanicki/ui/components/Hamburger";
 import * as icons from "@adamjanicki/ui/icons";
+import { Tooltip } from "@adamjanicki/ui-extended";
 import { useState } from "react";
 import {
   avatarSnippet,
