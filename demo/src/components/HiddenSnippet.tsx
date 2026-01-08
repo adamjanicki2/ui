@@ -19,8 +19,8 @@ export default function HiddenSnippet(props: Props) {
       <Animated
         vfx={{ axis: "x", justify: "center", width: "full" }}
         visible={show}
-        animateTo={{ vfx: { opacity: "full" } }}
-        animateFrom={{ vfx: { opacity: "none" } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
       >
         <Snippet {...props} />
       </Animated>

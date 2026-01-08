@@ -26,8 +26,8 @@ const Popover = ({
   children,
   vfx,
   duration,
-  animateFrom,
-  animateTo,
+  from,
+  to,
   ...floatingProps
 }: PopoverProps) => {
   const anchorRef = useRef<HTMLElement | null>(null);
@@ -75,8 +75,8 @@ const Popover = ({
       anchor={React.cloneElement(anchor, { ref: mergedAnchorRef })}
       visible={open}
       floatingContent={children}
-      animateFrom={animateFrom ?? { opacity: 0 }}
-      animateTo={animateTo ?? { opacity: 1 }}
+      from={from ?? { opacity: 0 }}
+      to={to ?? { opacity: 1 }}
       duration={
         duration ?? {
           forward: 0,

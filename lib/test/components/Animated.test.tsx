@@ -67,8 +67,8 @@ describe("Animated", () => {
       <Animated
         visible
         duration={0}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -85,9 +85,8 @@ describe("Animated", () => {
       <Animated
         visible
         duration={0.5}
-        transitionProperties={["opacity"]}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -100,9 +99,8 @@ describe("Animated", () => {
       <Animated
         visible={false}
         duration={0.5}
-        transitionProperties={["opacity"]}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -122,9 +120,8 @@ describe("Animated", () => {
       <Animated
         visible
         duration={{ forward: 0, reverse: 0.25 }}
-        transitionProperties={["opacity"]}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -137,9 +134,8 @@ describe("Animated", () => {
       <Animated
         visible={false}
         duration={{ forward: 0, reverse: 0.25 }}
-        transitionProperties={["opacity"]}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -148,7 +144,10 @@ describe("Animated", () => {
 
     const el = screen.getByTestId("animated");
     expect(el).toHaveStyle({ opacity: "0" });
-    expect(el).toHaveStyle({ transition: "opacity 0.25s ease-in-out" });
+    expect(el).toHaveStyle({
+      transitionProperty: "opacity",
+      transitionDuration: "0.25s",
+    });
 
     act(() => {
       jest.advanceTimersByTime(249);
@@ -169,8 +168,8 @@ describe("Animated", () => {
         visible
         keepMounted
         duration={{ forward: 0, reverse: 0.25 }}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -182,8 +181,8 @@ describe("Animated", () => {
         visible={false}
         keepMounted
         duration={{ forward: 0, reverse: 0.25 }}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -204,8 +203,8 @@ describe("Animated", () => {
       <Animated
         visible
         duration={{ forward: 0, reverse: 0 }}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -216,8 +215,8 @@ describe("Animated", () => {
       <Animated
         visible={false}
         duration={{ forward: 0, reverse: 0 }}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -233,9 +232,8 @@ describe("Animated", () => {
       <Animated
         visible
         duration={{ forward: 0.5, reverse: 0 }}
-        transitionProperties={["opacity"]}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -251,9 +249,8 @@ describe("Animated", () => {
       <Animated
         visible={false}
         duration={{ forward: 0.5, reverse: 0 }}
-        transitionProperties={["opacity"]}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -269,8 +266,8 @@ describe("Animated", () => {
       <Animated
         visible
         duration={{ forward: 0, reverse: 0.25 }}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -281,8 +278,8 @@ describe("Animated", () => {
       <Animated
         visible={false}
         duration={{ forward: 0, reverse: 0.25 }}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -293,8 +290,8 @@ describe("Animated", () => {
       <Animated
         visible
         duration={{ forward: 0, reverse: 0.25 }}
-        animateTo={{ style: { opacity: 1 } }}
-        animateFrom={{ style: { opacity: 0 } }}
+        to={{ opacity: 1 }}
+        from={{ opacity: 0 }}
         data-testid="animated"
       >
         Child
@@ -315,9 +312,8 @@ describe("Animated", () => {
       <Animated
         visible
         duration={0.4}
-        transitionProperties={["opacity", "transform"]}
-        animateTo={{ style: { opacity: 1, transform: "translateY(0px)" } }}
-        animateFrom={{ style: { opacity: 0, transform: "translateY(10px)" } }}
+        to={{ opacity: 1, transform: "translateY(0px)" }}
+        from={{ opacity: 0, transform: "translateY(10px)" }}
         data-testid="animated"
       >
         Child
@@ -328,7 +324,8 @@ describe("Animated", () => {
     await flushPromises();
 
     expect(screen.getByTestId("animated")).toHaveStyle({
-      transition: "opacity 0.4s ease-in-out, transform 0.4s ease-in-out",
+      transitionProperty: "opacity, transform",
+      transitionDuration: "0.4s",
     });
   });
 });

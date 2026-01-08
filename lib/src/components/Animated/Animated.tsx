@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import type { ReadonlyableArray, Style } from "../../types/common";
+import type { Style } from "../../types/common";
 import Box, { type BoxProps } from "../Box/Box";
 
 type Props = BoxProps & {
@@ -26,14 +26,9 @@ type Props = BoxProps & {
    */
   keepMounted?: boolean;
   /** Style applied at the start state */
-  animateTo?: Style;
+  to?: Style;
   /** Style applied at the end state */
-  animateFrom?: Style;
-  /**
-   * The properties to apply a transition.
-   * @default ['all']
-   */
-  transitionProperties?: ReadonlyableArray<string>;
+  from?: Style;
 };
 
 type Phase = "from" | "forward" | "reverse";
@@ -44,9 +39,8 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     visible,
     duration = 0.25,
     keepMounted = false,
-    transitionProperties = ["all"],
-    animateTo,
-    animateFrom,
+    to,
+    from,
     style,
     ...rest
   } = props;
@@ -112,19 +106,17 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   if (phase === "from" && !keepMounted && !visible) return null;
 
   const stateStyle =
-    phase === "forward" || (visible && instantForward)
-      ? animateTo
-      : animateFrom;
+    phase === "forward" || (visible && instantForward) ? to : from;
 
   let transitionProperty: string | undefined;
   let transitionDuration: number | undefined;
 
   if (phase === "forward" && !instantForward) {
     transitionDuration = forwardDuration;
-    transitionProperty = makeTransitionProperty(transitionProperties);
+    transitionProperty = getTransitionProp(to);
   } else if (phase === "reverse" && !instantReverse) {
     transitionDuration = reverseDuration;
-    transitionProperty = makeTransitionProperty(transitionProperties);
+    transitionProperty = getTransitionProp(from);
   }
 
   return (
@@ -143,7 +135,11 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   );
 });
 
-const makeTransitionProperty = (props: ReadonlyableArray<string>) =>
-  props.length <= 0 ? undefined : props.join(", ");
+const getTransitionProp = (style: Style = {}) => {
+  const props = Object.keys(style).map((key) =>
+    key.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`)
+  );
+  return props.length > 0 ? props.join(", ") : undefined;
+};
 
 export default Animated;

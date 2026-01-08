@@ -1,6 +1,6 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import useMergeRefs from "../../hooks/useMergeRefs";
-import type { Children, ReadonlyableArray, Style } from "../../types/common";
+import type { Children, Style } from "../../types/common";
 import Animated from "../Animated/Animated";
 
 type Placement =
@@ -33,13 +33,7 @@ type AnimatedProps = React.ComponentProps<typeof Animated>;
 
 type Props = Omit<
   AnimatedProps,
-  | "children"
-  | "visible"
-  | "keepMounted"
-  | "style"
-  | "animateFrom"
-  | "animateTo"
-  | "transitionProperties"
+  "children" | "visible" | "keepMounted" | "style" | "from" | "to"
 > & {
   /**
    * Anchor element the floating content is positioned relative to.
@@ -68,11 +62,9 @@ type Props = Omit<
   /** Style that can be safely applied to the floating element without distrupting positioning */
   style?: SafeStyle;
   /** Animation CSS for the start state (styles cannot override positioning) */
-  animateFrom?: SafeStyle;
+  from?: SafeStyle;
   /** Animation CSS for the end state (styles cannot override positioning) */
-  animateTo?: SafeStyle;
-  /** Safe properties that are allowed to be transitioned */
-  transitionProperties?: ReadonlyableArray<keyof SafeStyle>;
+  to?: SafeStyle;
 };
 
 type Position = { top: number; left: number };

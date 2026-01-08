@@ -132,12 +132,8 @@ export default function Presentation() {
             keepMounted
             duration={1}
             visible={animatedOpen}
-            animateTo={{
-              style: { opacity: 1, transform: "rotate(0)" },
-            }}
-            animateFrom={{
-              style: { opacity: 0, transform: "rotate(0.5turn)" },
-            }}
+            to={{ opacity: 1, transform: "rotate(0)" }}
+            from={{ opacity: 1, transform: "rotate(0.5turn)" }}
             vfx={{ width: "full" }}
           >
             <Alert type="info">This is an animated alert!</Alert>
@@ -297,7 +293,10 @@ export default function Presentation() {
               key: sortKey,
               direction: sortDirection,
               onSort: (key, direction) =>
-                setSort({ key: direction === "none" ? undefined : key, direction }),
+                setSort({
+                  key: direction === "none" ? undefined : key,
+                  direction,
+                }),
             }}
             routeTo={(item) => ({
               to: `https://adamovies.com/review/${item.title
