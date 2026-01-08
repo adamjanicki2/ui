@@ -17,10 +17,7 @@
   "scripts": {
     "start": "vite",
     "build": "eslint src --max-warnings=0 && vite build && cp build/index.html build/404.html",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx,json,css,scss,md}\"",
-    "fix": "npm run lint:fix && npm run format",
+    "fix": "eslint src --fix && prettier --write \"src/**/*.{ts,tsx,json,css,scss,md}\"",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
