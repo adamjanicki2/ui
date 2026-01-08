@@ -54,7 +54,10 @@ type Props<T> = Omit<IconInputProps, "inputProps" | "onSelect"> & {
   /** Props to pass to the underlying `input` */
   inputProps?: Omit<InputElementProps, "value" | "onChange" | "autoComplete">;
   /** Props for the popover */
-  popoverProps?: Omit<PopoverProps, "open" | "onClose" | "anchor" | "children">;
+  popoverProps?: Omit<
+    PopoverProps,
+    "open" | "onClose" | "anchor" | "children" | "from" | "to"
+  >;
   /** Footer node to render at the bottom of the popover */
   footer?: React.ReactNode;
   /**
