@@ -1,12 +1,13 @@
 import type * as React from "react";
+
+import classNames from "../../functions/classNames";
+import { arrowDown, arrowUp, select } from "../../icons";
+import { UnstyledLink } from "../../navigation/Link";
 import type { ReadonlyableArray } from "../../types/common";
 import type { BoxProps } from "../Box/Box";
 import Box from "../Box/Box";
-import { UnstyledLink } from "../../navigation/Link";
-import Icon from "../Icon";
-import { arrowDown, arrowUp, select } from "../../icons";
 import { UnstyledButton } from "../Button";
-import classNames from "../../functions/classNames";
+import Icon from "../Icon";
 
 type LinkProps = React.ComponentProps<typeof UnstyledLink>;
 type RouteLinkProps = Pick<LinkProps, "to" | "newTab">;
@@ -22,7 +23,7 @@ export type SortDirection = "none" | "asc" | "desc";
 
 type ColumnConfig<
   Item extends MinimalItem,
-  Key extends keyof Item = keyof Item
+  Key extends keyof Item = keyof Item,
 > = {
   /** The key in the item struct for this column */
   key: Key;

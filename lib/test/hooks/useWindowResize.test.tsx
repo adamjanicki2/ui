@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react";
+
 import { useWindowResize } from "../../src";
 
 const mockWindowResize = () => {

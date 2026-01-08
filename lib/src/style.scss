@@ -293,7 +293,8 @@ textarea {
 
 .aui-input:not([disabled]):focus-within,
 .aui-select-container:not([disabled]):focus-within {
-  box-shadow: var(--aui-subtle-box-shadow),
+  box-shadow:
+    var(--aui-subtle-box-shadow),
     0 0 0 3px var(--aui-focus-ring-color);
 }
 
@@ -377,7 +378,11 @@ $positions: static, relative, absolute, fixed, sticky;
   }
 }
 
-$flex-directions: x row, y column, "-x" row-reverse, "-y" column-reverse;
+$flex-directions:
+  x row,
+  y column,
+  "-x" row-reverse,
+  "-y" column-reverse;
 
 @each $class, $dir in $flex-directions {
   .aui-flex-#{$class} {
@@ -390,15 +395,22 @@ $flex-directions: x row, y column, "-x" row-reverse, "-y" column-reverse;
   flex-wrap: wrap;
 }
 
-$align-items: start flex-start, center center, end flex-end;
+$align-items:
+  start flex-start,
+  center center,
+  end flex-end;
 @each $class, $val in $align-items {
   .aui-align-#{$class} {
     align-items: $val;
   }
 }
 
-$justify-items: start flex-start, center center, end flex-end,
-  between space-between, around space-around;
+$justify-items:
+  start flex-start,
+  center center,
+  end flex-end,
+  between space-between,
+  around space-around;
 @each $class, $val in $justify-items {
   .aui-justify-#{$class} {
     justify-content: $val;
@@ -482,7 +494,11 @@ $aui-space: (
   xxl: var(--aui-xxl),
 );
 
-$padding-props: pa padding, pt padding-top, pb padding-bottom, pl padding-left,
+$padding-props:
+  pa padding,
+  pt padding-top,
+  pb padding-bottom,
+  pl padding-left,
   pr padding-right;
 @each $prefix, $prop in $padding-props {
   @each $k, $v in $aui-space {
@@ -492,7 +508,11 @@ $padding-props: pa padding, pt padding-top, pb padding-bottom, pl padding-left,
   }
 }
 
-$margin-props: ma margin, mt margin-top, mb margin-bottom, ml margin-left,
+$margin-props:
+  ma margin,
+  mt margin-top,
+  mb margin-bottom,
+  ml margin-left,
   mr margin-right;
 @each $prefix, $prop in $margin-props {
   .aui-#{$prefix}-auto {
@@ -512,9 +532,18 @@ $margin-props: ma margin, mt margin-top, mb margin-bottom, ml margin-left,
 }
 
 // Dimension Utilities
-$dimension-props: w width, minw min-width, maxw max-width, h height,
-  minh min-height, maxh max-height;
-$dimension-vals: full 100%, fit fit-content, min min-content, max max-content;
+$dimension-props:
+  w width,
+  minw min-width,
+  maxw max-width,
+  h height,
+  minh min-height,
+  maxh max-height;
+$dimension-vals:
+  full 100%,
+  fit fit-content,
+  min min-content,
+  max max-content;
 @each $short, $prop in $dimension-props {
   @each $name, $val in $dimension-vals {
     .aui-#{$short}-#{$name} {
@@ -524,19 +553,37 @@ $dimension-vals: full 100%, fit fit-content, min min-content, max max-content;
 }
 
 // Border & Shadow Utilities
-$border-radius: none var(--aui-radius-none), subtle var(--aui-radius-subtle),
-  rounded var(--aui-radius-rounded), max var(--aui-radius-max);
+$border-radius:
+  none var(--aui-radius-none),
+  subtle var(--aui-radius-subtle),
+  rounded var(--aui-radius-rounded),
+  max var(--aui-radius-max);
 @each $k, $v in $border-radius {
   .aui-radius-#{$k} {
     border-radius: $v;
   }
 }
 
-$border-widths: none 0px, xs 1px, s 2px, m 4px, l 8px, xl 16px;
-$border-styles: solid solid, dotted dotted, dashed dashed, none none;
-$border-colors: default var(--aui-default-border),
+$border-widths:
+  none 0px,
+  xs 1px,
+  s 2px,
+  m 4px,
+  l 8px,
+  xl 16px;
+$border-styles:
+  solid solid,
+  dotted dotted,
+  dashed dashed,
+  none none;
+$border-colors:
+  default var(--aui-default-border),
   primary var(--aui-color-default);
-$border-sides: ba border, bt border-top, br border-right, bb border-bottom,
+$border-sides:
+  ba border,
+  bt border-top,
+  br border-right,
+  bb border-bottom,
   bl border-left;
 
 @each $token, $prop in $border-sides {
@@ -560,16 +607,21 @@ $border-sides: ba border, bt border-top, br border-right, bb border-bottom,
   }
 }
 
-$shadows: "subtle" var(--aui-subtle-box-shadow),
-  "floating" var(--aui-floating-box-shadow), "none" none;
+$shadows:
+  "subtle" var(--aui-subtle-box-shadow),
+  "floating" var(--aui-floating-box-shadow),
+  "none" none;
 @each $token, $val in $shadows {
   .aui-shadow-#{$token} {
     box-shadow: $val;
   }
 }
 
-$opacity: none 0, disabled var(--aui-opacity-disabled),
-  dim var(--aui-opacity-dim), full 1;
+$opacity:
+  none 0,
+  disabled var(--aui-opacity-disabled),
+  dim var(--aui-opacity-dim),
+  full 1;
 @each $token, $val in $opacity {
   .aui-op-#{$token} {
     opacity: $val;
@@ -577,8 +629,15 @@ $opacity: none 0, disabled var(--aui-opacity-disabled),
 }
 
 // Typography Utilities
-$font-sizes: "xxs" 10px, "xs" 12px, "s" 14px, "default" 16px, "m" 20px, "l" 24px,
-  "xl" 32px, "xxl" 48px;
+$font-sizes:
+  "xxs" 10px,
+  "xs" 12px,
+  "s" 14px,
+  "default" 16px,
+  "m" 20px,
+  "l" 24px,
+  "xl" 32px,
+  "xxl" 48px;
 @each $token, $size in $font-sizes {
   .aui-f-#{$token} {
     font-size: $size;
@@ -604,16 +663,21 @@ $text-align: left right center;
 }
 
 // Colors
-$colors: "default" var(--aui-color-default), "muted" var(--aui-color-muted),
-  "inherit" inherit, "transparent" transparent;
+$colors:
+  "default" var(--aui-color-default),
+  "muted" var(--aui-color-muted),
+  "inherit" inherit,
+  "transparent" transparent;
 @each $token, $color in $colors {
   .aui-c-#{$token} {
     color: $color;
   }
 }
 
-$bg-colors: "default" var(--aui-default-background),
-  "muted" var(--aui-static-background), "inherit" inherit,
+$bg-colors:
+  "default" var(--aui-default-background),
+  "muted" var(--aui-static-background),
+  "inherit" inherit,
   "transparent" transparent;
 @each $token, $color in $bg-colors {
   .aui-bg-#{$token} {
@@ -621,7 +685,9 @@ $bg-colors: "default" var(--aui-default-background),
   }
 }
 
-$overflows: "scroll" scroll, "hidden" hidden;
+$overflows:
+  "scroll" scroll,
+  "hidden" hidden;
 @each $token, $overflow in $overflows {
   .aui-ov-#{$token} {
     overflow: $overflow;
@@ -634,7 +700,11 @@ $overflows: "scroll" scroll, "hidden" hidden;
   }
 }
 
-$z-indexes: "auto" auto, "floating" 100, "nav" 1000, "max" 10000;
+$z-indexes:
+  "auto" auto,
+  "floating" 100,
+  "nav" 1000,
+  "max" 10000;
 @each $token, $z in $z-indexes {
   .aui-z-#{$token} {
     z-index: $z;

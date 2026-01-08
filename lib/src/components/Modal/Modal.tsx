@@ -1,9 +1,10 @@
 import React from "react";
-import Box, { type BoxProps } from "../Box/Box";
-import Layer from "../Layer";
-import Button, { IconButton } from "../Button";
-import Animated from "../Animated";
+
 import { x } from "../../icons";
+import Animated from "../Animated";
+import Box, { type BoxProps } from "../Box/Box";
+import Button, { IconButton } from "../Button";
+import Layer from "../Layer";
 
 type ButtonProps = Omit<
   React.ComponentProps<typeof Button>,

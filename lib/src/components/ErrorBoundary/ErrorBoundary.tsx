@@ -1,4 +1,5 @@
 import React from "react";
+
 import type { ReadonlyableArray } from "../../types/common";
 
 type FallbackProps = { error: Error; reset: () => void };

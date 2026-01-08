@@ -1,5 +1,6 @@
-import { render, screen, waitFor, act } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
 import { Carousel } from "../../src";
 
 const Wrapper = () => (

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
+
 import useMergeRefs from "../../hooks/useMergeRefs";
+import type { Children } from "../../types/common";
 import useClickOutside from "../ClickOutside/useClickOutside";
 import Floating from "../Floating";
-import type { Children } from "../../types/common";
 
 type FloatingProps = React.ComponentProps<typeof Floating>;
 

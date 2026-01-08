@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
+
 import type { ReadonlyableArray } from "../../types/common";
 
 export type EventType =

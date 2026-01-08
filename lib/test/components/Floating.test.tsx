@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+
 import Floating from "../../src/components/Floating";
 
 const rect = (r: Partial<DOMRect>): DOMRect =>
@@ -12,7 +13,7 @@ const rect = (r: Partial<DOMRect>): DOMRect =>
     width: 0,
     height: 0,
     ...r,
-  } as DOMRect);
+  }) as DOMRect;
 
 describe("Floating", () => {
   beforeEach(() => {

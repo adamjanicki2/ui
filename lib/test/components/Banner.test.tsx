@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+
 import { Banner } from "../../src";
 
 describe("Banner", () => {

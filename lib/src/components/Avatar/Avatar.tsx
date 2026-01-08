@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import ui from "../ui";
+
+import { classNames } from "../../functions";
 import type { SizeToken, Style } from "../../types/common";
 import Box, { type BoxProps } from "../Box/Box";
-import { classNames } from "../../functions";
+import ui from "../ui";
 
 type Props = Omit<BoxProps, "children"> & {
   /**

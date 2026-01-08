@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+
 import { chevronDown, chevronRight } from "../../icons";
 import type { ReadonlyableArray } from "../../types/common";
 import Animated from "../Animated";

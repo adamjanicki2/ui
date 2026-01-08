@@ -1,10 +1,11 @@
 import React from "react";
-import useRouterContext from "./useRouterContext";
+
 import type {
   SearchParams,
   SetSearchParams,
   SetSearchParamsArg,
 } from "../types/navigation";
+import useRouterContext from "./useRouterContext";
 
 function deserialize(search: string): SearchParams {
   const urlSearchParams = new URLSearchParams(search);

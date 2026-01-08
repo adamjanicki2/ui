@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import { ErrorBoundary, Alert, Button } from "../../src";
+
+import { Alert, Button, ErrorBoundary } from "../../src";
 
 const Bomb = () => {
   throw new Error("💥 Boom!");

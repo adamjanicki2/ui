@@ -1,4 +1,4 @@
-import type { Location, HistoryMode } from "../types/navigation";
+import type { HistoryMode, Location } from "../types/navigation";
 
 export function getCurrentLocation(): Location {
   return {

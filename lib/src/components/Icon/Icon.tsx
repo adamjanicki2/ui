@@ -1,8 +1,9 @@
 import React from "react";
+
 import { classNames } from "../../functions";
 import type { SizeToken } from "../../types/common";
-import ui from "../ui";
 import type { IconType } from "../../types/icon";
+import ui from "../ui";
 
 /** Props for `Icon` */
 export type Props = Omit<

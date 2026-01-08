@@ -1,12 +1,13 @@
 import React from "react";
-import RouterContext from "./RouterContext";
+
+import type { Location, Navigate, NavigateOptions } from "../types/navigation";
 import {
   createRouterHistory,
   getCurrentLocation,
   type RouterHistory,
 } from "./history";
-import type { Location, Navigate, NavigateOptions } from "../types/navigation";
 import { getHref, normalizeBasename } from "./href";
+import RouterContext from "./RouterContext";
 
 export type Props = {
   /** Children to render inside the router provider */
