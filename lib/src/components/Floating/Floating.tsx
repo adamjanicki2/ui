@@ -18,17 +18,7 @@ type Placement =
   | "right-start"
   | "right-end";
 
-type SafeStyle = Omit<
-  Style,
-  | "top"
-  | "left"
-  | "right"
-  | "bottom"
-  | "position"
-  | "transform"
-  | "translate"
-  | "all"
->;
+type SafeStyle = Omit<Style, "position" | "transform" | "all" | "visibility">;
 
 type AnimatedProps = React.ComponentProps<typeof Animated>;
 
