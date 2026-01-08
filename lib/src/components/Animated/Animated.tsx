@@ -31,7 +31,7 @@ type Props = BoxProps & {
   from?: Style;
 };
 
-type Phase = "from" | "forward" | "reverse";
+type Phase = "init" | "forward" | "reverse";
 
 /** Wrapper for animating enter/exit states */
 const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -55,7 +55,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   // initialize based on whether we can instantly render
   const [phase, setPhase] = useState<Phase>(() =>
-    visible && instantForward ? "forward" : "from"
+    visible && instantForward ? "forward" : "init"
   );
 
   const timeoutRef = useRef<number | null>(null);
@@ -64,7 +64,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   useEffect(() => {
     // cases where no update is needed; already in correct phase
     if (visible && instantForward && phase === "forward") return;
-    if (!visible && instantReverse && phase === "from") return;
+    if (!visible && instantReverse && phase === "init") return;
 
     if (visible) {
       if (phase !== "forward") {
@@ -76,14 +76,14 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
           );
         }
       }
-    } else if (phase !== "from") {
+    } else if (phase !== "init") {
       if (instantReverse) {
-        setPhase("from");
+        setPhase("init");
       } else if (phase === "forward") {
         setPhase("reverse");
       } else {
         timeoutRef.current = window.setTimeout(
-          () => setPhase("from"),
+          () => setPhase("init"),
           reverseDuration * 1000
         );
       }
@@ -103,7 +103,7 @@ const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     };
   }, [visible, phase, instantForward, instantReverse, reverseDuration]);
 
-  if (phase === "from" && !keepMounted && !visible) return null;
+  if (phase === "init" && !keepMounted && !visible) return null;
 
   const stateStyle =
     phase === "forward" || (visible && instantForward) ? to : from;

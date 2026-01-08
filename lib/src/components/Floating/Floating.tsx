@@ -144,14 +144,19 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     let nextPosition = positioners[nextPlacement](positionerArgs);
 
     const overflowsViewport = overflowChecks[nextPlacement](
-      nextPosition,
+      toViewportPosition(nextPosition, parentRect),
       floatingRect
     );
 
     if (flip && overflowsViewport) {
       const oppositePlacement = opposites[nextPlacement];
       const oppositePosition = positioners[oppositePlacement](positionerArgs);
-      if (!overflowChecks[oppositePlacement](oppositePosition, floatingRect)) {
+      if (
+        !overflowChecks[oppositePlacement](
+          toViewportPosition(oppositePosition, parentRect),
+          floatingRect
+        )
+      ) {
         nextPlacement = oppositePlacement;
         nextPosition = oppositePosition;
       }
@@ -297,5 +302,10 @@ const overflowChecks: Record<Placement, OverflowCheck> = {
   "right-start": overflowsRight,
   "right-end": overflowsRight,
 };
+
+const toViewportPosition = (position: Position, parent: DOMRect) => ({
+  top: position.top + parent.top,
+  left: position.left + parent.left,
+});
 
 export default Floating;
