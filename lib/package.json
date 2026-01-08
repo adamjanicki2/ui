@@ -1,6 +1,6 @@
 {
   "name": "@adamjanicki/ui",
-  "version": "1.8.9",
+  "version": "1.9.0",
   "description": "Basic UI components and hooks for React in TypeScript",
   "type": "module",
   "main": "./index.js",
