@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { Router, Routes, Route, usePathParams } from "../../src";
+
+import { Route, Router, Routes, usePathParams } from "../../src";
 
 function Page({ name }: { name: string }) {
   const params = usePathParams();

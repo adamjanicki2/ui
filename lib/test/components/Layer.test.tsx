@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Layer, Alert } from "../../src";
+
+import { Alert, Layer } from "../../src";
 
 type Props = {
   onClose: () => void;

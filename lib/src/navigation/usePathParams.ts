@@ -1,4 +1,5 @@
 import React from "react";
+
 import type { PathParams } from "../types/navigation";
 import PathParamsContext from "./PathParamsContext";
 

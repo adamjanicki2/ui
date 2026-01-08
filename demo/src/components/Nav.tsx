@@ -1,7 +1,8 @@
-import { useState } from "react";
 import "src/components/nav.css";
-import { Hamburger, Box, ui, Icon, Link, UnstyledLink } from "@adamjanicki/ui";
+
+import { Box, Hamburger, Icon, Link, ui, UnstyledLink } from "@adamjanicki/ui";
 import { architect } from "@adamjanicki/ui/icons";
+import { useState } from "react";
 
 type NavlinkProps = {
   to: string;
@@ -53,7 +54,7 @@ export default function Nav() {
         <Navlink to="/signals">Signals</Navlink>
         <Navlink to="/action">Action</Navlink>
         <Navlink to="/miscellaneous">Miscellaneous</Navlink>
-        <Navlink to="/floating">Floating</Navlink>
+        <Navlink to="/overlay">Overlay</Navlink>
       </ui.ul>
     </ui.nav>
   );

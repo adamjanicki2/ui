@@ -1,4 +1,5 @@
 import { act, render, screen } from "@testing-library/react";
+
 import Animated from "../../src/components/Animated";
 
 function flushPromises() {

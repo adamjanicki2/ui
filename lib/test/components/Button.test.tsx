@@ -1,5 +1,6 @@
-import { render, fireEvent } from "@testing-library/react";
-import { Button, UnstyledButton, IconButton } from "../../src";
+import { fireEvent, render } from "@testing-library/react";
+
+import { Button, IconButton, UnstyledButton } from "../../src";
 import { notAMoon } from "../../src/icons";
 
 describe("Button", () => {

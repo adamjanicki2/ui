@@ -1,10 +1,11 @@
 import React from "react";
+
 import classNames from "../../functions/classNames";
+import { select } from "../../icons";
+import type { ReadonlyableArray } from "../../types/common";
 import Box, { type BoxProps } from "../Box/Box";
 import Icon from "../Icon";
 import ui from "../ui";
-import type { ReadonlyableArray } from "../../types/common";
-import { select } from "../../icons";
 
 type SelectProps = React.ComponentProps<typeof ui.select>;
 type Props = Omit<BoxProps, "children" | "onChange"> & {

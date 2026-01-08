@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+
 import { Icon } from "../../src";
 import { notAMoon } from "../../src/icons";
 

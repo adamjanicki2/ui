@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+
 import type { Style } from "../../types/common";
 import Box, { type BoxProps } from "../Box/Box";
 

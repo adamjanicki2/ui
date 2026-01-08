@@ -1,6 +1,7 @@
 import React from "react";
-import type { Vfx } from "../../types/common";
+
 import { classNames } from "../../functions";
+import type { Vfx } from "../../types/common";
 import transformVfx from "./transformVfx";
 
 type Tag = keyof React.JSX.IntrinsicElements;

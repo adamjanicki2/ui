@@ -1,5 +1,6 @@
+import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { render, screen, act, waitFor } from "@testing-library/react";
+
 import { Router, useLocation, useNavigate } from "../../src";
 import type { NavigateOptions } from "../../src/types/navigation";
 

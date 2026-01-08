@@ -1,10 +1,11 @@
 import React from "react";
+
+import type { Children } from "../types/common";
+import { stripBasename } from "./href";
 import { matchPath } from "./path";
 import PathParamsContext from "./PathParamsContext";
 import Route, { type Props as RouteProps } from "./Route";
-import type { Children } from "../types/common";
 import useRouterContext from "./useRouterContext";
-import { stripBasename } from "./href";
 
 export type Props = {
   /**

@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+
 import { classNames } from "../../functions";
-import Button from "../Button";
+import { chevronLeft, chevronRight } from "../../icons";
 import type { Children, ReadonlyableArray, Style } from "../../types/common";
 import Box, { type BoxProps } from "../Box/Box";
+import Button from "../Button";
 import Icon from "../Icon";
-import { chevronLeft, chevronRight } from "../../icons";
 
 type ButtonProps = {
   /** Children to render inside the button */

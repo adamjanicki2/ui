@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useMemo, useState } from "react";
+
 import { Table } from "../../src";
 import { arrowDown, arrowUp, select } from "../../src/icons";
 

@@ -1,7 +1,8 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Router, Link, UnstyledLink, ButtonLink } from "../../src";
+import React from "react";
+
+import { ButtonLink, Link, Router, UnstyledLink } from "../../src";
 
 describe("Link", () => {
   beforeEach(() => {

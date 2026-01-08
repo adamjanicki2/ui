@@ -1,10 +1,11 @@
-import React, { useRef, useState, useEffect } from "react";
-import Box, { type BoxProps } from "../Box/Box";
-import Icon from "../Icon";
-import { UnstyledButton } from "../Button";
-import Animated from "../Animated";
-import type { ReadonlyableArray } from "../../types/common";
+import React, { useEffect, useRef, useState } from "react";
+
 import { chevronDown, chevronRight } from "../../icons";
+import type { ReadonlyableArray } from "../../types/common";
+import Animated from "../Animated";
+import Box, { type BoxProps } from "../Box/Box";
+import { UnstyledButton } from "../Button";
+import Icon from "../Icon";
 
 type Props = Omit<BoxProps, "children"> & {
   /** Drawers to render as accordion sections */

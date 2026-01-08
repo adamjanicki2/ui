@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
 import { Router, useSearchParams } from "../../src";
 
 function formatValue(value: string | string[] | undefined) {
@@ -29,8 +30,8 @@ function Wrapper() {
               tag === undefined
                 ? ["x"]
                 : Array.isArray(tag)
-                ? [...tag, "x"]
-                : [tag, "x"];
+                  ? [...tag, "x"]
+                  : [tag, "x"];
 
             return { ...prev, tag: nextTags };
           })

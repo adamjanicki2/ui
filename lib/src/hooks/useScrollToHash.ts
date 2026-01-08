@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import scrollToId from "../functions/scrollToId";
 
 type UseScrollToHashConfig = {

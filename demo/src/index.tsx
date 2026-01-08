@@ -1,8 +1,9 @@
+import "@adamjanicki/ui/style.scss";
+import "src/css/media.css";
+import "src/css/style.css";
+
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "@adamjanicki/ui/style.scss";
-import "src/css/style.css";
-import "src/css/media.css";
 import App from "src/App";
 
 const root = ReactDOM.createRoot(

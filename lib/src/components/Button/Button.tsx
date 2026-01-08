@@ -1,4 +1,5 @@
 import React from "react";
+
 import classNames from "../../functions/classNames";
 import ui from "../ui";
 
@@ -60,6 +61,6 @@ export const getButtonProps = ({
   ({
     className: `aui-button-${variant}`,
     vfx: { ...vfxBySize[size], radius: "rounded", fontWeight: 6 },
-  } as const);
+  }) as const;
 
 export default Button;

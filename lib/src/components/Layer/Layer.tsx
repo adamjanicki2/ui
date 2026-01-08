@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { useFocusTrap, useScrollLock } from "../../hooks";
+
 import classNames from "../../functions/classNames";
-import Box, { type BoxProps } from "../Box/Box";
+import { useFocusTrap, useScrollLock } from "../../hooks";
 import useMergeRefs from "../../hooks/useMergeRefs";
+import Box, { type BoxProps } from "../Box/Box";
 
 type Props = Omit<BoxProps, "children"> & {
   /** Callback that fires when the user clicks outside the layer */

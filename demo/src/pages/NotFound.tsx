@@ -1,5 +1,5 @@
-import Para from "src/components/Para";
 import { ui } from "@adamjanicki/ui";
+import Para from "src/components/Para";
 
 export default function NotFound() {
   return (

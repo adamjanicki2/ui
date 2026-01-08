@@ -1,7 +1,8 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ClickOutside, Alert } from "../../src";
+import React from "react";
+
+import { Alert, ClickOutside } from "../../src";
 
 type Props = {
   children: React.ReactElement;

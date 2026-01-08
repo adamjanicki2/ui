@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { Router, Routes, Route } from "../../src";
+
+import { Route, Router, Routes } from "../../src";
 
 function Page({ name }: { name: string }) {
   return <div data-testid="page">{name}</div>;

@@ -1,5 +1,6 @@
-import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
+import React from "react";
+
 import { ui } from "../../src";
 
 describe("ui", () => {
@@ -39,9 +40,9 @@ describe("ui", () => {
     );
   });
 
-	  it("handles more complex refs", () => {
-	    const buttonRef = React.createRef<HTMLButtonElement>();
-	    const inputRef = jest.fn<void, [HTMLInputElement | null]>();
+  it("handles more complex refs", () => {
+    const buttonRef = React.createRef<HTMLButtonElement>();
+    const inputRef = jest.fn<void, [HTMLInputElement | null]>();
 
     render(
       <>

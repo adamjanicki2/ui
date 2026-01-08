@@ -1,8 +1,9 @@
 import React, { forwardRef } from "react";
-import { Props as InputProps } from "./Input";
+
 import classNames from "../../functions/classNames";
 import Box, { type BoxProps } from "../Box/Box";
 import ui from "../ui";
+import { Props as InputProps } from "./Input";
 
 type IconInputProps = Omit<BoxProps, "children"> & {
   /** Icon to display at the start of the input */

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
-import { UnstyledButton } from "../Button";
+
 import type { Style } from "../../types/common";
+import { UnstyledButton } from "../Button";
 
 /** Props shared by all the hamburgers */
 export type Props = {
