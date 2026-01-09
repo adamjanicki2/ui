@@ -275,6 +275,7 @@ const RowActionsMenu = ({
   const [open, setOpen] = useState(false);
   return (
     <Popover
+      flip={false}
       open={open}
       onClose={() => setOpen(false)}
       placement="bottom-end"
