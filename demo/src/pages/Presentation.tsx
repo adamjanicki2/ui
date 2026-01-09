@@ -298,13 +298,27 @@ export default function Presentation() {
                   direction,
                 }),
             }}
-            routeTo={(item) => ({
-              to: `https://adamovies.com/review/${item.title
-                .toLowerCase()
-                .split(/\s+/)
-                .join("-")}`,
-              newTab: true,
-            })}
+            // routeTo={(item) => ({
+            //   to: `https://adamovies.com/review/${item.title
+            //     .toLowerCase()
+            //     .split(/\s+/)
+            //     .join("-")}`,
+            //   newTab: true,
+            // })}
+            rowActions={(item) => [
+              {
+                label: "Review",
+                newTab: true,
+                to: `https://adamovies.com/review/${item.title
+                  .toLowerCase()
+                  .split(/\s+/)
+                  .join("-")}`,
+              },
+              {
+                label: "Do something cool",
+                onClick: () => window.alert("Action clicked for " + item.title),
+              },
+            ]}
           />
         </Box>
       </ShowcaseBlock>

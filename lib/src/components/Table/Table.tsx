@@ -1,13 +1,14 @@
-import type * as React from "react";
+import React, { useState } from "react";
 
 import classNames from "../../functions/classNames";
-import { arrowDown, arrowUp, select } from "../../icons";
+import { arrowDown, arrowUp, overflow, select } from "../../icons";
 import { UnstyledLink } from "../../navigation/Link";
 import type { ReadonlyableArray } from "../../types/common";
 import type { BoxProps } from "../Box/Box";
 import Box from "../Box/Box";
-import { UnstyledButton } from "../Button";
+import { IconButton, UnstyledButton } from "../Button";
 import Icon from "../Icon";
+import Popover from "../Popover";
 
 type LinkProps = React.ComponentProps<typeof UnstyledLink>;
 type RouteLinkProps = Pick<LinkProps, "to" | "newTab">;
@@ -40,6 +41,17 @@ type ColumnConfig<
   cellProps?: ContainerProps;
 };
 
+type BaseRowAction = {
+  /** Content to render in the action node */
+  label: React.ReactNode;
+};
+type RowLinkAction = BaseRowAction & RouteLinkProps;
+type RowButtonAction = BaseRowAction & {
+  /** Callback to fire on action click */
+  onClick?: () => void;
+};
+type RowAction = RowLinkAction | RowButtonAction;
+
 type Props<Item extends MinimalItem> = ContainerProps & {
   /** Items to render in the rows of the table */
   items: ReadonlyableArray<Item>;
@@ -61,6 +73,8 @@ type Props<Item extends MinimalItem> = ContainerProps & {
   };
   /** A row can either be a link to somewhere */
   routeTo?: (item: Item) => RouteLinkProps;
+  /** A list of actions or links to store in an overflow menu at the end of the row */
+  rowActions?: (item: Item) => ReadonlyableArray<RowAction>;
   /** Whether to render a small separator between columns */
   gutters?: boolean;
 };
@@ -84,6 +98,7 @@ const Table = <Item extends MinimalItem>({
   headerCellProps = {},
   sort,
   routeTo,
+  rowActions,
   vfx,
   gutters,
   ...boxProps
@@ -149,6 +164,14 @@ const Table = <Item extends MinimalItem>({
             </TableCell>
           );
         })}
+        {rowActions?.length ? (
+          <TableCell
+            vfx={{
+              borderBottom: true,
+              paddingX: "s",
+            }}
+          />
+        ) : null}
       </Box>
       {/* Rows */}
       {items.map((item) => (
@@ -158,6 +181,7 @@ const Table = <Item extends MinimalItem>({
           columns={columns}
           routeTo={routeTo}
           gutters={gutters}
+          rowActions={rowActions}
         />
       ))}
     </Box>
@@ -166,7 +190,7 @@ const Table = <Item extends MinimalItem>({
 
 type TableBodyRowProps<Item extends MinimalItem> = Pick<
   Props<Item>,
-  "columns" | "gutters" | "routeTo"
+  "columns" | "gutters" | "routeTo" | "rowActions"
 > & {
   item: Item;
 };
@@ -176,6 +200,7 @@ const TableBodyRow = <Item extends MinimalItem>({
   columns,
   routeTo,
   gutters,
+  rowActions,
 }: TableBodyRowProps<Item>) => {
   const children = columns.map(({ key, cellProps = {}, render }, colIndex) => {
     const { vfx, ...rest } = cellProps;
@@ -192,6 +217,18 @@ const TableBodyRow = <Item extends MinimalItem>({
       </TableCell>
     );
   });
+
+  if (rowActions) {
+    children.push(
+      <TableCell
+        key="row-actions"
+        onClick={(event) => event.stopPropagation()}
+        vfx={{ paddingX: "s" }}
+      >
+        <RowActionsMenu rowActions={rowActions(item)} />
+      </TableCell>
+    );
+  }
 
   const rowProps = {
     role: "row",
@@ -220,5 +257,54 @@ const TableCell = ({ vfx, children, className, ...rest }: BoxProps) => (
     {children}
   </Box>
 );
+
+const rowActionVfx = {
+  axis: "x",
+  align: "center",
+  padding: "s",
+  fontSize: "s",
+  fontWeight: 6,
+  radius: "rounded",
+} as const;
+
+const RowActionsMenu = ({
+  rowActions,
+}: {
+  rowActions: ReadonlyableArray<RowAction>;
+}) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <Popover
+      open={open}
+      onClose={() => setOpen(false)}
+      placement="bottom-end"
+      offset={8}
+      vfx={{ axis: "y", padding: "xs" }}
+      anchor={
+        <IconButton icon={overflow} onClick={() => setOpen((prev) => !prev)} />
+      }
+    >
+      {rowActions.map(({ label, ...rowAction }) =>
+        "to" in rowAction ? (
+          <UnstyledLink
+            {...rowAction}
+            vfx={rowActionVfx}
+            className="aui-subtle-hover"
+          >
+            {label}
+          </UnstyledLink>
+        ) : (
+          <UnstyledButton
+            onClick={rowAction.onClick}
+            vfx={rowActionVfx}
+            className="aui-subtle-hover"
+          >
+            {label}
+          </UnstyledButton>
+        )
+      )}
+    </Popover>
+  );
+};
 
 export default Table;
