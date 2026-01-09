@@ -110,23 +110,14 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const floatingEl = floatingRef.current;
     if (!anchorEl || !floatingEl) return;
 
-    const parent = anchorEl.offsetParent ?? anchorEl.parentElement;
-    if (!parent) return;
-
-    const parentRect = parent.getBoundingClientRect();
-    const anchorRect = anchorEl.getBoundingClientRect();
     const floatingRect = floatingEl.getBoundingClientRect();
+    const { el: relativeAnchorRect, parent: parentRect } = getRects(
+      anchorEl,
+      floatingEl.offsetParent as HTMLElement | null
+    );
 
     const positionerArgs = {
-      // relative to parent
-      anchor: {
-        top: anchorRect.top - parentRect.top,
-        left: anchorRect.left - parentRect.left,
-        right: anchorRect.right - parentRect.left,
-        bottom: anchorRect.bottom - parentRect.top,
-        width: anchorRect.width,
-        height: anchorRect.height,
-      },
+      anchor: relativeAnchorRect,
       floating: floatingRect,
       offset,
     } as const;
@@ -165,8 +156,8 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
     updatePosition();
 
+    if (flip) document.addEventListener("scroll", updatePosition, true);
     window.addEventListener("resize", updatePosition);
-    document.addEventListener("scroll", updatePosition, true);
 
     const anchorEl = anchorRef.current;
     const floatingEl = floatingRef.current;
@@ -179,11 +170,11 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     }
 
     return () => {
+      if (flip) document.removeEventListener("scroll", updatePosition, true);
       window.removeEventListener("resize", updatePosition);
-      document.removeEventListener("scroll", updatePosition, true);
       resizeObserver?.disconnect();
     };
-  }, [updatePosition, visible]);
+  }, [updatePosition, visible, flip]);
 
   const { top = 0, left = 0 } = position ?? {};
 
@@ -294,9 +285,51 @@ const overflowChecks: Record<Placement, OverflowCheck> = {
   "right-end": overflowsRight,
 };
 
-const toViewportPosition = (position: Position, parent: DOMRect) => ({
-  top: position.top + parent.top,
-  left: position.left + parent.left,
-});
+function getRects(
+  el: HTMLElement,
+  parent: HTMLElement | null
+): { el: Rect; parent?: Rect } {
+  const rect = el.getBoundingClientRect();
+  if (parent) {
+    const parentRect = parent.getBoundingClientRect();
+    return {
+      el: {
+        top: rect.top - parentRect.top,
+        left: rect.left - parentRect.left,
+        right: rect.right - parentRect.left,
+        bottom: rect.bottom - parentRect.top,
+        width: rect.width,
+        height: rect.height,
+      },
+      parent: parentRect,
+    };
+  }
+
+  const offsetTop = rect.top + window.scrollY;
+  const offsetLeft = rect.left + window.scrollX;
+  return {
+    el: {
+      top: offsetTop,
+      left: offsetLeft,
+      right: offsetLeft + rect.width,
+      bottom: offsetTop + rect.height,
+      width: rect.width,
+      height: rect.height,
+    },
+  };
+}
+
+function toViewportPosition(pos: Position, parent?: Rect): Position {
+  if (parent) {
+    return {
+      top: pos.top + parent.top,
+      left: pos.left + parent.left,
+    };
+  }
+  return {
+    top: pos.top - window.scrollY,
+    left: pos.left - window.scrollX,
+  };
+}
 
 export default Floating;
