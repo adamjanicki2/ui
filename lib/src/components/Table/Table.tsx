@@ -278,11 +278,13 @@ const RowActionsMenu = ({
       open={open}
       onClose={() => setOpen(false)}
       placement="bottom-end"
-      offset={8}
+      offset={4}
       vfx={{ axis: "y", padding: "xs" }}
       anchor={
         <IconButton icon={overflow} onClick={() => setOpen((prev) => !prev)} />
       }
+      to={{ opacity: 1, top: 0 }}
+      from={{ opacity: 0, top: -4 }}
     >
       {rowActions.map(({ label, ...rowAction }) =>
         "to" in rowAction ? (
