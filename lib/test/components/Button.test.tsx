@@ -20,11 +20,11 @@ describe("Button", () => {
     const buttons = screen.getAllByRole("button");
     expect(buttons).toHaveLength(3);
 
-    buttons.forEach(async (button) => {
+    for (const button of buttons) {
       await user.click(button);
       button.focus();
       await user.keyboard("{Enter}");
-    });
+    }
 
     expect(callback).toHaveBeenCalledTimes(6);
   });

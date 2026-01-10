@@ -1,4 +1,5 @@
 import { render, waitFor } from "@testing-library/react";
+
 import { useScrollLock } from "../../src";
 
 const setScrollY = (y: number) => {
