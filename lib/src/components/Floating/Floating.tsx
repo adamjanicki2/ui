@@ -45,16 +45,13 @@ type Props = Omit<
    * @default 0
    */
   offset?: number;
-  /**
-   * Whether to flip to the opposite placement when overflowing viewport.
-   * @default true
-   */
+  /** Whether to automatically flip to the opposite placement when it would overflow */
   flip?: boolean;
-  /** Style that can be safely applied to the floating element without distrupting positioning */
+  /** Style that can be safely applied to the floating element without disrupting positioning */
   style?: SafeStyle;
-  /** Animation CSS for the start state (styles cannot override positioning) */
+  /** Animation CSS for the start state */
   from?: SafeStyle;
-  /** Animation CSS for the end state (styles cannot override positioning) */
+  /** Animation CSS for the end state */
   to?: SafeStyle;
 };
 
@@ -87,7 +84,7 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     visible,
     placement = "bottom",
     offset = 0,
-    flip = true,
+    flip,
     style,
     vfx,
     duration = 0,
@@ -110,36 +107,45 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const floatingEl = floatingRef.current;
     if (!anchorEl || !floatingEl) return;
 
-    const floatingRect = floatingEl.getBoundingClientRect();
-    const { el: relativeAnchorRect, parent: parentRect } = getRects(
-      anchorEl,
-      floatingEl.offsetParent as HTMLElement | null
-    );
+    const ancestor =
+      (floatingEl.offsetParent as HTMLElement) || document.documentElement;
 
-    const positionerArgs = {
-      anchor: relativeAnchorRect,
+    const floatingRect = floatingEl.getBoundingClientRect();
+    const anchorRect = anchorEl.getBoundingClientRect();
+    const ancestorOffset = getAncestorOffset(ancestor);
+
+    const args = {
+      // anchor rect in coordinates relative to closest non-static ancestor, which is what absolute positioning uses
+      anchor: {
+        top: anchorRect.top + ancestorOffset.top,
+        left: anchorRect.left + ancestorOffset.left,
+        bottom: anchorRect.bottom + ancestorOffset.top,
+        right: anchorRect.right + ancestorOffset.left,
+        width: anchorRect.width,
+        height: anchorRect.height,
+      },
       floating: floatingRect,
       offset,
     } as const;
 
-    let nextPlacement = placement;
-    let nextPosition = positioners[nextPlacement](positionerArgs);
+    let nextPosition = positioners[placement](args);
 
-    const overflowsViewport = overflowChecks[nextPlacement](
-      toViewportPosition(nextPosition, parentRect),
-      floatingRect
-    );
-
-    if (flip && overflowsViewport) {
-      const oppositePlacement = opposites[nextPlacement];
-      const oppositePosition = positioners[oppositePlacement](positionerArgs);
+    // determine if we need to flip to opposite side if the floating element overflows viewport
+    if (
+      flip &&
+      overflowChecks[placement](
+        convertToViewport(nextPosition, ancestorOffset),
+        floatingRect
+      )
+    ) {
+      const oppositePlacement = opposites[placement];
+      const oppositePosition = positioners[oppositePlacement](args);
       if (
         !overflowChecks[oppositePlacement](
-          toViewportPosition(oppositePosition, parentRect),
+          convertToViewport(oppositePosition, ancestorOffset),
           floatingRect
         )
       ) {
-        nextPlacement = oppositePlacement;
         nextPosition = oppositePosition;
       }
     }
@@ -212,7 +218,6 @@ const centerX: Aligner = (anchor, floating) =>
   anchor.left + anchor.width / 2 - floating.width / 2;
 const startX: Aligner = (anchor) => anchor.left;
 const endX: Aligner = (anchor, floating) => anchor.right - floating.width;
-
 const centerY: Aligner = (anchor, floating) =>
   anchor.top + anchor.height / 2 - floating.height / 2;
 const startY: Aligner = (anchor) => anchor.top;
@@ -285,50 +290,24 @@ const overflowChecks: Record<Placement, OverflowCheck> = {
   "right-end": overflowsRight,
 };
 
-function getRects(
-  el: HTMLElement,
-  parent: HTMLElement | null
-): { el: Rect; parent?: Rect } {
-  const rect = el.getBoundingClientRect();
-  if (parent) {
-    const parentRect = parent.getBoundingClientRect();
+function getAncestorOffset(ancestor: HTMLElement): Position {
+  if (ancestor === document.documentElement) {
     return {
-      el: {
-        top: rect.top - parentRect.top,
-        left: rect.left - parentRect.left,
-        right: rect.right - parentRect.left,
-        bottom: rect.bottom - parentRect.top,
-        width: rect.width,
-        height: rect.height,
-      },
-      parent: parentRect,
+      top: window.scrollY,
+      left: window.scrollX,
     };
   }
-
-  const offsetTop = rect.top + window.scrollY;
-  const offsetLeft = rect.left + window.scrollX;
+  const rect = ancestor.getBoundingClientRect();
   return {
-    el: {
-      top: offsetTop,
-      left: offsetLeft,
-      right: offsetLeft + rect.width,
-      bottom: offsetTop + rect.height,
-      width: rect.width,
-      height: rect.height,
-    },
+    top: ancestor.scrollTop - rect.top,
+    left: ancestor.scrollLeft - rect.left,
   };
 }
 
-function toViewportPosition(pos: Position, parent?: Rect): Position {
-  if (parent) {
-    return {
-      top: pos.top + parent.top,
-      left: pos.left + parent.left,
-    };
-  }
+function convertToViewport(pos: Position, ancestorOffset: Position): Position {
   return {
-    top: pos.top - window.scrollY,
-    left: pos.left - window.scrollX,
+    top: pos.top - ancestorOffset.top,
+    left: pos.left - ancestorOffset.left,
   };
 }
 
