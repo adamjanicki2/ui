@@ -107,24 +107,19 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const floatingEl = floatingRef.current;
     if (!anchorEl || !floatingEl) return;
 
-    const ancestor =
+    const container =
       (floatingEl.offsetParent as HTMLElement) || document.documentElement;
 
     const floatingRect = floatingEl.getBoundingClientRect();
     const anchorRect = anchorEl.getBoundingClientRect();
-    const ancestorOffset = getAncestorOffset(ancestor);
+    const containerInfo = getContainerInfo(container);
+    const anchorLocalRect = getRelativeRect(anchorRect, containerInfo);
+    const floatingLocalRect = getRelativeRect(floatingRect, containerInfo);
 
     const args = {
-      // anchor rect in coordinates relative to closest non-static ancestor, which is what absolute positioning uses
-      anchor: {
-        top: anchorRect.top + ancestorOffset.top,
-        left: anchorRect.left + ancestorOffset.left,
-        bottom: anchorRect.bottom + ancestorOffset.top,
-        right: anchorRect.right + ancestorOffset.left,
-        width: anchorRect.width,
-        height: anchorRect.height,
-      },
-      floating: floatingRect,
+      // anchor rect in coordinates relative to closest non-static container, which is what absolute positioning uses
+      anchor: anchorLocalRect,
+      floating: floatingLocalRect,
       offset,
     } as const;
 
@@ -134,7 +129,7 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     if (
       flip &&
       overflowChecks[placement](
-        convertToViewport(nextPosition, ancestorOffset),
+        convertToViewport(nextPosition, containerInfo),
         floatingRect
       )
     ) {
@@ -142,7 +137,7 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
       const oppositePosition = positioners[oppositePlacement](args);
       if (
         !overflowChecks[oppositePlacement](
-          convertToViewport(oppositePosition, ancestorOffset),
+          convertToViewport(oppositePosition, containerInfo),
           floatingRect
         )
       ) {
@@ -290,24 +285,62 @@ const overflowChecks: Record<Placement, OverflowCheck> = {
   "right-end": overflowsRight,
 };
 
-function getAncestorOffset(ancestor: HTMLElement): Position {
-  if (ancestor === document.documentElement) {
+type Scale = { x: number; y: number };
+type ContainerInfo = {
+  pos: Position;
+  scroll: Position;
+  scale: Scale;
+};
+
+function getContainerInfo(container: HTMLElement): ContainerInfo {
+  if (container === document.documentElement) {
     return {
-      top: window.scrollY,
-      left: window.scrollX,
+      pos: { top: 0, left: 0 },
+      scroll: { top: window.scrollY, left: window.scrollX },
+      scale: { x: 1, y: 1 },
     };
   }
-  const rect = ancestor.getBoundingClientRect();
+
+  const rect = container.getBoundingClientRect();
+  const { width, height } = rect;
+  const { clientWidth, clientHeight } = container;
+
   return {
-    top: ancestor.scrollTop - rect.top,
-    left: ancestor.scrollLeft - rect.left,
+    pos: { top: rect.top, left: rect.left },
+    scroll: { top: container.scrollTop, left: container.scrollLeft },
+    scale: {
+      x: width && clientWidth ? width / clientWidth : 1,
+      y: height && clientHeight ? height / clientHeight : 1,
+    },
   };
 }
 
-function convertToViewport(pos: Position, ancestorOffset: Position): Position {
+function getRelativeRect(rect: Rect, container: ContainerInfo): Rect {
+  const width = rect.width / container.scale.x;
+  const height = rect.height / container.scale.y;
+  const left =
+    (rect.left - container.pos.left) / container.scale.x +
+    container.scroll.left;
+  const top =
+    (rect.top - container.pos.top) / container.scale.y + container.scroll.top;
+
   return {
-    top: pos.top - ancestorOffset.top,
-    left: pos.left - ancestorOffset.left,
+    top,
+    left,
+    bottom: top + height,
+    right: left + width,
+    width,
+    height,
+  };
+}
+
+function convertToViewport(pos: Position, container: ContainerInfo): Position {
+  return {
+    top:
+      (pos.top - container.scroll.top) * container.scale.y + container.pos.top,
+    left:
+      (container.pos.left - container.scroll.left) * container.scale.y +
+      container.pos.left,
   };
 }
 
