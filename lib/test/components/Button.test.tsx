@@ -1,22 +1,31 @@
-import { fireEvent, render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { Button, IconButton, UnstyledButton } from "../../src";
 import { notAMoon } from "../../src/icons";
 
 describe("Button", () => {
-  it("renders a button and fires onClick", async () => {
+  it("renders buttons and fires onClick", async () => {
+    const user = userEvent.setup();
     const callback = jest.fn();
-    const { container } = render(
+
+    render(
       <>
         <Button onClick={callback}>Regular</Button>
         <UnstyledButton onClick={callback}>Unstyled</UnstyledButton>
         <IconButton icon={notAMoon} onClick={callback} />
       </>
     );
-    const buttons = container.querySelectorAll("button");
-    expect(buttons.length).toBe(3);
 
-    buttons.forEach(fireEvent.click);
-    expect(callback).toHaveBeenCalledTimes(3);
+    const buttons = screen.getAllByRole("button");
+    expect(buttons).toHaveLength(3);
+
+    buttons.forEach(async (button) => {
+      await user.click(button);
+      button.focus();
+      await user.keyboard("{Enter}");
+    });
+
+    expect(callback).toHaveBeenCalledTimes(6);
   });
 });

@@ -1,66 +1,76 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import React from "react";
 
 import Popover from "../../src/components/Popover";
 
-const dispatchMouseDown = (el: Element) =>
-  el.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
+const flushEffects = async () => {
+  await act(async () => {});
+};
+
+const renderPopover = (opts?: {
+  onClose?: jest.Mock;
+  includeOutside?: boolean;
+  content?: React.ReactNode;
+  anchorTestId?: string;
+}) => {
+  const onClose = opts?.onClose ?? jest.fn();
+  const anchorTestId = opts?.anchorTestId ?? "anchor";
+
+  render(
+    <div>
+      {opts?.includeOutside && <button data-testid="outside">Outside</button>}
+      <Popover
+        open
+        onClose={onClose}
+        anchor={<button data-testid={anchorTestId}>Anchor</button>}
+      >
+        {opts?.content ?? <div data-testid="content">Content</div>}
+      </Popover>
+    </div>
+  );
+
+  return { onClose };
+};
 
 describe("Popover", () => {
   it("fires onClose when mousedown is outside anchor and content", async () => {
+    const user = userEvent.setup();
     const onClose = jest.fn();
 
-    render(
-      <div>
-        <button data-testid="outside">Outside</button>
-        <Popover
-          open
-          onClose={onClose}
-          anchor={<button data-testid="anchor">Anchor</button>}
-        >
-          <div data-testid="content">Content</div>
-        </Popover>
-      </div>
-    );
+    renderPopover({ onClose, includeOutside: true });
+    await flushEffects();
 
-    // useClickOutside waits a tick before activating to avoid firing on mount
-    await new Promise((resolve) => window.setTimeout(resolve, 0));
+    await user.pointer([
+      { target: screen.getByTestId("outside"), keys: "[MouseLeft]" },
+    ]);
 
-    dispatchMouseDown(screen.getByTestId("outside"));
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("does not fire onClose when mousedown is inside anchor", () => {
+  it("does not fire onClose when mousedown is inside anchor", async () => {
+    const user = userEvent.setup();
     const onClose = jest.fn();
 
-    render(
-      <Popover
-        open
-        onClose={onClose}
-        anchor={<button data-testid="anchor">Anchor</button>}
-      >
-        <div data-testid="content">Content</div>
-      </Popover>
-    );
+    renderPopover({ onClose });
 
-    dispatchMouseDown(screen.getByTestId("anchor"));
+    await user.pointer([
+      { target: screen.getByTestId("anchor"), keys: "[MouseLeft]" },
+    ]);
+
     expect(onClose).toHaveBeenCalledTimes(0);
   });
 
-  it("does not fire onClose when mousedown is inside content", () => {
+  it("does not fire onClose when mousedown is inside content", async () => {
+    const user = userEvent.setup();
     const onClose = jest.fn();
 
-    render(
-      <Popover
-        open
-        onClose={onClose}
-        anchor={<button data-testid="anchor">Anchor</button>}
-      >
-        <div data-testid="content">Content</div>
-      </Popover>
-    );
+    renderPopover({ onClose });
 
-    dispatchMouseDown(screen.getByTestId("content"));
+    await user.pointer([
+      { target: screen.getByTestId("content"), keys: "[MouseLeft]" },
+    ]);
+
     expect(onClose).toHaveBeenCalledTimes(0);
   });
 
@@ -68,15 +78,7 @@ describe("Popover", () => {
     const user = userEvent.setup();
     const onClose = jest.fn();
 
-    render(
-      <Popover
-        open
-        onClose={onClose}
-        anchor={<button data-testid="anchor">Anchor</button>}
-      >
-        <div data-testid="content">Content</div>
-      </Popover>
-    );
+    renderPopover({ onClose });
 
     await user.keyboard("{Escape}");
     expect(onClose).toHaveBeenCalledTimes(1);

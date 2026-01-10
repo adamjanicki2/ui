@@ -145,12 +145,10 @@ describe("Table", () => {
       />
     );
 
-    // Header order follows columns array
     const headers = screen.getAllByText(/^(Year|Title)$/);
     expect(headers[0]).toHaveTextContent("Year");
     expect(headers[1]).toHaveTextContent("Title");
 
-    // Custom renderers output
     movies.forEach((movie) => {
       expect(screen.getByTestId(`year-${movie.id}`)).toHaveTextContent(
         String(movie.year)
@@ -160,7 +158,6 @@ describe("Table", () => {
       );
     });
 
-    // cellProps class applied to year cells
     const yearCells = screen
       .getAllByTestId(/year-/)
       .map((el) => el.parentElement);
