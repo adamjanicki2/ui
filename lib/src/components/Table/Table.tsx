@@ -11,7 +11,7 @@ import Icon from "../Icon";
 import Popover from "../Popover";
 
 type LinkProps = React.ComponentProps<typeof UnstyledLink>;
-type RouteLinkProps = Pick<LinkProps, "to" | "newTab">;
+type RouteLinkProps = Pick<LinkProps, "newTab" | "to">;
 type ButtonProps = React.ComponentProps<typeof UnstyledButton>;
 type BaseRowAction = {
   /** Content to render in the action node */
@@ -19,8 +19,8 @@ type BaseRowAction = {
 };
 type RowLinkAction = BaseRowAction & RouteLinkProps;
 type RowButtonAction = BaseRowAction &
-  Pick<ButtonProps, "onClick" | "disabled">;
-type RowAction = RowLinkAction | RowButtonAction;
+  Pick<ButtonProps, "disabled" | "onClick">;
+type RowAction = RowButtonAction | RowLinkAction;
 
 type MinimalItem = {
   id: string;
@@ -29,16 +29,18 @@ type MinimalItem = {
 type ContainerProps = Omit<BoxProps, "children">;
 
 /** Options for data sort direction, used by `Table` */
-export type SortDirection = "none" | "asc" | "desc";
+export type SortDirection = "asc" | "desc" | "none";
 
 type ColumnConfig<
   Item extends MinimalItem,
   Key extends keyof Item = keyof Item,
 > = {
-  /** The key in the item struct for this column */
-  key: Key;
+  /** Additional props for the body cell container */
+  cellProps?: ContainerProps;
   /** What to render as the header */
   header: React.ReactNode;
+  /** The key in the item struct for this column */
+  key: Key;
   /** Custom render function for the inner cell content */
   render?: (item: Item) => React.ReactNode;
   /**
@@ -46,20 +48,22 @@ type ColumnConfig<
    * @default false
    */
   sortable?: boolean;
-  /** Additional props for the body cell container */
-  cellProps?: ContainerProps;
 };
 
 type Props<Item extends MinimalItem> = ContainerProps & {
-  /** Items to render in the rows of the table */
-  items: ReadonlyableArray<Item>;
   /** Columns to render for each data item */
   columns: ReadonlyableArray<ColumnConfig<Item>>;
+  /** Whether to render a small separator between columns */
+  gutters?: boolean;
   /**
    * Additional props for each header cell container.
    * @default {}
    */
   headerCellProps?: ContainerProps;
+  /** Items to render in the rows of the table */
+  items: ReadonlyableArray<Item>;
+  /** A single link, or list of actions or links to store in an overflow menu at the end of the row */
+  rowActions?: (item: Item) => RouteLinkProps | ReadonlyableArray<RowAction>;
   /** Options for controlled sorting of rows */
   sort?: {
     /** The key of the sorted column, or undefined if none */
@@ -69,10 +73,6 @@ type Props<Item extends MinimalItem> = ContainerProps & {
     /** Callback to fire when the sort column/direction change */
     onSort: (key: keyof Item, direction: SortDirection) => void;
   };
-  /** A single link, or list of actions or links to store in an overflow menu at the end of the row */
-  rowActions?: (item: Item) => RouteLinkProps | ReadonlyableArray<RowAction>;
-  /** Whether to render a small separator between columns */
-  gutters?: boolean;
 };
 
 const nextSortDirection = {

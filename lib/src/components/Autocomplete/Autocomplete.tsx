@@ -60,17 +60,17 @@ type Props<T> = Omit<IconInputProps, "inputProps" | "onSelect"> & {
    */
   remainOpenOnSelectOrEnter?: boolean;
   /**
-   * Render function for the option.
-   * @param option Current option.
-   * @returns Node to render for the option.
-   */
-  renderOption?: (option: T) => React.ReactNode;
-  /**
    * Render function for the group.
    * @param group Name.
    * @returns Node to render for the group.
    */
   renderGroup?: (group: string) => React.ReactNode;
+  /**
+   * Render function for the option.
+   * @param option Current option.
+   * @returns Node to render for the option.
+   */
+  renderOption?: (option: T) => React.ReactNode;
   /** The value of the input field */
   value: string;
 };

@@ -9,10 +9,8 @@ type FloatingProps = React.ComponentProps<typeof Floating>;
 
 export type TooltipProps = Omit<
   FloatingProps,
-  "onPointerEnter" | "onPointerLeave" | "visible" | "floatingContent" | "anchor"
+  "anchor" | "floatingContent" | "onPointerEnter" | "onPointerLeave" | "visible"
 > & {
-  /** Children to render inside the tooltip container */
-  tooltipContent: Children;
   /**
    * The element to attach the tooltip to.
    * IMPORTANT: This must be able to hold a ref.
@@ -23,9 +21,11 @@ export type TooltipProps = Omit<
    * @default false
    */
   disabled?: boolean;
+  /** Children to render inside the tooltip container */
+  tooltipContent: Children;
 };
 
-type Side = "top" | "bottom" | "left" | "right";
+type Side = "bottom" | "left" | "right" | "top";
 type Point = { x: number; y: number };
 
 // ordered (clockwise or counter clockwise) set of vertices of a trapezoid

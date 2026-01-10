@@ -1,6 +1,11 @@
 /** Location object of the current URL */
 export type Location = {
   /**
+   * URL hash
+   * @example "#home"
+   */
+  hash: string;
+  /**
    * URL pathname
    * @example "/movies/123"
    */
@@ -10,11 +15,6 @@ export type Location = {
    * @example "?q=inception"
    */
   search: string;
-  /**
-   * URL hash
-   * @example "#home"
-   */
-  hash: string;
 };
 
 export type HistoryMode = "push" | "replace";

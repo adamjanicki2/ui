@@ -26,18 +26,24 @@ export const accordionSnippet = `
       content: (
         <Alert type="success">We live in a Twilight World.</Alert>
       ),
+      open: true,
+      onOpenChange: () => {},
     },
     {
       label: "Info",
       content: (
         <Alert type="info">We live in a Twilight World.</Alert>
       ),
+      open: false,
+      onOpenChange: () => {},
     },
     {
       label: "Error",
       content: (
         <Alert type="error">We live in a Twilight World.</Alert>
       ),
+      open: false,
+      onOpenChange: () => {},
     },
   ]}
 />

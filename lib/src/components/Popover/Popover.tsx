@@ -10,7 +10,7 @@ type FloatingProps = React.ComponentProps<typeof Floating>;
 
 export type PopoverProps = Omit<
   FloatingProps,
-  "visible" | "floatingContent"
+  "floatingContent" | "visible"
 > & {
   /** Whether the popover is open */
   open: boolean;
