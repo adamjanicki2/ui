@@ -12,14 +12,17 @@ import Popover from "../Popover";
 
 type LinkProps = React.ComponentProps<typeof UnstyledLink>;
 type RouteLinkProps = Pick<LinkProps, "newTab" | "to">;
-type ButtonProps = React.ComponentProps<typeof UnstyledButton>;
 type BaseRowAction = {
   /** Content to render in the action node */
   label: React.ReactNode;
 };
 type RowLinkAction = BaseRowAction & RouteLinkProps;
-type RowButtonAction = BaseRowAction &
-  Pick<ButtonProps, "disabled" | "onClick">;
+type RowButtonAction = BaseRowAction & {
+  /** Callback to fire on action click */
+  onClick: () => void;
+  /** Whether the action is disabled */
+  disabled?: boolean;
+};
 type RowAction = RowButtonAction | RowLinkAction;
 
 type MinimalItem = {
@@ -265,15 +268,6 @@ const TableCell = ({ vfx, children, className, ...rest }: BoxProps) => (
   </Box>
 );
 
-const rowActionVfx = {
-  axis: "x",
-  align: "center",
-  padding: "s",
-  fontSize: "s",
-  fontWeight: 6,
-  radius: "rounded",
-} as const;
-
 const menuOffset = 4;
 
 const RowActionsMenu = ({
@@ -296,27 +290,38 @@ const RowActionsMenu = ({
       to={{ opacity: 1, top: 0 }}
       from={{ opacity: 0, top: -menuOffset }}
     >
-      {rowActions.map(({ label, ...rowAction }, i) =>
-        "to" in rowAction ? (
+      {rowActions.map(({ label, ...rowAction }, i) => {
+        const sharedProps = {
+          children: label,
+          vfx: {
+            axis: "x",
+            align: "center",
+            padding: "s",
+            fontSize: "s",
+            fontWeight: 6,
+            radius: "rounded",
+          },
+          className: "aui-subtle-hover",
+        } as const;
+
+        return "to" in rowAction ? (
           <UnstyledLink
             {...rowAction}
-            vfx={rowActionVfx}
-            className="aui-subtle-hover"
+            {...sharedProps}
+            onClick={() => setOpen(false)}
             key={i}
-          >
-            {label}
-          </UnstyledLink>
+          />
         ) : (
           <UnstyledButton
-            onClick={rowAction.onClick}
-            vfx={rowActionVfx}
-            className="aui-subtle-hover"
+            onClick={() => {
+              rowAction.onClick();
+              setOpen(false);
+            }}
+            {...sharedProps}
             key={i}
-          >
-            {label}
-          </UnstyledButton>
-        )
-      )}
+          />
+        );
+      })}
     </Popover>
   );
 };
