@@ -79,7 +79,7 @@ describe("Table", () => {
           { key: "title", header: "Title" },
           { key: "year", header: "Year" },
         ]}
-        routeTo={(movie) => ({ to: `/movies/${movie.id}` })}
+        rowActions={(movie) => ({ to: `/movies/${movie.id}` })}
       />
     );
 
