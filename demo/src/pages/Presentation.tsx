@@ -298,24 +298,14 @@ export default function Presentation() {
                   direction,
                 }),
             }}
-            // routeTo={(item) => ({
-            //   to: `https://adamovies.com/review/${item.title
-            //     .toLowerCase()
-            //     .split(/\s+/)
-            //     .join("-")}`,
-            //   newTab: true,
-            // })}
             rowActions={(item) => [
               {
-                label: "Review",
+                label: "Search Adamovies",
                 newTab: true,
-                to: `https://adamovies.com/review/${item.title
-                  .toLowerCase()
-                  .split(/\s+/)
-                  .join("-")}`,
+                to: `https://adamovies.com/search?query=${item.title}`,
               },
               {
-                label: "Do something cool",
+                label: "Click this",
                 onClick: () => window.alert("Action clicked for " + item.title),
               },
             ]}
