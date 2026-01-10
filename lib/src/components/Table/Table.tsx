@@ -109,15 +109,15 @@ const Table = <Item extends MinimalItem>({
     // Table container
     <Box
       {...boxProps}
-    vfx={{
-      axis: "y",
-      backgroundColor: "default",
-      border: true,
-      radius: "rounded",
-      shadow: "subtle",
-      overflowX: "auto",
-      ...vfx,
-    }}
+      vfx={{
+        axis: "y",
+        backgroundColor: "default",
+        border: true,
+        radius: "rounded",
+        shadow: "subtle",
+        overflowX: "auto",
+        ...vfx,
+      }}
     >
       {/* Inner container (scrollable within parent) */}
       <Box className="aui-table" role="table" vfx={{ width: "full" }}>
@@ -274,6 +274,8 @@ const rowActionVfx = {
   radius: "rounded",
 } as const;
 
+const menuOffset = 4;
+
 const RowActionsMenu = ({
   rowActions,
 }: {
@@ -286,13 +288,13 @@ const RowActionsMenu = ({
       open={open}
       onClose={() => setOpen(false)}
       placement="bottom-end"
-      offset={4}
+      offset={menuOffset}
       vfx={{ axis: "y", padding: "xs" }}
       anchor={
-        <IconButton icon={overflow} onClick={() => setOpen((prev) => !prev)} />
+        <IconButton icon={overflow} onClick={() => setOpen((open) => !open)} />
       }
       to={{ opacity: 1, top: 0 }}
-      from={{ opacity: 0, top: -4 }}
+      from={{ opacity: 0, top: -menuOffset }}
     >
       {rowActions.map(({ label, ...rowAction }, i) =>
         "to" in rowAction ? (
