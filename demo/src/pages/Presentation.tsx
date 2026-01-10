@@ -298,13 +298,17 @@ export default function Presentation() {
                   direction,
                 }),
             }}
-            routeTo={(item) => ({
-              to: `https://adamovies.com/review/${item.title
-                .toLowerCase()
-                .split(/\s+/)
-                .join("-")}`,
-              newTab: true,
-            })}
+            rowActions={(item) => [
+              {
+                label: "Search Adamovies",
+                newTab: true,
+                to: `https://adamovies.com/search?query=${item.title}`,
+              },
+              {
+                label: "Click this",
+                onClick: () => window.alert("Action clicked for " + item.title),
+              },
+            ]}
           />
         </Box>
       </ShowcaseBlock>

@@ -6,6 +6,9 @@ import unusedImports from "eslint-plugin-unused-imports";
 import eslint from "typescript-eslint";
 
 export default [
+  {
+    ignores: ["demo/build"],
+  },
   ...eslint.configs.recommended,
   {
     files: ["**/*.{ts,tsx}"],

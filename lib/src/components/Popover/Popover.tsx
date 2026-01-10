@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 import useMergeRefs from "../../hooks/useMergeRefs";
 import type { Children } from "../../types/common";
+import { DEFAULT_ANIMATION_DURATION_S } from "../Animated/Animated";
 import useClickOutside from "../ClickOutside/useClickOutside";
 import Floating from "../Floating";
 
@@ -81,7 +82,7 @@ const Popover = ({
       duration={
         duration ?? {
           forward: 0,
-          reverse: 0.25,
+          reverse: DEFAULT_ANIMATION_DURATION_S,
         }
       }
     />

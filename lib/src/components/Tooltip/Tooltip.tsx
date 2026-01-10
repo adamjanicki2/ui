@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import useMergeRefs from "../../hooks/useMergeRefs";
 import type { Children } from "../../types/common";
+import { DEFAULT_ANIMATION_DURATION_S } from "../Animated/Animated";
 import Floating from "../Floating/Floating";
 
 type FloatingProps = React.ComponentProps<typeof Floating>;
@@ -107,6 +108,7 @@ const Tooltip = ({
   vfx,
   from,
   to,
+  flip = true,
   ...floatingProps
 }: TooltipProps) => {
   const [open, setOpen] = useState(false);
@@ -197,11 +199,12 @@ const Tooltip = ({
   return (
     <Floating
       {...floatingProps}
+      flip={flip}
       ref={floatingRef}
       role="tooltip"
       anchor={anchor}
       visible={open}
-      duration={0.25}
+      duration={DEFAULT_ANIMATION_DURATION_S}
       from={from ?? { opacity: 0 }}
       to={to ?? { opacity: 1 }}
       onPointerEnter={(e: React.PointerEvent) => {

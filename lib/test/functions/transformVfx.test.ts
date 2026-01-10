@@ -117,12 +117,12 @@ describe("transformVfx", () => {
         justify: "end",
         wrap: true,
         overflow: "hidden",
-        overflowX: "scroll",
+        overflowX: "auto",
         overflowY: "hidden",
         z: "max",
       })
     ).toBe(
-      "aui-pos-fixed aui-flex-x aui-gap-m aui-align-center aui-justify-end aui-flex-wrap aui-ov-hidden aui-ov-x-scroll aui-ov-y-hidden aui-z-max"
+      "aui-pos-fixed aui-flex-x aui-gap-m aui-align-center aui-justify-end aui-flex-wrap aui-ov-hidden aui-ov-x-auto aui-ov-y-hidden aui-z-max"
     );
   });
 

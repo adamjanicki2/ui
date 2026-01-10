@@ -34,11 +34,13 @@ type Props = BoxProps & {
 
 type Phase = "init" | "forward" | "reverse";
 
+export const DEFAULT_ANIMATION_DURATION_S = 0.25;
+
 /** Wrapper for animating enter/exit states */
 const Animated = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     visible,
-    duration = 0.25,
+    duration = DEFAULT_ANIMATION_DURATION_S,
     keepMounted = false,
     to,
     from,

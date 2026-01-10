@@ -72,7 +72,7 @@ export default function Snippet({ className, children, lang = "tsx" }: Props) {
       <ui.pre
         vfx={{ axis: "x", width: "full", margin: "none", padding: "s" }}
         style={{
-          overflow: "scroll",
+          overflow: "auto",
           maxHeight: "70vh",
         }}
       >

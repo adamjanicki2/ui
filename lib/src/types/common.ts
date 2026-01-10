@@ -21,7 +21,7 @@ export type SizeToken = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
 type SpacingSize = SizeToken | "none";
 type AutoSize = SpacingSize | "auto";
 type Color = "default" | "muted" | "inherit" | "transparent";
-type Overflow = "hidden" | "scroll";
+type Overflow = "auto" | "hidden";
 
 /**
  * Custom styling props that map to class names.

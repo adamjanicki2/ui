@@ -196,19 +196,19 @@ export default function Overlay() {
           >
             <UnstyledButton
               vfx={{ padding: "m", radius: "rounded" }}
-              className="aui-autocomplete-option"
+              className="aui-subtle-hover"
             >
               Menu Item 1
             </UnstyledButton>
             <UnstyledButton
               vfx={{ padding: "m", radius: "rounded" }}
-              className="aui-autocomplete-option"
+              className="aui-subtle-hover"
             >
               Menu Item 2
             </UnstyledButton>
             <UnstyledButton
               vfx={{ padding: "m", radius: "rounded" }}
-              className="aui-autocomplete-option"
+              className="aui-subtle-hover"
             >
               Menu Item 3
             </UnstyledButton>

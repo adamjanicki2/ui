@@ -1,16 +1,26 @@
-import type * as React from "react";
+import React, { useState } from "react";
 
 import classNames from "../../functions/classNames";
-import { arrowDown, arrowUp, select } from "../../icons";
+import { arrowDown, arrowUp, overflow, select } from "../../icons";
 import { UnstyledLink } from "../../navigation/Link";
 import type { ReadonlyableArray } from "../../types/common";
 import type { BoxProps } from "../Box/Box";
 import Box from "../Box/Box";
-import { UnstyledButton } from "../Button";
+import { IconButton, UnstyledButton } from "../Button";
 import Icon from "../Icon";
+import Popover from "../Popover";
 
 type LinkProps = React.ComponentProps<typeof UnstyledLink>;
 type RouteLinkProps = Pick<LinkProps, "to" | "newTab">;
+type ButtonProps = React.ComponentProps<typeof UnstyledButton>;
+type BaseRowAction = {
+  /** Content to render in the action node */
+  label: React.ReactNode;
+};
+type RowLinkAction = BaseRowAction & RouteLinkProps;
+type RowButtonAction = BaseRowAction &
+  Pick<ButtonProps, "onClick" | "disabled">;
+type RowAction = RowLinkAction | RowButtonAction;
 
 type MinimalItem = {
   id: string;
@@ -59,8 +69,8 @@ type Props<Item extends MinimalItem> = ContainerProps & {
     /** Callback to fire when the sort column/direction change */
     onSort: (key: keyof Item, direction: SortDirection) => void;
   };
-  /** A row can either be a link to somewhere */
-  routeTo?: (item: Item) => RouteLinkProps;
+  /** A single link, or list of actions or links to store in an overflow menu at the end of the row */
+  rowActions?: (item: Item) => RouteLinkProps | ReadonlyableArray<RowAction>;
   /** Whether to render a small separator between columns */
   gutters?: boolean;
 };
@@ -77,96 +87,115 @@ const directionToIcon = {
   none: select,
 } as const;
 
+const isRowActionList = (
+  value: RouteLinkProps | ReadonlyableArray<RowAction> | undefined
+): value is ReadonlyableArray<RowAction> => Array.isArray(value);
+
 /** A sortable table to render data */
 const Table = <Item extends MinimalItem>({
   items,
   columns,
   headerCellProps = {},
   sort,
-  routeTo,
+  rowActions,
   vfx,
   gutters,
   ...boxProps
-}: Props<Item>) => (
-  // Table container
-  <Box
-    {...boxProps}
-    vfx={{
-      axis: "y",
-      backgroundColor: "default",
-      border: true,
-      radius: "rounded",
-      shadow: "subtle",
-      overflowX: "scroll",
-      ...vfx,
-    }}
-  >
-    {/* Inner container (scrollable within parent) */}
-    <Box className="aui-table" role="table" vfx={{ width: "full" }}>
-      {/* Header row */}
-      <Box className="aui-table-row" role="row">
-        {columns.map(({ key, header, sortable = false }, colIndex) => {
-          const columnSorted = sortable && sort && sort.key === key;
-          const direction = columnSorted ? sort.direction : "none";
-          const icon = sortable ? directionToIcon[direction] : null;
-          const { vfx, ...restHeaderCellProps } = headerCellProps;
+}: Props<Item>) => {
+  const hasActionMenu =
+    !!rowActions && items.some((item) => isRowActionList(rowActions(item)));
 
-          return (
+  return (
+    // Table container
+    <Box
+      {...boxProps}
+      vfx={{
+        axis: "y",
+        backgroundColor: "default",
+        border: true,
+        radius: "rounded",
+        shadow: "subtle",
+        overflowX: "auto",
+        ...vfx,
+      }}
+    >
+      {/* Inner container (scrollable within parent) */}
+      <Box className="aui-table" role="table" vfx={{ width: "full" }}>
+        {/* Header row */}
+        <Box className="aui-table-row" role="row">
+          {columns.map(({ key, header, sortable = false }, colIndex) => {
+            const columnSorted = sortable && sort && sort.key === key;
+            const direction = columnSorted ? sort.direction : "none";
+            const icon = sortable ? directionToIcon[direction] : null;
+            const { vfx, ...restHeaderCellProps } = headerCellProps;
+
+            return (
+              <TableCell
+                {...restHeaderCellProps}
+                key={String(key)}
+                vfx={{
+                  borderRight: gutters && colIndex < columns.length - 1,
+                  borderBottom: true,
+                  fontSize: "s",
+                  fontWeight: 7,
+                  ...vfx,
+                }}
+              >
+                {sort && icon ? (
+                  <UnstyledButton
+                    onClick={() =>
+                      sort.onSort(key, nextSortDirection[direction])
+                    }
+                    vfx={{
+                      fontWeight: 7,
+                      axis: "x",
+                      align: "center",
+                      gap: "s",
+                    }}
+                  >
+                    {header}
+                    {
+                      <Icon
+                        icon={icon}
+                        vfx={{ color: "muted" }}
+                        size="xs"
+                        aria-hidden
+                      />
+                    }
+                  </UnstyledButton>
+                ) : (
+                  header
+                )}
+              </TableCell>
+            );
+          })}
+          {hasActionMenu ? (
             <TableCell
-              {...restHeaderCellProps}
-              key={String(key)}
               vfx={{
-                borderRight: gutters && colIndex < columns.length - 1,
                 borderBottom: true,
-                fontSize: "s",
-                fontWeight: 7,
-                ...vfx,
+                paddingX: "s",
               }}
-            >
-              {sort && icon ? (
-                <UnstyledButton
-                  onClick={() => sort.onSort(key, nextSortDirection[direction])}
-                  vfx={{
-                    fontWeight: 7,
-                    axis: "x",
-                    align: "center",
-                    gap: "s",
-                  }}
-                >
-                  {header}
-                  {
-                    <Icon
-                      icon={icon}
-                      vfx={{ color: "muted" }}
-                      size="xs"
-                      aria-hidden
-                    />
-                  }
-                </UnstyledButton>
-              ) : (
-                header
-              )}
-            </TableCell>
-          );
-        })}
+            />
+          ) : null}
+        </Box>
+        {/* Rows */}
+        {items.map((item) => (
+          <TableBodyRow
+            key={item.id}
+            item={item}
+            columns={columns}
+            gutters={gutters}
+            rowActions={rowActions}
+          />
+        ))}
       </Box>
-      {/* Rows */}
-      {items.map((item) => (
-        <TableBodyRow
-          key={item.id}
-          item={item}
-          columns={columns}
-          routeTo={routeTo}
-          gutters={gutters}
-        />
-      ))}
     </Box>
-  </Box>
-);
+  );
+};
 
 type TableBodyRowProps<Item extends MinimalItem> = Pick<
   Props<Item>,
-  "columns" | "gutters" | "routeTo"
+  "columns" | "gutters" | "rowActions"
 > & {
   item: Item;
 };
@@ -174,9 +203,16 @@ type TableBodyRowProps<Item extends MinimalItem> = Pick<
 const TableBodyRow = <Item extends MinimalItem>({
   item,
   columns,
-  routeTo,
   gutters,
+  rowActions,
 }: TableBodyRowProps<Item>) => {
+  const rowActionValue = rowActions?.(item);
+  const actions = isRowActionList(rowActionValue) ? rowActionValue : null;
+  const rowLink =
+    rowActionValue && !isRowActionList(rowActionValue)
+      ? rowActionValue
+      : undefined;
+
   const children = columns.map(({ key, cellProps = {}, render }, colIndex) => {
     const { vfx, ...rest } = cellProps;
     return (
@@ -193,20 +229,28 @@ const TableBodyRow = <Item extends MinimalItem>({
     );
   });
 
+  if (actions) {
+    children.push(
+      <TableCell key="row-actions" vfx={{ paddingX: "s" }}>
+        <RowActionsMenu rowActions={actions} />
+      </TableCell>
+    );
+  }
+
   const rowProps = {
     role: "row",
     children,
   } as const;
 
-  if (!routeTo) {
+  if (!rowLink) {
     return <Box {...rowProps} className="aui-table-row" />;
   }
 
   return (
     <UnstyledLink
       {...rowProps}
-      {...routeTo(item)}
-      className="aui-table-row-link"
+      {...rowLink}
+      className="aui-table-row aui-subtle-hover"
     />
   );
 };
@@ -220,5 +264,61 @@ const TableCell = ({ vfx, children, className, ...rest }: BoxProps) => (
     {children}
   </Box>
 );
+
+const rowActionVfx = {
+  axis: "x",
+  align: "center",
+  padding: "s",
+  fontSize: "s",
+  fontWeight: 6,
+  radius: "rounded",
+} as const;
+
+const menuOffset = 4;
+
+const RowActionsMenu = ({
+  rowActions,
+}: {
+  rowActions: ReadonlyableArray<RowAction>;
+}) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <Popover
+      flip={false}
+      open={open}
+      onClose={() => setOpen(false)}
+      placement="bottom-end"
+      offset={menuOffset}
+      vfx={{ axis: "y", padding: "xs" }}
+      anchor={
+        <IconButton icon={overflow} onClick={() => setOpen((open) => !open)} />
+      }
+      to={{ opacity: 1, top: 0 }}
+      from={{ opacity: 0, top: -menuOffset }}
+    >
+      {rowActions.map(({ label, ...rowAction }, i) =>
+        "to" in rowAction ? (
+          <UnstyledLink
+            {...rowAction}
+            vfx={rowActionVfx}
+            className="aui-subtle-hover"
+            key={i}
+          >
+            {label}
+          </UnstyledLink>
+        ) : (
+          <UnstyledButton
+            onClick={rowAction.onClick}
+            vfx={rowActionVfx}
+            className="aui-subtle-hover"
+            key={i}
+          >
+            {label}
+          </UnstyledButton>
+        )
+      )}
+    </Popover>
+  );
+};
 
 export default Table;

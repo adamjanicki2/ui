@@ -6,7 +6,6 @@
   "type": "module",
   "dependencies": {
     "@adamjanicki/ui": "*",
-    "@adamjanicki/ui-extended": "^1.2.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^9.0.1",
@@ -17,7 +16,7 @@
   "scripts": {
     "start": "vite",
     "build": "eslint src --max-warnings=0 && vite build && cp build/index.html build/404.html",
-    "fix": "eslint src --fix && prettier --write \"src/**/*.{ts,tsx,json,css,scss,md}\"",
+    "lint": "eslint src --fix && prettier --write \"src/**/*.{ts,tsx,json,css,scss,md}\"",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },

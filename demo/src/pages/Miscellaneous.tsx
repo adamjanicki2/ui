@@ -8,6 +8,7 @@ import {
   Icon,
   Link,
   Spinner,
+  Tooltip,
   ui,
 } from "@adamjanicki/ui";
 import {
@@ -20,7 +21,6 @@ import {
   TripleSpin,
 } from "@adamjanicki/ui/components/Hamburger";
 import * as icons from "@adamjanicki/ui/icons";
-import { Tooltip } from "@adamjanicki/ui-extended";
 import { useState } from "react";
 import {
   avatarSnippet,

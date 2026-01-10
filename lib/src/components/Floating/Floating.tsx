@@ -18,17 +18,7 @@ type Placement =
   | "right-start"
   | "right-end";
 
-type SafeStyle = Omit<
-  Style,
-  | "top"
-  | "left"
-  | "right"
-  | "bottom"
-  | "position"
-  | "transform"
-  | "translate"
-  | "all"
->;
+type SafeStyle = Omit<Style, "position" | "transform" | "all" | "visibility">;
 
 type AnimatedProps = React.ComponentProps<typeof Animated>;
 
@@ -55,16 +45,13 @@ type Props = Omit<
    * @default 0
    */
   offset?: number;
-  /**
-   * Whether to flip to the opposite placement when overflowing viewport.
-   * @default true
-   */
+  /** Whether to automatically flip to the opposite placement when it would overflow */
   flip?: boolean;
-  /** Style that can be safely applied to the floating element without distrupting positioning */
+  /** Style that can be safely applied to the floating element without disrupting positioning */
   style?: SafeStyle;
-  /** Animation CSS for the start state (styles cannot override positioning) */
+  /** Animation CSS for the start state */
   from?: SafeStyle;
-  /** Animation CSS for the end state (styles cannot override positioning) */
+  /** Animation CSS for the end state */
   to?: SafeStyle;
 };
 
@@ -97,7 +84,7 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     visible,
     placement = "bottom",
     offset = 0,
-    flip = true,
+    flip,
     style,
     vfx,
     duration = 0,
@@ -120,45 +107,40 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const floatingEl = floatingRef.current;
     if (!anchorEl || !floatingEl) return;
 
-    const parent = anchorEl.offsetParent ?? anchorEl.parentElement;
-    if (!parent) return;
+    const container =
+      (floatingEl.offsetParent as HTMLElement) || document.documentElement;
 
-    const parentRect = parent.getBoundingClientRect();
-    const anchorRect = anchorEl.getBoundingClientRect();
     const floatingRect = floatingEl.getBoundingClientRect();
+    const anchorRect = anchorEl.getBoundingClientRect();
+    const containerInfo = getContainerInfo(container);
+    const anchorLocalRect = getRelativeRect(anchorRect, containerInfo);
+    const floatingLocalRect = getRelativeRect(floatingRect, containerInfo);
 
-    const positionerArgs = {
-      // relative to parent
-      anchor: {
-        top: anchorRect.top - parentRect.top,
-        left: anchorRect.left - parentRect.left,
-        right: anchorRect.right - parentRect.left,
-        bottom: anchorRect.bottom - parentRect.top,
-        width: anchorRect.width,
-        height: anchorRect.height,
-      },
-      floating: floatingRect,
+    const args = {
+      // anchor rect in coordinates relative to closest non-static container, which is what absolute positioning uses
+      anchor: anchorLocalRect,
+      floating: floatingLocalRect,
       offset,
     } as const;
 
-    let nextPlacement = placement;
-    let nextPosition = positioners[nextPlacement](positionerArgs);
+    let nextPosition = positioners[placement](args);
 
-    const overflowsViewport = overflowChecks[nextPlacement](
-      toViewportPosition(nextPosition, parentRect),
-      floatingRect
-    );
-
-    if (flip && overflowsViewport) {
-      const oppositePlacement = opposites[nextPlacement];
-      const oppositePosition = positioners[oppositePlacement](positionerArgs);
+    // determine if we need to flip to opposite side if the floating element overflows viewport
+    if (
+      flip &&
+      overflowChecks[placement](
+        convertToViewport(nextPosition, containerInfo),
+        floatingRect
+      )
+    ) {
+      const oppositePlacement = opposites[placement];
+      const oppositePosition = positioners[oppositePlacement](args);
       if (
         !overflowChecks[oppositePlacement](
-          toViewportPosition(oppositePosition, parentRect),
+          convertToViewport(oppositePosition, containerInfo),
           floatingRect
         )
       ) {
-        nextPlacement = oppositePlacement;
         nextPosition = oppositePosition;
       }
     }
@@ -175,8 +157,8 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 
     updatePosition();
 
+    if (flip) document.addEventListener("scroll", updatePosition, true);
     window.addEventListener("resize", updatePosition);
-    document.addEventListener("scroll", updatePosition, true);
 
     const anchorEl = anchorRef.current;
     const floatingEl = floatingRef.current;
@@ -189,11 +171,11 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     }
 
     return () => {
+      if (flip) document.removeEventListener("scroll", updatePosition, true);
       window.removeEventListener("resize", updatePosition);
-      document.removeEventListener("scroll", updatePosition, true);
       resizeObserver?.disconnect();
     };
-  }, [updatePosition, visible]);
+  }, [updatePosition, visible, flip]);
 
   const { top = 0, left = 0 } = position ?? {};
 
@@ -231,7 +213,6 @@ const centerX: Aligner = (anchor, floating) =>
   anchor.left + anchor.width / 2 - floating.width / 2;
 const startX: Aligner = (anchor) => anchor.left;
 const endX: Aligner = (anchor, floating) => anchor.right - floating.width;
-
 const centerY: Aligner = (anchor, floating) =>
   anchor.top + anchor.height / 2 - floating.height / 2;
 const startY: Aligner = (anchor) => anchor.top;
@@ -304,9 +285,63 @@ const overflowChecks: Record<Placement, OverflowCheck> = {
   "right-end": overflowsRight,
 };
 
-const toViewportPosition = (position: Position, parent: DOMRect) => ({
-  top: position.top + parent.top,
-  left: position.left + parent.left,
-});
+type Scale = { x: number; y: number };
+type ContainerInfo = {
+  pos: Position;
+  scroll: Position;
+  scale: Scale;
+};
+
+function getContainerInfo(container: HTMLElement): ContainerInfo {
+  if (container === document.documentElement) {
+    return {
+      pos: { top: 0, left: 0 },
+      scroll: { top: window.scrollY, left: window.scrollX },
+      scale: { x: 1, y: 1 },
+    };
+  }
+
+  const rect = container.getBoundingClientRect();
+  const { width, height } = rect;
+  const { clientWidth, clientHeight } = container;
+
+  return {
+    pos: { top: rect.top, left: rect.left },
+    scroll: { top: container.scrollTop, left: container.scrollLeft },
+    scale: {
+      x: width && clientWidth ? width / clientWidth : 1,
+      y: height && clientHeight ? height / clientHeight : 1,
+    },
+  };
+}
+
+function getRelativeRect(rect: Rect, container: ContainerInfo): Rect {
+  const width = rect.width / container.scale.x;
+  const height = rect.height / container.scale.y;
+  const left =
+    (rect.left - container.pos.left) / container.scale.x +
+    container.scroll.left;
+  const top =
+    (rect.top - container.pos.top) / container.scale.y + container.scroll.top;
+
+  return {
+    top,
+    left,
+    bottom: top + height,
+    right: left + width,
+    width,
+    height,
+  };
+}
+
+function convertToViewport(pos: Position, container: ContainerInfo): Position {
+  return {
+    top:
+      (pos.top - container.scroll.top) * container.scale.y + container.pos.top,
+    left:
+      (container.pos.left - container.scroll.left) * container.scale.y +
+      container.pos.left,
+  };
+}
 
 export default Floating;
