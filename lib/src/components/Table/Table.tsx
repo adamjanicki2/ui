@@ -243,7 +243,7 @@ const TableBodyRow = <Item extends MinimalItem>({
     <UnstyledLink
       {...rowProps}
       {...routeTo(item)}
-      className="aui-table-row-link"
+      className="aui-table-row aui-subtle-hover"
     />
   );
 };
@@ -287,12 +287,13 @@ const RowActionsMenu = ({
       to={{ opacity: 1, top: 0 }}
       from={{ opacity: 0, top: -4 }}
     >
-      {rowActions.map(({ label, ...rowAction }) =>
+      {rowActions.map(({ label, ...rowAction }, i) =>
         "to" in rowAction ? (
           <UnstyledLink
             {...rowAction}
             vfx={rowActionVfx}
             className="aui-subtle-hover"
+            key={i}
           >
             {label}
           </UnstyledLink>
@@ -301,6 +302,7 @@ const RowActionsMenu = ({
             onClick={rowAction.onClick}
             vfx={rowActionVfx}
             className="aui-subtle-hover"
+            key={i}
           >
             {label}
           </UnstyledButton>

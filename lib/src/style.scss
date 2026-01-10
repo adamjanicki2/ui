@@ -226,12 +226,10 @@ textarea {
   border-spacing: 0;
 }
 
-.aui-table-row,
-.aui-table-row-link {
+.aui-table-row {
   display: table-row;
 }
 
-.aui-table-row-link,
 .aui-subtle-hover {
   background-color: transparent;
   transition: background-color var(--aui-default-transition);
@@ -258,7 +256,6 @@ textarea {
     opacity: 1;
   }
 
-  .aui-table-row-link:not([disabled]):hover,
   .aui-subtle-hover:not([disabled]):hover,
   .aui-autocomplete-on-option {
     background-color: var(--aui-static-background);
