@@ -156,11 +156,9 @@ describe("useSearchParams", () => {
       </Router>
     );
 
-    // Push a new entry
     await user.click(screen.getByTestId("set-array"));
     expect(window.location.search).toBe("?tag=a&tag=b&page=2");
 
-    // Back should restore prior URL + UI
     window.history.back();
 
     await waitFor(() => {
@@ -169,7 +167,6 @@ describe("useSearchParams", () => {
       expect(screen.getByTestId("page")).toHaveTextContent("1");
     });
 
-    // Forward should restore the next URL + UI
     window.history.forward();
 
     await waitFor(() => {

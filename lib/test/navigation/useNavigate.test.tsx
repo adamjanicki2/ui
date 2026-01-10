@@ -49,7 +49,7 @@ describe("useNavigate", () => {
     window.history.replaceState(null, "", "/");
   });
 
-  it("works wiith an absolute URL and updates location", async () => {
+  it("works with an absolute URL and updates location", async () => {
     const user = userEvent.setup();
 
     render(

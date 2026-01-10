@@ -1,16 +1,12 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import useClickOutside from "../../src/components/ClickOutside/useClickOutside";
 
-const dispatchMouseDown = (el: Element) =>
-  el.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
-
-const waitForHookToStart = async () =>
-  new Promise((resolve) => window.setTimeout(resolve, 0));
-
 describe("useClickOutside", () => {
   it("fires callback on mousedown outside targets", async () => {
+    const user = userEvent.setup();
     const callback = jest.fn();
 
     const Wrapper = () => {
@@ -28,13 +24,13 @@ describe("useClickOutside", () => {
     };
 
     render(<Wrapper />);
-    await waitForHookToStart();
 
-    dispatchMouseDown(screen.getByTestId("outside"));
+    await user.click(screen.getByTestId("outside"));
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
   it("does not fire callback on mousedown inside a target", async () => {
+    const user = userEvent.setup();
     const callback = jest.fn();
 
     const Wrapper = () => {
@@ -51,13 +47,13 @@ describe("useClickOutside", () => {
     };
 
     render(<Wrapper />);
-    await waitForHookToStart();
 
-    dispatchMouseDown(screen.getByTestId("target"));
+    await user.click(screen.getByTestId("target"));
     expect(callback).toHaveBeenCalledTimes(0);
   });
 
   it("treats any target as inside", async () => {
+    const user = userEvent.setup();
     const callback = jest.fn();
 
     const Wrapper = () => {
@@ -77,14 +73,15 @@ describe("useClickOutside", () => {
     };
 
     render(<Wrapper />);
-    await waitForHookToStart();
 
-    dispatchMouseDown(screen.getByTestId("b"));
-    dispatchMouseDown(screen.getByTestId("outside"));
+    await user.click(screen.getByTestId("b"));
+    await user.click(screen.getByTestId("outside"));
+
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
   it("does not fire when disabled", async () => {
+    const user = userEvent.setup();
     const callback = jest.fn();
 
     const Wrapper = () => {
@@ -103,9 +100,8 @@ describe("useClickOutside", () => {
     };
 
     render(<Wrapper />);
-    await waitForHookToStart();
 
-    dispatchMouseDown(screen.getByTestId("outside"));
+    await user.click(screen.getByTestId("outside"));
     expect(callback).toHaveBeenCalledTimes(0);
   });
 });

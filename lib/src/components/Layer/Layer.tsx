@@ -71,7 +71,7 @@ const Layer = React.forwardRef<HTMLDivElement, Props>(
         className={classNames("aui-layer-backdrop", className)}
         onMouseDown={(e) => {
           onMouseDown?.(e);
-          onClose?.();
+          if (e.target === e.currentTarget) onClose?.();
         }}
         ref={ref}
       >
