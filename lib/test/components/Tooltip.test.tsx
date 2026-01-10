@@ -17,8 +17,8 @@ describe("Tooltip", () => {
 
   it("opens on mouse hover and closes after leaving", async () => {
     render(
-      <Tooltip tooltipContent="Hello tooltip" duration={0}>
-        <button type="button">Anchor</button>
+      <Tooltip anchor={<button type="button">Anchor</button>} duration={0}>
+        Hello
       </Tooltip>
     );
 
@@ -27,7 +27,7 @@ describe("Tooltip", () => {
     fireEvent.pointerEnter(anchor, { pointerType: "mouse" });
 
     expect(screen.getByRole("tooltip")).toBeInTheDocument();
-    expect(screen.getByText("Hello tooltip")).toBeInTheDocument();
+    expect(screen.getByText("Hello")).toBeInTheDocument();
 
     fireEvent.pointerLeave(anchor, { pointerType: "mouse" });
 

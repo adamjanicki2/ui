@@ -140,20 +140,18 @@ export default function Miscellaneous() {
         >
           {Object.entries(icons).map(([iconName, icon], i) => (
             <Tooltip
+              anchor={<Icon icon={icon} size="l" vfx={{ color: "muted" }} />}
               offset={4}
-              tooltipContent={
-                <Box
-                  vfx={{
-                    fontSize: "xs",
-                    fontWeight: 6,
-                  }}
-                >
-                  {i + 1}: {iconName}
-                </Box>
-              }
-              key={i}
+              key={iconName}
             >
-              <Icon icon={icon} size="l" vfx={{ color: "muted" }} />
+              <Box
+                vfx={{
+                  fontSize: "xs",
+                  fontWeight: 6,
+                }}
+              >
+                {i + 1}: {iconName}
+              </Box>
             </Tooltip>
           ))}
         </Box>

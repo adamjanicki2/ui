@@ -9,20 +9,15 @@ type FloatingProps = React.ComponentProps<typeof Floating>;
 
 export type TooltipProps = Omit<
   FloatingProps,
-  "anchor" | "floating" | "onPointerEnter" | "onPointerLeave" | "visible"
+  "floating" | "onPointerEnter" | "onPointerLeave" | "visible"
 > & {
-  /**
-   * The element to attach the tooltip to.
-   * IMPORTANT: This must be able to hold a ref.
-   */
-  children: React.ReactElement<any>;
+  /** Children to render inside the tooltip container */
+  children: Children;
   /**
    * Whether the tooltip is disabled. If true, will not show the tooltip.
    * @default false
    */
   disabled?: boolean;
-  /** Children to render inside the tooltip container */
-  tooltipContent: Children;
 };
 
 type Side = "bottom" | "left" | "right" | "top";
@@ -102,7 +97,7 @@ const makeZoid = (
 ): Zoid => zoids[side](fromRect, toRect, padding);
 
 const Tooltip = ({
-  tooltipContent,
+  anchor,
   children,
   disabled = false,
   vfx,
@@ -176,25 +171,10 @@ const Tooltip = ({
 
   const mergedAnchorRef = useMergeRefs<HTMLElement>(
     anchorRef,
-    children.props.ref
+    anchor.props.ref
   );
 
   if (disabled) return children;
-
-  const anchor = React.cloneElement(children, {
-    onPointerEnter: (e: React.PointerEvent) => {
-      children.props?.onPointerEnter?.(e);
-      if (e.pointerType === "mouse") {
-        stopTracking();
-        setOpen(true);
-      }
-    },
-    onPointerLeave: (e: React.PointerEvent) => {
-      children.props?.onPointerLeave?.(e);
-      if (e.pointerType === "mouse") startTracking();
-    },
-    ref: mergedAnchorRef,
-  });
 
   return (
     <Floating
@@ -202,7 +182,20 @@ const Tooltip = ({
       flip={flip}
       ref={floatingRef}
       role="tooltip"
-      anchor={anchor}
+      anchor={React.cloneElement(anchor, {
+        onPointerEnter: (e: React.PointerEvent) => {
+          anchor.props?.onPointerEnter?.(e);
+          if (e.pointerType === "mouse") {
+            stopTracking();
+            setOpen(true);
+          }
+        },
+        onPointerLeave: (e: React.PointerEvent) => {
+          anchor.props?.onPointerLeave?.(e);
+          if (e.pointerType === "mouse") startTracking();
+        },
+        ref: mergedAnchorRef,
+      })}
       visible={open}
       duration={DEFAULT_ANIMATION_DURATION_S}
       from={from ?? { opacity: 0 }}
@@ -225,7 +218,7 @@ const Tooltip = ({
         z: "floating",
         ...vfx,
       }}
-      floating={tooltipContent}
+      floating={children}
     />
   );
 };

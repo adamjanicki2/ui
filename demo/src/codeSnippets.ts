@@ -232,9 +232,15 @@ export const popoversSnippet = `
 `;
 
 export const tooltipSnippet = `
-<Tooltip tooltipContent="I'm a tooltip!" offset={2} placement="left">
-  <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
-    <Icon icon={arrowLeft} /> Left
-  </Box>
+<Tooltip
+  anchor={
+    <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
+      <Icon icon={arrowUp} /> Top
+    </Box>
+  }
+  offset={2}
+  placement="top"
+>
+  I'm a tooltip!
 </Tooltip>
 `;
