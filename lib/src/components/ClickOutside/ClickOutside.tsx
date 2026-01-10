@@ -3,7 +3,7 @@ import React, { cloneElement, useRef } from "react";
 import useMergeRefs from "../../hooks/useMergeRefs";
 import useClickOutside, { type Config } from "./useClickOutside";
 
-type Props = Pick<Config, "onClickOutside" | "eventType"> & {
+type Props = Pick<Config, "eventType" | "onClickOutside"> & {
   /**
    * The children to render.
    * IMPORTANT: The child must be a single element which can hold a ref.

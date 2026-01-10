@@ -5,16 +5,16 @@ import type { ReadonlyableArray } from "../../types/common";
 type FallbackProps = { error: Error; reset: () => void };
 
 type Props = {
-  /** Component to render when an error is caught */
-  Fallback: React.ComponentType<FallbackProps>;
   /** Children wrapped by the error boundary */
   children: React.ReactNode;
+  /** Dependencies to trigger a reset on change */
+  deps?: ReadonlyableArray<unknown>;
+  /** Component to render when an error is caught */
+  Fallback: React.ComponentType<FallbackProps>;
   /** Called when an error is caught */
   onError?: (error: Error, info: React.ErrorInfo) => void;
   /** Called when the error state is reset */
   onReset?: () => void;
-  /** Dependencies to trigger a reset on change */
-  deps?: ReadonlyableArray<unknown>;
 };
 
 type State = {

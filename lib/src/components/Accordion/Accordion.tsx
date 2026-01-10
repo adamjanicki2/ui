@@ -48,19 +48,19 @@ const Accordion = React.forwardRef<HTMLDivElement, Props>(
 );
 
 type Drawer = {
-  /** Label for the accordion drawer */
-  label: string;
   /** Content hidden within this accordion drawer */
   content: React.ReactNode;
-  /** Whether the drawer is open */
-  open: boolean;
+  /** Label for the accordion drawer */
+  label: string;
   /** Callback that fires when the open state changes for this drawer */
   onOpenChange: (open: boolean) => void;
+  /** Whether the drawer is open */
+  open: boolean;
 };
 
 type DrawerProps = {
-  item: Drawer;
   duration?: number;
+  item: Drawer;
   showDivider: boolean;
 };
 const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
