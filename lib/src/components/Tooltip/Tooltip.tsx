@@ -9,7 +9,7 @@ type FloatingProps = React.ComponentProps<typeof Floating>;
 
 export type TooltipProps = Omit<
   FloatingProps,
-  "anchor" | "floatingContent" | "onPointerEnter" | "onPointerLeave" | "visible"
+  "anchor" | "floating" | "onPointerEnter" | "onPointerLeave" | "visible"
 > & {
   /**
    * The element to attach the tooltip to.
@@ -225,7 +225,7 @@ const Tooltip = ({
         z: "floating",
         ...vfx,
       }}
-      floatingContent={tooltipContent}
+      floating={tooltipContent}
     />
   );
 };

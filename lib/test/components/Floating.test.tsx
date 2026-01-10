@@ -62,7 +62,7 @@ describe("Floating", () => {
       <Floating
         data-testid="floating"
         anchor={<button data-testid="anchor">Anchor</button>}
-        floatingContent={<div>Content</div>}
+        floating={<div>Content</div>}
         visible
         offset={8}
       />
@@ -79,7 +79,7 @@ describe("Floating", () => {
       <Floating
         data-testid="floating"
         anchor={<button data-testid="anchor">Anchor</button>}
-        floatingContent={<div>Content</div>}
+        floating={<div>Content</div>}
         visible={false}
       />
     );
@@ -110,7 +110,7 @@ describe("Floating", () => {
       <Floating
         data-testid="floating"
         anchor={<button data-testid="anchor">Anchor</button>}
-        floatingContent={<div>Content</div>}
+        floating={<div>Content</div>}
         visible
       />
     );
@@ -140,7 +140,7 @@ describe("Floating", () => {
       <Floating
         data-testid="floating"
         anchor={<div data-testid="anchor">Anchor</div>}
-        floatingContent={<div>Content</div>}
+        floating={<div>Content</div>}
         placement="bottom-end"
         visible
         flip
@@ -169,7 +169,7 @@ describe("Floating", () => {
       <Floating
         data-testid="floating"
         anchor={<div data-testid="anchor">Anchor</div>}
-        floatingContent={<div>Content</div>}
+        floating={<div>Content</div>}
         placement="bottom-end"
         flip={false}
         visible
@@ -200,7 +200,7 @@ describe("Floating", () => {
       <Floating
         data-testid="floating"
         anchor={<div data-testid="anchor">Anchor</div>}
-        floatingContent={<div>Content</div>}
+        floating={<div>Content</div>}
         placement="bottom"
         visible
       />
@@ -238,7 +238,7 @@ describe("Floating", () => {
       <Floating
         data-testid="floating"
         anchor={<button data-testid="anchor">Anchor</button>}
-        floatingContent={<div>Content</div>}
+        floating={<div>Content</div>}
         placement="bottom-start"
         visible
       />
@@ -273,7 +273,7 @@ describe("Floating", () => {
       <Floating
         data-testid="floating"
         anchor={<button data-testid="anchor">Anchor</button>}
-        floatingContent={<div>Content</div>}
+        floating={<div>Content</div>}
         visible={false}
         flip
       />
@@ -286,7 +286,7 @@ describe("Floating", () => {
       <Floating
         data-testid="floating"
         anchor={<button data-testid="anchor">Anchor</button>}
-        floatingContent={<div>Content</div>}
+        floating={<div>Content</div>}
         visible
         flip
       />

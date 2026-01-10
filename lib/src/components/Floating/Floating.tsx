@@ -34,7 +34,7 @@ type Props = Omit<
   /** Whether to automatically flip to the opposite placement when it would overflow */
   flip?: boolean;
   /** Content rendered in the floating element */
-  floatingContent: Children;
+  floating: Children;
   /**
    * Pixel offset between anchor and floating element.
    * @default 0
@@ -80,7 +80,7 @@ const opposites: Record<Placement, Placement> = {
 const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     anchor,
-    floatingContent,
+    floating,
     visible,
     placement = "bottom",
     offset = 0,
@@ -196,7 +196,7 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         visible={visible}
         duration={duration}
       >
-        {floatingContent}
+        {floating}
       </Animated>
     </>
   );

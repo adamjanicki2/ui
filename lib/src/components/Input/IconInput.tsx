@@ -27,7 +27,7 @@ const IconInput = forwardRef<HTMLDivElement, IconInputProps>(
           axis: "x",
           align: "center",
           radius: "rounded",
-          overflow: "auto",
+          overflow: "hidden",
           ...vfx,
         }}
         className={classNames(`aui-input`, className)}

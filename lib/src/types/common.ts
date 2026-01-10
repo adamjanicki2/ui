@@ -117,7 +117,7 @@ export type Vfx = {
   /** Vertical padding inside the content */
   paddingY?: SpacingSize;
   /** Element's positioning */
-  pos?: "absolute" | "fixed" | "relative" | "static" | "sticky";
+  pos?: "absolute" | "fixed" | "relative" | "sticky";
   /** Border radius of the content */
   radius?: "max" | "none" | "rounded" | "subtle";
   /** Box shadow presets */

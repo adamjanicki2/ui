@@ -369,7 +369,7 @@ textarea {
 }
 
 // Layout Utilities
-$positions: static, relative, absolute, fixed, sticky;
+$positions: relative, absolute, fixed, sticky;
 @each $pos in $positions {
   .aui-pos-#{$pos} {
     position: $pos;
