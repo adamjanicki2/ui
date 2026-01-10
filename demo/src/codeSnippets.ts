@@ -133,7 +133,7 @@ export const inputSnippet = `
   value={inputValue}
   onChange={(e) => setInputValue(e.target.value)}
 />
-<IconInput startIcon={<span>🔎</span>} inputProps={{placeholder: "Search..."}} />
+<IconInput startIcon="🔎" inputProps={{placeholder: "Search..."}} />
 <TextArea placeholder="Type something..." />
 `;
 
