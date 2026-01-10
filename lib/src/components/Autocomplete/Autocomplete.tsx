@@ -267,7 +267,7 @@ const Autocomplete = <T,>(props: Props<T>) => {
       to={{ opacity: 1, top: 0 }}
     >
       <Box
-        vfx={{ axis: "y", padding: "s", overflow: "scroll" }}
+        vfx={{ axis: "y", padding: "s", overflowY: "auto" }}
         style={{ maxHeight: 300 }}
         tabIndex={-1}
       >

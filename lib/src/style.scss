@@ -684,7 +684,7 @@ $bg-colors:
 }
 
 $overflows:
-  "scroll" scroll,
+  "auto" auto,
   "hidden" hidden;
 @each $token, $overflow in $overflows {
   .aui-ov-#{$token} {

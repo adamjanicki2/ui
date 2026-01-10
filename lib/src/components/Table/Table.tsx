@@ -109,15 +109,15 @@ const Table = <Item extends MinimalItem>({
     // Table container
     <Box
       {...boxProps}
-      vfx={{
-        axis: "y",
-        backgroundColor: "default",
-        border: true,
-        radius: "rounded",
-        shadow: "subtle",
-        overflowX: "scroll",
-        ...vfx,
-      }}
+    vfx={{
+      axis: "y",
+      backgroundColor: "default",
+      border: true,
+      radius: "rounded",
+      shadow: "subtle",
+      overflowX: "auto",
+      ...vfx,
+    }}
     >
       {/* Inner container (scrollable within parent) */}
       <Box className="aui-table" role="table" vfx={{ width: "full" }}>

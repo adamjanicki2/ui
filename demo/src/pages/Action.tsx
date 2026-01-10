@@ -111,10 +111,9 @@ export default function Action() {
             They are so crucial to any app, and I always used to have to waste a
             lot of time setting up and overriding annoying default link styles.
             This link is meant to be <ui.em>extremely</ui.em> customizable: you
-            can override the underlying link element from an anchor element{" "}
-            <ui.code>{"<a>"}</ui.code> to something more complex, maybe
-            react-router's link element if you're working within a router
-            context.
+            can use it like a normal <ui.code>{"<a>"}</ui.code> element, or use
+            it within my <ui.code>{"<Router>"}</ui.code> component for internal
+            navigation.
           </>
         }
       >
