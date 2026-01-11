@@ -61,7 +61,7 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(
     const { vfx: wrapperBoxVfx, ...wrapperBoxRest } = wrapperBoxProps || {};
     return (
       <Animated
-        vfx={{ z: "max" }}
+        vfx={{ pos: "fixed", z: "max" }}
         visible={open}
         to={{ opacity: 1 }}
         from={{ opacity: 0 }}
