@@ -8,10 +8,7 @@ import Floating from "../Floating";
 
 type FloatingProps = React.ComponentProps<typeof Floating>;
 
-export type PopoverProps = Omit<
-  FloatingProps,
-  "visible" | "floatingContent"
-> & {
+export type PopoverProps = Omit<FloatingProps, "floating" | "visible"> & {
   /** Whether the popover is open */
   open: boolean;
   /** Fired when the popover should close */
@@ -76,7 +73,7 @@ const Popover = ({
       ref={floatingRef}
       anchor={React.cloneElement(anchor, { ref: mergedAnchorRef })}
       visible={open}
-      floatingContent={children}
+      floating={children}
       from={from ?? { opacity: 0 }}
       to={to ?? { opacity: 1 }}
       duration={

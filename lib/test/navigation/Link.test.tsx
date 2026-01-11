@@ -5,12 +5,13 @@ import React from "react";
 import { ButtonLink, Link, Router, UnstyledLink } from "../../src";
 
 describe("Link", () => {
+  // clean up current location
   beforeEach(() => {
     window.history.replaceState(null, "", "/");
   });
 
   describe("without Router", () => {
-    it("renders", async () => {
+    it("renders without error", async () => {
       const user = userEvent.setup();
 
       render(
@@ -25,8 +26,7 @@ describe("Link", () => {
 
       const link = screen.getByTestId("main");
       expect(link).toHaveAttribute("href", "/about");
-
-      // just tests that no assertions thrown
+      // just tests that no assertions thrown on navigation
       await user.click(link);
     });
 

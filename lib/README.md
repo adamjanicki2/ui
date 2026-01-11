@@ -1,6 +1,6 @@
 # @adamjanicki/ui
 
-**Warning: use at own risk! These are mainly for personal use across my other sites, so while I strive to write good code, there may be bugs, and I make breaking changes semi-frequently!**
+_Warning: use at own risk! This library is primarily designed for usage by me across my other projects, so while I try to write good code, there will be some bugs, and more importantly, I make breaking changes often!_
 
 ## Installation
 
@@ -10,10 +10,8 @@ npm install @adamjanicki/ui
 
 ## Usage
 
-```ts
+```tsx
 import { Button } from "@adamjanicki/ui";
-
-// ...
 
 const App = () => {
   return (
@@ -24,23 +22,26 @@ const App = () => {
 
 ## Importing CSS
 
-Unfortunately, there was no great way to handle CSS. I often hate how large libraries make it extremely difficult to override CSS without using `!important`, or using inline styles. So, I've decided to just allow importing the CSS directly into your project. Here's an example of how to do it:
+Unfortunately, there was no great way to handle CSS. I hate how large libraries make it extremely difficult to override CSS without using `!important`, or using inline styles. So, I've decided to require importing the CSS directly into your project. Here's an example of how to do it:
 
-```ts
+```tsx
 import React from "react";
 import ReactDOM from "react-dom/client";
 // Make sure to import this first so your styles take priority!
 import "@adamjanicki/ui/style.css";
-// All your other global styles can go here!
+// All your other style imports can go below here!
 import "src/css/style.css";
 import App from "src/App";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
 ```
+
+## Components
+
+I'm not going to rewrite all the stuff I already wrote on my [demo site](https://adamjanicki.xyz/ui/), so go explore the component there if you'd like.

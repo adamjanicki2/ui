@@ -1,36 +1,70 @@
 import { useEffect } from "react";
 
-let globalLockCount = 0;
+let lockCount = 0;
 
-const lockScroll = () => {
-  globalLockCount += 1;
-  if (globalLockCount > 1) {
-    return () => {
-      globalLockCount -= 1;
-    };
-  }
+type State = {
+  scrollY: number;
+  overflow: string;
+  position: string;
+  top: string;
+  width: string;
+  paddingRight: string;
+};
 
-  const scrollPosition = window.scrollY;
+let state: State | null = null;
+
+function acquire() {
   const style = document.body.style;
-  const { overflow, position, top, width } = style;
+
+  const scrollbarWidth =
+    window.innerWidth - document.documentElement.clientWidth;
+
+  state = {
+    scrollY: window.scrollY,
+    overflow: style.overflow,
+    position: style.position,
+    top: style.top,
+    width: style.width,
+    paddingRight: style.paddingRight,
+  };
+
+  if (scrollbarWidth > 0) {
+    style.paddingRight = `calc(${getComputedStyle(document.body).paddingRight || "0px"} + ${scrollbarWidth}px)`;
+  }
 
   style.overflow = "hidden";
   style.position = "fixed";
-  style.top = `-${scrollPosition}px`;
+  style.top = `-${state.scrollY}px`;
   style.width = "100%";
+}
+
+function release() {
+  if (!state) return;
+  const style = document.body.style;
+
+  style.overflow = state.overflow;
+  style.position = state.position;
+  style.top = state.top;
+  style.width = state.width;
+  style.paddingRight = state.paddingRight;
+
+  window.scrollTo({ top: state.scrollY, left: 0, behavior: "instant" });
+
+  state = null;
+}
+
+const lockScroll = () => {
+  lockCount += 1;
+
+  if (lockCount === 1) {
+    acquire();
+  }
 
   return () => {
-    globalLockCount -= 1;
-    if (globalLockCount > 0) {
-      return;
+    lockCount -= 1;
+    if (lockCount === 0) {
+      release();
     }
-
-    style.overflow = overflow;
-    style.position = position;
-    style.top = top;
-    style.width = width;
-
-    window.scrollTo({ top: scrollPosition, left: 0, behavior: "instant" });
   };
 };
 
@@ -40,9 +74,7 @@ const lockScroll = () => {
  */
 const useScrollLock = (enable = true) => {
   useEffect(() => {
-    if (enable) {
-      return lockScroll();
-    }
+    if (enable) return lockScroll();
   }, [enable]);
 };
 

@@ -10,13 +10,13 @@ import { getHref, normalizeBasename } from "./href";
 import RouterContext from "./RouterContext";
 
 export type Props = {
-  /** Children to render inside the router provider */
-  children: React.ReactNode;
   /**
    * Optional basename prefix for all internal navigation.
    * @example "/app"
    */
   basename?: string;
+  /** Children to render inside the router provider */
+  children: React.ReactNode;
   /**
    * Whether to reset the page scroll position to the top on navigation.
    * This applies when navigating to a different pathname (query/hash changes do not reset scroll).

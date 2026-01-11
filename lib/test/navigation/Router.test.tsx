@@ -34,7 +34,7 @@ describe("Router", () => {
     window.history.scrollRestoration = "auto";
   });
 
-  it("renders children", () => {
+  it("renders", () => {
     render(
       <Router>
         <div data-testid="child">Child</div>
@@ -57,7 +57,7 @@ describe("Router", () => {
     expect(screen.getByTestId("hash")).toHaveTextContent("#hash");
   });
 
-  it("responds to browser popstate events by updating location", () => {
+  it("responds to browser popstate events", () => {
     render(
       <Router>
         <LocationView />
@@ -182,7 +182,7 @@ describe("Router", () => {
   it("cleans up listeners on unmount", () => {
     const effectCallback = jest.fn();
 
-    function EffectProbe() {
+    function WithEffect() {
       const location = useLocation();
       React.useEffect(() => {
         effectCallback(location.pathname);
@@ -192,7 +192,7 @@ describe("Router", () => {
 
     const { unmount } = render(
       <Router>
-        <EffectProbe />
+        <WithEffect />
       </Router>
     );
 

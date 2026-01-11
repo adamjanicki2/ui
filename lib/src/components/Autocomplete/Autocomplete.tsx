@@ -10,8 +10,31 @@ type IconInputProps = React.ComponentProps<typeof IconInput>;
 type InputElementProps = NonNullable<IconInputProps["inputProps"]>;
 
 type Props<T> = Omit<IconInputProps, "inputProps" | "onSelect"> & {
-  /** The value of the input field */
-  value: string;
+  /**
+   * Close the popover when the footer is clicked.
+   * @default true
+   */
+  closeOnFooterClick?: boolean;
+  /** Allow free text input by converting the query string to a value */
+  customize?: (query: string) => T;
+  /**
+   * Predicate to filter options.
+   * @param option Current option.
+   * @returns True if the option should be displayed.
+   */
+  filterOption?: (option: T) => boolean;
+  /** Footer node to render at the bottom of the popover */
+  footer?: React.ReactNode;
+  /**
+   * Group options by a string.
+   * @param option Current option.
+   * @returns String to group by.
+   */
+  groupBy?: (option: T) => string;
+  /** Props to pass to the underlying `input` */
+  inputProps?: Omit<InputElementProps, "autoComplete" | "onChange" | "value">;
+  /** Node to render when no options are available */
+  noOptionsNode?: React.ReactNode;
   /**
    * Callback for when the input field changes.
    * @param event Standard React ChangeEvent.
@@ -22,57 +45,34 @@ type Props<T> = Omit<IconInputProps, "inputProps" | "onSelect"> & {
    * @param value Selected value.
    */
   onSelect: (value: T) => void;
+  /** Callback fired when the user hits the Enter key while no option is selected */
+  onUnselectedEnter?: () => void;
   /** The list of available options */
   options: ReadonlyableArray<T>;
+  /** Props for the popover */
+  popoverProps?: Omit<
+    PopoverProps,
+    "anchor" | "children" | "from" | "onClose" | "open" | "to"
+  >;
   /**
-   * Predicate to filter options.
-   * @param option Current option.
-   * @returns True if the option should be displayed.
+   * Whether or not to leave the popover open after a selection occurs.
+   * @default false
    */
-  filterOption?: (option: T) => boolean;
-  /**
-   * Render function for the option.
-   * @param option Current option.
-   * @returns Node to render for the option.
-   */
-  renderOption?: (option: T) => React.ReactNode;
-  /** Node to render when no options are available */
-  noOptionsNode?: React.ReactNode;
-  /**
-   * Group options by a string.
-   * @param option Current option.
-   * @returns String to group by.
-   */
-  groupBy?: (option: T) => string;
+  remainOpenOnSelectOrEnter?: boolean;
   /**
    * Render function for the group.
    * @param group Name.
    * @returns Node to render for the group.
    */
   renderGroup?: (group: string) => React.ReactNode;
-  /** Allow free text input by converting the query string to a value */
-  customize?: (query: string) => T;
-  /** Props to pass to the underlying `input` */
-  inputProps?: Omit<InputElementProps, "value" | "onChange" | "autoComplete">;
-  /** Props for the popover */
-  popoverProps?: Omit<
-    PopoverProps,
-    "open" | "onClose" | "anchor" | "children" | "from" | "to"
-  >;
-  /** Footer node to render at the bottom of the popover */
-  footer?: React.ReactNode;
   /**
-   * Close the popover when the footer is clicked.
-   * @default true
+   * Render function for the option.
+   * @param option Current option.
+   * @returns Node to render for the option.
    */
-  closeOnFooterClick?: boolean;
-  /** Callback fired when the user hits the Enter key while no option is selected */
-  onUnselectedEnter?: () => void;
-  /**
-   * Whether or not to leave the popover open after a selection occurs.
-   * @default false
-   */
-  remainOpenOnSelectOrEnter?: boolean;
+  renderOption?: (option: T) => React.ReactNode;
+  /** The value of the input field */
+  value: string;
 };
 
 const defaultRenderOption = <T,>(option: T) => (

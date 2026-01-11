@@ -5,60 +5,60 @@ import type { Children, Style } from "../../types/common";
 import Animated from "../Animated/Animated";
 
 type Placement =
-  | "top"
-  | "top-start"
-  | "top-end"
   | "bottom"
-  | "bottom-start"
   | "bottom-end"
+  | "bottom-start"
   | "left"
-  | "left-start"
   | "left-end"
+  | "left-start"
   | "right"
+  | "right-end"
   | "right-start"
-  | "right-end";
+  | "top"
+  | "top-end"
+  | "top-start";
 
-type SafeStyle = Omit<Style, "position" | "transform" | "all" | "visibility">;
+type SafeStyle = Omit<Style, "all" | "position" | "transform" | "visibility">;
 
 type AnimatedProps = React.ComponentProps<typeof Animated>;
 
 type Props = Omit<
   AnimatedProps,
-  "children" | "visible" | "keepMounted" | "style" | "from" | "to"
+  "children" | "from" | "to" | "keepMounted" | "style" | "visible"
 > & {
   /**
    * Anchor element the floating content is positioned relative to.
    * IMPORTANT: must be a single element that can hold a ref.
    */
   anchor: React.ReactElement<any>;
+  /** Whether to automatically flip to the opposite placement when it would overflow */
+  flip?: boolean;
   /** Content rendered in the floating element */
-  floatingContent: Children;
-  /** Controls the visibility of the floating content */
-  visible: boolean;
-  /**
-   * Position the floating element around the anchor.
-   * @default "bottom"
-   */
-  placement?: Placement;
+  floating: Children;
   /**
    * Pixel offset between anchor and floating element.
    * @default 0
    */
   offset?: number;
-  /** Whether to automatically flip to the opposite placement when it would overflow */
-  flip?: boolean;
+  /**
+   * Position the floating element around the anchor.
+   * @default "bottom"
+   */
+  placement?: Placement;
   /** Style that can be safely applied to the floating element without disrupting positioning */
   style?: SafeStyle;
   /** Animation CSS for the start state */
   from?: SafeStyle;
   /** Animation CSS for the end state */
   to?: SafeStyle;
+  /** Controls the visibility of the floating content */
+  visible: boolean;
 };
 
-type Position = { top: number; left: number };
+type Position = { left: number; top: number };
 type Rect = Pick<
   DOMRect,
-  "top" | "left" | "right" | "bottom" | "width" | "height"
+  "bottom" | "height" | "left" | "right" | "top" | "width"
 >;
 
 const opposites: Record<Placement, Placement> = {
@@ -80,7 +80,7 @@ const opposites: Record<Placement, Placement> = {
 const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     anchor,
-    floatingContent,
+    floating,
     visible,
     placement = "bottom",
     offset = 0,
@@ -196,7 +196,7 @@ const Floating = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         visible={visible}
         duration={duration}
       >
-        {floatingContent}
+        {floating}
       </Animated>
     </>
   );
@@ -288,8 +288,8 @@ const overflowChecks: Record<Placement, OverflowCheck> = {
 type Scale = { x: number; y: number };
 type ContainerInfo = {
   pos: Position;
-  scroll: Position;
   scale: Scale;
+  scroll: Position;
 };
 
 function getContainerInfo(container: HTMLElement): ContainerInfo {

@@ -5,11 +5,6 @@ import Box, { type BoxProps } from "../Box/Box";
 
 type Props = BoxProps & {
   /**
-   * Whether to begin the animation and render the component.
-   * Set to true to start animation, false to start the exit animation.
-   */
-  visible: boolean;
-  /**
    * Duration of the animation in seconds.
    * @default 0.25
    */
@@ -21,15 +16,20 @@ type Props = BoxProps & {
         /** Length of the reverse direction */
         reverse: number;
       };
+  /** Style applied at the end state */
+  from?: Style;
+  /** Style applied at the start state */
+  to?: Style;
   /**
    * Whether to keep the component mounted when it is not animated.
    * @default false
    */
   keepMounted?: boolean;
-  /** Style applied at the start state */
-  to?: Style;
-  /** Style applied at the end state */
-  from?: Style;
+  /**
+   * Whether to begin the animation and render the component.
+   * Set to `true` to start the forward animation, `false` to start the reverse animation.
+   */
+  visible: boolean;
 };
 
 type Phase = "init" | "forward" | "reverse";

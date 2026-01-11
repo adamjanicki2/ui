@@ -1,4 +1,4 @@
-type DeviceType = "mobile" | "desktop";
+type DeviceType = "desktop" | "mobile";
 
 /**
  * Best effort checks to determine the device being used.

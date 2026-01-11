@@ -11,7 +11,6 @@ describe("Avatar", () => {
   it("renders text when image doesn't exist", async () => {
     render(<Avatar backgroundImage="404" username="Adam" />);
 
-    // mock error
     const img = screen.getByAltText("");
     act(() => {
       img.dispatchEvent(new Event("error"));

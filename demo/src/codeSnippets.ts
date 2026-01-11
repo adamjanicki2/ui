@@ -26,18 +26,24 @@ export const accordionSnippet = `
       content: (
         <Alert type="success">We live in a Twilight World.</Alert>
       ),
+      open: true,
+      onOpenChange: () => {},
     },
     {
       label: "Info",
       content: (
         <Alert type="info">We live in a Twilight World.</Alert>
       ),
+      open: false,
+      onOpenChange: () => {},
     },
     {
       label: "Error",
       content: (
         <Alert type="error">We live in a Twilight World.</Alert>
       ),
+      open: false,
+      onOpenChange: () => {},
     },
   ]}
 />
@@ -127,7 +133,7 @@ export const inputSnippet = `
   value={inputValue}
   onChange={(e) => setInputValue(e.target.value)}
 />
-<IconInput startIcon={<span>🔎</span>} inputProps={{placeholder: "Search..."}} />
+<IconInput startIcon="🔎" inputProps={{placeholder: "Search..."}} />
 <TextArea placeholder="Type something..." />
 `;
 
@@ -226,9 +232,15 @@ export const popoversSnippet = `
 `;
 
 export const tooltipSnippet = `
-<Tooltip tooltipContent="I'm a tooltip!" offset={2} placement="left">
-  <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
-    <Icon icon={arrowLeft} /> Left
-  </Box>
+<Tooltip
+  anchor={
+    <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
+      <Icon icon={arrowUp} /> Top
+    </Box>
+  }
+  offset={2}
+  placement="top"
+>
+  I'm a tooltip!
 </Tooltip>
 `;

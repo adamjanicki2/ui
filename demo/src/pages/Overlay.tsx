@@ -230,29 +230,49 @@ export default function Overlay() {
         snippet={tooltipSnippet}
       >
         <Box vfx={{ axis: "x", gap: "m", align: "center", justify: "center" }}>
-          <Tooltip tooltipContent="I'm a tooltip!" offset={2} placement="left">
-            <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
-              <Icon icon={arrowLeft} /> Left
-            </Box>
-          </Tooltip>
-          <Tooltip tooltipContent="I'm a tooltip!" offset={2} placement="top">
-            <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
-              <Icon icon={arrowUp} /> Top
-            </Box>
+          <Tooltip
+            anchor={
+              <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
+                <Icon icon={arrowLeft} /> Left
+              </Box>
+            }
+            offset={2}
+            placement="left"
+          >
+            I'm a tooltip!
           </Tooltip>
           <Tooltip
-            tooltipContent="I'm a tooltip!"
+            anchor={
+              <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
+                <Icon icon={arrowUp} /> Top
+              </Box>
+            }
+            offset={2}
+            placement="top"
+          >
+            I'm a tooltip!
+          </Tooltip>
+          <Tooltip
+            anchor={
+              <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
+                <Icon icon={arrowDown} /> Bottom
+              </Box>
+            }
             offset={2}
             placement="bottom"
           >
-            <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
-              <Icon icon={arrowDown} /> Bottom
-            </Box>
+            I'm a tooltip!
           </Tooltip>
-          <Tooltip tooltipContent="I'm a tooltip!" offset={2} placement="right">
-            <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
-              <Icon icon={arrowRight} /> Right
-            </Box>
+          <Tooltip
+            anchor={
+              <Box vfx={{ axis: "x", align: "center", gap: "xs" }}>
+                <Icon icon={arrowRight} /> Right
+              </Box>
+            }
+            offset={2}
+            placement="right"
+          >
+            I'm a tooltip!
           </Tooltip>
         </Box>
       </ShowcaseBlock>

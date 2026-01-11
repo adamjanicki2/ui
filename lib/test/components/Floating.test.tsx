@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import React from "react";
 
 import Floating from "../../src/components/Floating";
 
@@ -15,38 +16,65 @@ const rect = (r: Partial<DOMRect>): DOMRect =>
     ...r,
   }) as DOMRect;
 
+const setViewport = ({
+  width = 1000,
+  height = 600,
+  scrollX = 0,
+  scrollY = 0,
+}: {
+  width?: number;
+  height?: number;
+  scrollX?: number;
+  scrollY?: number;
+}) => {
+  window.innerWidth = width;
+  window.innerHeight = height;
+  window.scrollX = scrollX;
+  window.scrollY = scrollY;
+};
+
+type RectImpl =
+  | Record<string, Partial<DOMRect>>
+  | ((testId: string | null, el: HTMLElement) => Partial<DOMRect> | null);
+
+const mockRects = (impl: RectImpl) =>
+  jest
+    .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+    .mockImplementation(function (this: HTMLElement) {
+      const testId = this.getAttribute("data-testid");
+      const partial =
+        typeof impl === "function"
+          ? impl(testId, this)
+          : (impl[testId ?? ""] ?? null);
+
+      return rect(partial ?? {});
+    });
+
+const renderFloating = (
+  props: Partial<React.ComponentProps<typeof Floating>> & {
+    visible: boolean;
+  }
+) =>
+  render(
+    <Floating
+      data-testid="floating"
+      anchor={<button data-testid="anchor">Anchor</button>}
+      floating={<div>Content</div>}
+      {...props}
+    />
+  );
+
 describe("Floating", () => {
   beforeEach(() => {
-    // define props needed by floating
-    window.innerWidth = 1000;
-    window.innerHeight = 600;
-    window.scrollX = 0;
-    window.scrollY = 0;
+    setViewport({});
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  function mockBoundingClientRect(
-    impl:
-      | Record<string, Partial<DOMRect>>
-      | ((testId: string | null, el: HTMLElement) => Partial<DOMRect> | null)
-  ) {
-    return jest
-      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
-      .mockImplementation(function (this: HTMLElement) {
-        const testId = this.getAttribute("data-testid");
-        const partial =
-          typeof impl === "function"
-            ? impl(testId, this)
-            : (impl[testId ?? ""] ?? null);
-        return rect(partial ?? {});
-      });
-  }
-
   it("uses bottom placement by default and uses offset", () => {
-    mockBoundingClientRect({
+    mockRects({
       anchor: {
         top: 100,
         left: 200,
@@ -58,39 +86,22 @@ describe("Floating", () => {
       floating: { width: 80, height: 40 },
     });
 
-    render(
-      <Floating
-        data-testid="floating"
-        anchor={<button data-testid="anchor">Anchor</button>}
-        floatingContent={<div>Content</div>}
-        visible
-        offset={8}
-      />
-    );
+    renderFloating({ visible: true, offset: 8 });
 
     const floating = screen.getByTestId("floating");
-    expect(floating).toHaveClass("aui-pos-absolute");
-    expect(floating).toHaveClass("aui-z-floating");
+    expect(floating).toHaveClass("aui-pos-absolute", "aui-z-floating");
     expect(floating).toHaveStyle({ transform: "translate3d(210px, 128px, 0)" });
   });
 
   it("does not render when visible is false", () => {
-    render(
-      <Floating
-        data-testid="floating"
-        anchor={<button data-testid="anchor">Anchor</button>}
-        floatingContent={<div>Content</div>}
-        visible={false}
-      />
-    );
-
+    renderFloating({ visible: false });
     expect(screen.queryByTestId("floating")).not.toBeInTheDocument();
   });
 
   it("positions on mount without needing scroll", async () => {
     const seen = new Set<string | null>();
 
-    mockBoundingClientRect((testId) => {
+    mockRects((testId) => {
       seen.add(testId);
       if (testId === "anchor") {
         return {
@@ -106,14 +117,7 @@ describe("Floating", () => {
       return {};
     });
 
-    render(
-      <Floating
-        data-testid="floating"
-        anchor={<button data-testid="anchor">Anchor</button>}
-        floatingContent={<div>Content</div>}
-        visible
-      />
-    );
+    renderFloating({ visible: true });
 
     await waitFor(() => {
       expect(seen.has("floating")).toBe(true);
@@ -124,7 +128,7 @@ describe("Floating", () => {
   });
 
   it("flips from bottom to top when bottom would overflow viewport", () => {
-    mockBoundingClientRect({
+    mockRects({
       anchor: {
         top: 580,
         left: 100,
@@ -140,7 +144,7 @@ describe("Floating", () => {
       <Floating
         data-testid="floating"
         anchor={<div data-testid="anchor">Anchor</div>}
-        floatingContent={<div>Content</div>}
+        floating={<div>Content</div>}
         placement="bottom-end"
         visible
         flip
@@ -153,7 +157,7 @@ describe("Floating", () => {
   });
 
   it("does not flip when flip is false even if it would overflow", () => {
-    mockBoundingClientRect({
+    mockRects({
       anchor: {
         top: 580,
         left: 100,
@@ -169,7 +173,7 @@ describe("Floating", () => {
       <Floating
         data-testid="floating"
         anchor={<div data-testid="anchor">Anchor</div>}
-        floatingContent={<div>Content</div>}
+        floating={<div>Content</div>}
         placement="bottom-end"
         flip={false}
         visible
@@ -182,9 +186,9 @@ describe("Floating", () => {
   });
 
   it("does not flip if the opposite placement also overflows", () => {
-    window.innerHeight = 100;
+    setViewport({ height: 100 });
 
-    mockBoundingClientRect({
+    mockRects({
       anchor: {
         top: 40,
         left: 100,
@@ -196,15 +200,7 @@ describe("Floating", () => {
       floating: { width: 80, height: 200 },
     });
 
-    render(
-      <Floating
-        data-testid="floating"
-        anchor={<div data-testid="anchor">Anchor</div>}
-        floatingContent={<div>Content</div>}
-        placement="bottom"
-        visible
-      />
-    );
+    renderFloating({ visible: true, placement: "bottom" });
 
     expect(screen.getByTestId("floating")).toHaveStyle({
       transform: "translate3d(85px, 60px, 0)",
@@ -212,14 +208,13 @@ describe("Floating", () => {
   });
 
   it("positions correctly when offsetParent is null and window is scrolled", async () => {
-    window.scrollY = 400;
-    window.scrollX = 50;
+    setViewport({ scrollX: 50, scrollY: 400 });
 
     jest
-      .spyOn(HTMLElement.prototype as any, "offsetParent", "get")
+      .spyOn(HTMLElement.prototype, "offsetParent", "get")
       .mockReturnValue(null);
 
-    mockBoundingClientRect((testId) => {
+    mockRects((testId) => {
       if (testId === "anchor") {
         return {
           top: 200,
@@ -234,15 +229,7 @@ describe("Floating", () => {
       return {};
     });
 
-    render(
-      <Floating
-        data-testid="floating"
-        anchor={<button data-testid="anchor">Anchor</button>}
-        floatingContent={<div>Content</div>}
-        placement="bottom-start"
-        visible
-      />
-    );
+    renderFloating({ visible: true, placement: "bottom-start" });
 
     await waitFor(() => {
       expect(screen.getByTestId("floating")).toHaveStyle({
@@ -257,7 +244,7 @@ describe("Floating", () => {
     const addDoc = jest.spyOn(document, "addEventListener");
     const remDoc = jest.spyOn(document, "removeEventListener");
 
-    mockBoundingClientRect({
+    mockRects({
       anchor: {
         top: 10,
         left: 10,
@@ -269,15 +256,10 @@ describe("Floating", () => {
       floating: { width: 80, height: 40 },
     });
 
-    const { rerender, unmount } = render(
-      <Floating
-        data-testid="floating"
-        anchor={<button data-testid="anchor">Anchor</button>}
-        floatingContent={<div>Content</div>}
-        visible={false}
-        flip
-      />
-    );
+    const { rerender, unmount } = renderFloating({
+      visible: false,
+      flip: true,
+    });
 
     expect(addWin).not.toHaveBeenCalled();
     expect(addDoc).not.toHaveBeenCalled();
@@ -286,7 +268,7 @@ describe("Floating", () => {
       <Floating
         data-testid="floating"
         anchor={<button data-testid="anchor">Anchor</button>}
-        floatingContent={<div>Content</div>}
+        floating={<div>Content</div>}
         visible
         flip
       />

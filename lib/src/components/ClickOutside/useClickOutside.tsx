@@ -12,20 +12,20 @@ export type EventType =
 type TargetRef = React.RefObject<Element | null | undefined>;
 
 export type Config = {
-  /** Element(s) to treat as the "inside" boundary */
-  targets: ReadonlyableArray<TargetRef>;
-  /** Callback fired when an event occurs outside all targets */
-  onClickOutside: (event: MouseEvent | PointerEvent) => void;
-  /**
-   * Document event type to listen for.
-   * @default "mousedown"
-   */
-  eventType?: EventType;
   /**
    * Whether the listener is enabled.
    * @default true
    */
   enabled?: boolean;
+  /**
+   * Document event type to listen for.
+   * @default "mousedown"
+   */
+  eventType?: EventType;
+  /** Callback fired when an event occurs outside all targets */
+  onClickOutside: (event: MouseEvent | PointerEvent) => void;
+  /** Element(s) to treat as the "inside" boundary */
+  targets: ReadonlyableArray<TargetRef>;
 };
 
 function isInside(event: Event, ref: TargetRef) {

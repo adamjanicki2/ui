@@ -1,6 +1,8 @@
 import type * as React from "react";
 
 export type Props = {
+  /** Element to render when the path matches */
+  element: React.ReactElement;
   /**
    * Path pattern to match against window.location.pathname.
    * Currently, only 2 types are supported.
@@ -10,8 +12,6 @@ export type Props = {
    * @example "/movie/:id"
    */
   path: string;
-  /** Element to render when the path matches */
-  element: React.ReactElement;
 };
 
 /** A simple wrapper to be used by <Routes> */

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 
 import type { Style } from "../../types/common";
+import Box from "../Box";
 import { UnstyledButton } from "../Button";
 
 /** Props shared by all the hamburgers */
@@ -124,9 +125,9 @@ const Hamburger = (props: InnerProps) => {
       aria-label={buttonProps["aria-label"] || "hamburger"}
       aria-expanded={open}
     >
-      <span style={{ ...commonLineStyle, ...topStyle }} />
-      {!double && <span style={{ ...commonLineStyle, ...middleStyle }} />}
-      <span style={{ ...commonLineStyle, ...bottomStyle }} />
+      <Box style={{ ...commonLineStyle, ...topStyle }} />
+      {!double && <Box style={{ ...commonLineStyle, ...middleStyle }} />}
+      <Box style={{ ...commonLineStyle, ...bottomStyle }} />
     </UnstyledButton>
   );
 };

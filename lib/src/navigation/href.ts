@@ -1,7 +1,7 @@
 import { popSlash, prependSlash } from "./slash";
 
 export type Href = {
-  type: "internal" | "external" | "octo" | "unknown";
+  type: "external" | "internal" | "octo" | "unknown";
   url: string;
 };
 

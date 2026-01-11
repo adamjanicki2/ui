@@ -70,11 +70,14 @@ export default function Snippet({ className, children, lang = "tsx" }: Props) {
         )}
       </Box>
       <ui.pre
-        vfx={{ axis: "x", width: "full", margin: "none", padding: "s" }}
-        style={{
+        vfx={{
+          axis: "x",
+          margin: "none",
           overflow: "auto",
-          maxHeight: "70vh",
+          padding: "s",
+          width: "full",
         }}
+        style={{ maxHeight: "70vh" }}
       >
         <SyntaxHighlighter
           style={theme === "dark" ? dark : light}
