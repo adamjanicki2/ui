@@ -196,4 +196,51 @@ describe("useScrollLock", () => {
       behavior: "instant",
     });
   });
+
+  it("restores computed paddingRight after lock/unlock", async () => {
+    setScrollY(42);
+    document.body.style.paddingRight = "";
+
+    const originalGetComputedStyle = window.getComputedStyle;
+    jest.spyOn(window, "getComputedStyle").mockImplementation((el: Element) => {
+      const computed = originalGetComputedStyle(el);
+
+      if (el === document.body) {
+        return {
+          ...computed,
+          paddingRight: "12px",
+          overflow: computed.overflow || "",
+          position: computed.position || "",
+          top: computed.top || "",
+          width: computed.width || "",
+        } as CSSStyleDeclaration;
+      }
+
+      return computed;
+    });
+
+    const Wrapper = ({ enable }: { enable: boolean }) => {
+      useScrollLock(enable);
+      return <div />;
+    };
+
+    const { rerender } = render(<Wrapper enable={true} />);
+
+    await waitFor(() => {
+      expect(document.body.style.overflow).toBe("hidden");
+      expect(document.body.style.position).toBe("fixed");
+      expect(document.body.style.top).toBe("-42px");
+      expect(document.body.style.width).toBe("100%");
+    });
+
+    rerender(<Wrapper enable={false} />);
+
+    await waitFor(() => {
+      expect(document.body.style.overflow).toBe("");
+      expect(document.body.style.position).toBe("");
+      expect(document.body.style.top).toBe("");
+      expect(document.body.style.width).toBe("");
+      expect(document.body.style.paddingRight).toBe("12px");
+    });
+  });
 });

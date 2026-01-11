@@ -8,20 +8,30 @@ type State = {
   position: string;
   top: string;
   width: string;
+  paddingRight: string;
 };
 
 let state: State | null = null;
 
 function acquire() {
   const style = document.body.style;
+  const computedStyle = getComputedStyle(document.body);
+
+  const scrollbarWidth =
+    window.innerWidth - document.documentElement.clientWidth;
 
   state = {
     scrollY: window.scrollY,
-    overflow: style.overflow,
-    position: style.position,
-    top: style.top,
-    width: style.width,
+    overflow: computedStyle.overflow,
+    position: computedStyle.position,
+    top: computedStyle.top,
+    width: computedStyle.width,
+    paddingRight: computedStyle.paddingRight,
   };
+
+  if (scrollbarWidth > 0) {
+    style.paddingRight = `calc(${computedStyle.paddingRight || "0px"} + ${scrollbarWidth}px)`;
+  }
 
   style.overflow = "hidden";
   style.position = "fixed";
@@ -31,13 +41,13 @@ function acquire() {
 
 function release() {
   if (!state) return;
-
   const style = document.body.style;
 
   style.overflow = state.overflow;
   style.position = state.position;
   style.top = state.top;
   style.width = state.width;
+  style.paddingRight = state.paddingRight;
 
   window.scrollTo({ top: state.scrollY, left: 0, behavior: "instant" });
 
