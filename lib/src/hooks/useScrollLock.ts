@@ -15,22 +15,21 @@ let state: State | null = null;
 
 function acquire() {
   const style = document.body.style;
-  const computedStyle = getComputedStyle(document.body);
 
   const scrollbarWidth =
     window.innerWidth - document.documentElement.clientWidth;
 
   state = {
     scrollY: window.scrollY,
-    overflow: computedStyle.overflow,
-    position: computedStyle.position,
-    top: computedStyle.top,
-    width: computedStyle.width,
-    paddingRight: computedStyle.paddingRight,
+    overflow: style.overflow,
+    position: style.position,
+    top: style.top,
+    width: style.width,
+    paddingRight: style.paddingRight,
   };
 
   if (scrollbarWidth > 0) {
-    style.paddingRight = `calc(${computedStyle.paddingRight || "0px"} + ${scrollbarWidth}px)`;
+    style.paddingRight = `calc(${getComputedStyle(document.body).paddingRight || "0px"} + ${scrollbarWidth}px)`;
   }
 
   style.overflow = "hidden";

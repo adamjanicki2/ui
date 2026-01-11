@@ -240,7 +240,7 @@ describe("useScrollLock", () => {
       expect(document.body.style.position).toBe("");
       expect(document.body.style.top).toBe("");
       expect(document.body.style.width).toBe("");
-      expect(document.body.style.paddingRight).toBe("12px");
+      expect(document.body.style.paddingRight).toBe("");
     });
   });
 });
