@@ -14,15 +14,13 @@ describe("useScrollLock", () => {
   const originalScrollTo = window.scrollTo;
 
   beforeEach(() => {
-    jest.resetModules(); // IMPORTANT: resets globalLockCount inside the module
+    jest.resetModules();
 
-    // Reset body styles to a known baseline for each test
     document.body.style.overflow = "";
     document.body.style.position = "";
     document.body.style.top = "";
     document.body.style.width = "";
 
-    // Mock scrollY + scrollTo
     setScrollY(0);
     window.scrollTo = jest.fn();
   });
@@ -35,7 +33,7 @@ describe("useScrollLock", () => {
     setScrollY(123);
 
     const Wrapper = () => {
-      useScrollLock(); // default enable=true
+      useScrollLock();
       return <div />;
     };
 
@@ -75,7 +73,6 @@ describe("useScrollLock", () => {
 
     render(<Wrapper />);
 
-    // We can assert immediately, but waitFor is fine and consistent with effect timing.
     await waitFor(() => {
       expect(document.body.style.overflow).toBe("");
       expect(document.body.style.position).toBe("");
@@ -121,7 +118,6 @@ describe("useScrollLock", () => {
   it("restores whatever body styles existed before the lock", async () => {
     setScrollY(10);
 
-    // Set some non-empty baseline styles
     document.body.style.overflow = "auto";
     document.body.style.position = "relative";
     document.body.style.top = "5px";
@@ -175,7 +171,6 @@ describe("useScrollLock", () => {
       expect(document.body.style.top).toBe("-77px");
     });
 
-    // Remove one lock: styles should remain locked and scrollTo should not run
     rerender(<App showA={false} showB={true} />);
 
     await waitFor(() => {
@@ -185,7 +180,6 @@ describe("useScrollLock", () => {
 
     expect(window.scrollTo).toHaveBeenCalledTimes(0);
 
-    // Remove last lock: now it should restore + scrollTo
     rerender(<App showA={false} showB={false} />);
 
     await waitFor(() => {
