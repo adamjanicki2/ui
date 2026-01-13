@@ -66,12 +66,16 @@ export type Vfx = {
   gap?: SpacingSize;
   /** Height of the content */
   height?: SizeDimension;
+  /** Styles to apply on hover when element is not disabled */
+  hover?: "dim" | "undim" | "shade";
   /** Text alignment */
   textAlign?: "center" | "left" | "right";
   /** Use italics */
   italics?: boolean;
   /** How to space the children (Equivalent to justify-content) */
   justify?: "around" | "between" | "center" | "end" | "start";
+  /** Options for line height size */
+  lineHeight?: "s" | "m" | "l";
   /** Margin outside the content */
   margin?: AutoSize;
   /** Bottom margin outside the content */

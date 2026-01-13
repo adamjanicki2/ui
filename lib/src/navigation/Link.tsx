@@ -114,7 +114,7 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
   ({ className, vfx, ...props }, ref) => (
     <UnstyledLink
       {...props}
-      vfx={{ fontWeight: 6, ...vfx }}
+      vfx={{ fontWeight: 6, hover: "dim", ...vfx }}
       className={classNames("aui-link", className)}
       ref={ref}
     />

@@ -253,7 +253,8 @@ const TableBodyRow = <Item extends MinimalItem>({
     <UnstyledLink
       {...rowProps}
       {...rowLink}
-      className="aui-table-row aui-subtle-hover"
+      className="aui-table-row"
+      vfx={{ hover: "shade" }}
     />
   );
 };
@@ -300,8 +301,8 @@ const RowActionsMenu = ({
             fontSize: "s",
             fontWeight: 6,
             radius: "rounded",
+            hover: "shade",
           },
-          className: "aui-subtle-hover",
         } as const;
 
         return "to" in rowAction ? (

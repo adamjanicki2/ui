@@ -195,20 +195,17 @@ export default function Overlay() {
             }
           >
             <UnstyledButton
-              vfx={{ padding: "m", radius: "rounded" }}
-              className="aui-subtle-hover"
+              vfx={{ padding: "m", radius: "rounded", hover: "shade" }}
             >
               Menu Item 1
             </UnstyledButton>
             <UnstyledButton
-              vfx={{ padding: "m", radius: "rounded" }}
-              className="aui-subtle-hover"
+              vfx={{ padding: "m", radius: "rounded", hover: "shade" }}
             >
               Menu Item 2
             </UnstyledButton>
             <UnstyledButton
-              vfx={{ padding: "m", radius: "rounded" }}
-              className="aui-subtle-hover"
+              vfx={{ padding: "m", radius: "rounded", hover: "shade" }}
             >
               Menu Item 3
             </UnstyledButton>

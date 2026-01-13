@@ -204,20 +204,19 @@ textarea {
   transition: border var(--aui-default-transition);
 }
 
-.aui-dim,
-.aui-undim {
+.aui-hov-dim,
+.aui-hov-undim {
   transition: opacity var(--aui-default-transition);
 }
-.aui-dim {
+.aui-hov-dim {
   opacity: 1;
 }
-.aui-undim {
+.aui-hov-undim {
   opacity: var(--aui-opacity-dim);
 }
 
 .aui-link {
   color: var(--aui-link-color);
-  transition: opacity var(--aui-default-transition);
 }
 
 // Table
@@ -230,7 +229,7 @@ textarea {
   display: table-row;
 }
 
-.aui-subtle-hover {
+.aui-hov-shade {
   background-color: transparent;
   transition: background-color var(--aui-default-transition);
 }
@@ -242,9 +241,7 @@ textarea {
 
 // Hover effects
 @media (hover: hover) {
-  .aui-button-primary:not([disabled]):hover,
-  .aui-dim:not([disabled]):hover,
-  .aui-link:hover {
+  .aui-hov-dim:not([disabled]):hover {
     opacity: var(--aui-opacity-dim);
   }
 
@@ -252,11 +249,11 @@ textarea {
     border-color: var(--aui-button-secondary-border-hover);
   }
 
-  .aui-undim:not([disabled]):hover {
+  .aui-hov-undim:not([disabled]):hover {
     opacity: 1;
   }
 
-  .aui-subtle-hover:not([disabled]):hover,
+  .aui-hov-shade:not([disabled]):hover,
   .aui-autocomplete-on-option {
     background-color: var(--aui-static-background);
   }
@@ -653,6 +650,16 @@ $text-align: left right center;
 @each $align in $text-align {
   .aui-ta-#{$align} {
     text-align: $align;
+  }
+}
+
+$line-heights:
+  "s" 1.15,
+  "m" 1.5,
+  "l" 2;
+@each $token, $size in $line-heights {
+  .aui-lh-#{$token} {
+    line-height: $size;
   }
 }
 
