@@ -1,6 +1,5 @@
 import React from "react";
 
-import classNames from "../../functions/classNames";
 import Icon, { type Props as IconProps } from "../Icon/Icon";
 import { UnstyledButton } from "./Button";
 
@@ -22,14 +21,16 @@ type IconButtonProps = Omit<DefaultButtonProps, "children"> & {
 
 /** A button that renders an `Icon` component */
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  (
-    { icon, size, vfx, iconProps, variant = "dim", className, ...rest },
-    ref
-  ) => (
+  ({ icon, size, vfx, iconProps, variant = "dim", ...rest }, ref) => (
     <UnstyledButton
       {...rest}
-      vfx={{ axis: "x", align: "center", justify: "center", ...vfx }}
-      className={classNames(`aui-${variant}`, className)}
+      vfx={{
+        axis: "x",
+        align: "center",
+        justify: "center",
+        hover: variant,
+        ...vfx,
+      }}
       ref={ref}
     >
       <Icon icon={icon} size={size} {...iconProps} />

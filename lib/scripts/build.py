@@ -31,7 +31,7 @@ def get_saved_percent(before: int, after: int) -> float:
 
 
 def remove_empty_files() -> None:
-    removed: List[str] = []
+    removed = []
     for path in BUILD_DIR.rglob("*"):
         if path.is_file():
             name = path.name
