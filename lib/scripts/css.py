@@ -13,7 +13,7 @@ TYPE_DECLARATION_REGEX = r"^\s*(?:export\s+)?type\s+(\w+)\s*=\s*([^;]+);"
 
 
 # returns map of type unions, e.g. `{'ContentType': '"error" | "info" | "static" | "success" | "warning"'}`
-def load_type_aliases(text: str) -> Dict[str, List[str]]:
+def load_type_aliases(text: str) -> Dict[str, str]:
     aliases = {}
     pattern = re.compile(TYPE_DECLARATION_REGEX, re.MULTILINE)
     for match in pattern.finditer(text):
@@ -65,27 +65,28 @@ def load_vfx_type(text: str) -> Dict[str, str]:
     return props
 
 
+# Returns set of expected classnames, e.g. `{'aui-flex-x', 'aui-flex-y', ... }`
 def build_expected_classes(props: Dict[str, str], aliases: Dict[str, str]) -> Set[str]:
     expected = set()
     transformer_rules = load_transformation_classnames()
 
     for prop, type_expression in props.items():
-        rules = transformer_rules[prop]
+        classes = transformer_rules[prop]
+        assert classes
 
         class_suffixes = get_union_type_suffixes_dfs(type_expression, aliases, set())
-        prefixes = rules["prefixes"]
-        literals = rules["literals"]
+        class_prefixes = {c for c in classes if c.endswith("-")}
+        class_literals = classes - class_prefixes
 
-        assert prefixes or literals, f"Missing class rules for {prop}"
-
-        if prefixes:
+        if class_prefixes:
             assert class_suffixes
-            for prefix in prefixes:
-                for value in class_suffixes:
-                    expected.add(f"{prefix}{value}")
-        if literals:
+            for prefix in class_prefixes:
+                for suffix in class_suffixes:
+                    expected.add(prefix + suffix)
+
+        if class_literals:
             assert not class_suffixes
-            expected.update(literals)
+            expected.update(class_literals)
 
     return expected
 
@@ -96,39 +97,34 @@ VFX_KEY_REGEX = r"^\s{2}([a-zA-Z]+)\s*:"
 AUI_CLASSNAME_REGEX = r"aui-[a-z-]+-?"
 
 
-# returns map of VFX keys to class names, e.g. `{'pos': {'prefixes': {'aui-pos-'}, 'literals': set()}, ... }`
-def load_transformation_classnames() -> Dict[str, Dict[str, Set[str]]]:
+# returns map of VFX keys to class names, e.g. `{'pos': {'aui-pos-'}, 'wrap': {'aui-flex-wrap'}}`
+def load_transformation_classnames() -> Dict[str, Set[str]]:
     text = TRANSFORM_VFX_PATH.read_text(encoding="utf-8")
+    start = text.find("const transformers")
+    assert start != -1
+    block_start = text.find("{", start)
+    block_end = text.find("};", block_start)
+    assert block_start != -1 and block_end != -1
+
+    block = text[block_start + 1 : block_end]
     classnames = {}
     current_key = None
-    in_transformers = False
 
-    for line in text.splitlines():
-        if not in_transformers:
-            if "const transformers" in line:
-                in_transformers = True
-            continue
-
-        if line.strip().startswith("};"):
-            break
-
+    for line in block.splitlines():
         key_match = re.match(VFX_KEY_REGEX, line)
         if key_match:
             current_key = key_match.group(1)
-            classnames.setdefault(current_key, {"prefixes": set(), "literals": set()})
+            classnames.setdefault(current_key, set())
 
         tokens = re.findall(AUI_CLASSNAME_REGEX, line)
         if tokens:
             assert current_key
-            for token in tokens:
-                if token.endswith("-"):
-                    classnames[current_key]["prefixes"].add(token)
-                else:
-                    classnames[current_key]["literals"].add(token)
+            classnames[current_key].update(tokens)
 
     return classnames
 
 
+# Main validation function to check all classnames used in the VFX transform step are emitted to style.css
 def verify_css_classes() -> None:
     types_text = COMMON_TYPES_PATH.read_text(encoding="utf-8")
     aliases = load_type_aliases(types_text)
