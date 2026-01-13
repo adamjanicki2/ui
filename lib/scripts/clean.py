@@ -10,19 +10,19 @@ GREEN = "\033[32m"
 RESET = "\033[0m"
 
 
-def cyan(msg):
+def cyan(msg: str) -> None:
     print(f"{CYAN}{msg}{RESET}")
 
 
-def green(msg):
+def green(msg: str) -> None:
     print(f"{GREEN}{msg}{RESET}")
 
 
-def remove_build_dir():
+def remove_build_dir() -> None:
     shutil.rmtree(BUILD_DIR, ignore_errors=True)
 
 
-def remove_path(path):
+def remove_path(path: Path) -> None:
     if path.is_dir():
         shutil.rmtree(path, ignore_errors=True)
     elif path.is_file():
@@ -32,7 +32,7 @@ def remove_path(path):
             pass
 
 
-def clean():
+def clean() -> None:
     cyan("Cleaning build files...")
     remove_build_dir()
 

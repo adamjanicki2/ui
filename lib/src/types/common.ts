@@ -43,7 +43,7 @@ export type Vfx = {
   /** Border bottom */
   borderBottom?: boolean;
   /** Border thickness */
-  borderWidth?: SpacingSize;
+  borderWidth?: "none" | "xs" | "s" | "m" | "l";
   /** Border type */
   borderStyle?: "dashed" | "dotted" | "none" | "solid";
   /** Border color */
