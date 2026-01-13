@@ -20,6 +20,7 @@ lib/*
 !lib/README.md
 !lib/test
 !lib/jest.config.js
+!lib/scripts
 
 # Python
 .DS_Store

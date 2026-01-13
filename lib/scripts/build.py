@@ -1,6 +1,4 @@
 import subprocess
-from pathlib import Path
-
 from clean import cyan, green, clean, ROOT, BUILD_DIR, remove_build_dir
 
 
@@ -73,7 +71,6 @@ def main():
     remove_build_dir()
 
     green("Build complete!\n")
-    print(f"Emitted files: {len(files_after)}")
     print(f"Pre-minified size: {format_bytes(size_before)}")
     print(f"Post-minified size: {format_bytes(size_after)}")
     print(f"Saved: {format_bytes(size_before - size_after)} ({percent:.2f}%)")
