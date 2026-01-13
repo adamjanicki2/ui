@@ -149,22 +149,6 @@ textarea {
   margin: 0;
 }
 
-// Content types
-@each $type in "success", "warning", "error", "info", "static" {
-  .aui-content-#{$type} {
-    background-color: var(--aui-#{$type}-background);
-    color: var(--aui-#{$type}-color);
-    border-color: var(--aui-#{$type}-border);
-  }
-}
-
-// Signals
-.aui-alert,
-.aui-badge {
-  border-style: solid;
-  border-width: 1px;
-}
-
 // Buttons and Links
 .aui-action {
   color: inherit;
@@ -619,6 +603,15 @@ $opacity:
 @each $token, $val in $opacity {
   .aui-op-#{$token} {
     opacity: $val;
+  }
+}
+
+// Content types
+@each $type in "success", "warning", "error", "info", "static" {
+  .aui-content-#{$type} {
+    background-color: var(--aui-#{$type}-background);
+    color: var(--aui-#{$type}-color);
+    border-color: var(--aui-#{$type}-border);
   }
 }
 

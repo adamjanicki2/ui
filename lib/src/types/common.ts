@@ -7,7 +7,7 @@ export type ReadonlyableArray<T> = readonly T[] | T[];
 export type Children = React.ReactNode | ReadonlyableArray<React.ReactNode>;
 
 /** Content type used for UI styling */
-export type ContentType = "error" | "info" | "static" | "success" | "warning";
+export type SignalType = "error" | "info" | "static" | "success" | "warning";
 
 /** Inline CSS style */
 export type Style = React.CSSProperties;

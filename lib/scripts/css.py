@@ -12,7 +12,7 @@ TRANSFORM_VFX_PATH = ROOT / "src" / "components" / "ui" / "transformVfx.ts"
 TYPE_DECLARATION_REGEX = r"^\s*(?:export\s+)?type\s+(\w+)\s*=\s*([^;]+);"
 
 
-# returns map of type unions, e.g. `{'ContentType': '"error" | "info" | "static" | "success" | "warning"'}`
+# returns map of type unions, e.g. `{'SignalType': '"error" | "info" | "static" | "success" | "warning"'}`
 def load_type_aliases(text: str) -> Dict[str, str]:
     aliases = {}
     pattern = re.compile(TYPE_DECLARATION_REGEX, re.MULTILINE)

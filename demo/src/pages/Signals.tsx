@@ -4,7 +4,7 @@ import Page from "src/components/Page";
 import Para from "src/components/Para";
 import { ShowcaseBlock, ShowcaseRow } from "src/components/Showcase";
 
-const contentTypes = ["static", "info", "success", "warning", "error"] as const;
+const signalTypes = ["static", "info", "success", "warning", "error"] as const;
 
 export default function Signals() {
   return (
@@ -36,7 +36,7 @@ export default function Signals() {
             width: `min(100%, 400px)`,
           }}
         >
-          {contentTypes.map((type) => (
+          {signalTypes.map((type) => (
             <Alert key={type} type={type} vfx={{ width: "full" }}>
               This is a {type} alert
             </Alert>
@@ -56,7 +56,7 @@ export default function Signals() {
         }
       >
         <ShowcaseRow vfx={{ marginX: "auto", width: "fit" }}>
-          {contentTypes.map((type) => (
+          {signalTypes.map((type) => (
             <Badge key={type} type={type}>
               <ui.span style={{ textTransform: "capitalize" }}>{type}</ui.span>
             </Badge>
@@ -81,7 +81,7 @@ export default function Signals() {
         }
       >
         <ShowcaseRow vfx={{ axis: "y", gap: "s" }}>
-          {contentTypes.map((type) => (
+          {signalTypes.map((type) => (
             <Banner key={type} type={type}>
               This is a {type} banner
             </Banner>
