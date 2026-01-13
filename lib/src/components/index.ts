@@ -1,14 +1,12 @@
 export { default as Accordion } from "./Accordion";
-export { default as Alert } from "./Alert";
 export { default as Animated } from "./Animated";
 export { default as Autocomplete } from "./Autocomplete";
 export { default as Avatar } from "./Avatar";
-export { default as Badge } from "./Badge";
-export { default as Banner } from "./Banner";
 export { default as Box } from "./Box";
 export { default as Button, IconButton, UnstyledButton } from "./Button";
 export { default as Carousel } from "./Carousel";
 export { default as ClickOutside } from "./ClickOutside";
+export { Alert, Badge, Banner } from "./ContentTypes";
 export { default as ErrorBoundary } from "./ErrorBoundary";
 export * from "./Hamburger";
 export { default as Hamburger } from "./Hamburger";
