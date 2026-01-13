@@ -2,70 +2,25 @@ import re
 from pathlib import Path
 from typing import Dict, List, Set
 
-from clean import ROOT, cyan, green
+from util import ROOT, cyan, green
 
 COMMON_TYPES_PATH = ROOT / "src" / "types" / "common.ts"
 STYLE_CSS_PATH = ROOT / "style.css"
+TRANSFORM_VFX_PATH = ROOT / "src" / "components" / "ui" / "transformVfx.ts"
 
-VFX_CLASS_RULES = {
-    "pos": "aui-pos-",
-    "axis": "aui-flex-",
-    "gap": "aui-gap-",
-    "align": "aui-align-",
-    "justify": "aui-justify-",
-    "stretch": "aui-stretch-",
-    "overflow": "aui-ov-",
-    "overflowX": "aui-ov-x-",
-    "overflowY": "aui-ov-y-",
-    "z": "aui-z-",
-    "padding": "aui-pa-",
-    "paddingTop": "aui-pt-",
-    "paddingBottom": "aui-pb-",
-    "paddingLeft": "aui-pl-",
-    "paddingRight": "aui-pr-",
-    "margin": "aui-ma-",
-    "marginTop": "aui-mt-",
-    "marginBottom": "aui-mb-",
-    "marginLeft": "aui-ml-",
-    "marginRight": "aui-mr-",
-    "width": "aui-w-",
-    "minWidth": "aui-minw-",
-    "maxWidth": "aui-maxw-",
-    "height": "aui-h-",
-    "minHeight": "aui-minh-",
-    "maxHeight": "aui-maxh-",
-    "radius": "aui-radius-",
-    "borderWidth": "aui-bw-",
-    "borderStyle": "aui-bs-",
-    "borderColor": "aui-bc-",
-    "shadow": "aui-shadow-",
-    "opacity": "aui-op-",
-    "hover": "aui-hov-",
-    "fontSize": "aui-f-",
-    "fontWeight": "aui-fw-",
-    "textAlign": "aui-ta-",
-    "lineHeight": "aui-lh-",
-    "color": "aui-c-",
-    "backgroundColor": "aui-bg-",
-    "cursor": "aui-cursor-",
-    "wrap": "aui-flex-wrap",
-    "italics": "aui-it",
-    "border": "aui-ba",
-    "borderTop": "aui-bt",
-    "borderBottom": "aui-bb",
-    "borderLeft": "aui-bl",
-    "borderRight": "aui-br",
-}
+# matches a type declaration like type SizeToken = ...
+TYPE_DECLARATION_REGEX = r"^\s*(?:export\s+)?type\s+(\w+)\s*=\s*([^;]+);"
 
 
-def load_type_aliases(text: str) -> Dict[str, str]:
+# returns map of type unions, e.g. `{'ContentType': '"error" | "info" | "static" | "success" | "warning"'}`
+def load_type_aliases(text: str) -> Dict[str, List[str]]:
     aliases = {}
-    pattern = re.compile(r"^\s*(?:export\s+)?type\s+(\w+)\s*=\s*([^;]+);", re.MULTILINE)
+    pattern = re.compile(TYPE_DECLARATION_REGEX, re.MULTILINE)
     for match in pattern.finditer(text):
         name, expr = match.group(1), match.group(2).strip()
-        if expr.startswith("{"):
-            continue
-        aliases[name] = expr
+        if not expr.startswith("{"):
+            aliases[name] = expr
+
     return aliases
 
 
@@ -82,19 +37,18 @@ def get_union_type_suffixes_dfs(
             return []
         if re.fullmatch(r'"[^"]+"', type_element):
             values.append(type_element[1:-1])
-            continue
-        if re.fullmatch(r"\d+", type_element):
+        elif re.fullmatch(r"\d+", type_element):
             values.append(type_element)
-            continue
-
-        alias_type = aliases[type_element]
-        values += get_union_type_suffixes_dfs(alias_type, aliases, stack)
+        else:
+            alias_type = aliases[type_element]
+            values += get_union_type_suffixes_dfs(alias_type, aliases, stack)
 
     stack.remove(type_expression)
     return values
 
 
-def load_vfx_props(text: str) -> Dict[str, str]:
+# returns map of the VFX type, e.g. `{'align': '"center" | "end" | "start"', ... }`
+def load_vfx_type(text: str) -> Dict[str, str]:
     start = text.find("export type Vfx = {")
     end = text.find("};", start)
     assert start != -1 and end != -1, "Unable to find Vfx type definition."
@@ -107,30 +61,78 @@ def load_vfx_props(text: str) -> Dict[str, str]:
         match = pattern.match(line)
         if match:
             props[match.group(1)] = match.group(2).strip()
+
     return props
 
 
 def build_expected_classes(props: Dict[str, str], aliases: Dict[str, str]) -> Set[str]:
     expected = set()
-    for prop, rule in VFX_CLASS_RULES.items():
-        class_suffixes = get_union_type_suffixes_dfs(props[prop], aliases, set())
-        if rule.endswith("-"):
+    transformer_rules = load_transformation_classnames()
+
+    for prop, type_expression in props.items():
+        rules = transformer_rules[prop]
+
+        class_suffixes = get_union_type_suffixes_dfs(type_expression, aliases, set())
+        prefixes = rules["prefixes"]
+        literals = rules["literals"]
+
+        assert prefixes or literals, f"Missing class rules for {prop}"
+
+        if prefixes:
             assert class_suffixes
-
-            for value in class_suffixes:
-                expected.add(f"{rule}{value}")
-
-        else:
+            for prefix in prefixes:
+                for value in class_suffixes:
+                    expected.add(f"{prefix}{value}")
+        if literals:
             assert not class_suffixes
-            expected.add(rule)
+            expected.update(literals)
 
     return expected
+
+
+# matches any camelCase key
+VFX_KEY_REGEX = r"^\s{2}([a-zA-Z]+)\s*:"
+# matches any aui classname
+AUI_CLASSNAME_REGEX = r"aui-[a-z-]+-?"
+
+
+# returns map of VFX keys to class names, e.g. `{'pos': {'prefixes': {'aui-pos-'}, 'literals': set()}, ... }`
+def load_transformation_classnames() -> Dict[str, Dict[str, Set[str]]]:
+    text = TRANSFORM_VFX_PATH.read_text(encoding="utf-8")
+    classnames = {}
+    current_key = None
+    in_transformers = False
+
+    for line in text.splitlines():
+        if not in_transformers:
+            if "const transformers" in line:
+                in_transformers = True
+            continue
+
+        if line.strip().startswith("};"):
+            break
+
+        key_match = re.match(VFX_KEY_REGEX, line)
+        if key_match:
+            current_key = key_match.group(1)
+            classnames.setdefault(current_key, {"prefixes": set(), "literals": set()})
+
+        tokens = re.findall(AUI_CLASSNAME_REGEX, line)
+        if tokens:
+            assert current_key
+            for token in tokens:
+                if token.endswith("-"):
+                    classnames[current_key]["prefixes"].add(token)
+                else:
+                    classnames[current_key]["literals"].add(token)
+
+    return classnames
 
 
 def verify_css_classes() -> None:
     types_text = COMMON_TYPES_PATH.read_text(encoding="utf-8")
     aliases = load_type_aliases(types_text)
-    props = load_vfx_props(types_text)
+    props = load_vfx_type(types_text)
     expected = build_expected_classes(props, aliases)
 
     emitted_css = Path(STYLE_CSS_PATH).read_text(encoding="utf-8")

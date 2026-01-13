@@ -2,8 +2,9 @@ import subprocess
 from pathlib import Path
 from typing import Iterable, List
 
-from clean import BUILD_DIR, ROOT, clean, cyan, green, remove_build_dir
+from clean import clean, remove_build_dir
 from css import verify_css_classes
+from util import BUILD_DIR, ROOT, cyan, green
 
 
 def run(cmd: str) -> None:
