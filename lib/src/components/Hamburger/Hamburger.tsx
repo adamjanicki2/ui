@@ -116,42 +116,31 @@ const Hamburger = (props: InnerProps) => {
 type HamburgerConfig = {
   angles: typeof defaultAngles | typeof flipAngles;
   double?: boolean;
-  middleStyle?: Style;
-  outerStyle?: Style;
+  middle?: Style;
+  outer?: Style;
 };
 
-function makeHamburger(config: HamburgerConfig) {
-  const { angles, double, middleStyle, outerStyle } = config;
-
-  const Burger = (props: Props) => {
+const makeHamburger =
+  ({ angles, double, middle, outer }: HamburgerConfig) =>
+  (props: Props) => {
     const { direction = "left", ...rest } = props;
 
     const openStyle = useMemo(() => {
-      const topAngle = angles[direction];
-      const topTransform = `rotate(${topAngle}deg)`;
-      const bottomTransform = `rotate(${-topAngle}deg)`;
+      const angle = angles[direction];
 
       const style: OpenStyle = {
-        top: { transform: topTransform },
-        bottom: { transform: bottomTransform },
+        top: { transform: `rotate(${angle}deg)` },
+        bottom: { transform: `rotate(${-angle}deg)` },
       };
 
-      if (middleStyle) {
-        style.middle = middleStyle;
-      }
-
-      if (outerStyle) {
-        style.outer = outerStyle;
-      }
+      if (middle) style.middle = middle;
+      if (outer) style.outer = outer;
 
       return style;
     }, [direction]);
 
     return <Hamburger {...rest} double={double} openStyle={openStyle} />;
   };
-
-  return Burger;
-}
 
 /** A double-bar "cross" hamburger */
 export const DoubleCross = makeHamburger({
@@ -166,30 +155,30 @@ export const DoubleFlip = makeHamburger({ angles: flipAngles, double: true });
 export const DoubleSpin = makeHamburger({
   angles: defaultAngles,
   double: true,
-  outerStyle: { transform: "rotate(180deg)" },
+  outer: { transform: "rotate(180deg)" },
 });
 
 /** A three-bar "spin" hamburger */
 export const TripleSpin = makeHamburger({
   angles: defaultAngles,
-  middleStyle: { opacity: 0 },
-  outerStyle: { transform: "rotate(180deg)" },
+  middle: { opacity: 0 },
+  outer: { transform: "rotate(180deg)" },
 });
 
 /** A three-bar "flip" hamburger */
 export const TripleFlip = makeHamburger({
   angles: flipAngles,
-  middleStyle: { transform: "scale(0)" },
+  middle: { transform: "scale(0)" },
 });
 
 /** A three-bar hamburger that fades the middle bar */
 export const TripleFade = makeHamburger({
   angles: defaultAngles,
-  middleStyle: { opacity: 0 },
+  middle: { opacity: 0 },
 });
 
 /** The default hamburger */
 export const TriplePrestige = makeHamburger({
   angles: defaultAngles,
-  middleStyle: { transform: "scale(0)" },
+  middle: { transform: "scale(0)" },
 });
