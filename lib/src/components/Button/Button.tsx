@@ -54,13 +54,23 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
+const hoverVfx = {
+  primary: "dim",
+  secondary: undefined,
+} as const;
+
 export const getButtonProps = ({
   variant = "primary",
   size = "regular",
 }: VisualButtonProps) =>
   ({
     className: `aui-button-${variant}`,
-    vfx: { ...vfxBySize[size], radius: "rounded", fontWeight: 6 },
+    vfx: {
+      ...vfxBySize[size],
+      radius: "rounded",
+      fontWeight: 6,
+      hover: hoverVfx[variant],
+    },
   }) as const;
 
 export default Button;

@@ -1,6 +1,6 @@
 {
   "name": "@adamjanicki/ui",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "description": "Basic UI components and hooks for React in TypeScript",
   "type": "module",
   "main": "./index.js",
@@ -14,10 +14,10 @@
     "url": "git+https://github.com/adamjanicki2/ui.git"
   },
   "scripts": {
-    "clean": "python3 clean.py",
+    "clean": "python3 ./scripts/clean.py",
     "lint": "eslint src test --fix && prettier --write \"src/**/*.{ts,tsx,json,css,scss,md}\" \"test/**/*.{ts,tsx}\"",
     "test": "jest --silent",
-    "build": "npm test && eslint src test --max-warnings=0 && python3 build.py",
+    "build": "npm test && eslint src test --max-warnings=0 && python3 ./scripts/build.py",
     "prepare": "npm run build"
   },
   "peerDependencies": {

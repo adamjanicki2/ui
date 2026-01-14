@@ -75,12 +75,14 @@ const transformers: Record<keyof Vfx, Transformer> = {
   // --- Effects ---
   shadow: ({ shadow }) => `aui-shadow-${shadow}`,
   opacity: ({ opacity }) => `aui-op-${opacity}`,
+  hover: ({ hover }) => `aui-hov-${hover}`,
 
   // --- Typography ---
   fontSize: ({ fontSize }) => `aui-f-${fontSize}`,
   fontWeight: ({ fontWeight }) => `aui-fw-${fontWeight}`,
   textAlign: ({ textAlign }) => `aui-ta-${textAlign}`,
   italics: () => "aui-it",
+  lineHeight: ({ lineHeight }) => `aui-lh-${lineHeight}`,
 
   // --- Colors ---
   color: ({ color }) => `aui-c-${color}`,

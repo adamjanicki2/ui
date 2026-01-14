@@ -1,20 +1,23 @@
 import subprocess
 from pathlib import Path
+from typing import Iterable, List
 
-from clean import cyan, green, clean, ROOT, BUILD_DIR, remove_build_dir
+from clean import clean, remove_build_dir
+from css import verify_css_classes
+from util import BUILD_DIR, ROOT, cyan, green
 
 
-def run(cmd):
+def run(cmd: str) -> None:
     result = subprocess.run(cmd.split(), cwd=str(ROOT))
     if result.returncode != 0:
         raise SystemExit(result.returncode)
 
 
-def get_total_size(paths):
+def get_total_size(paths: Iterable[Path]) -> int:
     return sum(p.stat().st_size for p in paths if p.is_file())
 
 
-def format_bytes(byte_size):
+def format_bytes(byte_size: int) -> str:
     value = float(byte_size)
     for unit in ["B", "KB", "MB"]:
         if value < 1024:
@@ -23,11 +26,11 @@ def format_bytes(byte_size):
     return f"{byte_size} B"
 
 
-def get_saved_percent(before, after):
+def get_saved_percent(before: int, after: int) -> float:
     return ((before - after) / before) * 100.0
 
 
-def remove_empty_files():
+def remove_empty_files() -> None:
     removed = []
     for path in BUILD_DIR.rglob("*"):
         if path.is_file():
@@ -42,7 +45,7 @@ def remove_empty_files():
         print(f"{', '.join(removed)}")
 
 
-def main():
+def main() -> None:
     # clean up mess
     clean()
 
@@ -53,6 +56,10 @@ def main():
     cyan("Converting scss...")
     run("npx sass --no-source-map --style=compressed src/style.scss style.css")
     green("scss converted!\n")
+
+    cyan("Validating emitted CSS classes...")
+    verify_css_classes()
+    green("CSS classes verified!\n")
 
     cyan("Minifying JavaScript...")
 
@@ -73,7 +80,6 @@ def main():
     remove_build_dir()
 
     green("Build complete!\n")
-    print(f"Emitted files: {len(files_after)}")
     print(f"Pre-minified size: {format_bytes(size_before)}")
     print(f"Post-minified size: {format_bytes(size_after)}")
     print(f"Saved: {format_bytes(size_before - size_after)} ({percent:.2f}%)")

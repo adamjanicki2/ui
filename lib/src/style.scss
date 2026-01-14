@@ -149,22 +149,6 @@ textarea {
   margin: 0;
 }
 
-// Content types
-@each $type in "success", "warning", "error", "info", "static" {
-  .aui-content-#{$type} {
-    background-color: var(--aui-#{$type}-background);
-    color: var(--aui-#{$type}-color);
-    border-color: var(--aui-#{$type}-border);
-  }
-}
-
-// Signals
-.aui-alert,
-.aui-badge {
-  border-style: solid;
-  border-width: 1px;
-}
-
 // Buttons and Links
 .aui-action {
   color: inherit;
@@ -204,20 +188,19 @@ textarea {
   transition: border var(--aui-default-transition);
 }
 
-.aui-dim,
-.aui-undim {
+.aui-hov-dim,
+.aui-hov-undim {
   transition: opacity var(--aui-default-transition);
 }
-.aui-dim {
+.aui-hov-dim {
   opacity: 1;
 }
-.aui-undim {
+.aui-hov-undim {
   opacity: var(--aui-opacity-dim);
 }
 
 .aui-link {
   color: var(--aui-link-color);
-  transition: opacity var(--aui-default-transition);
 }
 
 // Table
@@ -230,7 +213,7 @@ textarea {
   display: table-row;
 }
 
-.aui-subtle-hover {
+.aui-hov-shade {
   background-color: transparent;
   transition: background-color var(--aui-default-transition);
 }
@@ -242,9 +225,7 @@ textarea {
 
 // Hover effects
 @media (hover: hover) {
-  .aui-button-primary:not([disabled]):hover,
-  .aui-dim:not([disabled]):hover,
-  .aui-link:hover {
+  .aui-hov-dim:not([disabled]):hover {
     opacity: var(--aui-opacity-dim);
   }
 
@@ -252,11 +233,11 @@ textarea {
     border-color: var(--aui-button-secondary-border-hover);
   }
 
-  .aui-undim:not([disabled]):hover {
+  .aui-hov-undim:not([disabled]):hover {
     opacity: 1;
   }
 
-  .aui-subtle-hover:not([disabled]):hover,
+  .aui-hov-shade:not([disabled]):hover,
   .aui-autocomplete-on-option {
     background-color: var(--aui-static-background);
   }
@@ -482,7 +463,6 @@ $aui-icon-size: (
 
 // Spacing Utilities
 $aui-space: (
-  none: 0,
   xxs: var(--aui-xxs),
   xs: var(--aui-xs),
   s: var(--aui-s),
@@ -490,6 +470,7 @@ $aui-space: (
   l: var(--aui-l),
   xl: var(--aui-xl),
   xxl: var(--aui-xxl),
+  none: 0,
 );
 
 $padding-props:
@@ -552,10 +533,10 @@ $dimension-vals:
 
 // Border & Shadow Utilities
 $border-radius:
-  none var(--aui-radius-none),
   subtle var(--aui-radius-subtle),
   rounded var(--aui-radius-rounded),
-  max var(--aui-radius-max);
+  max var(--aui-radius-max),
+  none var(--aui-radius-none);
 @each $k, $v in $border-radius {
   .aui-radius-#{$k} {
     border-radius: $v;
@@ -563,12 +544,11 @@ $border-radius:
 }
 
 $border-widths:
-  none 0px,
   xs 1px,
   s 2px,
   m 4px,
   l 8px,
-  xl 16px;
+  none 0px;
 $border-styles:
   solid solid,
   dotted dotted,
@@ -616,13 +596,22 @@ $shadows:
 }
 
 $opacity:
-  none 0,
   disabled var(--aui-opacity-disabled),
   dim var(--aui-opacity-dim),
-  full 1;
+  full 1,
+  none 0;
 @each $token, $val in $opacity {
   .aui-op-#{$token} {
     opacity: $val;
+  }
+}
+
+// Content types
+@each $type in "success", "warning", "error", "info", "static" {
+  .aui-content-#{$type} {
+    background-color: var(--aui-#{$type}-background);
+    color: var(--aui-#{$type}-color);
+    border-color: var(--aui-#{$type}-border);
   }
 }
 
@@ -653,6 +642,16 @@ $text-align: left right center;
 @each $align in $text-align {
   .aui-ta-#{$align} {
     text-align: $align;
+  }
+}
+
+$line-heights:
+  "s" 1.15,
+  "m" 1.5,
+  "l" 2;
+@each $token, $size in $line-heights {
+  .aui-lh-#{$token} {
+    line-height: $size;
   }
 }
 

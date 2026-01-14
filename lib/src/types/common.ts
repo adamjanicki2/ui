@@ -7,7 +7,7 @@ export type ReadonlyableArray<T> = readonly T[] | T[];
 export type Children = React.ReactNode | ReadonlyableArray<React.ReactNode>;
 
 /** Content type used for UI styling */
-export type ContentType = "error" | "info" | "static" | "success" | "warning";
+export type SignalType = "error" | "info" | "static" | "success" | "warning";
 
 /** Inline CSS style */
 export type Style = React.CSSProperties;
@@ -43,7 +43,7 @@ export type Vfx = {
   /** Border bottom */
   borderBottom?: boolean;
   /** Border thickness */
-  borderWidth?: SpacingSize;
+  borderWidth?: "none" | "xs" | "s" | "m" | "l";
   /** Border type */
   borderStyle?: "dashed" | "dotted" | "none" | "solid";
   /** Border color */
@@ -66,12 +66,16 @@ export type Vfx = {
   gap?: SpacingSize;
   /** Height of the content */
   height?: SizeDimension;
+  /** Styles to apply on hover when element is not disabled */
+  hover?: "dim" | "undim" | "shade";
   /** Text alignment */
   textAlign?: "center" | "left" | "right";
   /** Use italics */
   italics?: boolean;
   /** How to space the children (Equivalent to justify-content) */
   justify?: "around" | "between" | "center" | "end" | "start";
+  /** Options for line height size */
+  lineHeight?: "s" | "m" | "l";
   /** Margin outside the content */
   margin?: AutoSize;
   /** Bottom margin outside the content */

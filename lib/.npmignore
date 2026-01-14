@@ -2,9 +2,10 @@
 node_modules/
 package-lock.json
 
-# source & tests
+# source, tests, and build scripts
 src/
 test/
+scripts/
 
 # python
 *.py

@@ -40,7 +40,7 @@ type ColumnConfig<
 > = {
   /** Additional props for the body cell container */
   cellProps?: ContainerProps;
-  /** What to render as the header */
+  /** What to render for the title */
   header: React.ReactNode;
   /** The key in the item struct for this column */
   key: Key;
@@ -58,11 +58,10 @@ type Props<Item extends MinimalItem> = ContainerProps & {
   columns: ReadonlyableArray<ColumnConfig<Item>>;
   /** Whether to render a small separator between columns */
   gutters?: boolean;
-  /**
-   * Additional props for each header cell container.
-   * @default {}
-   */
+  /** Additional props for each header cell container */
   headerCellProps?: ContainerProps;
+  /** Additional props for the header row container */
+  headerRowProps?: ContainerProps;
   /** Items to render in the rows of the table */
   items: ReadonlyableArray<Item>;
   /** A single link, or list of actions or links to store in an overflow menu at the end of the row */
@@ -99,6 +98,7 @@ const Table = <Item extends MinimalItem>({
   items,
   columns,
   headerCellProps = {},
+  headerRowProps = {},
   sort,
   rowActions,
   vfx,
@@ -107,6 +107,8 @@ const Table = <Item extends MinimalItem>({
 }: Props<Item>) => {
   const hasActionMenu =
     !!rowActions && items.some((item) => isRowActionList(rowActions(item)));
+  const { className: headerRowClassName, ...restHeaderRowProps } =
+    headerRowProps;
 
   return (
     // Table container
@@ -125,12 +127,20 @@ const Table = <Item extends MinimalItem>({
       {/* Inner container (scrollable within parent) */}
       <Box className="aui-table" role="table" vfx={{ width: "full" }}>
         {/* Header row */}
-        <Box className="aui-table-row" role="row">
+        <Box
+          {...restHeaderRowProps}
+          className={classNames("aui-table-row", headerRowClassName)}
+          role="row"
+        >
           {columns.map(({ key, header, sortable = false }, colIndex) => {
             const columnSorted = sortable && sort && sort.key === key;
             const direction = columnSorted ? sort.direction : "none";
             const icon = sortable ? directionToIcon[direction] : null;
             const { vfx, ...restHeaderCellProps } = headerCellProps;
+
+            const headerContent = (
+              <Box vfx={{ fontSize: "s", fontWeight: 7 }}>{header}</Box>
+            );
 
             return (
               <TableCell
@@ -139,8 +149,6 @@ const Table = <Item extends MinimalItem>({
                 vfx={{
                   borderRight: gutters && colIndex < columns.length - 1,
                   borderBottom: true,
-                  fontSize: "s",
-                  fontWeight: 7,
                   ...vfx,
                 }}
               >
@@ -149,14 +157,9 @@ const Table = <Item extends MinimalItem>({
                     onClick={() =>
                       sort.onSort(key, nextSortDirection[direction])
                     }
-                    vfx={{
-                      fontWeight: 7,
-                      axis: "x",
-                      align: "center",
-                      gap: "s",
-                    }}
+                    vfx={{ axis: "x", align: "center", gap: "xs" }}
                   >
-                    {header}
+                    {headerContent}
                     {
                       <Icon
                         icon={icon}
@@ -167,7 +170,7 @@ const Table = <Item extends MinimalItem>({
                     }
                   </UnstyledButton>
                 ) : (
-                  header
+                  headerContent
                 )}
               </TableCell>
             );
@@ -253,7 +256,8 @@ const TableBodyRow = <Item extends MinimalItem>({
     <UnstyledLink
       {...rowProps}
       {...rowLink}
-      className="aui-table-row aui-subtle-hover"
+      className="aui-table-row"
+      vfx={{ hover: "shade" }}
     />
   );
 };
@@ -300,8 +304,8 @@ const RowActionsMenu = ({
             fontSize: "s",
             fontWeight: 6,
             radius: "rounded",
+            hover: "shade",
           },
-          className: "aui-subtle-hover",
         } as const;
 
         return "to" in rowAction ? (

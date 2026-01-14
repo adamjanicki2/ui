@@ -1,10 +1,7 @@
 export { default as Accordion } from "./Accordion";
-export { default as Alert } from "./Alert";
 export { default as Animated } from "./Animated";
 export { default as Autocomplete } from "./Autocomplete";
 export { default as Avatar } from "./Avatar";
-export { default as Badge } from "./Badge";
-export { default as Banner } from "./Banner";
 export { default as Box } from "./Box";
 export { default as Button, IconButton, UnstyledButton } from "./Button";
 export { default as Carousel } from "./Carousel";
@@ -18,6 +15,7 @@ export { default as Layer } from "./Layer";
 export { default as Modal } from "./Modal";
 export { default as Popover } from "./Popover";
 export { default as Select } from "./Select";
+export { Alert, Badge, Banner } from "./Signal";
 export { default as Spinner } from "./Spinner";
 export { default as Table } from "./Table";
 export { default as Tooltip } from "./Tooltip";
