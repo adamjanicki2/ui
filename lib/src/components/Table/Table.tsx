@@ -40,8 +40,8 @@ type ColumnConfig<
 > = {
   /** Additional props for the body cell container */
   cellProps?: ContainerProps;
-  /** What to render as the header */
-  header: React.ReactNode;
+  /** What to use as the column's title */
+  header: string;
   /** The key in the item struct for this column */
   key: Key;
   /** Custom render function for the inner cell content */
