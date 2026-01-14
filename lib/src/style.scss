@@ -463,7 +463,6 @@ $aui-icon-size: (
 
 // Spacing Utilities
 $aui-space: (
-  none: 0,
   xxs: var(--aui-xxs),
   xs: var(--aui-xs),
   s: var(--aui-s),
@@ -471,6 +470,7 @@ $aui-space: (
   l: var(--aui-l),
   xl: var(--aui-xl),
   xxl: var(--aui-xxl),
+  none: 0,
 );
 
 $padding-props:
@@ -533,10 +533,10 @@ $dimension-vals:
 
 // Border & Shadow Utilities
 $border-radius:
-  none var(--aui-radius-none),
   subtle var(--aui-radius-subtle),
   rounded var(--aui-radius-rounded),
-  max var(--aui-radius-max);
+  max var(--aui-radius-max),
+  none var(--aui-radius-none);
 @each $k, $v in $border-radius {
   .aui-radius-#{$k} {
     border-radius: $v;
@@ -544,11 +544,11 @@ $border-radius:
 }
 
 $border-widths:
-  none 0px,
   xs 1px,
   s 2px,
   m 4px,
-  l 8px;
+  l 8px,
+  none 0px;
 $border-styles:
   solid solid,
   dotted dotted,
@@ -596,10 +596,10 @@ $shadows:
 }
 
 $opacity:
-  none 0,
   disabled var(--aui-opacity-disabled),
   dim var(--aui-opacity-dim),
-  full 1;
+  full 1,
+  none 0;
 @each $token, $val in $opacity {
   .aui-op-#{$token} {
     opacity: $val;
