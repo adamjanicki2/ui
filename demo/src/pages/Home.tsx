@@ -52,7 +52,7 @@ export default function Home() {
           <Link to="/miscellaneous">Miscellaneous</Link>
         </ui.li>
         <ui.li>
-          <Link to="/floating">Floating</Link>
+          <Link to="/overlay">Overlay</Link>
         </ui.li>
       </ui.ul>
       <Para>

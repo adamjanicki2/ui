@@ -1,11 +1,13 @@
 :root {
   --nav-background-color: white;
-  --nav-box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  --nav-box-shadow:
+    0px 1px 0px rgba(0, 0, 0, 0.04), 0px 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 [data-theme="dark"] {
   --nav-background-color: var(--aui-obsidian);
-  --nav-box-shadow: 0px 4px 10px 0px rgba(120, 120, 120, 0.25);
+  --nav-box-shadow:
+    0px 1px 0px rgba(255, 255, 255, 0.04), 0px 6px 16px rgba(0, 0, 0, 0.5);
 }
 
 .nav {

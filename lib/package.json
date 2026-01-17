@@ -21,8 +21,7 @@
     "prepare": "npm run build"
   },
   "peerDependencies": {
-    "react": ">=19",
-    "react-dom": ">=19"
+    "react": ">=19"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.7.0",
@@ -30,7 +29,6 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
     "esbuild": "^0.27.2",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
