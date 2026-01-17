@@ -380,20 +380,20 @@ textarea {
   }
 }
 
-// Layout Utilities
-$positions: relative, absolute, fixed, sticky;
-@each $pos in $positions {
-  .aui-pos-#{$pos} {
-    position: $pos;
-  }
-}
+// Positioning & alignment
+
+$positions:
+  relative relative,
+  absolute absolute,
+  fixed fixed,
+  sticky sticky;
+@include spread-classes(pos, position, $positions);
 
 $flex-directions:
   x row,
   y column,
   "-x" row-reverse,
   "-y" column-reverse;
-
 @each $class, $dir in $flex-directions {
   .aui-flex-#{$class} {
     display: flex;
@@ -409,11 +409,7 @@ $align-items:
   start flex-start,
   center center,
   end flex-end;
-@each $class, $val in $align-items {
-  .aui-align-#{$class} {
-    align-items: $val;
-  }
-}
+@include spread-classes(align, align-items, $align-items);
 
 $justify-items:
   start flex-start,
@@ -421,13 +417,8 @@ $justify-items:
   end flex-end,
   between space-between,
   around space-around;
-@each $class, $val in $justify-items {
-  .aui-justify-#{$class} {
-    justify-content: $val;
-  }
-}
+@include spread-classes(justify, justify-content, $justify-items);
 
-// Flex presets
 .aui-stretch-even {
   flex: 1 1 0;
 }
@@ -444,7 +435,8 @@ $justify-items:
   flex: 0 0 100%;
 }
 
-// Avatar and Icon Utilities
+// Avatar and Icon
+
 $aui-avatar-color: (
   "red": var(--aui-avatar-red),
   "yellow": var(--aui-avatar-yellow),
@@ -452,11 +444,7 @@ $aui-avatar-color: (
   "blue": var(--aui-avatar-blue),
   "purple": var(--aui-avatar-purple),
 );
-@each $k, $v in $aui-avatar-color {
-  .aui-avatar-#{$k} {
-    background-color: $v;
-  }
-}
+@include spread-classes(avatar, background-color, $aui-avatar-color);
 
 $aui-avatar-size: (
   xxs: 12px,
@@ -492,7 +480,8 @@ $aui-icon-size: (
   }
 }
 
-// Spacing Utilities
+// Spacing
+
 $aui-space: (
   xxs: var(--aui-xxs),
   xs: var(--aui-xs),
@@ -510,7 +499,6 @@ $padding-props:
   pb padding-bottom,
   pl padding-left,
   pr padding-right;
-// Padding
 @include spread-spacing-classes($padding-props, $aui-space);
 
 $margin-props:
@@ -519,13 +507,12 @@ $margin-props:
   mb margin-bottom,
   ml margin-left,
   mr margin-right;
-// Margin
 @include spread-spacing-classes($margin-props, $aui-space, true);
 
-// Gap
 @include spread-classes(gap, gap, $aui-space);
 
-// Dimension Utilities
+// Sizing
+
 $dimension-props:
   w width,
   minw min-width,
@@ -538,16 +525,15 @@ $dimension-vals:
   fit fit-content,
   min min-content,
   max max-content;
-// Dimensions
 @include spread-classes-for-props($dimension-props, $dimension-vals);
 
-// Border & Shadow Utilities
+// Border & Shadow
+
 $border-radius:
   subtle var(--aui-radius-subtle),
   rounded var(--aui-radius-rounded),
   max var(--aui-radius-max),
   none var(--aui-radius-none);
-// Border radius
 @include spread-classes(radius, border-radius, $border-radius);
 
 $border-widths:
@@ -576,18 +562,17 @@ $border-sides:
     #{$prop}: 1px solid var(--aui-default-border);
   }
 }
-// Border widths
+
 @include spread-classes(bw, border-width, $border-widths);
-// Border styles
+
 @include spread-classes(bs, border-style, $border-styles);
-// Border colors
+
 @include spread-classes(bc, border-color, $border-colors);
 
 $shadows:
   "subtle" var(--aui-subtle-box-shadow),
   "floating" var(--aui-floating-box-shadow),
   "none" none;
-// Shadows
 @include spread-classes(shadow, box-shadow, $shadows);
 
 $opacity:
@@ -595,10 +580,10 @@ $opacity:
   dim var(--aui-opacity-dim),
   full 1,
   none 0;
-// Opacity
 @include spread-classes(op, opacity, $opacity);
 
 // Content types
+
 @each $type in "success", "warning", "error", "info", "static" {
   .aui-content-#{$type} {
     background-color: var(--aui-#{$type}-background);
@@ -607,7 +592,8 @@ $opacity:
   }
 }
 
-// Typography Utilities
+// Typography
+
 $font-sizes:
   "xxs" 10px,
   "xs" 12px,
@@ -627,12 +613,12 @@ $font-weights: 1 2 3 4 5 6 7 8 9;
   }
 }
 
-$text-align: left right center;
-@each $align in $text-align {
-  .aui-ta-#{$align} {
-    text-align: $align;
-  }
-}
+$text-align:
+  left left,
+  right right,
+  center center;
+// Text align
+@include spread-classes(ta, text-align, $text-align);
 
 $line-heights:
   "s" 1.15,
@@ -646,12 +632,12 @@ $line-heights:
 }
 
 // Colors
+
 $colors:
   "default" var(--aui-color-default),
   "muted" var(--aui-color-muted),
   "inherit" inherit,
   "transparent" transparent;
-// Text colors
 @include spread-classes(c, color, $colors);
 
 $bg-colors:
@@ -659,23 +645,17 @@ $bg-colors:
   "muted" var(--aui-static-background),
   "inherit" inherit,
   "transparent" transparent;
-// Background colors
 @include spread-classes(bg, background-color, $bg-colors);
 
 $overflows:
   "auto" auto,
   "hidden" hidden;
-@each $token, $overflow in $overflows {
-  .aui-ov-#{$token} {
-    overflow: $overflow;
-  }
-  .aui-ov-x-#{$token} {
-    overflow-x: $overflow;
-  }
-  .aui-ov-y-#{$token} {
-    overflow-y: $overflow;
-  }
-}
+$overflow-props:
+  ov overflow,
+  ov-x overflow-x,
+  ov-y overflow-y;
+// Overflow
+@include spread-classes-for-props($overflow-props, $overflows);
 
 $z-indexes:
   "auto" auto,
@@ -685,9 +665,8 @@ $z-indexes:
 // Z-index
 @include spread-classes(z, z-index, $z-indexes);
 
-$cursors: auto, pointer;
-@each $cursor in $cursors {
-  .aui-cursor-#{$cursor} {
-    cursor: $cursor;
-  }
-}
+$cursors:
+  auto auto,
+  pointer pointer;
+// Cursor
+@include spread-classes(cursor, cursor, $cursors);
