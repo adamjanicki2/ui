@@ -350,6 +350,36 @@ textarea {
   height: var(--aui-s);
 }
 
+// Begin main SCSS
+@mixin spread-classes($prefix, $prop, $map) {
+  @each $token, $val in $map {
+    .aui-#{$prefix}-#{$token} {
+      #{$prop}: $val;
+    }
+  }
+}
+
+@mixin spread-classes-for-props($props, $vals) {
+  @each $prefix, $prop in $props {
+    @include spread-classes($prefix, $prop, $vals);
+  }
+}
+
+@mixin spread-spacing-classes($props, $space, $allow-auto: false) {
+  @each $prefix, $prop in $props {
+    @if $allow-auto {
+      .aui-#{$prefix}-auto {
+        #{$prop}: auto;
+      }
+    }
+    @each $k, $v in $space {
+      .aui-#{$prefix}-#{$k} {
+        #{$prop}: $v;
+      }
+    }
+  }
+}
+
 // Layout Utilities
 $positions: relative, absolute, fixed, sticky;
 @each $pos in $positions {
@@ -480,13 +510,8 @@ $padding-props:
   pb padding-bottom,
   pl padding-left,
   pr padding-right;
-@each $prefix, $prop in $padding-props {
-  @each $k, $v in $aui-space {
-    .aui-#{$prefix}-#{$k} {
-      #{$prop}: $v;
-    }
-  }
-}
+// Padding
+@include spread-spacing-classes($padding-props, $aui-space);
 
 $margin-props:
   ma margin,
@@ -494,22 +519,11 @@ $margin-props:
   mb margin-bottom,
   ml margin-left,
   mr margin-right;
-@each $prefix, $prop in $margin-props {
-  .aui-#{$prefix}-auto {
-    #{$prop}: auto;
-  }
-  @each $k, $v in $aui-space {
-    .aui-#{$prefix}-#{$k} {
-      #{$prop}: $v;
-    }
-  }
-}
+// Margin
+@include spread-spacing-classes($margin-props, $aui-space, true);
 
-@each $k, $v in $aui-space {
-  .aui-gap-#{$k} {
-    gap: $v;
-  }
-}
+// Gap
+@include spread-classes(gap, gap, $aui-space);
 
 // Dimension Utilities
 $dimension-props:
@@ -524,13 +538,8 @@ $dimension-vals:
   fit fit-content,
   min min-content,
   max max-content;
-@each $short, $prop in $dimension-props {
-  @each $name, $val in $dimension-vals {
-    .aui-#{$short}-#{$name} {
-      #{$prop}: $val;
-    }
-  }
-}
+// Dimensions
+@include spread-classes-for-props($dimension-props, $dimension-vals);
 
 // Border & Shadow Utilities
 $border-radius:
@@ -538,11 +547,8 @@ $border-radius:
   rounded var(--aui-radius-rounded),
   max var(--aui-radius-max),
   none var(--aui-radius-none);
-@each $k, $v in $border-radius {
-  .aui-radius-#{$k} {
-    border-radius: $v;
-  }
-}
+// Border radius
+@include spread-classes(radius, border-radius, $border-radius);
 
 $border-widths:
   xs 1px,
@@ -570,42 +576,27 @@ $border-sides:
     #{$prop}: 1px solid var(--aui-default-border);
   }
 }
-@each $token, $val in $border-widths {
-  .aui-bw-#{$token} {
-    border-width: $val;
-  }
-}
-@each $token, $val in $border-styles {
-  .aui-bs-#{$token} {
-    border-style: $val;
-  }
-}
-@each $token, $val in $border-colors {
-  .aui-bc-#{$token} {
-    border-color: $val;
-  }
-}
+// Border widths
+@include spread-classes(bw, border-width, $border-widths);
+// Border styles
+@include spread-classes(bs, border-style, $border-styles);
+// Border colors
+@include spread-classes(bc, border-color, $border-colors);
 
 $shadows:
   "subtle" var(--aui-subtle-box-shadow),
   "floating" var(--aui-floating-box-shadow),
   "none" none;
-@each $token, $val in $shadows {
-  .aui-shadow-#{$token} {
-    box-shadow: $val;
-  }
-}
+// Shadows
+@include spread-classes(shadow, box-shadow, $shadows);
 
 $opacity:
   disabled var(--aui-opacity-disabled),
   dim var(--aui-opacity-dim),
   full 1,
   none 0;
-@each $token, $val in $opacity {
-  .aui-op-#{$token} {
-    opacity: $val;
-  }
-}
+// Opacity
+@include spread-classes(op, opacity, $opacity);
 
 // Content types
 @each $type in "success", "warning", "error", "info", "static" {
@@ -626,11 +617,8 @@ $font-sizes:
   "l" 24px,
   "xl" 32px,
   "xxl" 48px;
-@each $token, $size in $font-sizes {
-  .aui-f-#{$token} {
-    font-size: $size;
-  }
-}
+// Font sizes
+@include spread-classes(f, font-size, $font-sizes);
 
 $font-weights: 1 2 3 4 5 6 7 8 9;
 @each $w in $font-weights {
@@ -650,11 +638,8 @@ $line-heights:
   "s" 1.15,
   "m" 1.5,
   "l" 2;
-@each $token, $size in $line-heights {
-  .aui-lh-#{$token} {
-    line-height: $size;
-  }
-}
+// Line heights
+@include spread-classes(lh, line-height, $line-heights);
 
 .aui-it {
   font-style: italic;
@@ -666,22 +651,16 @@ $colors:
   "muted" var(--aui-color-muted),
   "inherit" inherit,
   "transparent" transparent;
-@each $token, $color in $colors {
-  .aui-c-#{$token} {
-    color: $color;
-  }
-}
+// Text colors
+@include spread-classes(c, color, $colors);
 
 $bg-colors:
   "default" var(--aui-default-background),
   "muted" var(--aui-static-background),
   "inherit" inherit,
   "transparent" transparent;
-@each $token, $color in $bg-colors {
-  .aui-bg-#{$token} {
-    background-color: $color;
-  }
-}
+// Background colors
+@include spread-classes(bg, background-color, $bg-colors);
 
 $overflows:
   "auto" auto,
@@ -703,11 +682,8 @@ $z-indexes:
   "floating" 100,
   "nav" 1000,
   "max" 10000;
-@each $token, $z in $z-indexes {
-  .aui-z-#{$token} {
-    z-index: $z;
-  }
-}
+// Z-index
+@include spread-classes(z, z-index, $z-indexes);
 
 $cursors: auto, pointer;
 @each $cursor in $cursors {
