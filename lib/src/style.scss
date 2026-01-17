@@ -13,6 +13,7 @@
   --aui-xxl: 64px;
 
   /* Colors */
+  --aui-light-gray: #e8e8e8;
   --aui-moon-gray: #ccc;
   --aui-dark-gray: #555;
   --aui-darkest-gray: #333;
@@ -66,7 +67,7 @@
   --aui-avatar-green: #add386;
   --aui-avatar-yellow: #f5c76d;
 
-  --aui-static-background: #e8e8e8;
+  --aui-static-background: var(--aui-light-gray);
   --aui-static-color: var(--aui-color-default);
   --aui-static-border: var(--aui-default-border);
 
