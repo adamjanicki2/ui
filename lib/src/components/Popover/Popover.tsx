@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 
+import useEventListener from "../../hooks/useEventListener";
 import useMergeRefs from "../../hooks/useMergeRefs";
 import type { Children } from "../../types/common";
 import { DEFAULT_ANIMATION_DURATION_S } from "../Animated/Animated";
 import useClickOutside from "../ClickOutside/useClickOutside";
 import Floating from "../Floating";
+import { DEFAULT_FLOATING_VFX } from "../Floating/Floating";
 
 type FloatingProps = React.ComponentProps<typeof Floating>;
 
@@ -49,27 +51,20 @@ const Popover = ({
     onClickOutside: onClose,
   });
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && openRef.current) onCloseRef.current();
-    };
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Escape" && openRef.current) onCloseRef.current();
+  };
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  useEventListener({
+    event: "keydown",
+    handler: handleKeyDown,
+    target: document,
+  });
 
   return (
     <Floating
       {...floatingProps}
-      vfx={{
-        padding: "s",
-        backgroundColor: "default",
-        border: true,
-        shadow: "floating",
-        radius: "rounded",
-        z: "floating",
-        ...vfx,
-      }}
+      vfx={{ ...DEFAULT_FLOATING_VFX, ...vfx }}
       ref={floatingRef}
       anchor={React.cloneElement(anchor, { ref: mergedAnchorRef })}
       visible={open}

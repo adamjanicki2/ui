@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import useMergeRefs from "../../hooks/useMergeRefs";
 import type { Children } from "../../types/common";
 import { DEFAULT_ANIMATION_DURATION_S } from "../Animated/Animated";
-import Floating from "../Floating/Floating";
+import Floating, { DEFAULT_FLOATING_VFX } from "../Floating/Floating";
 
 type FloatingProps = React.ComponentProps<typeof Floating>;
 
@@ -209,15 +209,7 @@ const Tooltip = ({
       onPointerLeave={(e: React.PointerEvent) => {
         if (e.pointerType === "mouse") startTracking();
       }}
-      vfx={{
-        padding: "s",
-        backgroundColor: "default",
-        border: true,
-        shadow: "floating",
-        radius: "rounded",
-        z: "floating",
-        ...vfx,
-      }}
+      vfx={{ ...DEFAULT_FLOATING_VFX, ...vfx }}
       floating={children}
     />
   );

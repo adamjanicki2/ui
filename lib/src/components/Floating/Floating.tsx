@@ -344,4 +344,13 @@ function convertToViewport(pos: Position, container: ContainerInfo): Position {
   };
 }
 
+export const DEFAULT_FLOATING_VFX = {
+  padding: "s",
+  backgroundColor: "default",
+  border: true,
+  shadow: "floating",
+  radius: "rounded",
+  z: "floating",
+} as const;
+
 export default Floating;
