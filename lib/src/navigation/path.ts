@@ -15,9 +15,7 @@ export function matchPath(
   const patternSegments = pattern.split("/").filter(Boolean);
   const pathSegments = pathname.split("/").filter(Boolean);
 
-  if (patternSegments.length !== pathSegments.length) {
-    return false;
-  }
+  if (patternSegments.length !== pathSegments.length) return false;
 
   const params: PathParams = {};
 

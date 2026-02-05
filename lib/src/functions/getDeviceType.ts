@@ -14,9 +14,7 @@ export default function getDeviceType(): DeviceType {
 
   const isNewIpad = platform === "MacIntel" && maxTouchPoints > 1;
 
-  if ((isMobileUserAgent && isTouchScreen) || isNewIpad) {
-    return "mobile";
-  }
+  if ((isMobileUserAgent && isTouchScreen) || isNewIpad) return "mobile";
 
   return "desktop";
 }

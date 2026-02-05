@@ -48,9 +48,8 @@ export function stripBasename(pathname: string, basename?: string) {
 
   if (pathname === basename) return "/";
 
-  if (pathname.startsWith(basename + "/")) {
+  if (pathname.startsWith(basename + "/"))
     return pathname.slice(basename.length);
-  }
 
   return pathname;
 }

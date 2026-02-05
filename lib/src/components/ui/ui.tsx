@@ -44,9 +44,7 @@ const ui = new Proxy(
   {
     get: (cache: Partial<UI>, tag: Tag) => {
       const cachedComponent = cache[tag];
-      if (cachedComponent) {
-        return cachedComponent;
-      }
+      if (cachedComponent) return cachedComponent;
 
       const component = createVfxElement(tag);
       cache[tag] = component;

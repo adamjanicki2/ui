@@ -263,9 +263,7 @@ describe("Router", () => {
     );
 
     expect(window.location.pathname).toBe("/app/base/relative");
-    expect(screen.getByTestId("pathname")).toHaveTextContent(
-      "/base/relative"
-    );
+    expect(screen.getByTestId("pathname")).toHaveTextContent("/base/relative");
     expect(window.scrollTo).not.toHaveBeenCalled();
   });
 });

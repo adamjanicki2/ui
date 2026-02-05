@@ -68,9 +68,8 @@ export default function Router({
     // Scroll restoration logic
     const state = scrollStateRef.current;
     if (resetScroll) {
-      if (state.scrollRestoration === null) {
+      if (state.scrollRestoration === null)
         state.scrollRestoration = window.history.scrollRestoration;
-      }
       window.history.scrollRestoration = "manual";
 
       if (state.prevPathname !== location.pathname) {

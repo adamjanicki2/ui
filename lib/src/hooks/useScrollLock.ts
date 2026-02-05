@@ -56,15 +56,11 @@ function release() {
 const lockScroll = () => {
   lockCount += 1;
 
-  if (lockCount === 1) {
-    acquire();
-  }
+  if (lockCount === 1) acquire();
 
   return () => {
     lockCount -= 1;
-    if (lockCount === 0) {
-      release();
-    }
+    if (lockCount === 0) release();
   };
 };
 

@@ -34,9 +34,8 @@ export default class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidUpdate(prevProps: Readonly<Props>) {
-    if (this.depsUpdated(this.props.deps, prevProps.deps)) {
+    if (this.depsUpdated(this.props.deps, prevProps.deps))
       this.resetErrorBoundary();
-    }
   }
 
   private resetErrorBoundary = () => {
@@ -59,9 +58,7 @@ export default class ErrorBoundary extends React.Component<Props, State> {
     const { Fallback, children } = this.props;
     const { error } = this.state;
 
-    if (!error) {
-      return children;
-    }
+    if (!error) return children;
 
     return <Fallback error={error} reset={this.resetErrorBoundary} />;
   }
