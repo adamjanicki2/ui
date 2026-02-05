@@ -71,7 +71,7 @@ export type Vfx = {
   /** Text alignment */
   textAlign?: "center" | "left" | "right";
   /** Use italics */
-  italics?: boolean;
+  italics?: true;
   /** How to space the children (Equivalent to justify-content) */
   justify?: "around" | "between" | "center" | "end" | "start";
   /** Options for line height size */
@@ -131,7 +131,7 @@ export type Vfx = {
   /** Width of the content */
   width?: SizeDimension;
   /** Whether to allow wrapping of children */
-  wrap?: boolean;
+  wrap?: true;
   /** Z-index to position the element at */
   z?: "auto" | "floating" | "max" | "nav";
 };

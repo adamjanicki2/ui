@@ -573,6 +573,9 @@ $border-sides:
   .aui-#{$token} {
     #{$prop}: 1px solid var(--aui-default-border);
   }
+  .aui-#{$token}-none {
+    #{$prop}: none;
+  }
 }
 
 @include spread-classes(bw, border-width, $border-widths);
