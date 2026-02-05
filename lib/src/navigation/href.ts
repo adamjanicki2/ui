@@ -1,4 +1,4 @@
-import { popSlash, prependSlash } from "./slash";
+import { normalizeSlashes, popSlash, prependSlash } from "./slash";
 
 export type Href = {
   type: "external" | "internal" | "octo" | "unknown";
@@ -36,8 +36,7 @@ export function getHref(
 
 export function normalizeBasename(basename: string): string {
   if (!basename || basename === "/") return "";
-
-  return prependSlash(popSlash(basename));
+  return normalizeSlashes(basename);
 }
 
 export function isExternal(to: string) {

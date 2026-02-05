@@ -1,28 +1,19 @@
 import type { PathParams } from "../types/navigation";
-import { popSlash, prependSlash } from "./slash";
-
-function normalizePath(path: string) {
-  path = prependSlash(path);
-  if (path.length > 1) {
-    path = popSlash(path);
-  }
-
-  return path;
-}
+import { normalizeSlashes } from "./slash";
 
 export function matchPath(
   pattern: string,
   pathname: string
 ): PathParams | false {
-  const normalizedPattern = normalizePath(pattern);
-  const normalizedPathname = normalizePath(pathname);
+  pattern = normalizeSlashes(pattern);
+  pathname = normalizeSlashes(pathname);
 
-  if (!normalizedPattern.includes(":")) {
-    return normalizedPattern === normalizedPathname ? {} : false;
+  if (!pattern.includes(":")) {
+    return pattern === pathname ? {} : false;
   }
 
-  const patternSegments = normalizedPattern.split("/").filter(Boolean);
-  const pathSegments = normalizedPathname.split("/").filter(Boolean);
+  const patternSegments = pattern.split("/").filter(Boolean);
+  const pathSegments = pathname.split("/").filter(Boolean);
 
   if (patternSegments.length !== pathSegments.length) {
     return false;

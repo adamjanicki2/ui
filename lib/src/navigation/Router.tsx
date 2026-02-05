@@ -27,6 +27,11 @@ export type Props = {
   resetScroll?: boolean;
 };
 
+type ScrollState = {
+  prevPathname: string;
+  scrollRestoration: History["scrollRestoration"] | null;
+};
+
 /**
  * Router provider for navigation hooks and components.
  */
@@ -45,59 +50,44 @@ export default function Router({
   );
 
   const locationRef = React.useRef<Location>(location);
-  const prevPathnameRef = React.useRef(location.pathname);
-  const prevScrollRestorationRef = React.useRef<
-    History["scrollRestoration"] | null
-  >(null);
+  const scrollStateRef = React.useRef<ScrollState>({
+    prevPathname: location.pathname,
+    scrollRestoration: null,
+  });
 
-  const cleanupScrollRestoration = React.useCallback(() => {
-    const prev = prevScrollRestorationRef.current;
-    if (prev !== null) {
-      window.history.scrollRestoration = prev;
-      prevScrollRestorationRef.current = null;
-    }
-  }, []);
-
-  // effect for managing listeners
   React.useLayoutEffect(() => {
-    const removeListener = history.addListener((nextLocation) => {
-      const location = {
-        ...nextLocation,
-        pathname: stripBasename(nextLocation.pathname, basename),
+    const removeListener = history.addListener((loc) => {
+      const nextLocation = {
+        ...loc,
+        pathname: stripBasename(loc.pathname, basename),
       };
-      locationRef.current = location;
-      setLocation(location);
+      locationRef.current = nextLocation;
+      setLocation(nextLocation);
     });
+
+    // Scroll restoration logic
+    const state = scrollStateRef.current;
+    if (resetScroll) {
+      if (state.scrollRestoration === null) {
+        state.scrollRestoration = window.history.scrollRestoration;
+      }
+      window.history.scrollRestoration = "manual";
+
+      if (state.prevPathname !== location.pathname) {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        state.prevPathname = location.pathname;
+      }
+    }
 
     return () => {
       removeListener();
       history.cleanup();
+      if (state.scrollRestoration !== null) {
+        window.history.scrollRestoration = state.scrollRestoration;
+        state.scrollRestoration = null;
+      }
     };
-  }, [history]);
-
-  // effect for scrolling to top
-  React.useLayoutEffect(() => {
-    const prevPathname = prevPathnameRef.current;
-    const nextPathname = location.pathname;
-
-    prevPathnameRef.current = nextPathname;
-
-    if (!resetScroll) {
-      cleanupScrollRestoration();
-      return;
-    }
-
-    if (prevScrollRestorationRef.current === null) {
-      prevScrollRestorationRef.current = window.history.scrollRestoration;
-    }
-    window.history.scrollRestoration = "manual";
-
-    if (prevPathname !== nextPathname) {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    }
-
-    return cleanupScrollRestoration;
-  }, [location.pathname, resetScroll, cleanupScrollRestoration]);
+  }, [history, location.pathname, resetScroll, basename]);
 
   const navigate: Navigate = React.useCallback(
     (to: string | number, options?: NavigateOptions) => {

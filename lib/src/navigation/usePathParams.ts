@@ -13,7 +13,7 @@ export default function usePathParams(): PathParams {
   const params = React.useContext(PathParamsContext);
   if (!params) {
     throw new Error(
-      "usePathParams() must be used inside of a <Router> component"
+      "usePathParams() must be used inside of a <Routes> component"
     );
   }
 
