@@ -25,11 +25,8 @@ const useMediaQuery = (config: Config): boolean => {
   useEffect(() => {
     const mediaQuery = window.matchMedia(query);
     const listener = (event: MediaQueryListEvent) => {
-      if (event.matches) {
-        onMatch?.();
-      } else {
-        onUnmatch?.();
-      }
+      const callback = event.matches ? onMatch : onUnmatch;
+      callback?.();
       setMatches(event.matches);
     };
     mediaQuery.addEventListener("change", listener);

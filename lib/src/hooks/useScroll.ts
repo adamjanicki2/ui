@@ -11,12 +11,11 @@ const useScroll = (): { scrollX: number; scrollY: number } => {
   });
 
   useEffect(() => {
-    const onScroll = () => {
+    const onScroll = () =>
       setScroll({
         scrollX: window.scrollX,
         scrollY: window.scrollY,
       });
-    };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);

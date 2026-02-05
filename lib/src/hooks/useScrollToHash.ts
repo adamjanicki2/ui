@@ -25,10 +25,8 @@ const useScrollToHash = (config: UseScrollToHashConfig = {}) => {
     const id = hash.substring(1);
     const scrollToId = () =>
       document.getElementById(id)?.scrollIntoView({ behavior });
-    if (delay !== undefined) {
-      const timeout = setTimeout(scrollToId, delay);
-      return () => clearTimeout(timeout);
-    }
+    if (delay !== undefined)
+      return () => clearTimeout(setTimeout(scrollToId, delay));
     scrollToId();
   }, [active, behavior, delay]);
 };

@@ -7,6 +7,5 @@ import useRouterContext from "./useRouterContext";
  * @returns A Navigate function.
  */
 export default function useNavigate(): Navigate {
-  const { navigate } = useRouterContext("useNavigate()");
-  return navigate;
+  return useRouterContext("useNavigate()").navigate;
 }

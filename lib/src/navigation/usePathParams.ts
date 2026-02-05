@@ -11,11 +11,10 @@ import PathParamsContext from "./PathParamsContext";
  */
 export default function usePathParams(): PathParams {
   const params = React.useContext(PathParamsContext);
-  if (!params) {
+  if (!params)
     throw new Error(
       "usePathParams() must be used inside of a <Routes> component"
     );
-  }
 
   return params;
 }

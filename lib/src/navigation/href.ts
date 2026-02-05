@@ -19,9 +19,7 @@ export function getHref(
   const type = "internal";
 
   // absolute
-  if (to.startsWith("/")) {
-    return { type, url: normalizedBasename + to };
-  }
+  if (to.startsWith("/")) return { type, url: normalizedBasename + to };
 
   // relative
   pathname = stripBasename(prependSlash(pathname), normalizedBasename);
@@ -35,8 +33,7 @@ export function getHref(
 }
 
 export function normalizeBasename(basename: string): string {
-  if (!basename || basename === "/") return "";
-  return normalizeSlashes(basename);
+  return !basename || basename === "/" ? "" : normalizeSlashes(basename);
 }
 
 export function isExternal(to: string) {

@@ -28,9 +28,8 @@ function acquire() {
     paddingRight: style.paddingRight,
   };
 
-  if (scrollbarWidth > 0) {
+  if (scrollbarWidth > 0)
     style.paddingRight = `calc(${getComputedStyle(document.body).paddingRight || "0px"} + ${scrollbarWidth}px)`;
-  }
 
   style.overflow = "hidden";
   style.position = "fixed";

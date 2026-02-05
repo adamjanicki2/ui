@@ -30,14 +30,13 @@ const Avatar = React.forwardRef<HTMLDivElement, Props>(
     const useFallback = imageError || !backgroundImage;
 
     const color = chooseColor(username);
-    let avatarClassName: string | undefined = undefined;
+    let avatarClassName: string | undefined;
 
-    if (useFallback) {
+    if (useFallback)
       avatarClassName = classNames(avatarClassName, `aui-avatar-${color}`);
-    }
-    let imageClassName: string | undefined = undefined;
+    let imageClassName: string | undefined;
     let avatarStyle: Style = {};
-    let imageStyle: Style | undefined = undefined;
+    let imageStyle: Style | undefined;
     if (typeof size === "number") {
       avatarStyle = { width: size, height: size, fontSize: 0.8 * size };
       imageStyle = { width: size, height: size };
@@ -45,8 +44,6 @@ const Avatar = React.forwardRef<HTMLDivElement, Props>(
       avatarClassName = classNames(avatarClassName, `aui-avatar-${size}`);
       imageClassName = `aui-avatar-${size}`;
     }
-
-    const fallbackCharacter = username[0];
 
     return (
       <Box
@@ -72,7 +69,7 @@ const Avatar = React.forwardRef<HTMLDivElement, Props>(
             style={imageStyle}
           />
         ) : (
-          fallbackCharacter
+          username[0]
         )}
       </Box>
     );
