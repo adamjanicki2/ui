@@ -23,14 +23,7 @@ type AutoSize = "auto" | SpacingSize;
 type Color = "default" | "inherit" | "muted" | "transparent";
 type Overflow = "auto" | "hidden";
 
-/**
- * Custom styling props that map to class names.
- * This is meant for consistent, token-based styling instead of inline CSS.
- * Keys are converted to class names and applied to the element.
- *
- * @example <ui.span vfx={{ axis: "y", gap: "m", padding: "m" }} />
- * @example <Box vfx={{ radius: "rounded", shadow: "subtle", border: true }} />
- */
+/** Custom styling tokens that map to class names */
 export type Vfx = {
   /** Alignment orthogonal to the selected axis (Equivalent to align-items) */
   align?: "center" | "end" | "start";

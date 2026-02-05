@@ -10,18 +10,12 @@ import { getHref, normalizeBasename, stripBasename } from "./href";
 import RouterContext from "./RouterContext";
 
 export type Props = {
-  /**
-   * Optional basename prefix for all internal navigation.
-   * @example "/app"
-   */
+  /** Basename prefix for all internal navigation */
   basename?: string;
   /** Children to render inside the router provider */
   children: React.ReactNode;
   /**
-   * Whether to reset the page scroll position to the top on navigation.
-   * This applies when navigating to a different pathname (query/hash changes do not reset scroll).
-   * When enabled, this also sets `history.scrollRestoration = "manual"` to avoid browser scroll
-   * restoration fighting the instant scroll.
+   * Whether to reset the page scroll position to the top on pathname change.
    * @default true
    */
   resetScroll?: boolean;
@@ -32,9 +26,7 @@ type ScrollState = {
   scrollRestoration: History["scrollRestoration"] | null;
 };
 
-/**
- * Router provider for navigation hooks and components.
- */
+/** Router provider for navigation hooks and components */
 export default function Router({
   children,
   basename,

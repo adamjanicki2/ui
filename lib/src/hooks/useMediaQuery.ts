@@ -5,10 +5,7 @@ type Config = {
   onMatch?: () => void;
   /** Callback for when the media query does not match */
   onUnmatch?: () => void;
-  /**
-   * The media query to watch for.
-   * @example "(max-width: 820px)"
-   */
+  /** The media query to watch for */
   query: string;
 };
 
