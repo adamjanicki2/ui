@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 
-import scrollToId from "../functions/scrollToId";
-
 type UseScrollToHashConfig = {
   /**
    * Whether or not to scroll to the hash.
@@ -25,11 +23,13 @@ const useScrollToHash = (config: UseScrollToHashConfig = {}) => {
     const hash = window.location.hash;
     if (!active || hash?.length <= 1) return;
     const id = hash.substring(1);
+    const scrollToId = () =>
+      document.getElementById(id)?.scrollIntoView({ behavior });
     if (delay !== undefined) {
-      const timeout = setTimeout(() => scrollToId(id, behavior), delay);
+      const timeout = setTimeout(scrollToId, delay);
       return () => clearTimeout(timeout);
     }
-    scrollToId(id, behavior);
+    scrollToId();
   }, [active, behavior, delay]);
 };
 
