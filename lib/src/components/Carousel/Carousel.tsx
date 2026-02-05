@@ -8,42 +8,30 @@ import Button from "../Button";
 import Icon from "../Icon";
 
 type ButtonProps = {
-  /** Children to render inside the button */
+  /** Children for the button */
   children?: Children;
-  /** Additional class name to apply to the button */
+  /** Additional button class names */
   className?: string;
-  /** Additional styles to apply to the button */
+  /** Additional button styles */
   style?: Style;
 };
 
 type Props = Omit<BoxProps, "children"> & {
-  /**
-   * The interval at which autoplay runs (in seconds).
-   * @example 5
-   */
+  /** Frequency of sliding in seconds */
   autoplayInterval?: number;
-  /** The child elements/slides of the carousel */
+  /** S of the carousel */
   children: ReadonlyableArray<React.ReactNode>;
-  /** Props to supply to the dot buttons */
+  /** Props for the dot buttons */
   dotProps?: Omit<ButtonProps, "children">;
-  /**
-   * How long the transition lasts (in seconds).
-   * @default 1
-   */
+  /** Transition duration in seconds */
   duration?: number;
-  /**
-   * Whether to hide the arrow controls.
-   * @default false
-   */
+  /** Whether to hide the arrow controls */
   hideArrows?: boolean;
-  /**
-   * Whether to hide the dot controls.
-   * @default false
-   */
+  /** Whether to hide the dot controls */
   hideDots?: boolean;
-  /** Props to supply to the left arrow button */
+  /** Props for the left arrow button */
   leftArrowProps?: ButtonProps;
-  /** Props to supply to the right arrow button */
+  /** Props for the right arrow button */
   rightArrowProps?: ButtonProps;
 };
 
@@ -64,7 +52,7 @@ const arrowVfx = {
   padding: "none",
 } as const;
 
-/** A carousel for paging through a list of slides */
+/** A carousel for paging through slides */
 const Carousel = React.forwardRef<HTMLDivElement, Props>(
   (
     {
