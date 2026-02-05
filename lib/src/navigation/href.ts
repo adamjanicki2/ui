@@ -44,7 +44,7 @@ export function isExternal(to: string) {
   return /^(https?:\/\/|mailto:|tel:)/i.test(to);
 }
 
-export function stripBasename(pathname: string, basename: string) {
+export function stripBasename(pathname: string, basename?: string) {
   if (!basename) return pathname;
 
   if (pathname === basename) return "/";

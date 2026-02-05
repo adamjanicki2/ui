@@ -150,7 +150,7 @@ describe("useNavigate", () => {
     await user.click(screen.getByTestId("go-a"));
 
     expect(window.location.pathname).toBe("/app/a");
-    expect(screen.getByTestId("pathname")).toHaveTextContent("/app/a");
+    expect(screen.getByTestId("pathname")).toHaveTextContent("/a");
   });
 
   it("supports basename with non-absolute paths", async () => {
@@ -169,7 +169,7 @@ describe("useNavigate", () => {
 
     expect(window.location.pathname).toBe("/app/base/relative");
     expect(screen.getByTestId("pathname")).toHaveTextContent(
-      "/app/base/relative"
+      "/base/relative"
     );
   });
 

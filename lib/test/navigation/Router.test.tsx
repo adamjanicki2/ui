@@ -221,7 +221,7 @@ describe("Router", () => {
 
     await waitFor(() => {
       expect(window.location.pathname).toBe("/app/a");
-      expect(screen.getByTestId("pathname")).toHaveTextContent("/app/a");
+      expect(screen.getByTestId("pathname")).toHaveTextContent("/a");
     });
 
     expect(window.scrollTo).toHaveBeenCalledTimes(1);
@@ -264,7 +264,7 @@ describe("Router", () => {
 
     expect(window.location.pathname).toBe("/app/base/relative");
     expect(screen.getByTestId("pathname")).toHaveTextContent(
-      "/app/base/relative"
+      "/base/relative"
     );
     expect(window.scrollTo).not.toHaveBeenCalled();
   });

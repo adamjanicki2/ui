@@ -6,7 +6,7 @@ import {
   getCurrentLocation,
   type RouterHistory,
 } from "./history";
-import { getHref, normalizeBasename } from "./href";
+import { getHref, normalizeBasename, stripBasename } from "./href";
 import RouterContext from "./RouterContext";
 
 export type Props = {
@@ -40,7 +40,9 @@ export default function Router({
   if (!historyRef.current) historyRef.current = createRouterHistory();
   const history = historyRef.current;
 
-  const [location, setLocation] = React.useState<Location>(getCurrentLocation);
+  const [location, setLocation] = React.useState<Location>(() =>
+    getCurrentLocation(basename)
+  );
 
   const locationRef = React.useRef<Location>(location);
   const prevPathnameRef = React.useRef(location.pathname);
@@ -59,8 +61,12 @@ export default function Router({
   // effect for managing listeners
   React.useLayoutEffect(() => {
     const removeListener = history.addListener((nextLocation) => {
-      locationRef.current = nextLocation;
-      setLocation(nextLocation);
+      const location = {
+        ...nextLocation,
+        pathname: stripBasename(nextLocation.pathname, basename),
+      };
+      locationRef.current = location;
+      setLocation(location);
     });
 
     return () => {
