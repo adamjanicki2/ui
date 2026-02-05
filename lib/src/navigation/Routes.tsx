@@ -1,7 +1,6 @@
 import React from "react";
 
 import type { Children } from "../types/common";
-import { stripBasename } from "./href";
 import { matchPath } from "./path";
 import PathParamsContext from "./PathParamsContext";
 import Route, { type Props as RouteProps } from "./Route";
@@ -42,8 +41,8 @@ function findRouteElements(children: React.ReactNode) {
  */
 export default function Routes({ children, fallback }: Props): React.ReactNode {
   const router = useRouterContext("<Routes>");
-  const { location, basename } = router;
-  const pathname = stripBasename(location.pathname, basename);
+  const { location } = router;
+  const pathname = location.pathname;
 
   const routes = findRouteElements(children);
 

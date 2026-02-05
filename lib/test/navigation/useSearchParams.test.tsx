@@ -175,4 +175,19 @@ describe("useSearchParams", () => {
       expect(screen.getByTestId("page")).toHaveTextContent("2");
     });
   });
+
+  it("does not duplicate basename when setting params with a basename", async () => {
+    const user = userEvent.setup();
+    window.history.replaceState(null, "", "/app/page");
+
+    render(
+      <Router basename="/app">
+        <Wrapper />
+      </Router>
+    );
+
+    await user.click(screen.getByTestId("set-array"));
+    expect(window.location.pathname).toBe("/app/page");
+    expect(window.location.search).toBe("?tag=a&tag=b&page=2");
+  });
 });

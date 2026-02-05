@@ -9,37 +9,30 @@ import useRouterContext from "./useRouterContext";
 
 function deserialize(search: string): SearchParams {
   const urlSearchParams = new URLSearchParams(search);
-  const searchParams: SearchParams = {};
+  const params: SearchParams = {};
 
   urlSearchParams.forEach((value, key) => {
-    const existing = searchParams[key];
-
-    if (existing === undefined) {
-      searchParams[key] = value;
-    } else if (Array.isArray(existing)) {
-      existing.push(value);
-    } else {
-      searchParams[key] = [existing, value];
-    }
+    const existing = params[key];
+    if (existing === undefined) params[key] = value;
+    else if (Array.isArray(existing)) existing.push(value);
+    else params[key] = [existing, value];
   });
 
-  return searchParams;
+  return params;
 }
 
 function serialize(params: SearchParams): string {
-  const urlSearchParams = new URLSearchParams();
+  const searchParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined) {
-      if (Array.isArray(value)) {
-        value.forEach((subvalue) => urlSearchParams.append(key, subvalue));
-      } else {
-        urlSearchParams.set(key, value);
-      }
+      if (Array.isArray(value))
+        value.forEach((subvalue) => searchParams.append(key, subvalue));
+      else searchParams.set(key, value);
     }
   });
 
-  const stringified = urlSearchParams.toString();
+  const stringified = searchParams.toString();
   return stringified ? `?${stringified}` : "";
 }
 

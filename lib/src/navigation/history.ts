@@ -1,8 +1,9 @@
 import type { HistoryMode, Location } from "../types/navigation";
+import { stripBasename } from "./href";
 
-export function getCurrentLocation(): Location {
+export function getCurrentLocation(basename?: string): Location {
   return {
-    pathname: window.location.pathname,
+    pathname: stripBasename(window.location.pathname, basename),
     search: window.location.search,
     hash: window.location.hash,
   };
