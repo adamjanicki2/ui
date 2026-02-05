@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
-import useEventListener from "../../hooks/useEventListener";
 import useMergeRefs from "../../hooks/useMergeRefs";
 import type { Children } from "../../types/common";
 import { DEFAULT_ANIMATION_DURATION_S } from "../Animated/Animated";
@@ -51,15 +50,14 @@ const Popover = ({
     onClickOutside: onClose,
   });
 
-  const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === "Escape" && openRef.current) onCloseRef.current();
-  };
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && openRef.current) onCloseRef.current();
+    };
 
-  useEventListener({
-    event: "keydown",
-    handler: handleKeyDown,
-    target: document,
-  });
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <Floating

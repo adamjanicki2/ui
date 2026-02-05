@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import classNames from "../../functions/classNames";
-import { useEventListener, useFocusTrap, useScrollLock } from "../../hooks";
+import { useFocusTrap, useScrollLock } from "../../hooks";
 import useMergeRefs from "../../hooks/useMergeRefs";
 import Box, { type BoxProps } from "../Box/Box";
 
@@ -44,14 +44,17 @@ const Layer = React.forwardRef<HTMLDivElement, Props>(
     // Lock and unlock on mount and unmount
     useScrollLock(!disableScrollLock);
 
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      if (!returnFocusOnEscape)
-        (document.activeElement as HTMLElement | null)?.blur?.();
-      onClose?.();
-    };
+    useEffect(() => {
+      const handleEscape = (event: KeyboardEvent) => {
+        if (event.key !== "Escape") return;
+        if (!returnFocusOnEscape)
+          (document.activeElement as HTMLElement | null)?.blur?.();
+        onClose?.();
+      };
 
-    useEventListener({ event: "keydown", handler: handleEscape, target: document });
+      document.addEventListener("keydown", handleEscape);
+      return () => document.removeEventListener("keydown", handleEscape);
+    }, [onClose, returnFocusOnEscape]);
 
     const mergedRef = useMergeRefs(focusRef, children.props.ref);
 

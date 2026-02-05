@@ -1,4 +1,3 @@
-export { default as useEventListener } from "./useEventListener";
 export { default as useFocusTrap } from "./useFocusTrap";
 export { default as useMediaQuery } from "./useMediaQuery";
 export { default as useMergeRefs } from "./useMergeRefs";

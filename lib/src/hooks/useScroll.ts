@@ -1,6 +1,4 @@
-import { useState } from "react";
-
-import useEventListener from "./useEventListener";
+import { useEffect, useState } from "react";
 
 /**
  * A hook getting the current scroll position of the window.
@@ -12,14 +10,16 @@ const useScroll = (): { scrollX: number; scrollY: number } => {
     scrollY: window.scrollY,
   });
 
-  const onScroll = () => {
-    setScroll({
-      scrollX: window.scrollX,
-      scrollY: window.scrollY,
-    });
-  };
-
-  useEventListener({ event: "scroll", handler: onScroll });
+  useEffect(() => {
+    const onScroll = () => {
+      setScroll({
+        scrollX: window.scrollX,
+        scrollY: window.scrollY,
+      });
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return scroll;
 };
