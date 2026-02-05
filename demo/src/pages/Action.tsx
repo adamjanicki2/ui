@@ -61,6 +61,9 @@ export default function Action() {
           <Button variant="secondary" onClick={buttonAction}>
             Secondary
           </Button>
+          <Button variant="danger" onClick={buttonAction}>
+            Danger
+          </Button>
           <UnstyledButton onClick={buttonAction}>Unstyled</UnstyledButton>
           <IconButton icon={download} size="m" onClick={buttonAction} />
         </ShowcaseRow>

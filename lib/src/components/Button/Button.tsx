@@ -16,7 +16,7 @@ export type VisualButtonProps = {
    * Type of button.
    * @default "primary"
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "danger";
 };
 
 type ButtonProps = DefaultButtonProps & VisualButtonProps;
@@ -57,6 +57,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 const hoverVfx = {
   primary: "dim",
   secondary: undefined,
+  danger: "dim",
 } as const;
 
 export const getButtonProps = ({
