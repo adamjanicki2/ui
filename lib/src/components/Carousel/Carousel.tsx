@@ -124,7 +124,7 @@ const Carousel = React.forwardRef<HTMLDivElement, Props>(
     const animatingStyles = animating
       ? {
           transform: `translateX(${-(delta / Math.abs(delta)) * 100}%)`,
-          transition: `transform ${duration}s ease-in-out`,
+          transition: `transform ${duration}s`,
         }
       : undefined;
 

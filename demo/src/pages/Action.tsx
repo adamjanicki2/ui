@@ -156,7 +156,7 @@ export default function Action() {
             <Select
               aria-label="select"
               options={["apple", "orange", "banana", "kiwi"]}
-              onChange={(e) => setSelectValue(e.target.value)}
+              onSelect={setSelectValue}
               value={selectValue}
             />
           </LabeledField>
