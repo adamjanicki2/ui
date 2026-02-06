@@ -10,19 +10,16 @@ import type { ReadonlyableArray } from "../types/common";
  */
 const useMergeRefs = <T>(
   ...refs: ReadonlyableArray<React.Ref<T> | null | undefined>
-): React.Ref<T> => {
-  return useCallback(
+): React.Ref<T> =>
+  useCallback(
     (node: T) => {
       refs.forEach((ref) => {
-        if (typeof ref === "function") {
-          ref(node);
-        } else if (ref && typeof ref === "object" && "current" in ref) {
+        if (typeof ref === "function") ref(node);
+        else if (ref && typeof ref === "object" && "current" in ref)
           ref.current = node;
-        }
       });
     },
     [refs]
   );
-};
 
 export default useMergeRefs;

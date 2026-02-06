@@ -293,13 +293,12 @@ type ContainerInfo = {
 };
 
 function getContainerInfo(container: HTMLElement): ContainerInfo {
-  if (container === document.documentElement) {
+  if (container === document.documentElement)
     return {
       pos: { top: 0, left: 0 },
       scroll: { top: window.scrollY, left: window.scrollX },
       scale: { x: 1, y: 1 },
     };
-  }
 
   const rect = container.getBoundingClientRect();
   const { width, height } = rect;
@@ -343,5 +342,14 @@ function convertToViewport(pos: Position, container: ContainerInfo): Position {
       container.pos.left,
   };
 }
+
+export const DEFAULT_FLOATING_VFX = {
+  padding: "s",
+  backgroundColor: "default",
+  border: true,
+  shadow: "floating",
+  radius: "rounded",
+  z: "floating",
+} as const;
 
 export default Floating;

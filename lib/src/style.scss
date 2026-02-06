@@ -41,7 +41,9 @@
   --aui-button-primary-color: white;
   --aui-button-secondary-border-hover: var(--aui-darkest-gray);
   --aui-subtle-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16);
-  --aui-button-primary-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.36);
+  --aui-button-primary-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.42);
+  --aui-button-danger-background: #cc1122;
+  --aui-button-danger-box-shadow: 0 1px 2px rgba(120, 20, 20, 0.48);
 
   /* Content types */
   --aui-success-background: #dff2e1;
@@ -87,10 +89,12 @@
   --aui-floating-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 
   --aui-button-primary-background: white;
-  --aui-button-primary-color: var(--aui-obsidian);
+  --aui-button-primary-color: black;
   --aui-button-secondary-border-hover: var(--aui-moon-gray);
   --aui-subtle-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --aui-button-primary-box-shadow: 0 1px 2px rgba(64, 64, 64, 0.8);
+  --aui-button-primary-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
+  --aui-button-danger-background: #ff4444;
+  --aui-button-danger-box-shadow: 0 1px 2px rgba(120, 20, 20, 0.75);
 
   --aui-success-background: #2a5733;
   --aui-success-color: #d9efd8;
@@ -178,6 +182,14 @@ textarea {
   border: 1px solid var(--aui-button-primary-background);
   color: var(--aui-button-primary-color);
   box-shadow: var(--aui-button-primary-box-shadow);
+  transition: opacity var(--aui-default-transition);
+}
+
+.aui-button-danger {
+  background-color: var(--aui-button-danger-background);
+  border: 1px solid var(--aui-button-danger-background);
+  color: var(--aui-button-primary-color);
+  box-shadow: var(--aui-button-danger-box-shadow);
   transition: opacity var(--aui-default-transition);
 }
 
@@ -560,6 +572,9 @@ $border-sides:
 @each $token, $prop in $border-sides {
   .aui-#{$token} {
     #{$prop}: 1px solid var(--aui-default-border);
+  }
+  .aui-#{$token}-none {
+    #{$prop}: none;
   }
 }
 

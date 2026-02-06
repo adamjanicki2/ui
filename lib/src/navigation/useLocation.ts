@@ -7,6 +7,5 @@ import useRouterContext from "./useRouterContext";
  * @returns The current location.
  */
 export default function useLocation(): Location {
-  const { location } = useRouterContext("useLocation()");
-  return location;
+  return useRouterContext("useLocation()").location;
 }

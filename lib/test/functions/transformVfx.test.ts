@@ -12,8 +12,8 @@ describe("transformVfx", () => {
     ).toBeNull();
   });
 
-  it("ignores falsy keys", () => {
-    expect(transformVfx({ borderBottom: false })).toBeNull();
+  it("does not ignore explicitly false key", () => {
+    expect(transformVfx({ borderBottom: false })).toBe("aui-bb-none");
   });
 
   it("transforms for simple case", () => {

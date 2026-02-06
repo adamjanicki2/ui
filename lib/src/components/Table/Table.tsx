@@ -235,22 +235,19 @@ const TableBodyRow = <Item extends MinimalItem>({
     );
   });
 
-  if (actions) {
+  if (actions)
     children.push(
       <TableCell key="row-actions" vfx={{ paddingX: "s" }}>
         <RowActionsMenu rowActions={actions} />
       </TableCell>
     );
-  }
 
   const rowProps = {
     role: "row",
     children,
   } as const;
 
-  if (!rowLink) {
-    return <Box {...rowProps} className="aui-table-row" />;
-  }
+  if (!rowLink) return <Box {...rowProps} className="aui-table-row" />;
 
   return (
     <UnstyledLink

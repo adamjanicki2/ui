@@ -12,7 +12,6 @@ export { default as Hamburger } from "./Hamburger";
 export { default as Icon } from "./Icon";
 export { IconInput, default as Input, TextArea } from "./Input";
 export { default as Layer } from "./Layer";
-export { default as Modal } from "./Modal";
 export { default as Popover } from "./Popover";
 export { default as Select } from "./Select";
 export { Alert, Badge, Banner } from "./Signal";

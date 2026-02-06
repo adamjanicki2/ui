@@ -33,7 +33,7 @@ def get_union_type_suffixes_dfs(
     values = []
     types = [t.strip() for t in type_expression.split("|")]
     for type_element in types:
-        if type_element == "boolean":
+        if type_element in {"boolean", "true", "false"}:
             return []
         if re.fullmatch(r'"[^"]+"', type_element):
             values.append(type_element[1:-1])

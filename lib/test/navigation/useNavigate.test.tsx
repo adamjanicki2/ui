@@ -168,9 +168,7 @@ describe("useNavigate", () => {
     await user.click(screen.getByTestId("go-relative"));
 
     expect(window.location.pathname).toBe("/app/base/relative");
-    expect(screen.getByTestId("pathname")).toHaveTextContent(
-      "/base/relative"
-    );
+    expect(screen.getByTestId("pathname")).toHaveTextContent("/base/relative");
   });
 
   it("supports navigating backwards with a history offset", async () => {

@@ -9,8 +9,6 @@ export function popSlash(str: string) {
 export function normalizeSlashes(path: string): string {
   if (!path) return "/";
   path = prependSlash(path);
-  if (path.length > 1) {
-    path = popSlash(path);
-  }
+  if (path.length > 1) path = popSlash(path);
   return path;
 }

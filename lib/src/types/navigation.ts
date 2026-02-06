@@ -1,19 +1,10 @@
 /** Location object of the current URL */
 export type Location = {
-  /**
-   * URL hash
-   * @example "#home"
-   */
+  /** URL hash */
   hash: string;
-  /**
-   * URL pathname
-   * @example "/movies/123"
-   */
+  /** URL pathname */
   pathname: string;
-  /**
-   * URL search
-   * @example "?q=inception"
-   */
+  /** URL search */
   search: string;
 };
 
@@ -21,10 +12,7 @@ export type HistoryMode = "push" | "replace";
 
 /** Additional params to feed the navigate() function */
 export type NavigateOptions = {
-  /**
-   * Whether to append a new entry or overwrite the current browser URL in history.
-   * @default "push"
-   */
+  /** Whether to append a new entry or overwrite the current browser URL in history */
   historyMode?: HistoryMode;
 };
 
@@ -37,24 +25,17 @@ export type Navigate = {
   (to: string, options?: NavigateOptions): void;
   /**
    * Navigate relative to the browser history stack.
-   * Positive values go forward, negative values go backward.
    * @example navigate(-1)
    */
   (historyOffset: number): void;
 };
 
-/**
- * Object containing params from the pathname.
- * @example `{id: "1"}` for `/movie/:id <=> /movie/1`
- */
+/** Params from the pathname */
 export type PathParams = {
   [key: string]: string | undefined;
 };
 
-/**
- * Object containing params from the search string.
- * @example `{id: "1", movies: ["inception", "alien"]}` for `"?id=1&movies=inception&movies=alien"`
- */
+/** Params from the search string */
 export type SearchParams = {
   [key: string]: string | string[] | undefined;
 };

@@ -32,21 +32,16 @@ type UI = {
 };
 
 /**
- * Collection of built-in DOM elements that support the `vfx` prop.
+ * Built-in elements that support the `vfx` prop.
  * `vfx` is transformed into class names and merged with the `className` property if provided.
- * Each element forwards refs and accepts normal props for that intrinsic element.
- *
- * @example <ui.div vfx={{ padding: "m", axis: "y", gap: "s" }} />
- * @example <ui.blockquote vfx={{ radius: "rounded", fontWeight: 6 }} />
+ * @example <ui.span vfx={{ padding: "m", axis: "y", gap: "s" }} />
  */
 const ui = new Proxy(
   {},
   {
     get: (cache: Partial<UI>, tag: Tag) => {
       const cachedComponent = cache[tag];
-      if (cachedComponent) {
-        return cachedComponent;
-      }
+      if (cachedComponent) return cachedComponent;
 
       const component = createVfxElement(tag);
       cache[tag] = component;

@@ -5,6 +5,7 @@ import type { Children } from "../../types/common";
 import { DEFAULT_ANIMATION_DURATION_S } from "../Animated/Animated";
 import useClickOutside from "../ClickOutside/useClickOutside";
 import Floating from "../Floating";
+import { DEFAULT_FLOATING_VFX } from "../Floating/Floating";
 
 type FloatingProps = React.ComponentProps<typeof Floating>;
 
@@ -61,15 +62,7 @@ const Popover = ({
   return (
     <Floating
       {...floatingProps}
-      vfx={{
-        padding: "s",
-        backgroundColor: "default",
-        border: true,
-        shadow: "floating",
-        radius: "rounded",
-        z: "floating",
-        ...vfx,
-      }}
+      vfx={{ ...DEFAULT_FLOATING_VFX, ...vfx }}
       ref={floatingRef}
       anchor={React.cloneElement(anchor, { ref: mergedAnchorRef })}
       visible={open}

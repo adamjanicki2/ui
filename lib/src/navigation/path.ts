@@ -8,16 +8,12 @@ export function matchPath(
   pattern = normalizeSlashes(pattern);
   pathname = normalizeSlashes(pathname);
 
-  if (!pattern.includes(":")) {
-    return pattern === pathname ? {} : false;
-  }
+  if (!pattern.includes(":")) return pattern === pathname ? {} : false;
 
   const patternSegments = pattern.split("/").filter(Boolean);
   const pathSegments = pathname.split("/").filter(Boolean);
 
-  if (patternSegments.length !== pathSegments.length) {
-    return false;
-  }
+  if (patternSegments.length !== pathSegments.length) return false;
 
   const params: PathParams = {};
 
@@ -33,9 +29,7 @@ export function matchPath(
       params[paramName] = pathSegment;
     }
     // static
-    else if (patternSegment !== pathSegment) {
-      return false;
-    }
+    else if (patternSegment !== pathSegment) return false;
   }
 
   return params;

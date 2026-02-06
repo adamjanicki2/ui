@@ -7,15 +7,13 @@ import PathParamsContext from "./PathParamsContext";
  * Get the params from the current pathname.
  *
  * @returns The params from the current path.
- * @example `{id: "1"}` for `/movie/:id <=> /movie/1`
  */
 export default function usePathParams(): PathParams {
   const params = React.useContext(PathParamsContext);
-  if (!params) {
+  if (!params)
     throw new Error(
       "usePathParams() must be used inside of a <Routes> component"
     );
-  }
 
   return params;
 }

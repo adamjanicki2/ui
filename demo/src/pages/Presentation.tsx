@@ -6,7 +6,6 @@ import {
   Button,
   Carousel,
   Layer,
-  Modal,
   Table,
   ui,
 } from "@adamjanicki/ui";
@@ -17,7 +16,6 @@ import {
   boxSnippet,
   carouselSnippet,
   layerSnippet,
-  modalSnippet,
 } from "src/codeSnippets";
 import Page from "src/components/Page";
 import Para from "src/components/Para";
@@ -45,7 +43,6 @@ const compareValues = (a: unknown, b: unknown) => {
 export default function Presentation() {
   const [animatedOpen, setAnimatedOpen] = useState(false);
   const [layerOpen, setLayerOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
   const [openDrawers, setOpenDrawers] = useState<Set<number>>(new Set());
   const [{ key: sortKey, direction: sortDirection }, setSort] = useState<{
     key?: keyof (typeof tableItems)[number];
@@ -240,35 +237,6 @@ export default function Presentation() {
               </Box>
             </Layer>
           )}
-        </ShowcaseRow>
-      </ShowcaseBlock>
-
-      <ShowcaseBlock
-        title="Modal"
-        snippet={modalSnippet}
-        description={
-          <>
-            Built as a simple wrapper on top of the lower-level Layer component,
-            the Modal component seeks to provide an easy interface for commonly
-            used modal design patterns, providing props for doing something on
-            confirm and close.
-          </>
-        }
-      >
-        <ShowcaseRow vfx={{ axis: "y", gap: "s", padding: "none" }}>
-          <Button vfx={{ width: "fit" }} onClick={() => setModalOpen(true)}>
-            Open Modal
-          </Button>
-          <Modal
-            open={modalOpen}
-            onClose={() => setModalOpen(false)}
-            onConfirm={() => {}}
-          >
-            <Box>
-              Welcome to my modal. You can put all sorts of stuff in here if
-              you'd like.
-            </Box>
-          </Modal>
         </ShowcaseRow>
       </ShowcaseBlock>
 

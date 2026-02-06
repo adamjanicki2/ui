@@ -70,9 +70,8 @@ const Drawer = ({ item, duration, showDivider }: DrawerProps) => {
   const { content: children, open, onOpenChange } = item;
 
   useEffect(() => {
-    if (open && children && boxRef.current) {
+    if (open && children && boxRef.current)
       setHeight(boxRef.current.offsetHeight);
-    }
   }, [open, children]);
 
   // TODO: change this to use calc-size when supported

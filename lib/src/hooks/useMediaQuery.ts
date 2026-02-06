@@ -5,10 +5,7 @@ type Config = {
   onMatch?: () => void;
   /** Callback for when the media query does not match */
   onUnmatch?: () => void;
-  /**
-   * The media query to watch for.
-   * @example "(max-width: 820px)"
-   */
+  /** The media query to watch for */
   query: string;
 };
 
@@ -25,11 +22,8 @@ const useMediaQuery = (config: Config): boolean => {
   useEffect(() => {
     const mediaQuery = window.matchMedia(query);
     const listener = (event: MediaQueryListEvent) => {
-      if (event.matches) {
-        onMatch?.();
-      } else {
-        onUnmatch?.();
-      }
+      const callback = event.matches ? onMatch : onUnmatch;
+      callback?.();
       setMatches(event.matches);
     };
     mediaQuery.addEventListener("change", listener);

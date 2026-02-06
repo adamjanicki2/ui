@@ -63,11 +63,15 @@ const transformers: Record<keyof Vfx, Transformer> = {
 
   // --- Borders ---
   radius: ({ radius }) => `aui-radius-${radius}`,
-  border: () => "aui-ba",
-  borderTop: () => "aui-bt",
-  borderBottom: () => "aui-bb",
-  borderLeft: () => "aui-bl",
-  borderRight: () => "aui-br",
+  border: ({ border }) => (border === false ? "aui-ba-none" : "aui-ba"),
+  borderTop: ({ borderTop }) =>
+    borderTop === false ? "aui-bt-none" : "aui-bt",
+  borderBottom: ({ borderBottom }) =>
+    borderBottom === false ? "aui-bb-none" : "aui-bb",
+  borderLeft: ({ borderLeft }) =>
+    borderLeft === false ? "aui-bl-none" : "aui-bl",
+  borderRight: ({ borderRight }) =>
+    borderRight === false ? "aui-br-none" : "aui-br",
   borderWidth: ({ borderWidth }) => `aui-bw-${borderWidth}`,
   borderStyle: ({ borderStyle }) => `aui-bs-${borderStyle}`,
   borderColor: ({ borderColor }) => `aui-bc-${borderColor}`,
@@ -100,9 +104,7 @@ export default function transformVfx(vfx: Vfx | undefined): string | null {
   Object.entries(vfx).forEach(([key, value]) => {
     const transformer = transformers[key as keyof Vfx];
     const result = transformer(vfx);
-    if (value && result) {
-      classes.push(result);
-    }
+    if (value !== undefined && result) classes.push(result);
   });
 
   return classes.join(" ") || null;

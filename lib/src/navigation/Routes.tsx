@@ -49,13 +49,12 @@ export default function Routes({ children, fallback }: Props): React.ReactNode {
   for (const routeElement of routes) {
     const { path, element } = routeElement.props;
     const pathParams = matchPath(path, pathname);
-    if (pathParams) {
+    if (pathParams)
       return (
         <PathParamsContext.Provider value={pathParams}>
           {element}
         </PathParamsContext.Provider>
       );
-    }
   }
 
   return fallback;

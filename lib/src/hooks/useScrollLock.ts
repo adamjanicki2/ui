@@ -28,9 +28,8 @@ function acquire() {
     paddingRight: style.paddingRight,
   };
 
-  if (scrollbarWidth > 0) {
+  if (scrollbarWidth > 0)
     style.paddingRight = `calc(${getComputedStyle(document.body).paddingRight || "0px"} + ${scrollbarWidth}px)`;
-  }
 
   style.overflow = "hidden";
   style.position = "fixed";
@@ -56,15 +55,11 @@ function release() {
 const lockScroll = () => {
   lockCount += 1;
 
-  if (lockCount === 1) {
-    acquire();
-  }
+  if (lockCount === 1) acquire();
 
   return () => {
     lockCount -= 1;
-    if (lockCount === 0) {
-      release();
-    }
+    if (lockCount === 0) release();
   };
 };
 

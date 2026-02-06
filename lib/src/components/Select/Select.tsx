@@ -40,56 +40,53 @@ const Select = React.forwardRef<HTMLSelectElement, Props>(
       ...rest
     },
     ref
-  ) => {
-    const { className: selectClassName } = selectProps || {};
-    return (
-      <Box
-        vfx={{
-          pos: "relative",
-          width: "fit",
-          axis: "x",
-          align: "center",
-          radius: "rounded",
-          backgroundColor: "default",
-          color: "default",
-          padding: "none",
-          ...vfx,
-        }}
-        className={classNames(
-          "aui-select-container",
-          selectProps?.disabled ? "aui-select-disabled" : undefined,
-          className
-        )}
-        {...rest}
+  ) => (
+    <Box
+      vfx={{
+        pos: "relative",
+        width: "fit",
+        axis: "x",
+        align: "center",
+        radius: "rounded",
+        backgroundColor: "default",
+        color: "default",
+        padding: "none",
+        ...vfx,
+      }}
+      className={classNames(
+        "aui-select-container",
+        selectProps?.disabled ? "aui-select-disabled" : undefined,
+        className
+      )}
+      {...rest}
+    >
+      <ui.select
+        {...selectProps}
+        value={value}
+        onChange={onChange}
+        className={classNames("aui-select", selectProps?.className)}
+        ref={ref}
       >
-        <ui.select
-          {...selectProps}
-          value={value}
-          onChange={onChange}
-          className={classNames("aui-select", selectClassName)}
-          ref={ref}
-        >
-          {options.map((option, index) => (
-            <option key={index} value={option}>
-              {getOptionLabel?.(option) || option}
-            </option>
-          ))}
-        </ui.select>
-        <Icon
-          icon={select}
-          vfx={{ color: "muted", pos: "absolute" }}
-          style={{
-            top: "50%",
-            right: 10,
-            transform: "translateY(-50%)",
-            pointerEvents: "none",
-          }}
-          size="xs"
-          aria-hidden
-        />
-      </Box>
-    );
-  }
+        {options.map((option, index) => (
+          <option key={index} value={option}>
+            {getOptionLabel?.(option) || option}
+          </option>
+        ))}
+      </ui.select>
+      <Icon
+        icon={select}
+        vfx={{ color: "muted", pos: "absolute" }}
+        style={{
+          top: "50%",
+          right: 10,
+          transform: "translateY(-50%)",
+          pointerEvents: "none",
+        }}
+        size="xs"
+        aria-hidden
+      />
+    </Box>
+  )
 );
 
 export default Select;
