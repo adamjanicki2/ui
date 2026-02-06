@@ -168,7 +168,7 @@ const fruits = ["apple", "orange", "banana", "kiwi"];
 <Select 
   options={fruits} 
   value={selectedFruit}
-  onChange={(e) => setSelectedFruit(e.target.value)}
+  onSelect={setSelectedFruit}
 />
 `;
 

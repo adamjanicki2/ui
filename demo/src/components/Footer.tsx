@@ -22,7 +22,7 @@ export default function Footer() {
       <Select
         options={["light", "dark"]}
         value={theme}
-        onChange={(e) => setTheme(e.target.value as Theme)}
+        onSelect={setTheme}
         getOptionLabel={(option) => labels[option as Theme]}
       />
       <ui.p vfx={{ fontWeight: 5 }}>
