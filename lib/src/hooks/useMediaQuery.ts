@@ -17,19 +17,24 @@ type Config = {
  */
 const useMediaQuery = (config: Config): boolean => {
   const { onMatch, onUnmatch, query } = config;
-  const [matches, setMatches] = useState(false);
+  const [matches, setMatches] = useState(
+    () => window.matchMedia(query).matches
+  );
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(query);
+
+    setMatches(mediaQuery.matches);
+
     const listener = (event: MediaQueryListEvent) => {
       const callback = event.matches ? onMatch : onUnmatch;
       callback?.();
       setMatches(event.matches);
     };
+
     mediaQuery.addEventListener("change", listener);
-    setMatches(mediaQuery.matches);
     return () => mediaQuery.removeEventListener("change", listener);
-  }, [onMatch, onUnmatch, query]);
+  }, [query, onMatch, onUnmatch]);
 
   return matches;
 };
